@@ -1,0 +1,319 @@
+<div class="modal fade" id="wallet_payment_modal" tabindex="-1" role="dialog" aria-labelledby="track_unreported" aria-hidden="true" data-id="0" data_price="{{PRICE}}">
+    <div class="modal-dialog mat_box" role="document">
+        <div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">{{LANG Choose a payment method.}}</h5>
+			</div>
+            <div class="modal-body">
+                <div class="wallet_payment_modal_alert"></div>
+				<div class="pay_method">
+					<?php if($music->config->paypal_payment == 'on'){?>
+						<button class="btn" onclick="purchaseWalletPaypal($(this),'{{PRICE}}')" id="btn-wallet-paypal-payment" data-id="" data-title="" data-price="{{PRICE}}">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#283593" d="M8.32,21.97C8.21,21.92 8.08,21.76 8.06,21.65C8.03,21.5 8,21.76 8.66,17.56C9.26,13.76 9.25,13.82 9.33,13.71C9.46,13.54 9.44,13.54 10.94,13.53C12.26,13.5 12.54,13.5 13.13,13.41C16.38,12.96 18.39,11.05 19.09,7.75C19.13,7.53 19.17,7.34 19.18,7.34C19.18,7.33 19.25,7.38 19.33,7.44C20.36,8.22 20.71,9.66 20.32,11.58C19.86,13.87 18.64,15.39 16.74,16.04C15.93,16.32 15.25,16.43 14.05,16.46C13.25,16.5 13.23,16.5 13,16.65C12.83,16.82 12.84,16.79 12.45,19.2C12.18,20.9 12.08,21.45 12.04,21.55C11.97,21.71 11.83,21.85 11.67,21.93L11.56,22H10C8.71,22 8.38,22 8.32,21.97V21.97M3.82,19.74C3.63,19.64 3.5,19.47 3.5,19.27C3.5,19 6.11,2.68 6.18,2.5C6.27,2.32 6.5,2.13 6.68,2.06L6.83,2H10.36C14.27,2 14.12,2 15,2.2C17.62,2.75 18.82,4.5 18.37,7.13C17.87,10.06 16.39,11.8 13.87,12.43C13,12.64 12.39,12.7 10.73,12.7C9.42,12.7 9.32,12.71 9.06,12.85C8.8,13 8.59,13.27 8.5,13.6C8.46,13.67 8.23,15.07 7.97,16.7C7.71,18.33 7.5,19.69 7.5,19.72L7.47,19.78H5.69C4.11,19.78 3.89,19.78 3.82,19.74V19.74Z" /></svg>{{LANG PayPal}}
+						</button>
+					<?php } ?>
+					<?php if($music->config->stripe_payment == 'on'){?>
+						<button class="btn" onclick="purchaseWalletStripe($(this),'{{PRICE}}')" id="btn-wallet-stripe-payment" data-id="" data-title="" data-price="{{PRICE}}">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#6BBEA1" d="M20,8H4V6H20M20,18H4V12H20M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z" /></svg>{{LANG Credit Card}}
+						</button>
+					<?php } ?>
+                    <?php if($music->config->bank_payment == 'on'){?>
+						<button class="btn" onclick="purchaseWalletBank($(this),'{{PRICE}}')" id="btn-wallet-bank-payment" data-id="" data-title="" data-price="{{PRICE}}">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#B5C3C6" d="M11.5,1L2,6V8H21V6M16,10V17H19V10M2,22H21V19H2M10,10V17H13V10M4,10V17H7V10H4Z" /></svg>{{LANG Bank transfer}}
+						</button>
+                    <?php } ?>
+                    <?php if($music->config->cashfree_payment == 'on'){?>
+                        <button class="btn" onclick="cashfree_pay($(this),'wallet')" id="btn-cashfree-payment" data-id="" data-title="" data-price="{{PRICE}}">
+                            <img src="{{CONFIG theme_url}}/img/cashfree.png">{{LANG Cashfree}}
+                        </button>
+                    <?php } ?>
+                    <?php if($music->config->paystack_payment == 'on'){?>
+                        <button class="btn" onclick="paystack_pay($(this),'wallet')" id="btn-paystack-payment" data-id="" data-title="" data-price="{{PRICE}}">
+                            <img src="{{CONFIG theme_url}}/img/paystack.png">{{LANG Paystack}}
+                        </button>
+                    <?php } ?>
+                    <?php if($music->config->razorpay_payment == 'on'){?>
+                        <button class="btn" onclick="razorpay_pay($(this),'wallet')" id="btn-razorpay-payment" data-id="" data-title="" data-price="{{PRICE}}">
+                            <img src="{{CONFIG theme_url}}/img/razorpay.png">{{LANG Razorpay}}
+                        </button>
+                    <?php } ?>
+                    <?php if($music->config->paysera_payment == 'on'){?>
+                        <button class="btn" onclick="paysera_pay($(this),'wallet')" id="btn-paysera-payment" data-id="" data-title="" data-price="{{PRICE}}">
+                            <img src="{{CONFIG theme_url}}/img/paysera.png">{{LANG Paysera}}
+                        </button>
+                    <?php } ?>
+                    <?php if($music->config->checkout_payment == 'on'){?>
+                        <button class="btn" onclick="checkout_pay($(this),'wallet')" id="btn-checkout-payment" data-id="" data-title="" data-price="{{PRICE}}">
+                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 512 512" xml:space="preserve"> <path style="fill:#019ACA;" d="M512,256c0,24.409-3.417,48.013-9.791,70.374C471.636,433.539,372.976,512,256,512 C114.615,512,0,397.385,0,256S114.615,0,256,0c112.149,0,207.454,72.119,242.071,172.502C507.099,198.677,512,226.764,512,256z"/> <g> <path style="fill:#F0EFEB;" d="M498.072,172.502c-19.926-12.455-45.108-17.784-71.45-12.904 c-44.23,8.192-74.073,44.387-74.094,91.167c-0.387,6.071,0.188,13.354,1.985,20.511c8.589,34.262,29.414,58.943,66.173,68.305 c30.103,7.67,57.971,3.929,81.523-13.208C508.583,304.013,512,280.409,512,256C512,226.764,507.099,198.677,498.072,172.502z M490.851,295.643c-16.865,18.15-38.013,22.936-61.2,16.645c-23.928-6.499-37.48-23.604-43.071-47.355 c-1.17-4.963-1.546-10.021-1.296-14.221c0.021-32.434,19.435-57.522,48.232-63.206c38.076-7.513,72.422,19.895,73.895,58.776 C508.123,264.903,503.745,281.767,490.851,295.643z"/> <path style="fill:#F0EFEB;" d="M84.868,312.922c12.492,0,24.985,0,37.476,0c13.791,0,27.583,0.135,41.371-0.085 c3.992-0.064,5.327,1.111,5.091,5.137c-0.332,5.659-0.428,11.379,0.021,17.022c0.388,4.87-1.636,5.606-5.925,5.588 c-36.91-0.15-73.82-0.087-110.73-0.087c-13.526,0-13.104-0.018-13.689-13.669c-0.332-7.75,1.921-12.893,8.097-17.96 c22.096-18.125,43.654-36.911,65.297-55.583c6.453-5.567,12.277-11.784,16.926-19.021c5.188-8.074,6.848-16.926,5.221-26.21 c-2.922-16.664-19.722-25.666-38.273-20.93c-12.54,3.201-21.052,11.856-28.623,21.486c-2.861,3.639-4.581,3.916-7.954,0.935 c-4.699-4.153-9.793-7.873-14.827-11.631c-1.899-1.417-2.722-2.39-1.067-4.792c21.73-31.543,52.725-42.546,88.687-30.858 c38.834,12.621,42.357,56.672,26.059,81.762c-7.615,11.723-17.872,20.935-28.433,29.82c-15.021,12.639-30.179,25.116-45.279,37.663 C84.498,311.98,84.683,312.451,84.868,312.922z"/> <path style="fill:#F0EFEB;" d="M284.865,343.452c-54.955,1.164-96.58-39.644-96.716-90.472 c-0.123-46.273,26.955-82.92,69.758-92.655c30.503-6.938,59.117-2.159,84.541,17.437c4.598,3.543,4.352,5.552,0.273,9.008 c-4.629,3.922-8.965,8.245-13.037,12.749c-2.925,3.235-4.868,3.752-8.727,0.8c-16.533-12.647-35.196-17.295-55.577-12.103 c-25.378,6.466-43.248,29.734-44.409,57.509c-0.971,23.229,6.213,43.253,25.18,57.717c21.007,16.02,50.546,15.303,73.637-1.764 c4.195-3.101,6.369-3.111,9.705,0.753c3.959,4.585,8.463,8.749,13.056,12.718c3.134,2.707,2.306,4.116-0.445,6.434 C324.287,336.604,303.68,343.595,284.865,343.452z"/> </g></svg>{{LANG 2checkout}}
+                        </button>
+                    <?php } ?>
+                    <?php if($music->config->iyzipay_payment == 'on'){?>
+                        <button class="btn" onclick="iyzipay_pay($(this),'wallet')" id="btn-iyzipay-payment" data-id="" data-title="" data-price="{{PRICE}}">
+                            <img src="{{CONFIG theme_url}}/img/iyzipay.png">{{LANG Iyzipay}}
+                        </button>
+                    <?php } ?>
+                    <?php if($music->config->securionpay_payment == 'on'){?>
+                        <button class="btn" onclick="securionpay_pay($(this),'wallet')" id="btn-securionpay-payment" data-id="" data-title="" data-price="{{PRICE}}">
+                            <img src="{{CONFIG theme_url}}/img/securionpay.png">{{LANG Securionpay}}
+                        </button>
+                    <?php } ?>
+                    <?php if($music->config->authorize_payment == 'on'){?>
+                        <button class="btn" onclick="authorize_pay($(this),'wallet')" id="btn-authorize-payment" data-id="" data-title="" data-price="{{PRICE}}">
+                            <img src="{{CONFIG theme_url}}/img/authorize.png">{{LANG Authorize}}
+                        </button>
+                    <?php } ?>
+                    <?php if($music->config->yoomoney_payment == 'on'){?>
+                        <button class="btn" onclick="pay_using_yoomoney()" id="btn-yoomoney-payment" data-id="" data-title="" data-price="">
+                            <svg width="57" height="40" viewBox="0 0 57 40" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M36.33 0c-11.14 0-20 8.987-20 20 0 11.14 8.987 20 20 20 11.012 0 20-8.987 20-20s-8.988-20-20-20zm0 27.342c-4.051 0-7.47-3.418-7.47-7.469 0-4.05 3.419-7.468 7.47-7.468 4.05 0 7.468 3.418 7.468 7.468-.127 4.178-3.418 7.469-7.469 7.469zM16.203 5.696V34.81h-7.09L0 5.696h16.203z" fill="#8b3ffd"></path></svg>{{LANG yoomoney}}
+                        </button>
+                    <?php } ?>
+                    <?php if($music->config->fortumo_payment == 'on'){?>
+                        <button class="btn" onclick="pay_using_fortumo()" id="btn-fortumo-payment" data-id="" data-title="" data-price="">
+                            <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="300.000000pt" height="300.000000pt" viewBox="0 0 300.000000 300.000000" preserveAspectRatio="xMidYMid meet"> <g transform="translate(0.000000,300.000000) scale(0.100000,-0.100000)" fill="#ef172f" stroke="none"> <path d="M1518 2850 c-210 -38 -411 -160 -524 -318 -92 -127 -119 -269 -71 -363 30 -59 286 -340 302 -331 6 4 110 83 231 177 271 210 339 277 396 391 39 78 42 94 46 178 5 111 -14 167 -71 210 -65 50 -205 75 -309 56z"></path> <path d="M2210 2306 c-132 -28 -263 -84 -359 -154 -100 -73 -511 -407 -509 -413 2 -4 52 -60 112 -126 285 -309 336 -352 480 -400 75 -25 93 -27 246 -27 151 0 173 3 255 28 565 172 752 736 333 1006 -101 66 -199 92 -358 96 -88 2 -158 -1 -200 -10z"></path> <path d="M545 2120 c-224 -48 -439 -243 -516 -470 -30 -89 -31 -208 -3 -270 77 -167 300 -200 517 -78 31 18 170 125 308 237 l250 204 -24 26 c-13 14 -78 90 -145 167 -102 118 -130 145 -172 163 -57 25 -155 34 -215 21z"></path> <path d="M947 1421 c-294 -241 -349 -298 -416 -435 -100 -202 -108 -405 -22 -575 95 -187 305 -293 518 -261 290 44 529 270 604 569 17 69 21 105 17 190 -6 120 -28 195 -82 276 -31 47 -362 435 -371 435 -2 0 -114 -90 -248 -199z"></path> </g> </svg>{{LANG fortumo}}
+                        </button>
+                    <?php } ?>
+                    <?php if($music->config->aamarpay_payment == 'on'){?>
+                        <button class="btn" onclick="pay_using_aamarpay()" id="btn-aamarpay-payment" data-id="" data-title="" data-price="">
+                            <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="64.000000pt" height="73.000000pt" viewBox="0 0 64.000000 73.000000" preserveAspectRatio="xMidYMid meet"> <g transform="translate(0.000000,73.000000) scale(0.100000,-0.100000)" fill="#fe9900" stroke="none"> <path d="M342 533 l3 -108 120 -5 c66 -3 122 -5 123 -4 2 2 -34 27 -80 56 -62 41 -93 69 -122 111 -22 31 -41 57 -43 57 -2 0 -2 -48 -1 -107z"></path> <path d="M67 432 c8 -20 23 -53 33 -72 14 -28 17 -51 13 -110 l-5 -75 53 59 c102 112 103 94 -11 169 l-99 66 16 -37z"></path> </g> </svg>{{LANG aamarpay}}
+                        </button>
+                    <?php } ?>
+                    <?php if($music->config->ngenius_payment == 'on'){?>
+                        <button class="btn" onclick="pay_using_ngenius()" id="btn-ngenius-payment" data-id="" data-title="" data-price="">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#E12E56" d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"></path></svg>{{LANG ngenius}}
+                        </button>
+                    <?php } ?>
+                    <?php if($music->config->coinbase_payment == 'on'){?>
+                        <button class="btn" onclick="pay_using_coinbase()" id="btn-coinbase-payment" data-id="" data-title="" data-price="">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 512 512"><path fill="#0052ff" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zm-141.651-35.33c4.937-32.999-20.191-50.739-54.55-62.573l11.146-44.702-27.213-6.781-10.851 43.524c-7.154-1.783-14.502-3.464-21.803-5.13l10.929-43.81-27.198-6.781-11.153 44.686c-5.922-1.349-11.735-2.682-17.377-4.084l.031-.14-37.53-9.37-7.239 29.062s20.191 4.627 19.765 4.913c11.022 2.751 13.014 10.044 12.68 15.825l-12.696 50.925c.76.194 1.744.473 2.829.907-.907-.225-1.876-.473-2.876-.713l-17.796 71.338c-1.349 3.348-4.767 8.37-12.471 6.464.271.395-19.78-4.937-19.78-4.937l-13.51 31.147 35.414 8.827c6.588 1.651 13.045 3.379 19.4 5.006l-11.262 45.213 27.182 6.781 11.153-44.733a1038.209 1038.209 0 0 0 21.687 5.627l-11.115 44.523 27.213 6.781 11.262-45.128c46.404 8.781 81.299 5.239 95.986-36.727 11.836-33.79-.589-53.281-25.004-65.991 17.78-4.098 31.174-15.792 34.747-39.949zm-62.177 87.179c-8.41 33.79-65.308 15.523-83.755 10.943l14.944-59.899c18.446 4.603 77.6 13.717 68.811 48.956zm8.417-87.667c-7.673 30.736-55.031 15.12-70.393 11.292l13.548-54.327c15.363 3.828 64.836 10.973 56.845 43.035z"></path></svg>{{LANG coinbase}}
+                        </button>
+                    <?php } ?>
+                    <?php if($music->config->fluttewave_payment == 'on'){?>
+                        <button class="btn" onclick="open_fluttewave()" id="btn-fluttewave-payment" data-id="" data-title="" data-price="">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 512 512"><path fill="#0052ff" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zm-141.651-35.33c4.937-32.999-20.191-50.739-54.55-62.573l11.146-44.702-27.213-6.781-10.851 43.524c-7.154-1.783-14.502-3.464-21.803-5.13l10.929-43.81-27.198-6.781-11.153 44.686c-5.922-1.349-11.735-2.682-17.377-4.084l.031-.14-37.53-9.37-7.239 29.062s20.191 4.627 19.765 4.913c11.022 2.751 13.014 10.044 12.68 15.825l-12.696 50.925c.76.194 1.744.473 2.829.907-.907-.225-1.876-.473-2.876-.713l-17.796 71.338c-1.349 3.348-4.767 8.37-12.471 6.464.271.395-19.78-4.937-19.78-4.937l-13.51 31.147 35.414 8.827c6.588 1.651 13.045 3.379 19.4 5.006l-11.262 45.213 27.182 6.781 11.153-44.733a1038.209 1038.209 0 0 0 21.687 5.627l-11.115 44.523 27.213 6.781 11.262-45.128c46.404 8.781 81.299 5.239 95.986-36.727 11.836-33.79-.589-53.281-25.004-65.991 17.78-4.098 31.174-15.792 34.747-39.949zm-62.177 87.179c-8.41 33.79-65.308 15.523-83.755 10.943l14.944-59.899c18.446 4.603 77.6 13.717 68.811 48.956zm8.417-87.667c-7.673 30.736-55.031 15.12-70.393 11.292l13.548-54.327c15.363 3.828 64.836 10.973 56.845 43.035z"></path></svg>{{LANG fluttewave}}
+                        </button>
+                    <?php } ?>
+                    <?php if($music->config->coinpayments == 'on'){?>
+                        <button class="btn" onclick="pay_using_coinpayments()" id="btn-coinpayments-payment" data-id="" data-title="" data-price="">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="196" height="46" viewBox="0 0 38 45" fill="none"> <path opacity="0.5" fill-rule="evenodd" clip-rule="evenodd" d="M0.161987 18.9846L1.44177 14.0873L10.4551 8.86938V15.407L0.161987 21.8952V18.9846Z" fill="#1C60DD"></path> <path opacity="0.7" fill-rule="evenodd" clip-rule="evenodd" d="M4.42798 19.1574L14.5777 12.8464V18.0292C14.5777 18.0292 14.4234 19.7398 13.6814 20.0584C13.1328 20.2823 4.43068 25.4312 4.43068 25.4312L4.42798 19.1574Z" fill="#1C60DD"></path> <path opacity="0.9" fill-rule="evenodd" clip-rule="evenodd" d="M9.95569 22.2194L18.9784 16.9021V22.0842C18.9784 22.0842 18.9784 23.5168 18.0822 24.0207C17.5038 24.3299 9.95772 28.7219 9.95772 28.7219L9.95569 22.2194Z" fill="#1C60DD"></path> <path opacity="0.5" fill-rule="evenodd" clip-rule="evenodd" d="M13.6947 7.01864L18.6555 3.82056V10.3547L13.6994 13.3878L13.6947 7.01864Z" fill="#1C60DD"></path> <path opacity="0.7" fill-rule="evenodd" clip-rule="evenodd" d="M17.7343 10.9115L22.7195 7.96704V14.7312L17.7322 17.6277L17.7343 10.9115Z" fill="#1C60DD"></path> <path opacity="0.5" fill-rule="evenodd" clip-rule="evenodd" d="M21.5567 2.07729L24.9517 0V4.50631C24.9517 4.50631 24.9517 6.76082 24.0554 7.212C23.8829 7.30331 21.575 8.64668 21.575 8.64668L21.5567 2.07729Z" fill="#1C60DD"></path> <path opacity="0.9" fill-rule="evenodd" clip-rule="evenodd" d="M21.6464 15.2719L25.0285 13.2427L24.9507 18.4207C24.9507 18.4207 25.0285 19.7864 24.0545 20.4499C23.8299 20.6495 21.5267 21.771 21.5673 21.7933C21.6079 21.8156 21.6329 15.0886 21.6464 15.2719Z" fill="#1C60DD"></path> <path opacity="0.7" fill-rule="evenodd" clip-rule="evenodd" d="M25.6279 6.30849L28.3336 4.51733C28.3336 4.51733 28.3607 7.20407 28.3336 9.02432C28.3137 9.57723 28.1847 10.1207 27.9541 10.6236C27.7234 11.1264 27.3956 11.5788 26.9896 11.9546C26.9896 11.9546 25.5901 12.8258 25.6327 12.8502C25.6753 12.8745 25.6279 6.30849 25.6279 6.30849Z" fill="#1C60DD"></path> <path fill-rule="evenodd" clip-rule="evenodd" d="M10.455 8.86499C10.4131 8.95292 2.18034 13.0385 0.932341 14.44C1.56885 13.903 0.391204 14.9704 0.25592 16.5782L0.647567 31.6888C0.647567 31.6888 0.0184966 34.3038 3.11109 36.0814C5.31622 37.349 18.0708 44.5901 19.6367 45.3267C21.2026 46.0634 21.6065 44.8992 21.6065 44.8992V30.2324C21.5726 30.1925 22.0739 27.915 19.3898 26.1976C18.8744 25.7498 2.34741 18.2219 1.64529 15.8517C0.891079 13.3064 10.455 9.52315 10.455 8.86499Z" fill="#1C60DD"></path> <path fill-rule="evenodd" clip-rule="evenodd" d="M20.8377 30.1024L21.6426 29.52V45.1453C21.6426 45.1453 21.2543 45.9266 20.8377 46.001C20.7883 45.9753 20.8377 30.1024 20.8377 30.1024Z" fill="#1C60DD"></path> <path d="M1.07855 16.3644C1.1929 16.546 1.32403 16.7165 1.47019 16.8737C1.30482 16.6911 1.16592 16.4862 1.05758 16.2649C0.0835329 13.7527 7.14537 10.928 10.0878 9.04077C10.0878 9.04077 2.94547 12.5872 1.52972 13.8244C0.278342 14.9175 0.188378 15.5784 0.188378 15.5784L0.0375366 16.5017C0.0686516 16.0539 0.0787979 15.6541 0.188378 15.5784C0.17485 15.6562 1.06705 16.2474 1.07855 16.3644Z" fill="#1C60DD"></path> <path d="M18.6372 26.8178C18.0568 26.3274 10.65 22.9405 5.5282 19.8777C5.83259 20.0698 6.10383 20.2382 6.31691 20.3789L18.4492 44.776C18.7049 44.9113 18.8976 45.0202 19.0451 45.0892L20.8376 45.9848V30.3128C20.8153 30.2952 21.0162 28.1314 18.6372 26.8178Z" fill="#1C60DD"></path> <path opacity="0.3" d="M0.5538 33.7224C0.276449 33.1509 0.0897757 32.5398 0.000488281 31.9109C0.0277243 32.5519 0.218175 33.1755 0.5538 33.7224Z" fill="#1C60DD"></path> <path d="M5.52811 19.8778C3.7153 18.805 2.21365 17.7484 1.46959 16.8751C1.32361 16.7177 1.19272 16.547 1.07861 16.3651C1.06509 16.2481 0.19927 15.5744 0.222268 15.4939C0.112688 15.5703 0.0430172 16.0445 0.0119019 16.495L0.0355766 31.9059C0.123511 33.047 0.211446 33.091 0.514482 33.7207C0.957536 34.4073 1.1767 34.6677 1.96675 35.3725C3.8215 36.5055 15.3058 43.0742 18.4653 44.7748L6.31681 20.3722L5.52811 19.8778Z" fill="#1C60DD"></path> <path opacity="0.2" d="M5.50781 19.8692C3.69501 18.7964 2.19335 17.7399 1.44929 16.8666C1.30979 16.7085 1.18568 16.5375 1.07861 16.3559C1.06509 16.2396 0.195888 15.5658 0.222268 15.4854C0.168155 15.5374 0.0673683 16.1408 0.036253 16.5906L0.0119019 31.9535C0.0558692 32.9133 0.243237 33.1792 0.519217 33.7514C0.914245 34.4096 1.42224 34.9013 1.99516 35.364C3.85058 36.497 15.2861 43.0657 18.4457 44.7662L6.29652 20.3637L5.50781 19.8692Z" fill="#1C60DD"></path> <path fill-rule="evenodd" clip-rule="evenodd" d="M18.225 33.1678L15.7039 31.612C15.2562 31.3522 14.8246 31.52 15.0458 31.9793V36.1656C15.1533 36.3205 15.3705 36.8218 15.2697 37.0747C14.9085 37.0572 16.7037 38.5629 17.7183 39.1304C18.0139 39.2961 18.5652 39.3651 18.5226 38.6826V33.7096C18.5239 33.6012 18.4968 33.4944 18.4441 33.3998C18.3921 33.3049 18.3167 33.225 18.225 33.1678Z" fill="#1C60DD"></path> <path fill-rule="evenodd" clip-rule="evenodd" d="M18.1177 33.4176C17.7254 32.9292 16.4145 32.1791 15.525 31.5372C15.3011 31.3735 14.9114 31.4898 14.9162 31.7611C14.9723 34.9287 14.9838 36.3864 15.1671 37.0067C15.3024 37.4802 16.7872 38.4752 17.6313 39.0359C17.8823 39.2057 18.2212 39.2463 18.232 38.9392C18.2794 37.6073 18.232 34.5175 18.232 33.7274C18.2282 33.6138 18.1873 33.5045 18.1157 33.4163L18.1177 33.4176Z" fill="#1C60DD"></path> </svg>{{LANG coinpayments}}
+                        </button>
+                    <?php } ?>
+				</div>
+            </div>
+        </div>
+    </div>
+	<input id="wallet_amount" type="hidden" value="{{PRICE}}">
+</div>
+<div class="modal fade" id="aamarpay_modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog mat_box" role="document">
+        <div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">{{LANG aamarpay}}</h5>
+			</div>
+			<form id="aamarpay_form" method="post">
+				<div class="modal-body">
+					<div id="aamarpay_alert" style="color: red;"></div>
+                    <div class="form-group">
+                        <input class="form-control" type="text" placeholder="{{LANG name}}"  value="{{ME name}}" id="aamarpay_name">
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="email" placeholder="{{LANG email}}" value="{{ME email}}" id="aamarpay_email">
+                    </div>
+                    <div class="form-group">
+                        <input id="aamarpay_number" class="form-control" type="text" placeholder="{{LANG phone_number}}">
+                    </div>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-default" data-dismiss="modal">{{LANG close}}</button>
+					<button type="button" class="btn btn-primary btn-mat btn-main" onclick="AamarpayRequest()" id="aamarpay_button">{{LANG pay}}</button>
+				</div>
+			</form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="stripe_modal" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog mat_box" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Stripe</h5>
+			</div>
+			<form id="stripe_form" method="post">
+				<div class="modal-body">
+					<div id="stripe_alert" style="    color: red;"></div>
+				
+					<div class="form-group">
+						<input class="form-control" type="text" placeholder="{{LANG Name}}"  value="{{ME name}}" id="stripe_name">
+					</div>
+					<div class="form-group">
+						<input class="form-control" type="email" placeholder="{{LANG Email}}" value="{{ME email}}" id="stripe_email">
+					</div>
+					<div class="form-group">
+						<input id="stripe_number" class="form-control" type="text" placeholder="{{LANG Card Number}}">
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<select id="stripe_month" type="text" class="form-control" autocomplete="off" placeholder="{{LANG Month}} (01)">
+									<option value="01">01</option>
+									<option value="02">02</option>
+									<option value="03">03</option>
+									<option value="04">04</option>
+									<option value="05">05</option>
+									<option value="06">06</option>
+									<option value="07">07</option>
+									<option value="08">08</option>
+									<option value="09">09</option>
+									<option value="10">10</option>
+									<option value="11">11</option>
+									<option value="12">12</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<select id="stripe_year" type="text" class="form-control" autocomplete="off" placeholder="{{LANG Year}} (2019)">
+									<?php for ($i=date('Y'); $i <= date('Y')+15; $i++) {  ?>
+									<option value="<?php echo($i) ?>"><?php echo($i) ?></option>
+									<?php } ?>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<input id="stripe_cvc" value="123" type="text" class="form-control" autocomplete="off" placeholder="CVC" maxlength="3" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">{{LANG Cancel}}</button>
+					<button type="button" class="btn btn-primary btn-mat btn-main" onclick="SH_StripeRequest()" id="stripe_button" >{{LANG Pay}}</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<?php if ($music->config->fluttewave_payment == 'on') { ?>
+<div class="modal fade" id="fluttewave_modal" role="dialog" data-keyboard="false" style="overflow-y: auto;">
+    <div class="modal-dialog mat_box">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">{{LANG fluttewave}}</h4>
+            </div>
+            <form class="form form-horizontal" method="post" id="fluttewave_form" action="#">
+                <div class="modal-body twocheckout_modal">
+                    <div id="fluttewave_alert"></div>
+                    <div class="clear"></div>
+                    <div class="sun_input col-md-12">
+                        <input id="fluttewave_email" type="text" class="form-control input-md" autocomplete="off" placeholder="{{LANG email}}" value="{{ME email}}">
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="clear"></div>
+                <div class="modal-footer">
+                    <div class="ball-pulse"><div></div><div></div><div></div></div>
+                    <button type="button" class="btn btn-main" id="fluttewave_btn" onclick="SignatureFluttewave()">{{LANG pay}}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<?php } ?>
+
+<script>
+    function purchaseWalletPaypal(element) {
+        ElementText = element.text();
+        element.text("{{LANG Please wait..}}");
+        element.attr('disabled', 'true');
+        $.get('{{CONFIG ajax_url}}/get-wallet-url?price={{PRICE}}', function (data) {
+            if (data.status == 200) {
+                element.text("{{LANG Redirecting..}}");
+                location.href = data.url;
+            } else {
+                element.text("{{LANG Oops, an error found.}}");
+                element.removeAttr('disabled');
+                console.log(data.error);
+            }
+        });
+    }
+
+    function openStripeModel(){
+        //$('#stripe_email').val($('#stripe_email').attr('data-email'));
+        $('#stripe_number').val('');
+        $('#stripe_cvc').val('');
+        $('#stripe_modal').removeClass('up_rec_img_ready, up_rec_active');
+        $('#stripe_modal').modal('show');
+	}
+    var stripe_array = [];
+    function SH_StripeRequest(argument) {
+        if ($("#stripe_name").val() != '' && $("#stripe_email").val() != '' && $("#stripe_number").val() != '' && $("#stripe_month").val() != '' && $("#stripe_year").val() != '' && $("#stripe_cvc").val() != '' && $("#wallet_amount").val() != '') {
+            var script = document.createElement('script');
+            script.src = 'https://js.stripe.com/v2/';
+            script.type = 'text/javascript';
+            script.onload = script.onreadystatechange = function() {
+                Stripe.setPublishableKey('{{CONFIG stripe_id}}');
+
+                $('#stripe_button').attr('disabled', 'true');
+                $('#stripe_button').text("{{LANG Please wait..}}");
+                stripe_array['stripe_name'] = $('#stripe_name').val();
+                stripe_array['stripe_email'] = $('#stripe_email').val();
+                stripe_array['stripe_number'] = $('#stripe_number').val();
+                stripe_array['stripe_month'] = $('#stripe_month').val();
+                stripe_array['stripe_year'] = $('#stripe_year').val();
+                stripe_array['stripe_cvc'] = $('#stripe_cvc').val();
+                stripe_array['amount'] = $('#wallet_amount').val();
+                Stripe.createToken({
+                    number: $('#stripe_number').val(),
+                    exp_month: $('#stripe_month').val(),
+                    exp_year: $('#stripe_year').val(),
+                    cvc: $('#stripe_cvc').val()
+                }, SH_StripeResponseHandler);
+            };
+            let head  = document.getElementsByTagName('head')[0];
+            head.appendChild(script);
+        }
+        else{
+            $('#stripe_alert').html("{{LANG Please check your details}}");
+        }
+    }
+    function SH_StripeResponseHandler(status, response) {
+        if (response.error) {
+            $('#stripe_alert').html(response.error.message);
+            $('#stripe_button').removeAttr('disabled');
+            $('#stripe_button').text("{{LANG Pay}}");
+        } else {
+            stripe_array['token'] = response.id;
+
+            $.post('{{CONFIG ajax_url}}/stripe-wallet', {
+                stripeToken: stripe_array['token'],
+                stripe_name: stripe_array['stripe_name'],
+                stripe_email: stripe_array['stripe_email'],
+                stripe_number: stripe_array['stripe_number'],
+                stripe_month: stripe_array['stripe_month'],
+                stripe_year: stripe_array['stripe_year'],
+                stripe_cvc: stripe_array['stripe_cvc'],
+                amount: stripe_array['amount'],
+                description: 'Replenish My Balance',
+                price: stripe_array['amount'],
+                payType: 'wallet',
+                trackID: ''
+            }, function (data) {
+                if (data.status == 200) {
+                    window.location = data.url;
+                }else{
+                    alert(data.message);
+                }
+            });
+        }
+    }
+    function purchaseWalletBank(element,price) {
+        var title = '{{LANG Replenish My Balance}}';
+
+        $('#btn-upload-receipt').attr('data-id', 1);
+        $('#btn-upload-receipt').attr('data-mode', 'wallet');
+        $('#btn-upload-receipt').attr('data-title', title);
+        $('#btn-upload-receipt').attr('data-price', price);
+
+        $('#receipt_img_path').html('');
+        $('#receipt_img_preview').attr('src', '');
+        $('.bank_transfer_modal').removeClass('up_rec_img_ready, up_rec_active');
+        $('.bank_transfer_modal').modal('show');
+    }
+</script>

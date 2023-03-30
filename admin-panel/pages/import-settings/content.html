@@ -1,0 +1,98 @@
+<?php
+$music->config->ffmpeg  = is_executable($music->config->ffmpeg_binary_file);
+function isEnabled($func) {
+return is_callable($func) && false === stripos(ini_get('disable_functions'), $func);
+}
+$enabled = true;
+if (!isEnabled('shell_exec')) {
+$enabled = false;
+}
+?>
+<div class="container-fluid">
+    <div>
+        <h3>Import Settings</h3>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="#">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="#">Settings</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">Import Settings</li>
+            </ol>
+        </nav>
+    </div>
+    <!-- Vertical Layout -->
+
+    </div>
+    <!-- #END# Vertical Layout -->
+<script>
+    
+function handleClick(self) {
+    if ($(self).val() == 'admin') {
+        $('.itunes_partner_div').slideDown();
+    }
+    else{
+        $('.itunes_partner_div').slideUp();
+    }
+}
+$(function() {
+    var form_soundcloud_settings = $('form.soundcloud-settings');
+    var form_itunes_settings = $('form.itunes-settings');
+    var form_deezer_settings = $('form.deezer-settings');
+
+    form_soundcloud_settings.ajaxForm({
+        url: '{{CONFIG ajax_url}}/ap/save-settings',
+        beforeSend: function() {
+            form_soundcloud_settings.find('.waves-effect').text("Please wait");
+        },
+        success: function(data) {
+            if (data.status == 200) {
+                form_soundcloud_settings.find('.waves-effect').text('Save');
+                $('.soundcloud-settings-alert').html('<div class="alert alert-success"><i class="fa fa-check"></i> Settings updated successfully</div>');
+                setTimeout(function () {
+                    $('.soundcloud-settings-alert').empty();
+                }, 2000);
+            }
+        }
+    });
+
+    form_itunes_settings.ajaxForm({
+        url: '{{CONFIG ajax_url}}/ap/save-settings',
+        beforeSend: function() {
+            form_itunes_settings.find('.waves-effect').text("Please wait");
+        },
+        success: function(data) {
+            if (data.status == 200) {
+                form_itunes_settings.find('.waves-effect').text('Save');
+                $('.itunes-settings-alert').html('<div class="alert alert-success"><i class="fa fa-check"></i> Settings updated successfully</div>');
+                setTimeout(function () {
+                    $('.itunes-settings-alert').empty();
+                }, 2000);
+            }
+        }
+    });
+
+    form_deezer_settings.ajaxForm({
+        url: '{{CONFIG ajax_url}}/ap/save-settings',
+        beforeSend: function() {
+            form_deezer_settings.find('.waves-effect').text("Please wait");
+        },
+        success: function(data) {
+            if (data.status == 200) {
+                form_deezer_settings.find('.waves-effect').text('Save');
+                $('.deezer-settings-alert').html('<div class="alert alert-success"><i class="fa fa-check"></i> Settings updated successfully</div>');
+                setTimeout(function () {
+                    $('.deezer-settings-alert').empty();
+                }, 2000);
+            }
+            else if (data.status == 220) {
+                location.href = data.url;
+            }
+        }
+    });
+
+
+});
+</script>

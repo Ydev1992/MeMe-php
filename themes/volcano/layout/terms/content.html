@@ -1,0 +1,27 @@
+<div class="ma_page_content">
+	<div class="ma_pc_inner">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-4">
+					{{terms_header}}
+				</div>
+				<div class="col-lg-8">
+					<div class="content <?php echo ($music->page_to_load == 'faqs') ? 'tube_faq' : '';?>">
+						{{terms_content}}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<?php if ($music->page_to_load == 'faqs') { ?>
+<script>
+$(function() {
+	$(".accordion-item").click(function() {
+		// Toggle the item
+		$(this).toggleClass("is-active").find(".accordion-panel").slideToggle("ease-out");
+	});
+});
+</script>
+<?php } ?>

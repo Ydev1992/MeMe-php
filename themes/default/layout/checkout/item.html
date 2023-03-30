@@ -1,0 +1,23 @@
+<div class="song_list" id="checkout_product_{{product_id}}">
+	<div class="avatar">
+		<a href="{{url}}" data-load="<?php echo($music->item->product->data_load) ?>"><img src="{{image}}"></a>
+	</div>
+	<div class="song_right_part">
+		<div class="song_upper">
+			<div class="song_meta_info">
+				<a href="{{url}}" data-load="<?php echo($music->item->product->data_load) ?>"><h3>{{title}}</h3></a>
+				<a href="{{user_url}}" data-load="{{username}}"><p>{{name}}</p></a>
+				<p>Qty: 
+					<select id="cart_product_qty" onchange="ChangeQty(this,{{product_id}})">
+						<?php for ($i=1; $i <= $music->item->product->units; $i++) {  ?>
+							<option value="<?php echo $i; ?>" <?php if ($i == $music->item->units) {echo "selected";} ?>><?php echo $i; ?></option>
+						<?php } ?>
+					</select>
+				</p>
+			</div>
+			<div class="song_price_info">
+				<b>{{CONFIG currency_symbol}}{{price}}</b>&nbsp;&nbsp;<a href="javascript:void(0)" onclick="RemoveProductFromCart({{product_id}});LoadCheckout()" class="text-danger" title="{{LANG Remove From Cart}}"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="4" y1="7" x2="20" y2="7" /><line x1="10" y1="11" x2="10" y2="17" /><line x1="14" y1="11" x2="14" y2="17" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg></a>
+			</div>
+		</div>
+	</div>
+</div>

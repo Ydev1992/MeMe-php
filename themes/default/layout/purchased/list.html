@@ -1,0 +1,18 @@
+<div class="col-lg-4 col-md-6">
+	<div class="my_purchased">
+		<div class="content my_purchased_innr">
+			<div class="d-flex align-items-center">
+				<div class="type track" title="{{LANG Track}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M21,3V15.5A3.5,3.5 0 0,1 17.5,19A3.5,3.5 0 0,1 14,15.5A3.5,3.5 0 0,1 17.5,12C18.04,12 18.55,12.12 19,12.34V6.47L9,8.6V17.5A3.5,3.5 0 0,1 5.5,21A3.5,3.5 0 0,1 2,17.5A3.5,3.5 0 0,1 5.5,14C6.04,14 6.55,14.12 7,14.34V6L21,3Z" /></svg></div>&nbsp;&nbsp;<div class="id">#{{t_key}}</div>
+			</div>
+			<a href="javscript:void(0)" onclick="playSong('{{t_audio_id}}');" class="title d-block text-truncate">{{t_title}}</a>
+			<div class="price">{{LANG Price}}: {{CONFIG currency_symbol}}{{t_price}}</div>
+			<div class="purchased">{{LANG Date}}: {{t_purchased_on}}</div>
+			<div class="duration">{{t_duration}}</div>
+			<div class="foot">
+				<a class="btn btn-info btn-mat" href="javascript:void(0)" onclick="getPlayLists({{t_id}})">{{LANG Add to Playlist}}</a>
+				<a class="btn btn-info btn-mat" href="javascript:void(0)" onclick="getShareModal('{{t_id}}', $(this));">{{LANG Share}}</a>
+				<span class="fav_song"><?php echo getFavButton($music->songData->id, 'fav-icon');?></span>
+			</div>
+		</div>
+	</div>
+</div>

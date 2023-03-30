@@ -1,0 +1,32 @@
+<div class="song_list">
+	<div class="song_right_part">
+		<div class="song_upper">
+			<div class="song_meta_info">
+				<a href="{{LINK customer_order/{{hash}}}}" data-load="customer_order/{{hash}}"><h3>#{{hash}}</h3></a>
+				<a href="javascript:void(0)"><p>&nbsp;&nbsp;</p></a>
+			</div>
+			&nbsp;
+			&nbsp;
+			&nbsp;
+			&nbsp;
+			<div class="song_meta_info">
+				<a href="javascript:void(0)"><h3>{{LANG Products}}</h3></a>
+				<a href="javascript:void(0)"><p>{{count}}</p></a>
+			</div>
+			&nbsp;
+			&nbsp;
+			&nbsp;
+			&nbsp;
+			<div class="song_meta_info">
+				<a href="javascript:void(0)"><h3>Qty</h3></a>
+				<a href="javascript:void(0)"><p>{{items_count}}</p></a>
+			</div>
+			<div class="song_price_info">
+				{{CONFIG currency_symbol}}{{price}}
+			</div>
+		</div>
+		<ul class="list-unstyled mb-0 p20">
+			<a href="{{LINK customer_order/{{hash}}}}" data-load="customer_order/{{hash}}" class="btn btn-default btn-mat buy_button">{{LANG View Details}}</a>
+		</ul>
+	</div>
+</div>

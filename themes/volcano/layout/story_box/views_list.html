@@ -1,0 +1,11 @@
+<div class="story_views_" id="<?php echo $music->view->id ?>">
+	<div class="story_view_list">
+		<div class="user-avatar">
+			<img src="<?php echo $music->view->user_data->avatar; ?>" alt="">
+		</div>
+		<div class="user-name">
+			<a href="<?php echo $music->view->user_data->url; ?>" <?php if(empty($music->view->fingerPrint)){ ?> data-load="<?php echo $music->view->user_data->username; ?>"<?php } ?>><?php echo $music->view->user_data->name; ?></a>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>

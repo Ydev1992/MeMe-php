@@ -1,0 +1,159 @@
+<?php if ( $music->announcement !== '' ) {?>
+		<div class="announcement-renderer">
+			{{ANNOUNCEMENT}}
+		</div>
+		<br>
+<?php } ?>
+
+<div class="ma_page_content">
+	<div class="ma_pc_inner">
+		<center><?php echo GetAd('header');?></center>
+		<div class="page_padding ma_discover_page">
+			<!-- Top Slider -->
+			<div class="owl-carousel home_top_slider owl-theme">
+				{{TOP_SLIDER_CONTENT}}
+			</div>
+			<!-- End Top Slider -->
+			
+			<!-- Recently Played (Only Visible if User Plays any Music) -->
+				<div class="mb-60">
+					<h2 class="home_widget_title home_big_title">
+						{{LANG Recently Played}}
+						<div class="slide_btns">
+							<?php if (IS_LOGGED) { ?>
+							<a href="{{LINK recently_played}}" data-load="recently_played">{{LANG Show All}}</a>
+							<?php } ?>
+							<div class="recent_music_btn"></div>
+						</div>
+					</h2>
+					<div class="rp_slider">{{RECENT_PLAYS}}</div>
+				</div>
+			<!-- End Recently Played -->
+					
+			<div class="row">
+				<?php if (!empty($music->playlists)) { ?>
+				<div class="col-md-7">
+					<h2 class="home_widget_title home_big_title mt-0">{{LANG discover_pop_playlist}}</h2>
+					<div class="mb-60 pop_playlist">
+						<div class="row">
+							<div class="col-md-8">
+								<h2><a href="<?php echo $music->playlists->url?>" data-load="<?php echo $music->playlists->ajax_url?>"><?php echo $music->playlists->name?></a></h2>
+								<div class="artist"><a href="<?php echo $music->playlists->publisher->url?>" data-load="<?php echo $music->playlists->publisher->username?>"><?php echo $music->playlists->publisher->name?></a></div>
+								<p><?php echo $music->playlists->songs?> {{LANG songs}}</p>
+								<a href="" class="btn btn-primary btn-mat" onclick="playPlayListSongs(<?php echo $music->playlists->id?>); return false"><svg xmlns="http://www.w3.org/2000/svg" width="26.596" height="26.596" viewBox="0 0 26.596 26.596"> <path id="ic_play_circle_filled_24px" d="M15.3,2A13.3,13.3,0,1,0,28.6,15.3,13.3,13.3,0,0,0,15.3,2Zm-2.66,19.282V9.314L20.617,15.3Z" transform="translate(-2 -2)" fill="currentColor"/> </svg> {{LANG listen_now}}</a>
+							</div>
+							<div class="col-md-4">
+								<a href="<?php echo $music->playlists->url?>" data-load="<?php echo $music->playlists->ajax_url?>">
+									<img src="<?php echo getMedia($music->playlists->thumbnail)?>">
+								</a>
+							</div>
+						</div>
+					</div>
+					
+					<h2 class="home_widget_title home_big_title mt-0">{{LANG top_playlists}}</h2>
+					<div class="serial_counter top_playlists">
+						{{OTHER_PLAYLISTS}}
+					</div>
+				</div>
+				<?php } ?>
+				<div class="short_list_cont top_dic_son_listz col-md-5">
+					<div class="short_list_card">
+						<h2 class="home_widget_title home_big_title mt-0">{{LANG Most Popular This Week}}</h2>
+						<ul class="s_list_songs home_tp_songs_list">
+							{{MOST_THIS_WEEK}}
+						</ul>
+					</div>
+				</div>
+			</div>
+			
+			<!-- New Releases -->
+			<div class="sq_music_tracks mb-60">
+				<h2 class="home_widget_title home_big_title">{{LANG New Releases}}</h2>
+				<div class="owl-carousel owl-theme mus_disc_new_trk">
+					{{NEW_RELEASES}}
+				</div>
+			</div>
+			<!-- End New Releases -->
+			
+			<!-- Top This Week  -->
+			<?php if ($music->is_best) { ?>
+			<div class="short_list_card">
+				<h2 class="home_widget_title home_big_title"><?php echo($music->config->store_system == 'on' ? '{{LANG Best Selling Songs & Products This Week}}' : '{{LANG Best Selling Songs & Albums This Week}}'); ?></h2>
+				<div class="row best_prods_seller_week">
+					{{BEST_THIS_WEEK}}
+				</div>
+			</div>
+			<?php } ?>
+			<!-- End Popular This Week/Recommende  -->
+
+			<div class="short_list_cont short_list_cont_bigp top_dic_son_listz">
+				<!-- Recommended  -->
+				<div class="short_list_card">
+					<h2 class="home_widget_title home_big_title">{{LANG Recommended}}</h2>
+					<ul class="s_list_songs dis_recom_songs">
+						{{MOST_RECOMMENDED}}
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+$('svg .verified_ico').tooltip({
+	title: '{{LANG verified}}',
+	placement: 'top',
+	container: 'body'
+});
+
+$(function () {
+	$(".home_top_slider, .mus_disc_new_trk").owlCarousel({
+		loop:true,
+		items: 5,
+		margin: 20,
+		nav:true,
+		<?php if ($music->language_type == 'rtl'){?>
+		rtl:true,
+		<?php }?>
+		dots: false,
+		responsive:{
+			0:{
+				items:1
+			},
+			600:{
+				items:3
+			},
+			1000:{
+				items:5
+			}
+		}
+	});
+	// $(".rp_slider").owlCarousel({
+		// margin:20,
+		// nav: true,
+		// dots: false,
+		// navContainer: '.recent_music_btn',
+		// slideBy: 2,
+		// items:7,
+		// responsive:{
+			// 0:{
+				// items:1
+			// },
+			// 260:{
+				// items:2
+			// },
+			// 380:{
+				// items:3
+			// },
+			// 768:{
+				// items:5
+			// },
+			// 992:{
+				// items:6
+			// },
+			// 1300:{
+				// items:7
+			// }
+		// }
+	// });
+})
+</script>

@@ -1,0 +1,39 @@
+<div class="feed_post pb-0 border-bottom-0" data-id="<?php echo $data->id;?>" id="feed_<?php echo $data->id;?>">
+	<div class="fp_body m-0">
+		<ul class="feed_song list-unstyled mb-0" onclick="playSong('<?php echo $data->audio_id;?>')">
+			<li class="first">
+			<span class="cover">
+				<img src="<?php echo $data->thumbnail;?>">
+				<div class="play_btn">
+					<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"><path fill="currentColor" d="M10,16.5V7.5L16,12M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"></path></svg>
+				</div>
+			</span>
+			</li>
+			<li class="second">
+				<div class="art_details">
+					<a href="javascript:void(0)"><h4><?php echo $data->title;?> <?php if (!empty($music->store)) { ?> <small>{{CONFIG currency_symbol}}<?php echo $data->price;?></small> <?php } ?></h4></a>
+				</div>
+			</li>
+		</ul>
+		<span class="third" style="position: absolute;right: 60px;margin-top: -60px;">
+			<div class="ds_toggle_switch edit_sptlght" onclick="ToggleSpotlight_<?php echo $data->id;?>();">
+				<label>
+					<input type="checkbox" data-toggle="toggle" data-onstyle="main" data-offstyle="warning" data-on='<svg xmlns="http://www.w3.org/2000/svg" width="36" height="20" viewBox="0 0 36 20"> <g id="Group_9812" data-name="Group 9812" transform="translate(-688 -284.5)"> <path id="Path_4833" data-name="Path 4833" d="M9226,1238a10,10,0,0,1,10-10h16a10,10,0,0,1,0,20h-16A10,10,0,0,1,9226,1238Z" transform="translate(-8538 -943.5)" fill="var(--main-color)"/> <rect id="Rectangle_1904" data-name="Rectangle 1904" width="16" height="16" rx="8" transform="translate(706 286.5)" fill="#fff"/> </g> </svg>' data-off='<svg xmlns="http://www.w3.org/2000/svg" width="36" height="20" viewBox="0 0 36 20"> <g id="Group_9813" data-name="Group 9813" transform="translate(-782 -395.5)"> <path id="Path_4832" data-name="Path 4832" d="M9166,1238a10,10,0,0,1,10-10h16a10,10,0,0,1,0,20h-16A10,10,0,0,1,9166,1238Z" transform="translate(-8384 -832.5)" fill="#afb1b7"/> <rect id="Rectangle_1903" data-name="Rectangle 1903" width="16" height="16" rx="8" transform="translate(784 397.5)" fill="#fff"/> </g> </svg>' <?php if($data->spotlight == 1) { echo 'checked=checked';}?> >
+				</label>
+			</div>
+		</span>
+	</div>
+	<div class="clearfix"></div>
+
+</div>
+<script>
+    $(document).ready( function () {
+        $('.feed_post').find('[type="checkbox"]').each(function(index, el) {
+            $(el).bootstrapToggle();
+        });
+    });
+
+    function ToggleSpotlight_<?php echo $data->id;?>(){
+        $.post('{{CONFIG ajax_url}}/user/update_spotlight_status', {id:'<?php echo $data->id;?>'}, function(data, textStatus, xhr) {/* pass */});
+    }
+</script>

@@ -1,0 +1,14 @@
+<?php 
+$data = $db->where('name','notification')->getOne(T_HTML_EMAILS);
+$html = $data->value;
+$replaces = array('uname' => $music->uname,
+                 'username' => $music->username,
+                 'full_name' => $music->full_name,
+                 'contents' => $music->contents,
+                 'site_name' => $music->config->name,
+                 'user_link' => getLink($music->username),
+                 'notify_link' => getLink($music->url),
+                 'c' => $music->c);
+$html = ReplaceText($html,$replaces);
+echo $html;
+ ?>

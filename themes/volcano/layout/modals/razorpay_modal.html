@@ -1,0 +1,141 @@
+<div class="modal fade" id="razorpay_modal" role="dialog" data-keyboard="false" >
+  <div class="modal-dialog mat_box">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{LANG Razorpay}}</h5>
+      </div>
+      <form class="form form-horizontal" method="post" id="razorpay_form" action="#">
+        <div class="modal-body twocheckout_modal">
+          <div id="razorpay_alert"></div>
+          <div class="row">
+				<div class="col-md-12">
+							<div class="form-group mat_input float">
+								<input id="razorpay_name" type="text" class="form-control" autocomplete="off" placeholder=" ">
+								<label>{{LANG Name}}</label>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group mat_input float">
+								<input id="razorpay_email" type="text" class="form-control" autocomplete="off" placeholder=" ">
+								<label>{{LANG Email}}</label>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group mat_input float">
+								<input id="razorpay_phone" type="text" class="form-control" autocomplete="off" placeholder=" ">
+								<label>{{LANG Phone Number}}</label>
+							</div>
+						</div>
+          </div>
+          <input type="hidden" name="razorpay_type" id="razorpay_type">
+          <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+        <div class="modal-footer">
+          <div class="ball-pulse"><div></div><div></div><div></div></div>
+          <button class="btn btn-default" data-dismiss="modal">{{LANG Close}}</button>
+          <button type="button" class="btn btn-primary btn-mat" id="razorpay_btn" onclick="SignatureRazorpay()">{{LANG Pay}}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script type="text/javascript">
+  function razorpay_pay(self,type) {
+    $("#razorpay_alert").html('');
+    $('#razorpay_type').val(type)
+    $('#buy_album_modal').modal('hide');
+    $('#razorpay_modal').modal({
+          show: true
+      });
+  }
+
+  function SignatureRazorpay() {
+    $('#razorpay_btn').html("{{LANG Please wait..}}");
+    $('#razorpay_btn').attr('disabled','true');
+      var merchant_order_id = "<?php echo(round(111111,9999999)) ?>";
+      var card_holder_name_id = $('#razorpay_name').val();
+      type = $('#razorpay_type').val();
+    email = $('#razorpay_email').val();
+    id    = $('#buy_album_modal').attr('data-id');
+    amount = $('#buy_album_modal').attr('data_price');
+    if ($('#razorpay_type').val() == 'buy_song') {
+      id    = $('#payment_modal').attr('data-id');
+      amount    = $('#payment_modal').find('#btn-razorpay-payment').attr('data-price');
+    }
+    if ($('#razorpay_type').val() == 'wallet') {
+      amount = $('#wallet_payment_modal').attr('data_price');
+    }
+    if ($('#razorpay_type').val() == 'go_pro') {
+      amount = $('#paymentpro_modal').find('#btn-razorpay-payment').attr('data-price');
+    }
+      var phone = $('#razorpay_phone').val();
+      var currency_code_id = "INR";
+
+      if (!email || !phone || !card_holder_name_id) {
+        $('#razorpay_alert').html("<div class='alert alert-danger'>{{LANG Please check your details}}</div>");
+      setTimeout(function () {
+        $('#razorpay_alert').html("");
+      },3000);
+      $('#razorpay_btn').html("{{LANG Pay}}");
+      $('#razorpay_btn').removeAttr('disabled');
+      return false;
+      }
+      amount = (parseInt(amount) * 100);
+
+      var razorpay_options = {
+          key: "<?php echo $music->config->razorpay_key_id; ?>",
+          amount: amount,
+          name: "<?php echo $music->config->title; ?>",
+          description: type,
+          image: "<?php echo($music->config->theme_url) ?>/img/logo.png?cache={{CONFIG logo_cache}}",
+          netbanking: true,
+          currency: currency_code_id,
+          prefill: {
+              name: card_holder_name_id,
+              email: email,
+              contact: phone
+          },
+          notes: {
+              soolegal_order_id: merchant_order_id,
+          },
+          handler: function (transaction) {
+              jQuery.ajax({
+                  url:"{{LINK endpoints/razorpay/initialize}}",
+                  type: 'post',
+                  data: {payment_id: transaction.razorpay_payment_id, order_id: merchant_order_id, card_holder_name_id: card_holder_name_id,  amount: amount, currency: currency_code_id, type: type, id: id},
+                  dataType: 'json',
+                  success: function (data) {
+                    if (data.status == 200) {
+                      window.location = data.url;
+                    }
+                    else{
+                      if (data.url != '') {
+                        //window.location = data.url;
+                      }
+                      else{
+                        $('#razorpay_alert').html("<div class='alert alert-danger'>"+data.message+"</div>");
+                setTimeout(function () {
+                  $('#razorpay_alert').html("");
+                },3000);
+                $('#razorpay_btn').html("{{LANG Pay}}");
+                $('#razorpay_btn').removeAttr('disabled');
+
+                      }
+                    }
+                  }
+              });
+          },
+          "modal": {
+              "ondismiss": function () {
+                  // code here
+              }
+          }
+      };
+      // obj
+      var objrzpv1 = new Razorpay(razorpay_options);
+      objrzpv1.open();
+      e.preventDefault();
+  }
+</script>

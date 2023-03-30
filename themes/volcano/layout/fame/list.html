@@ -1,0 +1,34 @@
+<div class="col-lg-4 artist_lists" data-id="{{ARTIST id}}" data_views="{{VIEWS}}" data_v_id="{{ID}}">
+	<div class="content ds_hall_art">
+		<div class="headr">
+			<a href="{{LINK }}{{ARTIST username}}" data-load="{{ARTIST username}}">
+				<img src="{{ARTIST cover}}">
+			</a>
+		</div>
+		<div class="info">
+			<div class="cover_art">
+				<a href="{{LINK }}{{ARTIST username}}" data-load="{{ARTIST username}}">
+					<img src="{{ARTIST avatar}}">
+				</a>
+			</div>
+			<div>
+				<div class="track_info">
+					<a href="{{LINK }}{{ARTIST username}}" data-load="{{ARTIST username}}">{{ARTIST name}}</a>
+				</div>
+				<div class="artist">@{{ARTIST username}}&nbsp;&nbsp;•&nbsp;&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="7.242" height="9.438" viewBox="0 0 7.242 9.438"> <path id="Path_215785" data-name="Path 215785" d="M8848.7,2869.4c-.077,0-.153-.127-.19-.127a1.7,1.7,0,0,1-.077-.256v-8.417a1.712,1.712,0,0,1,.077-.256c.037,0,.113-.127.19-.127s.18-.129.269-.129a.26.26,0,0,0,.254.129l6.225,4.21c.076,0,.127.125.165.125a.637.637,0,0,1,.063.256.653.653,0,0,1-.062.256c-.038,0-.089.127-.165.127l-6.225,4.208a.262.262,0,0,0-.254.127C8848.88,2869.531,8848.789,2869.4,8848.7,2869.4Z" transform="translate(-8848.433 -2860.094)" fill="currentColor"/> </svg> {{VIEWS_FORMAT}}</div>
+			</div>
+		</div>
+		<hr>
+		<div class="row mx-0">
+			<div class="col-md-4">
+				<p class="stat"><b>{{COUNT_FOLLOWERS}}</b> {{LANG followers}}</p>
+			</div>
+			<div class="col-md-4">
+				<p class="stat"><b>{{COUNT_FOLLOWING}}</b> {{LANG following}}</p>
+			</div>
+			<div class="col-md-4">
+				<p class="stat"><b>{{COUNT_TRACKS}}</b> {{LANG tracks}}</p>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,72 @@
+<div class="modal fade" id="cashfree_wallet_modal" role="dialog" data-keyboard="false" >
+  <div class="modal-dialog mat_box">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{LANG Cashfree}}</h5>
+      </div>
+      <form class="form form-horizontal" method="post" id="cashfree_form" action="#">
+        <div class="modal-body twocheckout_modal">
+          <div id="cashfree_wallet_alert"></div>
+          <div class="row">
+            <div class="form-group col-md-12">
+              <input id="cashfree_name" type="text" class="form-control" autocomplete="off" placeholder="{{LANG Name}}">
+            </div>
+            <div class="form-group col-md-6">
+              <input id="cashfree_email" type="text" class="form-control" autocomplete="off" placeholder="{{LANG Email}}">
+            </div>
+            <div class="form-group col-md-6">
+              <input id="cashfree_phone" type="text" class="form-control" autocomplete="off" placeholder="{{LANG Phone Number}}">
+            </div>
+          </div>
+          <input type="hidden" name="cashfree_type" id="cashfree_type">
+          <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+        <div class="modal-footer">
+          <div class="ball-pulse"><div></div><div></div><div></div></div>
+          <button class="btn btn-default" data-dismiss="modal">{{LANG Close}}</button>
+          <button type="button" class="btn btn-primary btn-mat" id="cashfree_btn" onclick="SignatureCashfree()">{{LANG Pay}}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  function cashfree_pay(self,type) {
+    $("#cashfree_wallet_alert").html('');
+    $('#buy_album_modal').modal('hide');
+    $('#cashfree_type').val(type);
+    $('#cashfree_wallet_modal').modal({
+          show: true
+      });
+  }
+  function SignatureCashfree() {
+    $('#cashfree_btn').html("{{LANG please_wait}}");
+    $('#cashfree_btn').attr('disabled','true');
+    type = $('#cashfree_type').val();
+    email = $('#cashfree_email').val();
+    name = $('#cashfree_name').val();
+    phone = $('#cashfree_phone').val();
+    id    = $('#buy_album_modal').attr('data-id');
+    amount = $('#buy_album_modal').attr('data_price');
+    if ($('#cashfree_type').val() == 'buy_song') {
+      id    = $('#payment_modal').attr('data-id');
+    }
+    if ($('#cashfree_type').val() == 'wallet') {
+      amount = $('#wallet_payment_modal').attr('data_price');
+    }
+    $.post('{{LINK endpoints/cashfree/initialize}}', {type:type,email:email,name:name,phone:phone,amount:amount,id:id}, function(data) {
+      if (data.status == 200) {
+        $('body').append(data.html);
+        document.getElementById("redirectForm").submit();
+      } else {
+        $('#cashfree_wallet_alert').html("<div class='alert alert-danger'>"+data.error+"</div>");
+        setTimeout(function () {
+          $('#cashfree_wallet_alert').html("");
+        },3000);
+      }
+      $('#cashfree_btn').html("{{LANG Pay}}");
+      $('#cashfree_btn').removeAttr('disabled');
+    });
+  }
+</script>

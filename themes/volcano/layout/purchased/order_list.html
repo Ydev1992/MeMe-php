@@ -1,0 +1,24 @@
+<tr class="my_purchased">
+	<td><div class="type order" title="{{type}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M21,16.5C21,16.88 20.79,17.21 20.47,17.38L12.57,21.82C12.41,21.94 12.21,22 12,22C11.79,22 11.59,21.94 11.43,21.82L3.53,17.38C3.21,17.21 3,16.88 3,16.5V7.5C3,7.12 3.21,6.79 3.53,6.62L11.43,2.18C11.59,2.06 11.79,2 12,2C12.21,2 12.41,2.06 12.57,2.18L20.47,6.62C20.79,6.79 21,7.12 21,7.5V16.5M12,4.15L10.11,5.22L16,8.61L17.96,7.5L12,4.15M6.04,7.5L12,10.85L13.96,9.75L8.08,6.35L6.04,7.5M5,15.91L11,19.29V12.58L5,9.21V15.91M19,15.91V9.21L13,12.58V19.29L19,15.91Z" /></svg></div></td>
+	
+	<td class="id">#{{t_key}}</td>
+	
+	<td><a href="{{LINK customer_order/{{id}}}}" data-load="customer_order/{{id}}" class="title">{{t_title}}</a></td>
+	
+	<td><div class="price">{{CONFIG currency_symbol}}{{t_price}}</div></td>
+	
+	<td class="text-center"><div class="purchased">{{t_purchased_on}}</div></td>
+
+	<td class="text-right">
+		<div class="foot">
+			<div class="dropdown">
+				<svg data-display="static" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M16,12A2,2 0 0,1 18,10A2,2 0 0,1 20,12A2,2 0 0,1 18,14A2,2 0 0,1 16,12M10,12A2,2 0 0,1 12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12M4,12A2,2 0 0,1 6,10A2,2 0 0,1 8,12A2,2 0 0,1 6,14A2,2 0 0,1 4,12Z"></path></svg>
+				<div class="dropdown-menu dropdown-menu-right mat-dropdown">
+					<ul class="list-unstyled mb-0">
+						<li><a href="{{LINK customer_order/{{id}}}}" data-load="customer_order/{{id}}"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"></path><path fill="currentColor" d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM11 7h2v2h-2V7zm0 4h2v6h-2v-6z"></path></svg>&nbsp;{{LANG Details}}</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</td>
+</tr>

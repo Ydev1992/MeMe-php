@@ -1,0 +1,143 @@
+<div class="ticket_card_<?php echo($music->purchase->id) ?>" style="display: none !important;">
+	<style type="text/css">
+		#invoice_<?php echo($music->purchase->id) ?> {position:relative; overflow: hidden;padding: 0px;border: none;}
+		
+		#invoice_<?php echo($music->purchase->id) ?> #p1dimg1 {
+			width: 775px;
+		}
+		#invoice_<?php echo($music->purchase->id) ?> #p1dimg1 > div {
+		background-color: #43444e;margin: 88px 0px 0px;max-width: 30%;
+		}
+		#invoice_<?php echo($music->purchase->id) ?> #p1dimg1 .col-8 {
+			border-right: 1px dashed #a0a0a0;margin-left: 45px;max-width: 60%;
+		}
+		#invoice_<?php echo($music->purchase->id) ?> #p1dimg1 .col-8:before {
+			content: '';
+			position: absolute;
+			display: inline-block;
+			width: 24px;
+			height: 24px;
+			background: #ffffff;
+			border-radius: 24px;
+			right: -12px;
+			z-index: 1;
+			top: -12px;
+		}
+		#invoice_<?php echo($music->purchase->id) ?> #p1dimg1 .col-8:after {
+			content: '';
+			position: absolute;
+			display: inline-block;
+			width: 24px;
+			height: 24px;
+			background: #ffffff;
+			border-radius: 24px;
+			right: -12px;
+			z-index: 1;
+			bottom: -12px;
+		}
+		.invoice_cover {
+			border-bottom: 2px solid #6c6c6c;
+			padding: 0 0 20px;
+			margin: 0 0 20px;
+		}
+		.invoice_cover img {
+			width: 100%;
+			max-width: 150px;
+		}
+		.invoice_label {
+			color: #ffd979;
+			font-weight: 500;
+			text-transform: uppercase;
+			font-size: 14px;display: block;
+		}
+		.invoice_label_data {
+			font-size: 18px;
+			color: #fff;
+		}
+		.invoice_label_data a {color: #fff;}
+		.qr_code {
+			background-color: #fff;
+			padding: 15px;display: inline-block;margin-top: 60px;
+		}
+		.qr_code > div {
+			width:100px; height:100px;
+		}
+		.purchased_on {
+			background-color: #DABA89;
+			color: #222;
+			font-weight: 500;
+			font-size: 14px;
+			padding: 10px;
+			line-height: 1;
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+		}
+	</style>
+	<div id="invoice_<?php echo($music->purchase->id) ?>">
+		<div class="row m-0" id="p1dimg1">
+			<div class="col-8 p-4 pb-5">
+				<div class="invoice_cover">
+					<img src="{{CONFIG theme_url}}/img/logo.png?cache={{CONFIG logo_cache}}" alt="<?php echo ($music->config->name);?>">
+				</div>
+				<b class="invoice_label">{{LANG Event Name}}</b>
+				<p class="invoice_label_data"><?php echo($music->event->name) ?></p>
+				<b class="invoice_label">{{LANG Event Address}}</b>
+				<p class="invoice_label_data">
+					<?php if (!empty($music->event->online_url)) { ?>
+						<a href="<?php echo($music->event->online_url) ?>"><?php echo($music->event->online_url) ?></a>
+					<?php }else{ ?>
+						<?php echo $music->event->real_address; ?>
+					<?php } ?>
+				</p>
+				<b class="invoice_label">{{LANG Start Date}}</b>
+				<p class="invoice_label_data"><?php echo $music->event->start_date. ' - ' . date('H:i',strtotime($music->event->start_time)); ?></p>
+				<b class="invoice_label">{{LANG End Date}}</b>
+				<p class="invoice_label_data"><?php echo $music->event->end_date . ' - ' . date('H:i',strtotime($music->event->end_time)); ?></p>
+				<div class="purchased_on">
+					<?php 
+						$text_t = lang("Ticket was purchased in SITENAME, DATE");
+						$text_t = str_replace('{SITENAME}', "", $text_t);
+						$text_t = str_replace('{DATE}', date('l d F Y h:i:s A',$music->purchase->time), $text_t);
+						echo($text_t);
+					?>
+				</div>
+			</div>
+			<div class="col-4 p-4 pb-5">
+				<div class="qr_code mb-3">
+					<div id="qrcode_<?php echo($music->purchase->id) ?>"></div>
+				</div>
+				<b class="invoice_label">{{LANG Purchased By}}</b>
+				<p class="invoice_label_data">{{ME name}}</p>
+				<div class="purchased_on">
+					<?php
+						$lang_copy = lang("© |DATE| |NAME|");
+						$lang_copy = str_replace('|NAME|', $music->config->name, $lang_copy);
+						echo $lang_copy = str_replace('|DATE|', date('Y'), $lang_copy);
+					?>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	var qrcode = new QRCode(document.getElementById("qrcode_<?php echo($music->purchase->id) ?>"), {
+		width : 100,
+		height : 100
+	});
+	function makeCode () {   
+		qrcode.makeCode("<?php echo($music->purchase->id) ?>:<?php echo($music->user->email) ?>");
+		invoice = this.document.getElementById("invoice_<?php echo($music->purchase->id) ?>");
+		var opt = {
+			margin: 1,
+			filename: "ticket_<?php echo($music->purchase->id) ?>.pdf",
+			image: { type: 'jpeg', quality: 1 },
+			html2canvas: { scale: 2 },
+			jsPDF: {format: 'a4'}
+		};
+		html2pdf().from(invoice).set(opt).save();
+	}
+	makeCode();
+</script>

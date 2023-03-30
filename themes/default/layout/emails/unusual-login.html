@@ -1,0 +1,14 @@
+<?php 
+$data = $db->where('name','unusual_login')->getOne(T_HTML_EMAILS);
+$html = $data->value;
+$replaces = array('username' => $music->username,
+                 'code' => $music->code,
+                 'date' => $music->date,
+                 'email' => $music->email,
+                 'countryCode' => $music->countryCode,
+                 'ip_address' => $music->ip_address,
+                 'city' => $music->city,
+                 'site_name' => $music->config->name);
+$html = ReplaceText($html,$replaces);
+echo $html;
+ ?>

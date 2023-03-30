@@ -1,0 +1,26 @@
+<div class="ma_page_content" id="container_blog">
+    <div class="ma_pc_inner">
+        <div class="page_padding">
+			<div class="ma_tabs store_tabs">
+				<ul class="list-unstyled mb-0">
+					<?php if ($music->user->artist != 0) { ?>
+						<li>
+							<a href="{{LINK create-product}}" data-load="create-product"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M17,13H13V17H11V13H7V11H11V7H13V11H17M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" /></svg> {{LANG Create Product}}</a>
+						</li>
+					<?php } ?>
+					<li class="active">
+						<a href="{{LINK manage_products}}" data-load="manage_products"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M17,18C15.89,18 15,18.89 15,20A2,2 0 0,0 17,22A2,2 0 0,0 19,20C19,18.89 18.1,18 17,18M1,2V4H3L6.6,11.59L5.24,14.04C5.09,14.32 5,14.65 5,15A2,2 0 0,0 7,17H19V15H7.42A0.25,0.25 0 0,1 7.17,14.75C7.17,14.7 7.18,14.66 7.2,14.63L8.1,13H15.55C16.3,13 16.96,12.58 17.3,11.97L20.88,5.5C20.95,5.34 21,5.17 21,5A1,1 0 0,0 20,4H5.21L4.27,2M7,18C5.89,18 5,18.89 5,20A2,2 0 0,0 7,22A2,2 0 0,0 9,20C9,18.89 8.1,18 7,18Z" /></svg> {{LANG Manage Products}}</a>
+					</li>
+				</ul>
+			</div>
+            <div class="row" id="products_result">
+				{{HTML}}
+            </div>
+            <?php if (!empty($music->products) && count($music->products) == 10) { ?>
+				<div class="text-center see_all">
+					<a href="javascript:void(0); loadMore('manage_products', '');" id="load-more-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M17,13H13V17H11V13H7V11H11V7H13V11H17M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"></path></svg> {{LANG Load More}}</a>
+				</div>
+            <?php } ?>
+        </div>
+    </div>
+</div>

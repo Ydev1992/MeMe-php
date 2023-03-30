@@ -1,0 +1,322 @@
+<div class="ma_page_content" id="container_blog">
+    <div class="ma_pc_inner">
+        <div class="page_padding">
+			<div class="row">
+				<div class="col-lg-8 offset-lg-2">
+					<div class="content upload_music no-flex ds_create_edit_ads_cont p-5">
+						<form class="user-event-form ds_create_edit_prods" method="POST">
+							<div class="ds_media_file full_size">
+								<span class="btn btn-file image_file" onclick="$('#event-media').trigger('click'); return false;">
+									<span id="event-media-holder"><img src="{{CONFIG theme_url}}/img/events/create.png"></span>
+									<button class="btn"><svg xmlns="http://www.w3.org/2000/svg" width="17.01" height="15.21" viewBox="0 0 17.01 15.21"> <path id="Path_215837" data-name="Path 215837" d="M-12213.892-2767.992a.431.431,0,0,1-.285-.116.432.432,0,0,1-.117-.285v-6.7h.8v6.3h15.406v-6.3h.8v6.7a.422.422,0,0,1-.113.285.42.42,0,0,1-.285.116Zm7.7-4.711v-6.305h-3.795l4.2-4.19,4.2,4.19h-3.795v6.305Zm.4-10.5v0Z" transform="translate(12214.294 2783.203)" fill="currentColor"/> </svg>&nbsp;&nbsp;{{LANG Event Cover}}</button>
+								</span>
+								<input type="file" class="media" id="event-media" name="image" accept="image/*">
+							</div>
+
+							<div class="user-event-alert"></div>
+							<div class="alert alert-success ads-settings-alert hidden"></div>
+							<div class="progress hidden">
+								<div class="upload-progress-bar bar progress-bar progress-bar-striped active"></div>
+								<div class="percent">0%</div>
+							</div>
+							
+							<h3 class="mat_form_title mb-4">{{LANG Event Name}}</h3>
+							<div class="form-group mat_input float">
+								<input type="text" id="name" name="name" class="form-control" placeholder=" ">
+								<label class="col-md-3 col-form-label" for="name">{{LANG event_title}}</label>
+							</div>
+							
+							<h3 class="mat_form_title mt-5 mb-4">{{LANG event_details}}</h3>
+							<div class="form-group mat_input float">
+								<select name="location" id="location" class="form-control" onchange="ShowLocation(this)">
+									<option value="online">{{LANG Online}}</option>
+									<option value="real">{{LANG Real Location}}</option>
+								</select>
+								<label class="col-md-3 col-form-label" for="location">{{LANG Event location}}</label>
+							</div>
+
+							<div class="form-group mat_input float online_url">
+								<input type="text" id="online_url" name="online_url" class="form-control" placeholder=" " required>
+								<label class="col-md-3 col-form-label" for="online_url">{{LANG URL}}</label>
+							</div>
+
+							<div class="form-group mat_input float real_address" style="display: none;">
+								<textarea name="real_address" id="real_address" rows="3" class="form-control" placeholder=" "></textarea>
+								<label class="col-md-3 col-form-label" for="real_address">{{LANG Address}}</label>
+							</div>
+
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group mat_input float">
+										<input type="text" id="start_date" class="start_date form-control" name="start_date" placeholder=" ">
+										<label class="col-md-3 col-form-label" for="start_date">{{LANG Event Start Date}}</label>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group mat_input float">
+										<input type="text" id="start_time" class="time form-control" name="start_time" placeholder=" ">
+										<label class="col-md-3 col-form-label" for="start_time">{{LANG Event Start Time}}</label>
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="form-group mat_input float">
+										<input type="text" id="end_date" class="end_date form-control" name="end_date" placeholder=" ">
+										<label class="col-md-3 col-form-label" for="end_date">{{LANG Event End Date}}</label>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group mat_input float">
+										<input type="text" id="end_time" class="time form-control" name="end_time" placeholder=" ">
+										<label class="col-md-3 col-form-label" for="end_time">{{LANG Event End Time}}</label>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group mat_input float">
+								<select name="timezone" id="timezone" class="form-control">
+									<?php foreach ($music->timezones as $key => $value) { ?>
+										<option value="<?php echo($key) ?>"><?php echo($value) ?></option>
+									<?php } ?>
+								</select>
+								<label class="col-md-3 col-form-label" for="location">{{LANG Timezone}}</label>
+							</div>
+
+							<div class="form-group mat_input float">
+								<select name="sell_tickets" id="sell_tickets" class="form-control" onchange="ShowTickets(this)">
+									<option value="no">{{LANG No}}</option>
+									<option value="yes">{{LANG Yes}}</option>
+								</select>
+								<label class="col-md-3 col-form-label" for="location">{{LANG Sell Tickets}}</label>
+							</div>
+
+							<div class="sell_tickets"  style="display: none;">
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group mat_input float">
+											<input type="number" id="available_tickets" name="available_tickets" class="form-control" placeholder=" ">
+											<label class="col-md-3 col-form-label" for="available_tickets">{{LANG total_ticks_avail}}</label>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group mat_input float">
+											<input type="number" id="ticket_price" name="ticket_price" class="form-control" placeholder=" ">
+											<label class="col-md-3 col-form-label" for="ticket_price">{{LANG Ticket Price}}</label>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<h3 class="mat_form_title mt-5 mb-4">{{LANG Event Description}}</h3>
+							<div class="form-group mat_input float">
+								<textarea name="desc" id="desc" rows="5" class="form-control" placeholder=" "></textarea>
+								<label class="col-md-3 col-form-label" for="desc">{{LANG type_event_desc}}</label>
+							</div>
+							
+							<h3 class="mat_form_title mt-5 mb-4">{{LANG Event Video/Trailer}}</h3>
+							<div class="form-group mat_input">
+								<div class="ds_media_file mt-0 mat_file_upload">
+									<div class="btn btn-file image_file" onclick="$('#event-video').trigger('click'); return false;">
+										<span id="event-video-holder"><svg xmlns="http://www.w3.org/2000/svg" width="62.982" height="57.205" viewBox="0 0 62.982 57.205"> <path id="Path_6622" data-name="Path 6622" d="M3782.481,7254.287l12.127,12.129-4.032,4.033-5.234-5.207V7281.2h-5.721v-15.988l-5.234,5.234-4.032-4.033Zm0-30.289a19.963,19.963,0,0,1,19.878,17.705,15.79,15.79,0,0,1,11.555,16.561,15.735,15.735,0,0,1-14.271,14.3V7266.9a17.168,17.168,0,0,0-34.322-.658v6.32a15.742,15.742,0,0,1-2.717-30.861A19.963,19.963,0,0,1,3782.481,7224Z" transform="translate(-3750.99 -7223.998)" fill="#d8d8d8"></path> </svg> {{LANG select_a_video}}</span>
+									</div>
+									<input type="file" class="video" id="event-video" name="video" accept="video/*">
+									<input type="text" readonly id="video_name" style="display: none;">
+								</div>
+							</div>
+
+							<div class="last-sett-btn modal-footer mat_sett_btn">
+								<button type="submit" class="btn btn-primary btn-mat" id="submit-btn">{{LANG Publish}}</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+        </div>
+    </div>
+</div>
+<script>
+function ShowTickets(self) {
+  if ($(self).val() == 'no') {
+    $('.sell_tickets').slideUp();
+    $('#available_tickets').removeAttr('required');
+    $('#ticket_price').removeAttr('required');
+  }
+  else{
+    $('.sell_tickets').slideDown();
+    $('#available_tickets').attr('required','true');
+    $('#ticket_price').attr('required','true');
+  }
+}
+function ShowLocation(self) {
+  if ($(self).val() == 'online') {
+    $('.online_url').slideDown();
+    $('#online_url').attr('required','true');
+    $('.real_address').slideUp();
+    $('#real_address').removeAttr('required');
+  }
+  else{
+    $('.online_url').slideUp();
+    $('.real_address').slideDown();
+    $('#real_address').attr('required','true');
+    $('#online_url').removeAttr('required');
+  }
+}
+
+
+
+$(document).ready(function() {
+	$(".start_date").flatpickr({
+		dateFormat: "Y-m-d",
+		altInput: true,
+		altFormat: "F j, Y",
+		minDate: "today",
+	});
+	$(".end_date").flatpickr({
+		dateFormat: "Y-m-d",
+		altInput: true,
+		altFormat: "F j, Y",
+		minDate: new Date().fp_incr(1),
+	});
+	
+	$(".time").flatpickr({
+		enableTime: true,
+		noCalendar: true,
+		dateFormat: "H:i",
+	});
+
+	$("#event-media").on('change', function() {
+	//Get count of selected files
+	$("#event-media-holder").html("<img src='" + window.URL.createObjectURL(this.files[0]) + "' alt='Picture'>");
+	});
+  $("#event-video").on('change', function() {
+        var file_size = $("#event-video").prop('files')[0].size;
+        if (file_size > <?php echo $music->config->user_max_upload?>) {
+          showResponseAlert('.user-event-alert','danger',"{{LANG file_is_large}}",2000);
+          return false;
+        } else {
+          var filename = $('#event-video').val().split('\\').pop();
+          $('#video_name').slideDown();
+          $('#video_name').val(filename);
+        }
+  });
+});
+
+    var _Delay = (function(){
+        var timer = 0;
+        return function(callback, ms){
+            clearTimeout (timer);
+            timer = setTimeout(callback, ms);
+        };
+    })();
+
+    function scrollToTop() {
+        verticalOffset = typeof (verticalOffset) != 'undefined' ? verticalOffset : 0;
+        element = $('html');
+        offset = element.offset();
+        offsetTop = offset.top;
+        $('html, body').animate({
+            scrollTop: offsetTop
+        }, 300, 'linear');
+    }
+    function HasExtension(id, exts) {
+        var fileName = $(id).val();
+        return (new RegExp('(' + exts.join('|').replace(/\./g, '\\.') + ')$')).test(fileName);
+    }
+  var bar         = $('.bar');
+  var percent     = $('.percent');
+
+	jQuery(document).ready(function($) {
+	  $('.selectpicker').selectpicker({});
+
+    $("#ad-placement").change(function(event) {
+      if ($(this).val() == 2) {
+        $("#cost").find("option[value='2']").removeAttr('selected').attr('disabled', 'disabled');
+      }
+
+      else{
+        $("#cost").find("option").removeAttr('disabled');
+      }
+    });
+
+    $('.user-event-form').submit(function(event) {
+        var mediafile = HasExtension('#event-media', ['.jpg', '.gif', '.png', '.jpeg', '.webp']);
+        if (!mediafile){
+          scrollToTop();
+          $('#event-media').val('');
+          $(".user-event-alert").html("<div class='alert alert-danger'><i class='fa fa-info-circle'></i> {{LANG Media file is invalid. Please select a valid image}}</div>");
+          return false;
+        }
+    });
+
+    $('.user-event-form').ajaxForm({
+      url: '{{CONFIG ajax_url}}/event/create?hash_id=' + getHashID(),
+      dataType:"json",
+      beforeSend: function() {
+
+        var mediafile = $("#event-media").prop('files');
+        if( $("#event-media").val() ) {
+            if (mediafile[0].size > "{{CONFIG max_upload}}") {
+                swal({
+                    title: '{{LANG Error!}}',
+                    text: "{{LANG File is too big, Max upload size is}} <?php echo size_format($music->config->max_upload); ?>",
+                    type: 'error',
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'OK',
+                    buttonsStyling: true,
+                    confirmButtonClass: 'btn btn-success',
+                }).then(function () {
+                        swal.close();
+                        $("#event-media").val('');
+                    },
+                    function () {
+                        swal.close();
+                        $("#event-media").val('');
+                    });
+                return false;
+            }
+        }
+        if ($("#event-media").val()) {
+          $(".user-event-alert").html($('.progress').clone(true).addClass('progress-clone').removeClass('hidden'));
+          bar     = $('.progress-clone').find('.bar');
+          percent = $('.progress-clone').find('.percent');
+        }
+
+        $('#submit-btn').attr('disabled', true).text("{{LANG Please wait..}}");
+
+      },
+      uploadProgress: function(event, position, total, percentComplete) {
+          if(percentComplete > 50) {
+            percent.addClass('white');
+          }
+          var percentVal = percentComplete + '%';
+          bar.width(percentVal);
+          percent.html(percentVal);
+
+          if (percentComplete == 100) {
+            $(".user-event-alert").empty();
+          }
+      },
+      success: function(data) {
+        scrollToTop();
+        $('#submit-btn').removeAttr('disabled').text('{{LANG Publish}}');
+        if (data.status == 200){
+          $(".user-event-alert").html('<div class="alert alert-success"><i class="fa fa-check"></i> '+
+            data.message
+            +'</div>');
+            _Delay(function(){
+            /*window.location.href = data.url;*/
+            goToAjaxLink("feed");
+          },2000);
+
+        }
+        else {
+          $('#submit-btn').removeAttr('disabled').text('{{LANG Publish}}');
+          $(".user-event-alert").html('<div class="alert alert-danger"><i class="fa fa-info-circle"></i> '+
+            data.message
+            +'</div>');
+        }
+      }
+    });
+	});
+</script>

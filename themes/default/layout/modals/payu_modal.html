@@ -1,0 +1,100 @@
+<div class="modal fade" id="payu_modal" role="dialog" data-keyboard="false" >
+        <div class="modal-dialog mat_box">
+            <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{LANG Payu}}</h5>
+      </div>
+                <form class="form form-horizontal" method="post" id="payu_form" action="#">
+                    <div class="modal-body payu_modal">
+                        <div id="payu_alert"></div>
+                        <div class="row">
+                            <div class="form-group col-12">
+                                <input id="payu_card_number" class="form-control" type="text" autocomplete="off" placeholder="{{LANG Card Number}}">
+                            </div>
+                            <div class="form-group col-4">
+                                <select id="payu_card_month" name="card_month" class="form-control" type="text" autocomplete="off" placeholder="{{LANG Month}} (01)">
+                                    <option value="01">01</option>
+                                    <option value="02">02</option>
+                                    <option value="03">03</option>
+                                    <option value="04">04</option>
+                                    <option value="05">05</option>
+                                    <option value="06">06</option>
+                                    <option value="07">07</option>
+                                    <option value="08">08</option>
+                                    <option value="09">09</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-4 no-padding-both">
+                                <select id="payu_card_year" name="card_year" class="form-control" type="text" autocomplete="off" placeholder="{{LANG Year}} (2021)">
+                                    <?php for ($i=date('Y'); $i <= date('Y')+15; $i++) {  ?>
+                                        <option value="<?php echo($i) ?>"><?php echo($i) ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                            <div class="form-group col-4">
+                                <input id="payu_card_cvc" name="card_cvc" type="text" class="form-control" autocomplete="off" placeholder="CVC" maxlength="3" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                    <input id="payu_type" type="hidden">
+                    <div class="modal-footer">
+                        <div class="ball-pulse"><div></div><div></div><div></div></div>
+          <button class="btn btn-default" data-dismiss="modal">{{LANG Close}}</button>
+                        <button type="button" class="btn btn-primary btn-mat" id="payu_btn" onclick="PayuRequest($(this))">{{LANG Pay}}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+      function payu_pay(self,type) {
+        $("#payu_alert").html('');
+        $('#payu_type').val(type)
+        $('#buy_album_modal').modal('hide');
+        $('#payu_modal').modal({
+              show: true
+          });
+
+
+
+      }
+      function PayuRequest(self) {
+        self.attr('disabled','true');
+        $('#buy_album_modal').modal('hide');
+        type    = $('#payu_type').val();
+        id    = $('#buy_album_modal').attr('data-id');
+        amount = $('#buy_album_modal').attr('data_price');
+        if (type == 'buy_song') {
+          id    = $('#payment_modal').attr('data-id');
+        }
+        if (type== 'wallet') {
+          amount = $('#wallet_payment_modal').attr('data_price');
+        }
+        card_number = $('#payu_card_number').val();
+        card_month = $('#payu_card_month').val();
+        card_year = $('#payu_card_year').val();
+        card_cvc = $('#payu_card_cvc').val();
+        $.post('{{LINK endpoints/payu/pay}}', {
+                type: type,
+                id: id,
+                amount: amount,
+                card_number: card_number,
+                card_month: card_month,
+                card_year: card_year,
+                card_cvc: card_cvc
+            }, function(data) {
+          if (data.status == 200) {
+            if(data.url){
+                              location.href = data.url;
+                          }
+          } else {
+            self.attr('disabled', false).html("Payu App not set yet.");
+          }
+          self.removeAttr('disabled');
+        });
+      }
+    </script>

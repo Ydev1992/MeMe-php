@@ -1,0 +1,93 @@
+<div class="ma_page_content">
+    <div class="ma_pc_inner">
+        <div class="page_padding">
+            <!-- Settings -->
+            <div class="sett_page">
+				<div class="row">
+						<div class="col-lg-4">
+							<?php echo loadPage("settings/sidebar"); ?>
+						</div>
+						<div class="col-lg-8">
+							<div class="st_content">
+								<h2 class="home_widget_title home_big_title mt-4 mb-5">{{LANG Notification Settings}}</h2>
+								
+								<div class="st_form ds_not_sett_togs">
+									<p>{{LANG Notify me when}}</p>
+									<div onclick="ToggleNotificationStatus('email_on_follow_user');">
+										<label>
+											<input type="checkbox" data-toggle="toggle" data-onstyle="main" data-offstyle="warning" data-on='<svg xmlns="http://www.w3.org/2000/svg" width="36" height="20" viewBox="0 0 36 20"> <g id="Group_9812" data-name="Group 9812" transform="translate(-688 -284.5)"> <path id="Path_4833" data-name="Path 4833" d="M9226,1238a10,10,0,0,1,10-10h16a10,10,0,0,1,0,20h-16A10,10,0,0,1,9226,1238Z" transform="translate(-8538 -943.5)" fill="var(--main-color)"/> <rect id="Rectangle_1904" data-name="Rectangle 1904" width="16" height="16" rx="8" transform="translate(706 286.5)" fill="#fff"/> </g> </svg>' data-off='<svg xmlns="http://www.w3.org/2000/svg" width="36" height="20" viewBox="0 0 36 20"> <g id="Group_9813" data-name="Group 9813" transform="translate(-782 -395.5)"> <path id="Path_4832" data-name="Path 4832" d="M9166,1238a10,10,0,0,1,10-10h16a10,10,0,0,1,0,20h-16A10,10,0,0,1,9166,1238Z" transform="translate(-8384 -832.5)" fill="#afb1b7"/> <rect id="Rectangle_1903" data-name="Rectangle 1903" width="16" height="16" rx="8" transform="translate(784 397.5)" fill="#fff"/> </g> </svg>' <?php if($music->user->email_on_follow_user == 1) { echo 'checked=checked';}?> >
+										</label>
+										<label>{{LANG Someone followed me}}</label>
+									</div>
+									<div onclick="ToggleNotificationStatus('email_on_liked_track');">
+										<label>
+											<input type="checkbox" data-toggle="toggle" data-onstyle="main" data-offstyle="warning" data-on='<svg xmlns="http://www.w3.org/2000/svg" width="36" height="20" viewBox="0 0 36 20"> <g id="Group_9812" data-name="Group 9812" transform="translate(-688 -284.5)"> <path id="Path_4833" data-name="Path 4833" d="M9226,1238a10,10,0,0,1,10-10h16a10,10,0,0,1,0,20h-16A10,10,0,0,1,9226,1238Z" transform="translate(-8538 -943.5)" fill="var(--main-color)"/> <rect id="Rectangle_1904" data-name="Rectangle 1904" width="16" height="16" rx="8" transform="translate(706 286.5)" fill="#fff"/> </g> </svg>' data-off='<svg xmlns="http://www.w3.org/2000/svg" width="36" height="20" viewBox="0 0 36 20"> <g id="Group_9813" data-name="Group 9813" transform="translate(-782 -395.5)"> <path id="Path_4832" data-name="Path 4832" d="M9166,1238a10,10,0,0,1,10-10h16a10,10,0,0,1,0,20h-16A10,10,0,0,1,9166,1238Z" transform="translate(-8384 -832.5)" fill="#afb1b7"/> <rect id="Rectangle_1903" data-name="Rectangle 1903" width="16" height="16" rx="8" transform="translate(784 397.5)" fill="#fff"/> </g> </svg>'  <?php if($music->user->email_on_liked_track == 1) { echo 'checked=checked';}?> >
+										</label>
+										<label>{{LANG Someone liked/disliked one of my tracks}}</label>
+									</div>
+									<div onclick="ToggleNotificationStatus('email_on_reviewed_track');">
+										<label>
+											<input type="checkbox" data-toggle="toggle" data-onstyle="main" data-offstyle="warning" data-on='<svg xmlns="http://www.w3.org/2000/svg" width="36" height="20" viewBox="0 0 36 20"> <g id="Group_9812" data-name="Group 9812" transform="translate(-688 -284.5)"> <path id="Path_4833" data-name="Path 4833" d="M9226,1238a10,10,0,0,1,10-10h16a10,10,0,0,1,0,20h-16A10,10,0,0,1,9226,1238Z" transform="translate(-8538 -943.5)" fill="var(--main-color)"/> <rect id="Rectangle_1904" data-name="Rectangle 1904" width="16" height="16" rx="8" transform="translate(706 286.5)" fill="#fff"/> </g> </svg>' data-off='<svg xmlns="http://www.w3.org/2000/svg" width="36" height="20" viewBox="0 0 36 20"> <g id="Group_9813" data-name="Group 9813" transform="translate(-782 -395.5)"> <path id="Path_4832" data-name="Path 4832" d="M9166,1238a10,10,0,0,1,10-10h16a10,10,0,0,1,0,20h-16A10,10,0,0,1,9166,1238Z" transform="translate(-8384 -832.5)" fill="#afb1b7"/> <rect id="Rectangle_1903" data-name="Rectangle 1903" width="16" height="16" rx="8" transform="translate(784 397.5)" fill="#fff"/> </g> </svg>'  <?php if($music->user->email_on_reviewed_track == 1) { echo 'checked=checked';}?> >
+										</label>
+										<label>{{LANG Someone reviewed one of my tracks}}</label>
+									</div>
+									<div onclick="ToggleNotificationStatus('email_on_liked_comment');">
+										<label>
+											<input type="checkbox" data-toggle="toggle" data-onstyle="main" data-offstyle="warning" data-on='<svg xmlns="http://www.w3.org/2000/svg" width="36" height="20" viewBox="0 0 36 20"> <g id="Group_9812" data-name="Group 9812" transform="translate(-688 -284.5)"> <path id="Path_4833" data-name="Path 4833" d="M9226,1238a10,10,0,0,1,10-10h16a10,10,0,0,1,0,20h-16A10,10,0,0,1,9226,1238Z" transform="translate(-8538 -943.5)" fill="var(--main-color)"/> <rect id="Rectangle_1904" data-name="Rectangle 1904" width="16" height="16" rx="8" transform="translate(706 286.5)" fill="#fff"/> </g> </svg>' data-off='<svg xmlns="http://www.w3.org/2000/svg" width="36" height="20" viewBox="0 0 36 20"> <g id="Group_9813" data-name="Group 9813" transform="translate(-782 -395.5)"> <path id="Path_4832" data-name="Path 4832" d="M9166,1238a10,10,0,0,1,10-10h16a10,10,0,0,1,0,20h-16A10,10,0,0,1,9166,1238Z" transform="translate(-8384 -832.5)" fill="#afb1b7"/> <rect id="Rectangle_1903" data-name="Rectangle 1903" width="16" height="16" rx="8" transform="translate(784 397.5)" fill="#fff"/> </g> </svg>' <?php if($music->user->email_on_liked_comment == 1) { echo 'checked=checked';}?> >
+										</label>
+										<label>{{LANG Someone liked one of my comments}}</label>
+									</div>
+									<div onclick="ToggleNotificationStatus('email_on_artist_status_changed');" style="display: none;" >
+										<label>
+											<input type="checkbox" data-toggle="toggle" data-onstyle="main" data-offstyle="warning" data-on='<svg xmlns="http://www.w3.org/2000/svg" width="36" height="20" viewBox="0 0 36 20"> <g id="Group_9812" data-name="Group 9812" transform="translate(-688 -284.5)"> <path id="Path_4833" data-name="Path 4833" d="M9226,1238a10,10,0,0,1,10-10h16a10,10,0,0,1,0,20h-16A10,10,0,0,1,9226,1238Z" transform="translate(-8538 -943.5)" fill="var(--main-color)"/> <rect id="Rectangle_1904" data-name="Rectangle 1904" width="16" height="16" rx="8" transform="translate(706 286.5)" fill="#fff"/> </g> </svg>' data-off='<svg xmlns="http://www.w3.org/2000/svg" width="36" height="20" viewBox="0 0 36 20"> <g id="Group_9813" data-name="Group 9813" transform="translate(-782 -395.5)"> <path id="Path_4832" data-name="Path 4832" d="M9166,1238a10,10,0,0,1,10-10h16a10,10,0,0,1,0,20h-16A10,10,0,0,1,9166,1238Z" transform="translate(-8384 -832.5)" fill="#afb1b7"/> <rect id="Rectangle_1903" data-name="Rectangle 1903" width="16" height="16" rx="8" transform="translate(784 397.5)" fill="#fff"/> </g> </svg>' <?php if($music->user->email_on_artist_status_changed == 1) { echo 'checked=checked';}?> >
+										</label>
+										<label>{{LANG Approve/Disapprove artist request}}</label>
+									</div>
+									<div onclick="ToggleNotificationStatus('email_on_receipt_status_changed');" style="display: none;" >
+										<label>
+											<input type="checkbox" data-toggle="toggle" data-onstyle="main" data-offstyle="warning" data-on='<svg xmlns="http://www.w3.org/2000/svg" width="36" height="20" viewBox="0 0 36 20"> <g id="Group_9812" data-name="Group 9812" transform="translate(-688 -284.5)"> <path id="Path_4833" data-name="Path 4833" d="M9226,1238a10,10,0,0,1,10-10h16a10,10,0,0,1,0,20h-16A10,10,0,0,1,9226,1238Z" transform="translate(-8538 -943.5)" fill="var(--main-color)"/> <rect id="Rectangle_1904" data-name="Rectangle 1904" width="16" height="16" rx="8" transform="translate(706 286.5)" fill="#fff"/> </g> </svg>' data-off='<svg xmlns="http://www.w3.org/2000/svg" width="36" height="20" viewBox="0 0 36 20"> <g id="Group_9813" data-name="Group 9813" transform="translate(-782 -395.5)"> <path id="Path_4832" data-name="Path 4832" d="M9166,1238a10,10,0,0,1,10-10h16a10,10,0,0,1,0,20h-16A10,10,0,0,1,9166,1238Z" transform="translate(-8384 -832.5)" fill="#afb1b7"/> <rect id="Rectangle_1903" data-name="Rectangle 1903" width="16" height="16" rx="8" transform="translate(784 397.5)" fill="#fff"/> </g> </svg>' <?php if($music->user->email_on_receipt_status_changed == 1) { echo 'checked=checked';}?> >
+										</label>
+										<label>{{LANG Approve/Disapprove bank payment request}}</label>
+									</div>
+									<div onclick="ToggleNotificationStatus('email_on_new_track');">
+										<label>
+											<input type="checkbox" data-toggle="toggle" data-onstyle="main" data-offstyle="warning" data-on='<svg xmlns="http://www.w3.org/2000/svg" width="36" height="20" viewBox="0 0 36 20"> <g id="Group_9812" data-name="Group 9812" transform="translate(-688 -284.5)"> <path id="Path_4833" data-name="Path 4833" d="M9226,1238a10,10,0,0,1,10-10h16a10,10,0,0,1,0,20h-16A10,10,0,0,1,9226,1238Z" transform="translate(-8538 -943.5)" fill="var(--main-color)"/> <rect id="Rectangle_1904" data-name="Rectangle 1904" width="16" height="16" rx="8" transform="translate(706 286.5)" fill="#fff"/> </g> </svg>' data-off='<svg xmlns="http://www.w3.org/2000/svg" width="36" height="20" viewBox="0 0 36 20"> <g id="Group_9813" data-name="Group 9813" transform="translate(-782 -395.5)"> <path id="Path_4832" data-name="Path 4832" d="M9166,1238a10,10,0,0,1,10-10h16a10,10,0,0,1,0,20h-16A10,10,0,0,1,9166,1238Z" transform="translate(-8384 -832.5)" fill="#afb1b7"/> <rect id="Rectangle_1903" data-name="Rectangle 1903" width="16" height="16" rx="8" transform="translate(784 397.5)" fill="#fff"/> </g> </svg>' <?php if($music->user->email_on_new_track == 1) { echo 'checked=checked';}?> >
+										</label>
+										<label>{{LANG One of my following users upload new track}}</label>
+									</div>
+									<div onclick="ToggleNotificationStatus('email_on_comment_mention');">
+										<label>
+											<input type="checkbox" data-toggle="toggle" data-onstyle="main" data-offstyle="warning" data-on='<svg xmlns="http://www.w3.org/2000/svg" width="36" height="20" viewBox="0 0 36 20"> <g id="Group_9812" data-name="Group 9812" transform="translate(-688 -284.5)"> <path id="Path_4833" data-name="Path 4833" d="M9226,1238a10,10,0,0,1,10-10h16a10,10,0,0,1,0,20h-16A10,10,0,0,1,9226,1238Z" transform="translate(-8538 -943.5)" fill="var(--main-color)"/> <rect id="Rectangle_1904" data-name="Rectangle 1904" width="16" height="16" rx="8" transform="translate(706 286.5)" fill="#fff"/> </g> </svg>' data-off='<svg xmlns="http://www.w3.org/2000/svg" width="36" height="20" viewBox="0 0 36 20"> <g id="Group_9813" data-name="Group 9813" transform="translate(-782 -395.5)"> <path id="Path_4832" data-name="Path 4832" d="M9166,1238a10,10,0,0,1,10-10h16a10,10,0,0,1,0,20h-16A10,10,0,0,1,9166,1238Z" transform="translate(-8384 -832.5)" fill="#afb1b7"/> <rect id="Rectangle_1903" data-name="Rectangle 1903" width="16" height="16" rx="8" transform="translate(784 397.5)" fill="#fff"/> </g> </svg>' <?php if($music->user->email_on_comment_mention == 1) { echo 'checked=checked';}?> >
+										</label>
+										<label>{{LANG One of my follower mention me in comment}}</label>
+									</div>
+									<div onclick="ToggleNotificationStatus('email_on_comment_replay_mention');">
+										<label>
+											<input type="checkbox" data-toggle="toggle" data-onstyle="main" data-offstyle="warning" data-on='<svg xmlns="http://www.w3.org/2000/svg" width="36" height="20" viewBox="0 0 36 20"> <g id="Group_9812" data-name="Group 9812" transform="translate(-688 -284.5)"> <path id="Path_4833" data-name="Path 4833" d="M9226,1238a10,10,0,0,1,10-10h16a10,10,0,0,1,0,20h-16A10,10,0,0,1,9226,1238Z" transform="translate(-8538 -943.5)" fill="var(--main-color)"/> <rect id="Rectangle_1904" data-name="Rectangle 1904" width="16" height="16" rx="8" transform="translate(706 286.5)" fill="#fff"/> </g> </svg>' data-off='<svg xmlns="http://www.w3.org/2000/svg" width="36" height="20" viewBox="0 0 36 20"> <g id="Group_9813" data-name="Group 9813" transform="translate(-782 -395.5)"> <path id="Path_4832" data-name="Path 4832" d="M9166,1238a10,10,0,0,1,10-10h16a10,10,0,0,1,0,20h-16A10,10,0,0,1,9166,1238Z" transform="translate(-8384 -832.5)" fill="#afb1b7"/> <rect id="Rectangle_1903" data-name="Rectangle 1903" width="16" height="16" rx="8" transform="translate(784 397.5)" fill="#fff"/> </g> </svg>' <?php if($music->user->email_on_comment_replay_mention == 1) { echo 'checked=checked';}?> >
+										</label>
+										<label>{{LANG One of my follower mention me in comment replay}}</label>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+            </div>
+            <!-- End Settings -->
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready( function () {
+        $('.st_form').find('[type="checkbox"]').each(function(index, el) {
+            $(el).bootstrapToggle();
+        });
+    });
+
+    function ToggleNotificationStatus(id){
+        if (!id) {
+            return false;
+        }
+        $.post('{{CONFIG ajax_url}}/user/update_notification_setting', {id:id}, function(data, textStatus, xhr) {/* pass */});
+    }
+</script>

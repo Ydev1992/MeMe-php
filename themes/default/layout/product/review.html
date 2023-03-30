@@ -1,0 +1,39 @@
+<div class="review_list review_{{id}}" id="{{id}}">
+	<div class="row">
+		<div class="col-md-3">
+			<div class="review_list_head">
+				<div class="valign-wrapper review-meta-desc">
+					<div class="reviewMeta--author-avatar">
+						<img src="{{avatar}}" alt="">
+					</div>
+					<div class="reviewMeta--author-text">
+						<a class="linkk" href="{{user_url}}" data-load="{{username}}">{{name}}</a>
+						<div><time>{{time}}</time></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-9">
+			<div class="prod_review-meta">
+				<div class="Review-rating {{review_class}}">{{review_stars}}</div>
+			</div>
+			<p class="prod_review-desc">{{desc}}</p>
+			<?php if (!empty($music->review->images)) { ?>
+			<div class="create_prod_images">
+				<div class="productimage-holder">
+					<div class="lightbox-gallery">
+						<div class="px-1">
+							<div class="row photos">
+								<?php  
+									foreach ($music->review->images as $key => $value) { ?>
+									<div class="col-sm-6 col-md-4 col-lg-3 item"><a href="<?php echo($value['image']) ?>" data-lightbox="photos"><img class="img-fluid rounded-lg" src="<?php echo($value['image']) ?>"></a></div>
+								<?php } ?>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<?php } ?>
+		</div>
+	</div>
+</div>

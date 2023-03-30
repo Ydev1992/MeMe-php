@@ -1,0 +1,19 @@
+<tr class="setting-banlist" id="currency_<?php echo $music->currency_value?>" data_selected="<?php echo $music->currency_value?>">
+   <td><?php echo $music->currency_key?></td>
+   <td>
+      <div>
+         <?php echo $music->currency_value;?>
+      </div>
+   </td>
+   <td>
+     <?php echo $music->config->currency_symbol_array[$music->currency_value] ?>
+   </td>
+   <td>
+     <?php echo ($music->currency_value == $music->config->currency) ? '<span class="label label-success">Default</span>': '';?>
+   </td>
+   <td>
+      <a href="javascript:void(0)" onclick="make_default('<?php echo $music->currency_value; ?>')" class="btn bg-success waves-effect">Set Default</a>
+      <a href="javascript:void(0)" onclick="open_edit_currency('<?php echo $music->currency_value; ?>','<?php echo($music->config->currency_symbol_array[$music->currency_value]) ?>','<?php echo $music->currency_key?>')" class="btn bg-info waves-effect">Edit</a>
+      <a href="javascript:void(0)" onclick="delete_currency('<?php echo $music->currency_value; ?>','hide')" class="btn bg-danger waves-effect">DELETE</a>
+   </td>
+</tr>

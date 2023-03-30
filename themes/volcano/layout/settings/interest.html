@@ -1,0 +1,115 @@
+<div class="ma_page_content">
+    <div class="ma_pc_inner">
+        <div class="page_padding">
+            <!-- Settings -->
+            <div class="sett_page">
+				<div class="row">
+						<div class="col-lg-4">
+							<?php echo loadPage("settings/sidebar"); ?>
+						</div>
+						<div class="col-lg-8">
+							<div class="st_content">
+								<h2 class="home_widget_title home_big_title mt-4 mb-5">{{LANG Interest}} {{LANG Settings}}</h2>
+								
+								<div class="st_form">
+									<form method="post" action="" id="general-form">
+										<div class="dt_interest_sett">
+											<div class="row">
+												<div class="col-md-8">
+													<b>{{LANG Interest}} {{LANG Settings}}</b>
+													<h4>{{LANG Select your music preference}}</h4>
+												</div>
+												<div class="col-md-4">
+													<img src="data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' id='Layer_1' height='512' viewBox='0 0 24 24' width='512' data-name='Layer 1'%3e%3cg%3e%3cpath d='m19 21h-14a4 4 0 0 1 0-8h14a4 4 0 0 1 0 8zm-14-7a3 3 0 0 0 0 6h14a3 3 0 0 0 0-6z' style='&%2310; fill: %23<?php echo $music->config->second_color?>;&%2310;'/%3e%3cpath d='m19 19a2 2 0 1 1 2-2 2 2 0 0 1 -2 2zm0-3a1 1 0 1 0 1 1 1 1 0 0 0 -1-1z' style='&%2310; fill: %23<?php echo $music->config->main_color ?>;&%2310;'/%3e%3cpath d='m19 11h-14a4 4 0 0 1 0-8h14a4 4 0 0 1 0 8zm-14-7a3 3 0 0 0 0 6h14a3 3 0 0 0 0-6z' style='&%2310; fill: %23<?php echo $music->config->second_color?>;&%2310;'/%3e%3cpath d='m5 9a2 2 0 1 1 2-2 2 2 0 0 1 -2 2zm0-3a1 1 0 1 0 1 1 1 1 0 0 0 -1-1z' style='&%2310; fill: %23<?php echo $music->config->main_color ?>;&%2310;'/%3e%3c/g%3e%3c/svg%3e">
+												</div>
+											</div>
+										</div>
+										<div class="alert alert-warning alert-empty" id="output-interest-errors"></div>
+										<div class="alert alert-success alert-empty" id="output-interest-success"></div>
+										<div class="ma_interest">
+											<div class="ma_interest_innr">
+												<ul class="ma_interest_list">
+													<?php
+													foreach($music->categories as $key => $category){
+														$is_exist = $db->where('user_id', $music->user->id)->where('category_id', $key)->getOne(T_USER_INTEREST,'count(id) as cnt')->cnt;
+														if($is_exist == 0) {
+													?>
+														<li>
+															<input type="checkbox" class="interest-genre position-relative" id="cat_<?php echo $key;?>" value="<?php echo $key;?>">
+															<label for="cat_<?php echo $key;?>"><?php echo $category;?></label>
+														</li>
+													<?php }else{ ?>
+														<li>
+															<input type="checkbox" class="interest-genre position-relative" id="cat_<?php echo $key;?>" value="<?php echo $key;?>" checked="checked">
+															<label for="cat_<?php echo $key;?>"><?php echo $category;?></label>
+														</li>
+													<?php } ?>
+													<?php } ?>
+												</ul>
+											</div>
+										</div>
+										<div class="last-sett-btn modal-footer mat_sett_btn pb-3 mt-3">
+											<input type="hidden" id="user-id" name="user_id" value="{{USER id}}">
+											<button class="btn btn-primary btn-save_intrsts">{{LANG Save}}</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+
+                
+            </div>
+            <!-- End Settings -->
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $(document).on('click','.interest-genre',function(e){
+            //e.preventDefault();
+            // if( $(this).prop('checked') === true ){
+            //     $(this).prop('checked', false);
+            //     $(this).attr('checked', false);
+            // }else {
+            //     $(this).prop('checked', true);
+            //     $(this).attr('checked', true);
+            // }
+        });
+        $(document).on('click','.btn-save_intrsts',function(e){
+            e.preventDefault();
+            let genres = [];
+            let formData = new FormData();
+            $(".interest-genre:checked").each ( function() {
+                genres.push($(this).val());
+            });
+            if(genres.length > 0) {
+                formData.append('genres', genres);
+            }else{
+				$('#output-interest-success').empty();
+				$('#output-interest-errors').html('{{LANG You have to choose your favorites genres below}}');
+                return;
+            }
+            $('.btn-save_intrsts').html("{{LANG Please wait...}}");
+            $.ajax({
+                url: '{{CONFIG ajax_url}}/user/update-interest?hash_id=' + getHashID(),
+                type : 'POST',
+                data : formData,
+                contentType:false,
+                cache: false,
+                processData:false,
+                success : function(data) {
+					scrollToTop();
+                    if (data.status == 200) {
+                        $('.btn-save_intrsts').html("{{LANG Save}}");
+						$('#output-interest-errors').empty();
+						$('#output-interest-success').html('{{LANG Your selection saved successfully.}}');
+                        //ajaxRedirect('discover');
+                    }
+                }
+            });
+        });
+    });
+</script>

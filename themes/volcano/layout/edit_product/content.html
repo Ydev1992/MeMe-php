@@ -1,0 +1,229 @@
+<div class="ma_page_content" id="container_blog">
+    <div class="ma_pc_inner">
+        <div class="page_padding">
+			<div class="row">
+				<div class="col-lg-8 offset-lg-2">
+					<h2 class="home_widget_title home_big_title mt-0">
+						{{LANG Edit Product}}
+					</h2>
+					
+					<div class="content upload_music no-flex ds_create_edit_ads_cont p-5">
+						<form class="user-product-form ds_create_edit_prods" method="POST">
+							<div class="user-product-alert"></div>
+							<div class="alert alert-success ads-settings-alert hidden"></div>
+							<div class="progress hidden">
+								<div class="upload-progress-bar bar progress-bar progress-bar-striped active"></div>
+								<div class="percent">0%</div>
+							</div>
+							
+							<h3 class="mat_form_title mb-4">{{LANG product_details}}</h3>
+							<div class="form-group mat_input float">
+								<input type="text" id="title" name="title" class="form-control" placeholder=" " value="<?php echo($music->product->title) ?>">
+								<label class="col-md-3 col-form-label" for="title">{{LANG Title}}</label>
+							</div>
+							
+							<div class="form-group mat_input float">
+								<input name="tags" id="tags" type="text" placeholder=" " class="form-control" value="<?php echo($music->product->tags) ?>">
+								<label class="col-md-3 col-form-label" for="tags">{{LANG Tags}}</label>
+							</div>
+							
+							<div class="row">
+								<div class="col-lg-6">
+									<div class="form-group mat_input float">
+										<input type="number" id="price" name="price" class="form-control" placeholder=" " value="<?php echo($music->product->price) ?>">
+										<label class="col-md-3 col-form-label" for="price">{{LANG Price}}</label>
+									</div>
+								</div>
+								<div class="col-lg-6">
+									<div class="form-group mat_input float">
+										<input type="number" id="units" name="units" class="form-control" placeholder=" " value="<?php echo($music->product->units) ?>">
+										<label class="col-md-3 col-form-label" for="units">{{LANG Total Item Units}}</label>
+									</div>
+								</div>
+								<div class="col-lg-6">
+									<div class="form-group ">
+										<div class="dropdown mat_input float">
+											<input type="text" id="search_related" class="form-control dropdown-toggle" data-toggle="dropdown" onclick="SearchSong(this)" oninput="SearchSong(this)" autocomplete="off" placeholder=" " value="<?php echo($music->product->related_song->title) ?>">
+											<label class="col-md-3 col-form-label" for="search_related">{{LANG Related to song}}</label>
+											<input type="hidden" id="related" name="related" class="form-control" value="<?php echo($music->product->related_song->id) ?>">
+											<div class="dropdown-menu mat-dropdown w-100 product-related-song" id="SearchSong"></div>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-6">
+									<div class="form-group mat_input float">
+										<select name="category" id="category" class="form-select">
+											<?php foreach ($music->products_categories as $key => $value) { ?>
+												<option value="<?php echo($key) ?>" <?php echo($music->product->cat_id == $key ? 'selected' : '') ?> ><?php echo($value) ?></option>
+											<?php } ?>
+										</select>
+										<label class="col-md-3 col-form-label" for="category">{{LANG Category}}</label>
+									</div>
+								</div>
+							</div>
+							
+							<h3 class="mat_form_title mt-5 mb-4">{{LANG product_desc}}</h3>
+							<div class="form-group mat_input float">
+								<textarea name="desc" id="desc" rows="5" class="form-control" placeholder=" "><?php echo($music->product->desc) ?></textarea>
+								<label class="col-md-3 col-form-label" for="desc">{{LANG Description}}</label>
+							</div>
+							
+							<h3 class="mat_form_title mt-5 mb-4">{{LANG upload_prod_images}}</h3>
+							<div class="form-group mat_input">
+								<div class="ds_media_file mt-0 mat_file_upload">
+									<div class="btn btn-file image_file" onclick="$('#product-media').trigger('click'); return false;">
+										<span id="product-media-holder"><svg xmlns="http://www.w3.org/2000/svg" width="62.982" height="57.205" viewBox="0 0 62.982 57.205"> <path id="Path_6622" data-name="Path 6622" d="M3782.481,7254.287l12.127,12.129-4.032,4.033-5.234-5.207V7281.2h-5.721v-15.988l-5.234,5.234-4.032-4.033Zm0-30.289a19.963,19.963,0,0,1,19.878,17.705,15.79,15.79,0,0,1,11.555,16.561,15.735,15.735,0,0,1-14.271,14.3V7266.9a17.168,17.168,0,0,0-34.322-.658v6.32a15.742,15.742,0,0,1-2.717-30.861A19.963,19.963,0,0,1,3782.481,7224Z" transform="translate(-3750.99 -7223.998)" fill="#d8d8d8"/> </svg> {{LANG select_images_import}}</span>
+									</div>
+									<div id="productimage-holder">
+										<?php foreach ($music->product->images as $key => $value) { ?>
+											<img src="<?php echo($value['image']) ?>" alt='Picture' class='thumb-image'>
+										<?php } ?>
+									</div>
+									<input type="file" class="media" id="product-media" name="image[]" accept="image/*" multiple="multiple">
+								</div>
+							</div>
+							
+							<div class="last-sett-btn modal-footer mat_sett_btn">
+								<input type="hidden" name="id" value="<?php echo($music->product->id) ?>">
+								<button type="submit" class="btn btn-primary btn-mat" id="submit-btn">{{LANG Publish}}</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+        </div>
+    </div>
+</div>
+
+<script>
+$(function () {
+  $("#tags").tagit({
+    allowSpaces: true
+  });
+});
+function SearchSong(self) {
+  $('#SearchSong').html("");
+  $.post('{{CONFIG ajax_url}}/product/search?hash_id=' + getHashID(), {word: $(self).val()}, function(data, textStatus, xhr) {
+    if (data.status == 200) {
+      $('#SearchSong').html(data.html);
+    }
+  });
+}
+function AddRelated(self,id) {
+  $('#search_related').val($(self).find('a').html());
+  $('#related').val(id);
+  $('#SearchSong').html("");
+}
+$(document).ready(function() {
+  $("#product-media").on('change', function() {
+    $("#productimage-holder").html("");
+    if (this.files.length > 0) {
+      for (var i = 0; i < this.files.length; i++) {
+        console.log(i)
+        $("#productimage-holder").append("<img src='" + window.URL.createObjectURL(this.files[i]) + "' alt='Picture' class='thumb-image'>");
+      }
+    }
+  });
+});
+    var _Delay = (function(){
+        var timer = 0;
+        return function(callback, ms){
+            clearTimeout (timer);
+            timer = setTimeout(callback, ms);
+        };
+    })();
+
+    function scrollToTop() {
+        verticalOffset = typeof (verticalOffset) != 'undefined' ? verticalOffset : 0;
+        element = $('html');
+        offset = element.offset();
+        offsetTop = offset.top;
+        $('html, body').animate({
+            scrollTop: offsetTop
+        }, 300, 'linear');
+    }
+    function HasExtension(id, exts) {
+        var fileName = $(id).val();
+        return (new RegExp('(' + exts.join('|').replace(/\./g, '\\.') + ')$')).test(fileName);
+    }
+  var bar         = $('.bar');
+  var percent     = $('.percent');
+
+  jQuery(document).ready(function($) {
+    $('.user-product-form').ajaxForm({
+      url: '{{CONFIG ajax_url}}/product/edit?hash_id=' + getHashID(),
+      dataType:"json",
+      beforeSend: function() {
+
+        var mediafile = $("#product-media").prop('files');
+        if( $("#product-media").val() ) {
+            if (mediafile[0].size > "{{CONFIG max_upload}}") {
+                swal({
+                    title: '{{LANG Error!}}',
+                    text: "{{LANG File is too big, Max upload size is}} <?php echo size_format($music->config->max_upload); ?>",
+                    type: 'error',
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'OK',
+                    buttonsStyling: true,
+                    confirmButtonClass: 'btn btn-success',
+                }).then(function () {
+                        swal.close();
+                        $("#product-media").val('');
+                    },
+                    function () {
+                        swal.close();
+                        $("#product-media").val('');
+                    });
+                return false;
+            }
+        }
+        if ($("#product-media").val()) {
+          $(".user-product-alert").html($('.progress').clone(true).addClass('progress-clone').removeClass('hidden'));
+          bar     = $('.progress-clone').find('.bar');
+          percent = $('.progress-clone').find('.percent');
+        }
+
+        $('#submit-btn').attr('disabled', true).text("{{LANG Please wait..}}");
+        
+      },
+      uploadProgress: function(event, position, total, percentComplete) {
+          if(percentComplete > 50) {
+            percent.addClass('white');
+          }
+          var percentVal = percentComplete + '%';
+          bar.width(percentVal);
+          percent.html(percentVal);
+
+          if (percentComplete == 100) {
+            $(".user-product-alert").empty();
+          }
+      },
+      success: function(data) {
+        scrollToTop();
+        $('#submit-btn').removeAttr('disabled').text('{{LANG Publish}}');
+        if (data.status == 200){
+          $(".user-product-alert").html('<div class="alert alert-success"><i class="fa fa-check"></i> '+
+            data.message
+            +'</div>');
+            _Delay(function(){
+              /*location.href = "{{LINK manage_products}}";*/
+              goToAjaxLink("manage_products");
+          },2000);
+          
+        }
+        else {
+          $('#submit-btn').removeAttr('disabled').text('{{LANG Publish}}');
+          $(".user-product-alert").html('<div class="alert alert-danger"><i class="fa fa-info-circle"></i> '+
+            data.message
+            +'</div>');
+        }
+      }
+    });
+  });
+
+
+
+
+
+</script>

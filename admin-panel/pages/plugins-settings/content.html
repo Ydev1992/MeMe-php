@@ -1,0 +1,11 @@
+<?php 
+if (!empty($_GET['id'])) {
+    $plugin = secure($_GET['id']);
+    $getSettingsFile = loadPage($plugin, ['pluginSettings' => true]);
+    if (!empty($getSettingsFile)) {
+        echo $getSettingsFile;
+    } else {
+        echo "<div class=\"div alert alert-warning\">No settings found for this plugin.</div>";
+    }
+}
+?>

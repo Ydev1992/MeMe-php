@@ -1,0 +1,77 @@
+<div class="ma_page_content">
+	<div class="ma_pc_inner">
+		<div class="page_padding">
+			<!-- Playlist Songs -->
+				<div class="row mb-60">
+					<div class="col-md-2"></div>
+					<div class="col-md-8">
+						<div class="album_songs">
+							<div class="album_poster_info">
+								<div class="al_art">
+									<div class="al_art_img" style="background-image: url({{t_thumbnail}});"></div>
+								</div>
+								<div>
+									<h2 class="al_name"><a href="{{LINK playlist/{{t_uid}}}}" data-load="playlist/{{t_uid}}">{{t_title}}</a></h2>
+									<span class="al_artist"><a href="{{USER url}}" data-load="{{USER username}}">{{USER name_v}}</a></span>
+									<p class="text-center al_add_info">{{t_songs}} {{LANG Songs}} • {{t_date}}</p>
+									<div class="play_btn">
+										<button class="btn btn-primary btn-mat" onclick="playPlayListSongs({{t_id}})"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M8,5.14V19.14L19,12.14L8,5.14Z" /></svg> {{LANG Play}}</button>
+										<span class="dropdown">
+											<button class="btn btn-primary-rev btn-mat" data-display="static" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12,16A2,2 0 0,1 14,18A2,2 0 0,1 12,20A2,2 0 0,1 10,18A2,2 0 0,1 12,16M12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12A2,2 0 0,1 12,10M12,4A2,2 0 0,1 14,6A2,2 0 0,1 12,8A2,2 0 0,1 10,6A2,2 0 0,1 12,4Z" /></svg></button>
+											<div class="dropdown-menu dropdown-menu-right mat-dropdown">
+												<ul class="list-unstyled mb-0">
+													<li><a href="javascript:void(0);" onclick="getPlayListShareForm({{t_id}})"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"></path><path fill="currentColor" d="M13.12 17.023l-4.199-2.29a4 4 0 1 1 0-5.465l4.2-2.29a4 4 0 1 1 .959 1.755l-4.2 2.29a4.008 4.008 0 0 1 0 1.954l4.199 2.29a4 4 0 1 1-.959 1.755zM6 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm11-6a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm0 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path></svg>&nbsp;{{LANG Share}}</a></li>
+													<?php if (IS_LOGGED) { ?>
+													<?php if ($music->playlist->user_id == $music->user->id) { ?>
+													<li><a href="{{LINK my_playlists}}" data-load="my_playlists"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"></path><path fill="currentColor" d="M6.414 16L16.556 5.858l-1.414-1.414L5 14.586V16h1.414zm.829 2H3v-4.243L14.435 2.322a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414L7.243 18zM3 20h18v2H3v-2z"></path></svg>&nbsp;{{LANG Edit}}</a></li>
+													<?php } ?>
+													<?php } ?>
+												</ul>
+											</div>
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<hr class="albm_song_hr">
+						<div class="short_list_cont albm_song_listz">
+							<div class="short_list_card wide_page_songs album_play_song_lists">
+								<ul class="s_list_songs" id="next-list-songs">
+									{{html_list}}
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2">
+						<!-- Related Playlist -->
+							<!-- <?php include('single-album/related.php') ?> -->
+						<!-- End Related Playlist -->
+					</div>
+                </div>
+			<!-- End Playlist Songs -->
+		</div>
+	</div>
+</div>
+<?php echo loadPage('modals/delete-playlist-song'); ?>
+<?php if (IS_LOGGED && $music->playlist->user_id == $music->user->id && !isMobile()) { ?>
+<script type="text/javascript">
+    $.getScript('{{CONFIG theme_url}}/js/Sortable.min.js', function(data, textStatus) {
+        var el = document.getElementById('next-list-songs');
+        var sortable = Sortable.create(el,{
+			delay: 100,
+			delayOnTouchOnly: true,
+            onEnd: function (/**Event*/evt) {
+                var ids_array = [];
+	            $('[data-litsitem-id]').each(function(i, obj) {
+	               ids_array[i] = $(obj).attr('data-litsitem-id');
+	               if (i == $('[data-litsitem-id]').length-1) {
+	                  $.post(ajaxUrl() + "/playlist/sort", {ids_array: ids_array,list_id:"{{t_uid}}"}, function(data, textStatus, xhr) {
+	                  	goToAjaxLink('playlist/{{t_uid}}');
+	                  });
+	               }
+	            });
+            }
+        });
+    });
+</script>
+<?php } ?>

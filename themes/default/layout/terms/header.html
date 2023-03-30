@@ -1,0 +1,27 @@
+<div class="ma_tabs">
+	<ul class="list-unstyled mb-0">
+		<?php if ($music->about_page == 1) { ?>
+		<li class="<?php echo ($music->page_to_load == 'about') ? 'active' : '';?>">
+			<a href="{{LINK terms/about}}" data-load="terms/about">{{LANG About Us}}</a>
+		</li>
+		<?php } ?>
+		<?php if ($music->terms_of_use_page == 1) { ?>
+		<li class="<?php echo ($music->page_to_load == 'terms') ? 'active' : '';?>">
+			<a href="{{LINK terms/terms}}" data-load="terms/terms">{{LANG Terms}}</a>
+		</li>
+		<?php } ?>
+		<?php if ($music->privacy_policy_page == 1) { ?>
+		<li class="<?php echo ($music->page_to_load == 'privacy') ? 'active' : '';?>">
+			<a href="{{LINK terms/privacy}}" data-load="terms/privacy">{{LANG Privacy Policy}}</a>
+		</li>
+		<?php } ?>
+		<?php if ($music->dmca_terms_page == 1) { ?>
+		<li class="<?php echo ($music->page_to_load == 'dmca') ? 'active' : '';?>">
+			<a href="{{LINK terms/dmca}}" data-load="terms/dmca">{{LANG DMCA}}</a>
+		</li>
+		<?php } ?>
+		<li class="<?php echo ($music->page_to_load == 'faqs') ? 'active' : '';?>">
+			<a href="{{LINK terms/faqs}}" data-load="terms/faqs">{{LANG faqs}}</a>
+		</li>
+	</ul>
+</div>

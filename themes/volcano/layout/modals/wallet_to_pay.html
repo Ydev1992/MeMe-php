@@ -1,0 +1,20 @@
+<div class="modal fade" id="wallet_to_pay" tabindex="-1" role="dialog" aria-labelledby="wallet_to_pay" aria-hidden="true" data-id="0">
+  <div class="modal-dialog mat_box" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{LANG Pay from wallet}}</h5>
+      </div>
+      <div class="modal-body">
+        <div class="modal_wallet_pay_alert"></div>
+        <div id="wallet_to_pay_text"></div>
+      </div>
+      <div class="modal-footer">
+        <input type="hidden" id="wallet_to_pay_price">
+        <input type="hidden" id="wallet_to_pay_type">
+        <input type="hidden" id="wallet_to_pay_id">
+        <button type="button" class="btn btn-default" data-dismiss="modal">{{LANG Cancel}}</button>
+        <button type="button" class="btn btn-primary btn-mat" onclick="PayFromWallet()">{{LANG pay}} <?php echo $music->config->currency_symbol.$music->config->story_price; ?></button>
+      </div>
+    </div>
+  </div>
+</div>

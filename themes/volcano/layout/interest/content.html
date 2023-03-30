@@ -1,0 +1,131 @@
+<div class="ma_page_content">
+	<div class="ma_pc_inner">
+		<div class="page_padding">
+			<div class="reset_page">
+				<div class="circle_blue circle_opacity"></div>
+				<div class="circle_red circle_opacity"></div>
+				<div class="circle_orange circle_opacity"></div>
+				<div class="content p-relative interest_page">
+					<div class="dt_interest_sett startup">
+						<div class="row">
+							<div class="col-md-8">
+								<b>{{LANG Interest}}</b>
+								<h4>{{LANG Select your music preference}}</h4>
+							</div>
+							<div class="col-md-4">
+								<img src="data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' id='Layer_1' height='512' viewBox='0 0 24 24' width='512' data-name='Layer 1'%3e%3cg%3e%3cpath d='m19 21h-14a4 4 0 0 1 0-8h14a4 4 0 0 1 0 8zm-14-7a3 3 0 0 0 0 6h14a3 3 0 0 0 0-6z' style='&%2310; fill: %23<?php echo $music->config->second_color?>;&%2310;'/%3e%3cpath d='m19 19a2 2 0 1 1 2-2 2 2 0 0 1 -2 2zm0-3a1 1 0 1 0 1 1 1 1 0 0 0 -1-1z' style='&%2310; fill: %23<?php echo $music->config->main_color ?>;&%2310;'/%3e%3cpath d='m19 11h-14a4 4 0 0 1 0-8h14a4 4 0 0 1 0 8zm-14-7a3 3 0 0 0 0 6h14a3 3 0 0 0 0-6z' style='&%2310; fill: %23<?php echo $music->config->second_color?>;&%2310;'/%3e%3cpath d='m5 9a2 2 0 1 1 2-2 2 2 0 0 1 -2 2zm0-3a1 1 0 1 0 1 1 1 1 0 0 0 -1-1z' style='&%2310; fill: %23<?php echo $music->config->main_color ?>;&%2310;'/%3e%3c/g%3e%3c/svg%3e">
+							</div>
+						</div>
+					</div>
+					<div class="ma_interest">
+						<div class="ma_interest_innr">
+							<ul class="ma_interest_list">
+								<?php foreach($music->categories as $key => $category){?>
+									<li>
+										<input type="checkbox" class="interest-genre" id="cat_<?php echo $key;?>" value="<?php echo $key;?>">
+										<label for="cat_<?php echo $key;?>"><?php echo $category;?></label>
+									</li>
+								<?php } ?>
+							</ul>
+							<div class="mat_sett_btn">
+								<button class="btn btn-primary btn-save_intrst">{{LANG Next}}</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="msgbox" tabindex="-1" role="dialog" aria-labelledby="msgbox" aria-hidden="true">
+	<div class="modal-dialog mat_box" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">{{LANG Select your music preference}}</h5>
+			</div>
+			<div class="modal-body">
+			{{LANG You have to choose your favorites genres below}}
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">{{LANG Close}}</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+    $(document).ready(function() {
+
+        $(document).on('click','.interest-genre',function(e){
+            //e.preventDefault();
+            // $(this).prop('checked', true);
+            // $(this).attr('checked', true);
+        });
+        $(document).on('click','.btn-save_intrst',function(e){
+            e.preventDefault();
+            let genres = [];
+            let formData = new FormData();
+				$(".interest-genre:checked").each ( function() {
+                    genres.push($(this).val());
+				});
+				if(genres.length > 0) {
+					formData.append('genres', genres);
+				}else{
+				    $('#msgbox').modal('show');
+				    return;
+				}
+			$('.btn-save_intrst').html("{{LANG Please wait...}}");
+            $.ajax({
+                url: '{{CONFIG ajax_url}}/user/interest?hash_id=' + getHashID(),
+                type : 'POST',
+                data : formData,
+                contentType:false,
+                cache: false,
+                processData:false,
+                success : function(data) {
+                    if (data.status == 200) {
+                        $('.btn-save_intrst').html("{{LANG Next}}");
+                        ajaxRedirect('discover');
+                    }
+                }
+            });
+		});
+
+
+
+        var options = {
+            url: "{{CONFIG ajax_url}}/auth/signup?hash_id=" + getHashID(),
+            beforeSubmit:  function () {
+                $('#output-singup-errors').removeClass("alert-success").addClass('alert-danger');
+                $('#output-singup-errors').empty();
+                $("#btn-singup-submit").text("{{LANG Please wait..}}");
+            },
+            success: function (data) {
+                $("#btn-singup-submit").text("{{LANG Signup}}");
+                if (data.status == 200) {
+                    if ($('#page').attr('data-page') != 'home' && $('#page').attr('data-page') != 'forgot' && $('#page').attr('data-page') != 'reset') {
+                        $('#main-header').html(data.header);
+                        $('#signup_box').modal('hide');
+
+                        if (Amplitude.getActiveSongMetadata().price > 0) {
+                            location.href = '{{CONFIG site_url}}';
+                        } else {
+                            ajaxRedirect();
+                        }
+                    } else {
+                        location.href = '{{CONFIG site_url}}';
+                    }
+                } else if (data.status == 400) {
+                    var errros = data.errors.join("<br>");
+                    $('#output-singup-errors').html(errros);
+                } else if (data.status == 403) {
+                    $('#output-singup-errors').removeClass("alert-danger").addClass('alert-success');
+                    $('#output-singup-errors').html(data.message);
+                }
+            }
+        };
+
+        $('#signup-form').ajaxForm(options);
+    });
+</script>

@@ -1,0 +1,19 @@
+<div class="song_list">
+	<div class="avatar">
+		<a href="{{url}}" data-load="<?php echo($music->order->product->data_load) ?>"><img src="{{image}}"></a>
+	</div>
+	<div class="song_right_part">
+		<div class="song_upper">
+			<div class="song_meta_info">
+				<a href="{{url}}" data-load="<?php echo($music->order->product->data_load) ?>"><h3>{{title}}</h3></a>
+				<p>Qty: <b>{{items_count}}</b></p>
+				<?php if ($music->can_review > 0 && $music->is_reviewed < 1) { ?>
+					<a class="btn btn-info border-0 mt-2 btn-sm" href="javascript:void(0)" onclick="OpenWriteReview('{{product_id}}')">{{LANG Write Review}}</a>
+				<?php } ?>
+			</div>
+			<div class="song_price_info">
+				<b>{{CONFIG currency_symbol}}{{price}}</b>
+			</div>
+		</div>
+	</div>
+</div>

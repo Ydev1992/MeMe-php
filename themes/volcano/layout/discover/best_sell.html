@@ -1,0 +1,42 @@
+<div class="col-lg-6 track_list" data-id="{{t_id}}">
+	<div class="track">
+		<div class="cover_art">
+			<a href="{{url}}" data-load="{{data_load}}">
+				<img src="{{thumbnail}}">
+			</a>
+		</div>
+		<div class="track_info">
+			<div>
+				<div>
+					<a href="{{url}}" data-load="{{data_load}}"><span class="title">{{title}}</span></a>
+				</div>
+				<div>
+					<span class="artist">
+						<?php if (empty($music->product)) { ?>
+							{{USER name_v}}
+						<?php }else{ ?>
+							{{CONFIG currency_symbol}}{{price}}
+						<?php } ?>
+					</span>
+				</div>
+			</div>
+			<div class="last">
+				<?php if (empty($music->product)) { ?>
+					<span class="duration">{{duration}}</span>
+
+					<span class="fav_song">{{fav_button}}</span>
+				
+					<span class="opts_song dropdown pointer">
+						<svg data-display="static" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M16,12A2,2 0 0,1 18,10A2,2 0 0,1 20,12A2,2 0 0,1 18,14A2,2 0 0,1 16,12M10,12A2,2 0 0,1 12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12M4,12A2,2 0 0,1 6,10A2,2 0 0,1 8,12A2,2 0 0,1 6,14A2,2 0 0,1 4,12Z"></path></svg>
+						<div class="dropdown-menu dropdown-menu-right mat-dropdown">
+							<ul class="list-unstyled mb-0">
+								<li><a href="javascript:void(0)" onclick="getPlayLists({{id}})">{{LANG Add to Playlist}}</a></li>
+								<li><a onclick="getShareModal('{{id}}', $(this));">{{LANG Share}}</a></li>
+							</ul>
+						</div>
+					</span>
+				<?php } ?>
+			</div>
+		</div>
+	</div>
+</div>

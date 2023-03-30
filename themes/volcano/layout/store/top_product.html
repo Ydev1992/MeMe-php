@@ -1,0 +1,22 @@
+<div class="col-lg-4 col-md-6 events-list-wrapper" data-id="{{t_id}}">
+	<div class="events-list-cover store_products">
+		<a href="{{t_url}}" data-load="{{data_load}}" class="event_cover store_products_hdr">
+			<img src="{{t_thumbnail}}" class="events-list-cover-img">
+			<p class="store_products-cat"><?php echo $music->products_categories[$music->product->cat_id]; ?></p>
+		</a>
+		<div class="store_products-info">
+			<h3 class="store_products-name">
+				<a href="{{t_url}}" data-load="{{data_load}}">{{t_title}}</a>
+			</h3>
+			<b class="main store_products-price text-truncate">{{CONFIG currency_symbol}}{{t_price}}</b>
+			<div class="store_products-btns">
+				<?php if ($music->product->user_data->id != $music->user->id) { ?>
+					<span>
+						<button type="button" onclick="AddProductToCart(this,'<?php echo($music->product->id) ?>','<?php echo(!empty($music->product->added_to_cart) && $music->product->added_to_cart > 0 ? 'remove' : 'add') ?>')" class="btn btn-mat" title="<?php echo(!empty($music->product->added_to_cart) && $music->product->added_to_cart > 0 ? lang('Remove From Cart') : lang('Add To Cart')) ?>"><svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 58 58"> <g id="Group_9580" data-name="Group 9580" transform="translate(-833 -689)"> <rect id="Rectangle_3421" data-name="Rectangle 3421" width="58" height="58" rx="29" transform="translate(833 689)" fill="var(--main-color)"/> <path id="Union_12" data-name="Union 12" d="M.588,22.148a.61.61,0,0,1-.417-.17A.616.616,0,0,1,0,21.562v-.074L.992,8.7a.561.561,0,0,1,.183-.374l.013-.008a.561.561,0,0,1,.391-.157H3.415v-.58a7.6,7.6,0,0,1,15.192,0v.58h1.832a.566.566,0,0,1,.393.157l.013.008a.56.56,0,0,1,.183.371l.994,12.817a.619.619,0,0,1-.147.434.61.61,0,0,1-.379.2Zm.634-1.17H20.8l-.9-11.65H2.116ZM6.565,2.95A6.336,6.336,0,0,0,4.6,7.293l-.038.863H17.43v-.58a6.4,6.4,0,0,0-6.137-6.4l-.258-.011-.025,0A6.41,6.41,0,0,0,6.565,2.95ZM8.674,14.568V12.236h4.674v2.332Z" transform="translate(851 707)" fill="#fff"/> </g> </svg></button>
+					</span>  
+				<?php } ?>				
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>

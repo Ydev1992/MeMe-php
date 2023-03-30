@@ -1,0 +1,50 @@
+<div class="ma_page_content">
+    <div class="ma_pc_inner">
+        <div class="page_padding">
+            <div class="ma_tabs">
+                <ul class="list-unstyled mb-0">
+					<li class="<?php echo ($music->pageType == 'songs') ? 'active' : ''; ?>">
+						<a href="{{LINK store/songs}}" data-load="store/songs"><svg xmlns="http://www.w3.org/2000/svg" width="24.699" height="25" viewBox="0 0 24.699 25"> <path id="Path_7218" data-name="Path 7218" d="M8843.883,2857.355a3.644,3.644,0,0,1,5.96-2.812l.082.069v-8.76a.624.624,0,1,1,1.247,0v.029a1.414,1.414,0,0,0,.828,1.076,4.939,4.939,0,0,0,2.425.583.623.623,0,1,1,0,1.247,5.98,5.98,0,0,1-3.175-.83l-.078-.049v9.448a3.645,3.645,0,1,1-7.289,0Zm1.248,0a2.4,2.4,0,1,0,2.4-2.4A2.4,2.4,0,0,0,8845.131,2857.355Zm-14.779-3.431a5.2,5.2,0,0,1,8.511-4.017l.545.447v-13.677a.677.677,0,0,1,1.354,0v.042a2.347,2.347,0,0,0,1.367,1.835,7.667,7.667,0,0,0,3.768.908.677.677,0,0,1,0,1.354,8.718,8.718,0,0,1-4.623-1.2l-.512-.33v14.583a.023.023,0,0,1,0,.013v.027a.016.016,0,0,1,0,.011,5.205,5.205,0,1,1-10.41,0Zm1.351,0a3.853,3.853,0,1,0,3.853-3.853A3.855,3.855,0,0,0,8831.7,2853.924Z" transform="translate(-8830.352 -2836)" fill="currentColor"/> </svg> {{LANG Songs}}</a>
+					</li>
+					<li class="<?php echo ($music->pageType == 'album') ? 'active' : ''; ?>">
+						<a href="{{LINK store/album}}" data-load="store/album"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="24.899" viewBox="0 0 25 24.899"> <path id="Subtraction_7" data-name="Subtraction 7" d="M8840.7,2866.271a12.482,12.482,0,0,1-9.5-20.6,12.858,12.858,0,0,1,7.555-4.3v1.47a10.64,10.64,0,0,0-6.635,3.837,11.324,11.324,0,0,0-2.529,7.79,11.224,11.224,0,0,0,11.106,10.437,11.009,11.009,0,0,0,7.088-2.511,11.145,11.145,0,0,0,3.851-6.535,10.987,10.987,0,0,0-1.144-7.384,11.373,11.373,0,0,0-5.617-5l-.868-.352v10.651a3.474,3.474,0,0,1-.633,1.981,3.556,3.556,0,0,1-1.678,1.228,2.367,2.367,0,0,1-.74.112,4.252,4.252,0,0,1-1.321-.243,3.423,3.423,0,0,1-1.646-1.22,3.183,3.183,0,0,1-.6-1.979,3.126,3.126,0,0,1,.67-1.853l0-.007a3.554,3.554,0,0,1,1.7-1.228,2.424,2.424,0,0,1,.739-.112,4.152,4.152,0,0,1,1.31.242l.829.275v-9.6a12.856,12.856,0,0,1,7.553,4.3,12.482,12.482,0,0,1-9.5,20.6Z" transform="translate(-8828.199 -2841.371)" fill="currentColor"/> </svg> {{LANG Albums}}</a>
+					</li>
+					<?php if( $music->config->artist_sell == 'on' ) { ?>
+					<li class="<?php echo ($music->pageType == 'top') ? 'active' : ''; ?>">
+						<a href="{{LINK store/top}}" data-load="store/top"><svg xmlns="http://www.w3.org/2000/svg" width="25.681" height="25.681" viewBox="0 0 25.681 25.681"> <path id="graph-up-svgrepo-com" d="M0,0H1.586V23.795H25.381v1.586H0ZM15.863,5.552a.793.793,0,0,1,.793-.793H23a.793.793,0,0,1,.793.793V11.9a.793.793,0,1,1-1.586,0V7.773L16.477,14.78a.793.793,0,0,1-1.174.059l-4.1-4.1L5.4,18.709a.793.793,0,0,1-1.282-.933l6.345-8.725a.793.793,0,0,1,1.2-.1L15.8,13.1l5.524-6.751H16.656A.793.793,0,0,1,15.863,5.552Z" transform="translate(0.15 0.15)" fill="currentColor" stroke="#fff" stroke-width="0.3" fill-rule="evenodd"/> </svg> {{LANG Top Seller}}</a>
+					</li>
+					<?php } ?>
+					<?php if( $music->config->store_system == 'on' ) { ?>
+					<li class="<?php echo ($music->pageType == 'products') ? 'active' : ''; ?>">
+						<a href="{{LINK store/products}}" data-load="store/products"><svg xmlns="http://www.w3.org/2000/svg" width="24.999" height="25.196" viewBox="0 0 24.999 25.196"> <path id="Union_6" data-name="Union 6" d="M8827.667,2865.2a.66.66,0,0,1-.667-.667v-.083l1.126-14.553a.634.634,0,0,1,.206-.425l.015-.01a.641.641,0,0,1,.446-.178h2.082v-.659a8.666,8.666,0,0,1,2.524-6.1,8.63,8.63,0,0,1,12.2,0,8.659,8.659,0,0,1,2.528,6.1v.659h2.078a.646.646,0,0,1,.448.178l.015.01a.631.631,0,0,1,.207.422l1.127,14.581a.694.694,0,0,1-.163.493.7.7,0,0,1-.432.232Zm.719-1.332h22.225l-1.02-13.254H8829.4Zm6.067-20.509a7.208,7.208,0,0,0-2.234,4.941l-.043.982h14.611v-.659a7.274,7.274,0,0,0-6.967-7.277l-.292-.012-.028,0A7.267,7.267,0,0,0,8834.453,2843.356Zm2.395,13.218v-2.653h5.306v2.653Z" transform="translate(-8827 -2840)" fill="currentColor"/> </svg> {{LANG Products}}</a>
+					</li>
+					<?php } ?>
+				</ul>
+            </div>
+            <div class="row">
+				<div class="col-md-1"></div>
+                <div class="col-md-10">
+					{{filters}}
+					
+                    <div class="sq_music_tracks">
+                        <div class="sq_track_slider no-slider store_albums store_short_albums" id="store_result">
+                            <?php if( $data['records'] > 0 ){?>
+                                {{html_content}}
+                            <?php } else { ?>
+								<div class="no-track-found bg_light"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M4,6H2V20A2,2 0 0,0 4,22H18V20H4M18,7H15V12.5A2.5,2.5 0 0,1 12.5,15A2.5,2.5 0 0,1 10,12.5A2.5,2.5 0 0,1 12.5,10C13.07,10 13.58,10.19 14,10.5V5H18M20,2H8A2,2 0 0,0 6,4V16A2,2 0 0,0 8,18H20A2,2 0 0,0 22,16V4A2,2 0 0,0 20,2Z" /></svg>{{LANG No more albums}}</div>
+                            <?php } ?>
+                        </div>
+                        <?php if( $data['records'] > 0 ){?>
+                            <div class="text-center see_all">
+                                <a href="javascript:void(0); loadMore('store_albums', '');" id="load-more-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M17,13H13V17H11V13H7V11H11V7H13V11H17M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"></path></svg> {{LANG Load More}}</a>
+                            </div>
+
+                        <?php } ?>
+                    </div>
+                </div>
+				<div class="col-md-1"></div>
+                <input type="hidden" id="filter_type" value="albums">
+            </div>
+        </div>
+    </div>
+</div>

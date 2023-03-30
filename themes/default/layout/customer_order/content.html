@@ -1,0 +1,179 @@
+<div class="ma_page_content">
+	<div class="ma_pc_inner">
+		<div class="page_padding">
+			<h2 class="home_widget_title font-weight-bold">
+				{{LANG Order}} #<?php echo $music->order->hash_id ?>
+				&nbsp;<div class="badge badge-secondary">{{LANG <?php echo ucfirst($music->order->status) ?>}}</div>
+				<?php if ($music->order->status == 'shipped') { ?>
+					<select id="cart_product_qty" onchange="ChangeStatus(this,'{{hash}}')">
+						<?php if ($music->order->status == 'shipped') { ?>
+							<option value="shipped" <?php if ($music->order->status == 'shipped') {echo "selected";} ?>>{{LANG Shipped}}</option>
+							<option value="delivered" <?php if ($music->order->status == 'delivered') {echo "selected";} ?>>{{LANG Delivered}}</option>
+						<?php } ?>
+					</select>
+				<?php } ?>
+			</h2>
+			
+			<?php if ($music->order->status != 'delivered') { ?>
+				<div class="alert alert-info">
+					<ul class="mb-0 px-3">
+						<li>{{LANG If the order status wasn't set to delivered within 60 days from the order date, it will be automatically be sent to "Delivered".}}</li>
+						<li>{{LANG If the order wasn't actually delivered, the buyer can request a refund.}}</li>
+					</ul>
+				</div>
+			<?php } ?>
+			
+			<div class="row">
+				<div class="col-lg-9">
+					<div class="se_box store_songs ds_order_items p-1" id="store_result">
+						{{html}}
+					</div>
+					<?php if (!empty($music->order->tracking_url) && !empty($music->order->tracking_id)) { ?>
+						<div class="se_box">
+							<b class="se_prod_ordr_title">{{LANG Tracking Details}}</b>
+							<label class="user_prod_track_details">{{LANG Site Url}}</label>
+							<div class="mb-2 user_prod_track_link"><a href="<?php echo $music->order->tracking_url ?>"><?php echo $music->order->tracking_url ?></a></div>
+							<label class="user_prod_track_details">{{LANG Tracking Number}}</label>
+							<div><?php echo $music->order->tracking_id ?></div>
+						</div>
+					<?php } ?>
+					<div class="se_box">
+						<b class="se_prod_ordr_title">{{LANG Payments}}</b>
+						<ul class="list-unstyled mb-0">
+							<li class="valign-wrapper">{{LANG Subtotal}}<span class="ml-auto">{{CONFIG currency_symbol}}{{total}}</span></li>
+						</ul>
+						<hr>
+						<?php if (empty($music->refund)) { ?>
+							<div class="valign-wrapper">
+								<a class="ml-auto pointer" href="javascript:void(0)" onclick="RefundOrder('{{hash}}','hide')">{{LANG Request a Refund}}</a>
+							</div>
+						<?php } ?>
+					</div>
+				</div>
+				<div class="col-lg-3">
+					<div class="se_box">
+						<b class="se_prod_ordr_title">{{LANG Delivery Address}}</b>
+						<div class="address_box selr_adrs_box">
+							<p class="addrs_name"><?php echo($music->address->name) ?></p>
+							<p class="addrs_phone"><?php echo($music->address->phone) ?></p>
+							<p class="addrs_street"><?php echo($music->address->address) ?>, <?php echo($music->address->city) ?> - <?php echo($music->address->zip) ?></p>
+							<p class="addrs_count"><?php echo($music->address->country) ?></p>
+						</div>
+						<a class="btn btn-info btn-mat btn-block mt-3" href="javascript:void(0)" onclick="DownloadPurchased('{{hash}}','order')">{{LANG Download Invoice}}</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<a href="{{LINK customer_order/{{hash}}}}" data-load="customer_order/{{hash}}" id="load_order"></a>
+
+<div class="modal fade" id="write_product_review" tabindex="-1" role="dialog" aria-labelledby="refund_order" aria-hidden="true" data-id="0">
+	<div class="modal-dialog mat_box" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">{{LANG Write Review}}</h5>
+			</div>
+			<form id="write_review_form" method="post">
+				<div class="modal-body">
+					<div class="write_review_alert"></div>
+					<div id="write_review_alert"></div>
+					<div class="valign-wrapper star_rating">
+						<input type="radio" id="5-stars" name="rating" value="5">
+						<label for="5-stars" class="star">★</label>
+						<input type="radio" id="4-stars" name="rating" value="4">
+						<label for="4-stars" class="star">★</label>
+						<input type="radio" id="3-stars" name="rating" value="3">
+						<label for="3-stars" class="star">★</label>
+						<input type="radio" id="2-stars" name="rating" value="2">
+						<label for="2-stars" class="star">★</label>
+						<input type="radio" id="1-star" name="rating" value="1">
+						<label for="1-star" class="star">★</label>
+					</div>
+					<div class="form-group">
+						<b class="se_prod_ordr_title">{{LANG Photos}}</b>
+						<div class="create_prod_images">
+							<div class="productimage-holder">
+								<div class="upload-product-image" onclick="document.getElementById('p_photos').click(); return false">
+									<div class="valign-wrapper upload-image-content">
+										<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"><path fill="currentColor" d="M5,3A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H14.09C14.03,20.67 14,20.34 14,20C14,19.32 14.12,18.64 14.35,18H5L8.5,13.5L11,16.5L14.5,12L16.73,14.97C17.7,14.34 18.84,14 20,14C20.34,14 20.67,14.03 21,14.09V5C21,3.89 20.1,3 19,3H5M19,16V19H16V21H19V24H21V21H24V19H21V16H19Z"></path></svg>
+									</div>
+								</div>
+							</div>
+							<span class="d-none">
+								<input type="file" id="p_photos" accept="image/x-png, image/jpeg" multiple="multiple" name="images[]">
+							</span>
+						</div>
+					</div>
+					<div class="form-group">
+						<textarea class="form-control shop_input" placeholder="{{LANG Review}}" rows="5" name="review"></textarea>
+					</div>
+					<input name="product_id" class="form-control shop_input" type="hidden" id="write_product_review_product_id">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">{{LANG Cancel}}</button>
+					<button type="submit" class="btn btn-primary write_review_btn_submit" id="write_review_button">{{LANG Submit}}</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	$("#p_photos").on('change', function() {
+		//Get count of selected files
+		var product_countFiles = $(this)[0].files.length;
+		var product_imgPath = $(this)[0].value;
+		var extn = product_imgPath.substring(product_imgPath.lastIndexOf('.') + 1).toLowerCase();
+		var product_image_holder = $(".productimage-holder");
+		product_image_holder.find('img').remove();
+		if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg") {
+			if (typeof(FileReader) != "undefined") {
+				//loop for each file selected for uploaded.
+				for (var i = 0; i < product_countFiles; i++) 
+				{
+				var product_reader = new FileReader();
+				product_reader.onload = function(e) {
+					$("<img />", {
+						"src": e.target.result,
+						"class": "thumb-image"
+					}).appendTo(product_image_holder);
+					}
+					product_image_holder.show();
+					product_reader.readAsDataURL($(this)[0].files[i]);
+				}
+			} else {
+				product_image_holder.html("<p>This browser does not support FileReader.</p>");
+			}
+		}
+	});
+$(document).ready(function() { 
+	$('#write_review_form').ajaxForm({ 
+    	url: '{{CONFIG ajax_url}}/product/review?hash_id=' + getHashID(),
+        beforeSubmit:  function () {
+        	$('#write_review_button').html("{{LANG Please wait..}}");
+		    $('#write_review_button').attr('disabled', "true");
+        }, 
+        success: function (data) {
+        	$('#write_review_button').removeAttr('disabled');
+			$('#write_review_button').text("{{LANG Submit}}");
+        	if (data.status == 200) {
+        		$('.write_review_alert').html("<div class='alert alert-success bg-success'><i class='fa fa-check'></i> "+data.message+"</div>");
+				setTimeout(function () {
+					$('#write_product_review').modal('hide');
+	            	$('.write_review_alert').html("");
+	            	setTimeout(function () {
+		            	$('#load_order').click();
+		            },200);
+	            },2000);
+        	}
+        	else{
+        		$('.write_review_alert').html("<div class='alert alert-danger bg-danger'><i class='fa fa-check'></i> "+data.message+"</div>");
+				setTimeout(function () {
+	            	$('.write_review_alert').html("");
+	            },2000);
+
+        	}
+        }
+    });
+});
+</script>

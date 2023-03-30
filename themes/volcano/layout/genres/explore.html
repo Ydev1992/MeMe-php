@@ -1,0 +1,58 @@
+<div class="ma_page_content">
+	<div class="ma_pc_inner">
+		<div class="page_padding">
+			<!-- Top Albums -->
+			<div class="genre_lst mb-5 small">
+				<?php foreach ($music->categories as $key => $category) {?>
+					<div class="gnr_list_item">
+						<a href="{{LINK explore-genres/<?php echo $key?>}}" data-load="explore-genres/<?php echo $key?>" class="">
+							<div class="img_cnt">
+								<img src="<?php echo getMedia(getCategoryInfo($key)->background_thumb);?>" alt="category" />
+								<svg xmlns="http://www.w3.org/2000/svg" width="17.324" height="15.895" viewBox="0 0 17.324 15.895"> <g id="Group_9892" data-name="Group 9892" transform="translate(-416.009 -232.927)"> <path id="Path_215782" data-name="Path 215782" d="M1687.491-2561.046s5.729,3.918,5.81,5.946-5.647,6.459-5.647,6.459" transform="translate(-1269.745 2795.71)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" opacity="0.3"/> <path id="Path_215783" data-name="Path 215783" d="M1687.491-2561.046s5.729,3.918,5.81,5.946-5.647,6.459-5.647,6.459" transform="translate(-1261.22 2795.71)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" opacity="0.3"/> </g> </svg>
+								<div class="name"><?php echo $category?></div>
+								<div class="song_count" title="{{LANG songs}}"><svg xmlns="http://www.w3.org/2000/svg" width="15.13" height="19.978" viewBox="0 0 15.13 19.978"> <path id="Subtraction_44" data-name="Subtraction 44" d="M4.757,19.678A4.608,4.608,0,0,1,0,15.25,4.608,4.608,0,0,1,4.757,10.82,4.984,4.984,0,0,1,7.78,11.833l.5.381V.576a.623.623,0,0,1,1.243,0V.611c0,.557.452,1.126,1.249,1.562a7.4,7.4,0,0,0,3.443.773.6.6,0,0,1,.618.576.6.6,0,0,1-.618.577A8.4,8.4,0,0,1,9.986,3.074L9.518,2.8V15.2s0,.006,0,.009v.023s0,.006,0,.009A4.613,4.613,0,0,1,4.757,19.678Zm0-7.7A3.41,3.41,0,0,0,1.233,15.25a3.41,3.41,0,0,0,3.524,3.277A3.407,3.407,0,0,0,8.275,15.25,3.407,3.407,0,0,0,4.757,11.973Z" transform="translate(0.152 0.15)" fill="#fff" stroke="currentColor" stroke-width="0.3"/> </svg> <?php echo $db->where('category_id', $key)->getOne(T_SONGS, array('count(*) as cnt'))->cnt;?></div>
+							</div>
+						</a>
+					</div>
+				<?php } ?>
+			</div>
+			
+			<h2 class="home_widget_title home_big_title mt-0 mb-5">{{LANG Latest Songs In}} {{CATEGORY_NAME}}</h2>
+			<div class="sq_music_tracks">
+				<div class="short_list_cont row top_dic_son_listz">
+					<div class="col-md-4">
+						<div class="genre_lst mus_cus_side_filtrs mainn">
+							<?php foreach ($music->categories as $key => $category) {?>
+								<div class="gnr_list_item <?php echo ($music->category_id == $key) ? 'active' : ''?>">
+									<a href="{{LINK explore-genres/<?php echo $key?>}}" data-load="explore-genres/<?php echo $key?>" class="">
+										<div class="img_cnt">
+											<img src="<?php echo getMedia(getCategoryInfo($key)->background_thumb);?>" alt="category" />
+											<svg xmlns="http://www.w3.org/2000/svg" width="17.324" height="15.895" viewBox="0 0 17.324 15.895"> <g id="Group_9892" data-name="Group 9892" transform="translate(-416.009 -232.927)"> <path id="Path_215782" data-name="Path 215782" d="M1687.491-2561.046s5.729,3.918,5.81,5.946-5.647,6.459-5.647,6.459" transform="translate(-1269.745 2795.71)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" opacity="0.3"/> <path id="Path_215783" data-name="Path 215783" d="M1687.491-2561.046s5.729,3.918,5.81,5.946-5.647,6.459-5.647,6.459" transform="translate(-1261.22 2795.71)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" opacity="0.3"/> </g> </svg>
+											<div class="name"><?php echo $category?></div>
+										</div>
+									</a>
+								</div>
+							<?php } ?>
+						</div>
+					</div>
+					<div class="col-md-8">
+						<div class="short_list_card">
+							<ul class="s_list_songs home_tp_songs_list mus_tg_tp_songs_list">
+								{{TOP_SONGS}}
+							</ul>
+							<?php if ($music->songs == 0) { ?>
+								<div class="no-track-found bg_light"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M19,9H2V11H19V9M19,5H2V7H19V5M2,15H15V13H2V15M17,13V19L22,16L17,13Z"></path></svg> {{LANG no_tracks_found}}</div>
+							<?php } ?>
+							<?php if ($music->songs > 29) { ?>
+							<div class="text-center see_all">
+								<br>
+								<a href="javascript:void(0); loadMore('categories', '{{category_id}}');" id="load-more-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M17,13H13V17H11V13H7V11H11V7H13V11H17M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"></path></svg> {{LANG Load More}}</a>
+							</div>
+							<?php } ?>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

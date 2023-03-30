@@ -1,0 +1,104 @@
+<div class="ma_page_content" id="container_blog">
+
+	<div class="ma_pc_inner">
+		<div class="page_padding">
+			<?php $loadPage = loadPage('thirdparty/paypal-demo'); echo (!empty($loadPage)) ? $loadPage : '';?>
+			<div class="ma_tabs">
+				<ul class="list-unstyled mb-0">
+					<li class="active">
+						<a href="{{LINK ads}}" data-load="ads">{{LANG Advertising}}</a>
+					</li>
+					<li>
+						<a href="{{LINK settings/{{ME username}}/wallet}}" data-load="settings/{{ME username}}/wallet">{{LANG Wallet}} ({{CURRENCY}}{{ME wallet}})</a>
+					</li>
+					<li>
+						<a href="{{LINK create-ads}}" data-load="create-ads">{{LANG Create ad}}</a>
+					</li>
+				</ul>
+			</div>
+			<div class="content">
+				<table class="table" id="music-user-ads-table">
+					<thead>
+						<th>{{LANG Status}}</th>
+						<th>{{LANG Name}}</th>
+						<th>{{LANG Results}}</th>
+						<th>{{LANG Spent}}</th>
+						<th>{{LANG Action}}</th>
+					</thead>
+					<tbody>{{ADS_LIST}}</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script>
+	
+    var Delay = (function(){
+        var timer = 0;
+        return function(callback, ms){
+            clearTimeout (timer);
+            timer = setTimeout(callback, ms);
+        };
+    })();
+	$(document).ready( function () {
+	    $('#music-user-ads-table').DataTable();
+		$('#music-user-ads-table').on( 'page.dt', function () {
+		    Delay(function(){
+		    	$('#music-user-ads-table').find('[type="checkbox"]').each(function(index, el) {
+			    	$(el).bootstrapToggle();
+			    });
+		    },50)
+		});
+	});
+
+	
+
+	function DeleteAd(id){
+		if (!id) {
+			return false;
+		}
+		swal({
+		  title: '{{LANG Confirmation}}',
+		  text: "{{LANG Are you sure you want to delete this ad?}}",
+		  type: 'warning',
+		  showCloseButton: true,
+		  showCancelButton: false,
+		  focusConfirm: false,
+		  confirmButtonText:"{{LANG Delete}}!",
+		  cancelButtonText:"{{LANG Cancel}}",
+		  buttonsStyling:false,
+		  confirmButtonClass:'btn btn-primary btn-mat',
+		  cancelButtonClass:"btn btn-default",
+		  allowOutsideClick:false,
+		}).then(function (){
+			$.post('{{CONFIG ajax_url}}/ads/delete', {id:id}, function(data, textStatus, xhr) {/* pass */});
+			$("tr[data-ads-list='"+id+"']").slideUp(function(){
+				$(this).remove();
+				swal({
+					title:'{{LANG campaign_deleted_succ}}',
+				    type:'success',
+				    buttonsStyling:false,
+				    confirmButtonClass:'btn btn-success',
+				});
+                setTimeout(function () {
+                    goToAjaxLink('ads');
+                }, 1000);
+			});
+		});
+	}
+
+	function ToggleAdsStatus(id){
+		if (!id) {
+			return false;
+		}
+		$.post('{{CONFIG ajax_url}}/ads/toggle-stat', {id:id}, function(data, textStatus, xhr) {/* pass */});
+	}
+
+	
+	
+
+	
+
+</script>

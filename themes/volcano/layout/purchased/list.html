@@ -1,0 +1,26 @@
+<tr class="my_purchased">
+	<td><div class="type track"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M21,3V15.5A3.5,3.5 0 0,1 17.5,19A3.5,3.5 0 0,1 14,15.5A3.5,3.5 0 0,1 17.5,12C18.04,12 18.55,12.12 19,12.34V6.47L9,8.6V17.5A3.5,3.5 0 0,1 5.5,21A3.5,3.5 0 0,1 2,17.5A3.5,3.5 0 0,1 5.5,14C6.04,14 6.55,14.12 7,14.34V6L21,3Z" /></svg></div></td>
+	
+	<td class="id">#{{t_key}}</td>
+	
+	<td><a href="javscript:void(0)" onclick="playSong('{{t_audio_id}}');" class="title">{{t_title}} <span class="duration">{{t_duration}}</span></a></td>
+	
+	<td><div class="price">{{CONFIG currency_symbol}}{{t_price}}</div></td>
+	
+	<td class="text-center"><div class="purchased">{{t_purchased_on}}</div></td>
+
+	<td class="text-right">
+		<div class="foot">
+			<span class="fav_song"><?php echo getFavButton($music->songData->id, 'fav-icon');?></span>
+			<div class="dropdown">
+				<svg data-display="static" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M16,12A2,2 0 0,1 18,10A2,2 0 0,1 20,12A2,2 0 0,1 18,14A2,2 0 0,1 16,12M10,12A2,2 0 0,1 12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12M4,12A2,2 0 0,1 6,10A2,2 0 0,1 8,12A2,2 0 0,1 6,14A2,2 0 0,1 4,12Z"></path></svg>
+				<div class="dropdown-menu dropdown-menu-right mat-dropdown">
+					<ul class="list-unstyled mb-0">
+						<li><a href="javascript:void(0)" onclick="getPlayLists({{t_id}})"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"></path><path fill="currentColor" d="M2 18h10v2H2v-2zm0-7h20v2H2v-2zm0-7h20v2H2V4zm16 14v-3h2v3h3v2h-3v3h-2v-3h-3v-2h3z"></path></svg>&nbsp;{{LANG Add to Playlist}}</a></li>
+						<li><a onclick="getShareModal('{{t_id}}', $(this));"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"></path><path fill="currentColor" d="M13.12 17.023l-4.199-2.29a4 4 0 1 1 0-5.465l4.2-2.29a4 4 0 1 1 .959 1.755l-4.2 2.29a4.008 4.008 0 0 1 0 1.954l4.199 2.29a4 4 0 1 1-.959 1.755zM6 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm11-6a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm0 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path></svg>&nbsp;{{LANG Share}}</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</td>
+</tr>

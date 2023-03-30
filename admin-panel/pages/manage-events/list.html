@@ -1,0 +1,26 @@
+<tr class="setting-event" id="EventID_<?php echo $music->event->id ?>" data_selected="<?php echo $music->event->id ?>">
+  <td><input type="checkbox" id="check-data-<?php echo $music->event->id?>" class="delete-checkbox filled-in"><label for="check-data-<?php echo $music->event->id?>"></label></td>
+   <td><?php echo $music->event->id?></td>
+   <td>
+      <a href="<?php echo $music->event->url; ?>">LINK</a>
+   </td>
+   <td>
+      <a href="<?php echo $music->event->user_data->url; ?>">
+        <img src="<?php echo $music->event->user_data->avatar; ?>" class="setting-avatar" >
+         <?php echo $music->event->user_data->name; ?>
+      </a>
+   </td>
+   <td>
+     <div class="ajax-time">
+         <?php echo ($music->start_date);?>
+     </div>
+   </td>
+   <td>
+      <button type="button" class="delete-event btn bg-danger admn_table_btn" id="<?php echo $music->event->id?>" onclick="Wo_DeleteEvent(<?php echo $music->event->id?>,'hide')">Delete</button>
+      <?php if (!empty($music->event->ticket_price)) { ?>
+          <button type="button" class="delete-event btn bg-danger admn_table_btn" id="<?php echo $music->event->id?>" onclick="ViewTicket(<?php echo $music->event->id?>)">Show Ticket Buyers</button>
+      <?php } ?>
+      
+      <a class="delete-event btn bg-success admn_table_btn" id="<?php echo $music->event->id?>" href="<?php echo ($music->event->edit_url); ?>">Edit</a>
+   </td>
+</tr>

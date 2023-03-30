@@ -1,0 +1,39 @@
+<div class="ma_page_content">
+    <div class="ma_pc_inner">
+		<div class="page_padding">
+            <!-- Settings -->
+            <div class="sett_page">
+				<div class="row">
+					<div class="col-lg-4">
+						<?php echo loadPage("settings/sidebar"); ?>
+					</div>
+					<div class="col-lg-8">
+						<div class="st_content">
+							<h2 class="home_widget_title home_big_title mt-4 mb-5">{{LANG Withdrawals}}</h2>
+							
+							<div class="table-responsive my_purchased_songs ds_store_analytics st_form">
+								<table id="withdrawal-requests" class="table table-striped">
+									<thead>
+									<th>ID</th>
+									<th>{{LANG Requested on}}</th>
+									<th>{{LANG amount}}</th>
+									<th>{{LANG status}}</th>
+									</thead>
+									<tbody>
+										{{WITHDRAWAL_HISTORY_LIST}}
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+            </div>
+            <!-- End Settings -->
+        </div>
+    </div>
+</div>
+<script>
+    jQuery(document).ready(function($) {
+       // $("#withdrawal-requests").DataTable();
+    });
+</script>

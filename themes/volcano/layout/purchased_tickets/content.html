@@ -1,0 +1,36 @@
+<div class="ma_page_content" id="container_blog">
+    <div class="ma_pc_inner">
+        <div class="page_padding">
+			<div class="ma_tabs">
+				<ul class="list-unstyled mb-0">
+          <?php if ($music->config->can_use_event_system) { ?>
+					<li>
+            <a href="{{LINK create-event}}" data-load="create-event">{{LANG Create New Event}}</a>
+          </li>
+          <?php } ?>
+          <?php if ($music->have_events > 0) { ?>
+          <li>
+            <a href="{{LINK manage_events}}" data-load="manage_events">{{LANG Manage Events}}</a>
+          </li>
+          <?php } ?>
+          <li>
+            <a href="{{LINK events}}" data-load="events">{{LANG Browse Events}}</a>
+          </li>
+          <li>
+            <a href="{{LINK joined}}" data-load="joined">{{LANG Joined Events}}</a>
+          </li>
+				</ul>
+			  </div>
+          <div class="content upload_music no-flex ds_create_edit_ads_cont">
+            <div class="row" id="events_search_result">
+              {{HTML}}
+            </div>
+            <?php if (!empty($music->events) && count($music->events) == 10) { ?>
+              <div class="text-center see_all">
+                  <a href="javascript:void(0); loadMore('purchased_events', '');" id="load-more-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M17,13H13V17H11V13H7V11H11V7H13V11H17M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"></path></svg> {{LANG Load More}}</a>
+              </div>
+            <?php } ?>
+          </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,32 @@
+<div class="ma_page_content">
+	<div class="ma_pc_inner page_padding">
+		<div class="short_list_cont">
+			<h2 class="home_widget_title home_big_title mt-0">
+				{{LANG My Purchases}}
+			</h2>
+			<div class="my_purchased_songs">
+				<?php if ($music->have_purchased) { ?>
+					<div class="table-responsive my_purchased_song_list">
+						<table class="table">
+							<thead>
+								<tr>
+									<th scope="col" width="45"></th>
+									<th scope="col">{{LANG ID}}</th>
+									<th scope="col">{{LANG Title}}</th>
+									<th scope="col">{{LANG Price}}</th>
+									<th scope="col" class="text-center">{{LANG Date}}</th>
+									<th scope="col" class="text-right">{{LANG options}}</th>
+								</tr>
+							</thead>
+							<tbody>
+								{{html}}
+							</tbody>
+						</table>
+					</div>
+				<?php }else{ ?>
+					<div class="no-track-found bg_light"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M3,7H9V13H3V7M3,3H21V5H3V3M21,11V13H11V11H21M3,15H17V17H3V15M3,19H21V21H3V19Z"></path></svg> {{LANG No purchased tracks found}}</div>
+				<?php } ?>
+			</div>
+		</div>
+	</div>
+</div>

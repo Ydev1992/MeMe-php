@@ -1,0 +1,82 @@
+<tr class="setting-event" id="list_<?php echo $music->order->id ?>" data_selected="<?php echo $music->order->id ?>">
+	<td><input type="checkbox" id="check-data-<?php echo $music->order->id?>" class="delete-checkbox filled-in"><label for="check-data-<?php echo $music->order->id?>"></label></td>
+	<td><?php echo $music->order->id?></td>
+	<td>
+		<a href="<?php echo getLink("order/".$music->order->hash_id); ?>" target="_blank">LINK</a>
+	</td>
+	<td>
+		<a href="<?php echo $music->order->user_data->url; ?>">
+			<img src="<?php echo $music->order->user_data->avatar; ?>" class="setting-avatar" >
+			<?php echo $music->order->user_data->name; ?>
+		</a>
+	</td>
+	<td>
+		<div class="ajax-time">
+			<?php echo date('F j Y, g:i a', $music->order->time); ?>
+		</div>
+	</td>
+	<td>
+		<?php echo $music->order->status; ?>
+	</td>
+	<td>
+		<button type="button" class="delete-event btn bg-danger admn_table_btn" id="<?php echo $music->order->id?>" onclick="DeleteOrder(<?php echo $music->order->id?>,'hide')">Delete</button>
+		<button type="button" class="btn btn-secondary admn_table_btn" data-toggle="modal" data-target="#change_status_<?php echo $music->order->id ?>">
+			Change Status
+		</button>
+   </td>
+</tr>
+
+<div class="modal fade" id="change_status_<?php echo $music->order->id ?>" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Change Status</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="select_radio_btn order_lisst">
+					<div class="select_radio_btn_innr">
+						<label>
+							<input type="radio" name="order_status" value="placed" onchange="ChangeStatus(<?php echo $music->order->id?>,$(this).val(),'hide')">
+							<div class="sr_btn_lab_innr">
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M3,5H9V11H3V5M5,7V9H7V7H5M11,7H21V9H11V7M11,15H21V17H11V15M5,20L1.5,16.5L2.91,15.09L5,17.17L9.59,12.59L11,14L5,20Z" /></svg>&nbsp;&nbsp;<span>{{LANG Placed}}</span>
+							</div>
+						</label>
+						<label>
+							<input type="radio" name="order_status" value="canceled" onchange="ChangeStatus(<?php echo $music->order->id?>,$(this).val(),'hide')">
+							<div class="sr_btn_lab_innr">
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M13 12.6L19 9.2V13C19.7 13 20.4 13.1 21 13.4V7.5C21 7.1 20.8 6.8 20.5 6.6L12.6 2.2C12.4 2.1 12.2 2 12 2S11.6 2.1 11.4 2.2L3.5 6.6C3.2 6.8 3 7.1 3 7.5V16.5C3 16.9 3.2 17.2 3.5 17.4L11.4 21.8C11.6 21.9 11.8 22 12 22S12.4 21.9 12.6 21.8L13.5 21.3C13.2 20.7 13.1 20 13 19.3M12 4.2L18 7.5L16 8.6L10.1 5.2L12 4.2M11 19.3L5 15.9V9.2L11 12.6V19.3M12 10.8L6 7.5L8 6.3L14 9.8L12 10.8M16.9 15.5L19 17.6L21.1 15.5L22.5 16.9L20.4 19L22.5 21.1L21.1 22.5L19 20.4L16.9 22.5L15.5 21.1L17.6 19L15.5 16.9L16.9 15.5Z" /></svg>&nbsp;&nbsp;<span>{{LANG Canceled}}</span>
+							</div>
+						</label>
+						<label>
+							<input type="radio" name="order_status" value="accepted" onchange="ChangeStatus(<?php echo $music->order->id?>,$(this).val(),'hide')">
+							<div class="sr_btn_lab_innr">
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M12 2C11.8 2 11.6 2.1 11.4 2.2L3.5 6.6C3.2 6.8 3 7.1 3 7.5V16.5C3 16.9 3.2 17.2 3.5 17.4L11.4 21.8C11.6 21.9 11.8 22 12 22S12.4 21.9 12.6 21.8L13.5 21.3C13.2 20.7 13.1 20 13 19.3V12.6L19 9.2V13C19.7 13 20.4 13.1 21 13.3V7.5C21 7.1 20.8 6.8 20.5 6.6L12.6 2.2C12.4 2.1 12.2 2 12 2M12 4.2L18 7.5L16 8.6L10.1 5.2L12 4.2M8.1 6.3L14 9.8L12 10.9L6 7.5L8.1 6.3M5 9.2L11 12.6V19.3L5 15.9V9.2M21.3 15.8L17.7 19.4L16.1 17.8L15 19L17.8 22L22.6 17.2L21.3 15.8Z" /></svg>&nbsp;&nbsp;<span>{{LANG Accepted_}}</span>
+							</div>
+						</label>
+						<label>
+							<input type="radio" name="order_status" value="packed" onchange="ChangeStatus(<?php echo $music->order->id?>,$(this).val(),'hide')">
+							<div class="sr_btn_lab_innr">
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M2,10.96C1.5,10.68 1.35,10.07 1.63,9.59L3.13,7C3.24,6.8 3.41,6.66 3.6,6.58L11.43,2.18C11.59,2.06 11.79,2 12,2C12.21,2 12.41,2.06 12.57,2.18L20.47,6.62C20.66,6.72 20.82,6.88 20.91,7.08L22.36,9.6C22.64,10.08 22.47,10.69 22,10.96L21,11.54V16.5C21,16.88 20.79,17.21 20.47,17.38L12.57,21.82C12.41,21.94 12.21,22 12,22C11.79,22 11.59,21.94 11.43,21.82L3.53,17.38C3.21,17.21 3,16.88 3,16.5V10.96C2.7,11.13 2.32,11.14 2,10.96M12,4.15V4.15L12,10.85V10.85L17.96,7.5L12,4.15M5,15.91L11,19.29V12.58L5,9.21V15.91M19,15.91V12.69L14,15.59C13.67,15.77 13.3,15.76 13,15.6V19.29L19,15.91M13.85,13.36L20.13,9.73L19.55,8.72L13.27,12.35L13.85,13.36Z" /></svg>&nbsp;&nbsp;<span>{{LANG Packed}}</span>
+							</div>
+						</label>
+						<label>
+							<input type="radio" name="order_status" value="shipped" onchange="ChangeStatus(<?php echo $music->order->id?>,$(this).val(),'hide')">
+							<div class="sr_btn_lab_innr">
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M18,18.5A1.5,1.5 0 0,1 16.5,17A1.5,1.5 0 0,1 18,15.5A1.5,1.5 0 0,1 19.5,17A1.5,1.5 0 0,1 18,18.5M19.5,9.5L21.46,12H17V9.5M6,18.5A1.5,1.5 0 0,1 4.5,17A1.5,1.5 0 0,1 6,15.5A1.5,1.5 0 0,1 7.5,17A1.5,1.5 0 0,1 6,18.5M20,8H17V4H3C1.89,4 1,4.89 1,6V17H3A3,3 0 0,0 6,20A3,3 0 0,0 9,17H15A3,3 0 0,0 18,20A3,3 0 0,0 21,17H23V12L20,8Z" /></svg>&nbsp;&nbsp;<span>{{LANG Shipped}}</span>
+							</div>
+						</label>
+						<label>
+							<input type="radio" name="order_status" value="delivered" onchange="ChangeStatus(<?php echo $music->order->id?>,$(this).val(),'hide')">
+							<div class="sr_btn_lab_innr">
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M6 3C5.5 3 5.1 3.2 4.8 3.6L3.5 5.2C3.2 5.6 3 6 3 6.5V19C3 20.1 3.9 21 5 21H13.3C13.1 20.4 13 19.7 13 19C13 15.7 15.7 13 19 13C19.7 13 20.4 13.1 21 13.3V6.5C21 6 20.8 5.6 20.5 5.2L19.1 3.5C18.9 3.2 18.5 3 18 3H6M5.9 4H17.9L18.8 5H5.1L5.9 4M6 15H12V18H6V15M21.3 15.8L17.7 19.4L16.1 17.8L15 19L17.8 22L22.6 17.2L21.3 15.8Z" /></svg>&nbsp;&nbsp;<span>{{LANG Delivered}}</span>
+							</div>
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

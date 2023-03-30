@@ -1,0 +1,51 @@
+<div class="feed_post" data-id="{{s_id}}" id="feed_{{s_id}}" a_id="{{a_id}}">
+	<div class="fp_head">
+		<div class="avatar user-image">
+			<a href="{{USER url}}" data-load="{{USER username}}">
+				<img src="{{USER avatar}}" alt="User Avatar">
+			</a>
+			<?php if ($music->config->go_pro == 'on') { ?>
+			<?php if ($music->songData->publisher->is_pro == 1) { ?>
+			<div class="is-pro-badge-small" title="{{LANG PRO Memeber}}">
+				<?php if (!empty($music->songData->publisher->pro_type) && in_array($music->songData->publisher->pro_type, array_keys($music->pro_packages) )) {
+					echo($music->pro_packages[$music->songData->publisher->pro_type]['html_icon']);
+				}
+					?>
+			</div>
+			<?php } ?>
+			<?php } ?>
+		</div>
+		<div class="user_info">
+			<a href="{{USER url}}" data-load="{{USER username}}">{{USER name_v}}</a>
+			<span>{{LANG Created new product}} {{s_time}}</span>
+		</div>
+		<?php if(IS_LOGGED && (IsAdmin() || $music->songData->user_id == $music->user->id)) { ?>
+		<div class="opts_feed dropdown">
+			<button type="button" class="btn" data-display="static" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M16,12A2,2 0 0,1 18,10A2,2 0 0,1 20,12A2,2 0 0,1 18,14A2,2 0 0,1 16,12M10,12A2,2 0 0,1 12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12M4,12A2,2 0 0,1 6,10A2,2 0 0,1 8,12A2,2 0 0,1 6,14A2,2 0 0,1 4,12Z"></path></svg></button>
+			<div class="dropdown-menu dropdown-menu-right mat-dropdown">
+				<ul class="list-unstyled mb-0">
+					<li><a href="<?php echo($music->songData->edit_url) ?>" data-load="<?php echo($music->songData->edit_data_load) ?>">{{LANG Edit Info}}</a></li>
+					<li><a href="javascript:void(0)" onclick="$('#delete-post').attr('data-id', '{{a_id}}')" data-toggle="modal" data-target="#delete-post">{{LANG Delete Post}}</a></li>
+				</ul>
+			</div>
+		</div>
+	<?php } ?>
+	</div>
+	<div class="fp_body clearfix user_feed_products">
+		<div class="col-md-4 p-0 m-0 events-list-wrapper" onclick="goToAjaxLink('<?php echo($music->songData->data_load) ?>')">
+			<div class="events-list-cover text-center store_products">
+				<a href="javascript:void(0)" class="event_cover store_products_hdr">
+					<img src="{{s_thumbnail}}" class="events-list-cover-img">
+					<p class="store_products-cat"><?php echo $music->products_categories[$music->songData->cat_id]; ?></p>
+				</a>
+				<div class="store_products-info pb-3">
+					<h3 class="store_products-name">
+						<a href="javascript:void(0)">{{s_name}}</a>
+					</h3>
+					<b class="main store_products-price text-truncate">{{CONFIG currency_symbol}}{{s_price}}</b>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>

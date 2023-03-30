@@ -1,0 +1,88 @@
+<div class="sidebar_widget">
+	<?php if ($music->config->go_pro == 'on') { ?>
+		<?php if ($music->userData->is_pro == 1 && !empty($music->pro_packages) && !empty($music->pro_packages[$music->userData->pro_type])) { ?>
+			<div class="is-pro-badge d-none">
+				<?php echo($music->pro_packages[$music->userData->pro_type]['html_icon']); ?> {{LANG PRO Memeber}}
+			</div>
+		<?php } ?>
+	<?php } ?>
+	<ul class="list-unstyled user_side_info_list">
+		<ul class="user_side_info_list_innr">
+			<li>
+				{{LANG tracks}}
+				<span>{{COUNT_TRACKS}}</span>
+			</li>
+			<li>
+				<a href="{{USER url}}/followers" data-load="{{USER username}}/followers">{{LANG Followers}}<span class="followers">{{COUNT_FOLLOWERS}}</span></a>
+			</li>
+			<li>
+				<a href="{{USER url}}/following" data-load="{{USER username}}/following">{{LANG Following}}<span class="following">{{COUNT_FOLLOWING}}</span></a>
+			</li>
+		</ul>
+		
+		<li>
+			<svg xmlns="http://www.w3.org/2000/svg" width="14.277" height="21.615" viewBox="0 0 14.277 21.615"> <path id="Path_6888" data-name="Path 6888" d="M3701.467,14457.68a6.588,6.588,0,0,1-4.406-2.479,6.688,6.688,0,0,1-1.542-4.775,6.942,6.942,0,0,1,2.166-4.59,6.946,6.946,0,0,1,9.41,0,6.942,6.942,0,0,1,2.166,4.59,6.908,6.908,0,0,1-5.957,7.254v1.926h4.59v1.838h-4.59v3.672h-1.836v-3.672h-4.59v-1.838h4.59Zm.918-1.744a5.17,5.17,0,0,0,3.571-1.469,5.076,5.076,0,0,0,0-7.16,5.07,5.07,0,0,0-7.142,0,5.074,5.074,0,0,0,0,7.16A5.168,5.168,0,0,0,3702.386,14455.936Z" transform="translate(-3695.252 -14443.75)" fill="currentColor" stroke="#fff" stroke-width="0.5"/> </svg> {{LANG <?php echo $music->userData->gender?>}}
+		</li>
+		<?php if ($music->userData->age > 0) { ?>
+		<li>
+			<svg xmlns="http://www.w3.org/2000/svg" width="17.51" height="17.51" viewBox="0 0 17.51 17.51"> <path id="Path_5016" data-name="Path 5016" d="M3484.758,2259.7h3.4a.842.842,0,0,1,.851.851v13.608a.842.842,0,0,1-.851.85h-15.309a.842.842,0,0,1-.851-.85v-13.608a.842.842,0,0,1,.851-.851h3.4V2258h1.7v1.7h5.1V2258h1.7Zm2.551,5.1v-3.4h-2.551v1.7h-1.7v-1.7h-5.1v1.7h-1.7v-1.7H3473.7v3.4Zm0,1.7H3473.7v6.8h13.608Zm-11.907,1.7h4.252v3.4H3475.4Z" transform="translate(-3471.75 -2257.75)" fill="currentColor" stroke="#fff" stroke-width="0.5"/> </svg> {{USER age}} {{LANG years old}}
+		</li>
+		<?php } ?>
+		<?php if ($music->userData->country_id > 0) { ?>
+		<li>
+			<svg xmlns="http://www.w3.org/2000/svg" width="16.505" height="22.5" viewBox="0 0 16.505 22.5"> <path id="Path_6166" data-name="Path 6166" d="M3705,5531.94a8.009,8.009,0,1,1,2,0V5535h-2Zm1-1.94a6.009,6.009,0,1,0-4.24-1.76A5.969,5.969,0,0,0,3706,5530Zm-7,6h14v2h-14Z" transform="translate(-3697.755 -5515.75)" fill="currentColor" stroke="#fff" stroke-width="0.5"/> </svg> {{LANG Located in}} {{USER country_name}}
+		</li>
+		<?php } ?>
+		<li>
+			<svg xmlns="http://www.w3.org/2000/svg" width="21.147" height="18.048" viewBox="0 0 21.147 18.048"> <path id="Path_6595" data-name="Path 6595" d="M3371,7124h-2a8.993,8.993,0,0,0-7.97,4.81q-.03-.405-.03-.81a10,10,0,0,1,10-10v-5.5l10.5,8.5-10.5,8.5Zm-2-2h4v3.31l5.32-4.31-5.32-4.31V7120h-2a8.1,8.1,0,0,0-3.33.72,7.988,7.988,0,0,0-2.73,2.05A11.046,11.046,0,0,1,3369,7122Z" transform="translate(-3360.75 -7111.976)" fill="currentColor" stroke="#fff" stroke-width="0.5"/> </svg> {{LANG Social Links}}
+		</li>
+		<li class="user_social_links">
+			<?php if (!empty($music->userData->facebook)) { ?>
+			<a class="social-btn" href="https://www.facebook.com/{{USER facebook}}" target="_blank">
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#4267b2"><path d="M5,3H19A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3M18,5H15.5A3.5,3.5 0 0,0 12,8.5V11H10V14H12V21H15V14H18V11H15V9A1,1 0 0,1 16,8H18V5Z"></path></svg>
+			</a>
+			<?php } ?>
+			<?php if (!empty($music->userData->twitter)) { ?>
+			<a class="social-btn" href="https://twitter.com/{{USER twitter}}" target="_blank">
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#1da1f2"><path d="M5,3H19A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3M17.71,9.33C18.19,8.93 18.75,8.45 19,7.92C18.59,8.13 18.1,8.26 17.56,8.33C18.06,7.97 18.47,7.5 18.68,6.86C18.16,7.14 17.63,7.38 16.97,7.5C15.42,5.63 11.71,7.15 12.37,9.95C9.76,9.79 8.17,8.61 6.85,7.16C6.1,8.38 6.75,10.23 7.64,10.74C7.18,10.71 6.83,10.57 6.5,10.41C6.54,11.95 7.39,12.69 8.58,13.09C8.22,13.16 7.82,13.18 7.44,13.12C7.81,14.19 8.58,14.86 9.9,15C9,15.76 7.34,16.29 6,16.08C7.15,16.81 8.46,17.39 10.28,17.31C14.69,17.11 17.64,13.95 17.71,9.33Z"></path></svg>
+			</a>
+			<?php } ?>
+			<?php if (!empty($music->userData->google)) { ?>
+			<a class="social-btn" href="https://plus.google.com/{{USER google}}" target="_blank">
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#dc4938"><path d="M5,3H19A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3M19.5,12H18V10.5H17V12H15.5V13H17V14.5H18V13H19.5V12M9.65,11.36V12.9H12.22C12.09,13.54 11.45,14.83 9.65,14.83C8.11,14.83 6.89,13.54 6.89,12C6.89,10.46 8.11,9.17 9.65,9.17C10.55,9.17 11.13,9.56 11.45,9.88L12.67,8.72C11.9,7.95 10.87,7.5 9.65,7.5C7.14,7.5 5.15,9.5 5.15,12C5.15,14.5 7.14,16.5 9.65,16.5C12.22,16.5 13.96,14.7 13.96,12.13C13.96,11.81 13.96,11.61 13.89,11.36H9.65Z"></path></svg>
+			</a>
+			<?php } ?>
+		</li>
+		<?php if (!empty($music->userData->about)) { ?>
+		<li>
+			<svg xmlns="http://www.w3.org/2000/svg" width="22.5" height="21.825" viewBox="0 0 22.5 21.825"> <path id="Path_6840" data-name="Path 6840" d="M3244,14241a8.138,8.138,0,0,1,2.34-5.7,8.115,8.115,0,0,1,11.32,0,8.138,8.138,0,0,1,2.34,5.7h-2a5.828,5.828,0,0,0-1.76-4.2,5.894,5.894,0,0,0-8.48,0,5.828,5.828,0,0,0-1.76,4.2Zm8-9a6,6,0,1,1,6-6A6,6,0,0,1,3252,14232Zm0-2a4,4,0,1,0-4-4A4.005,4.005,0,0,0,3252,14230Zm12.55-10.2a13.661,13.661,0,0,1,1.45,6.2,14.06,14.06,0,0,1-1.45,6.2l-1.65-1.2a12.031,12.031,0,0,0,1.1-5,11.663,11.663,0,0,0-1.1-5Zm-3.3,2.4a10,10,0,0,1,0,7.6l-1.68-1.2a8.074,8.074,0,0,0,0-5.2Z" transform="translate(-3243.75 -14219.425)" fill="currentColor" stroke="#fff" stroke-width="0.5"/> </svg> {{LANG Bio}}
+		</li>
+		<li class="user_bio">
+			{{USER about}}
+		</li>
+		<?php } ?>
+		<?php if (!empty($music->userData->website)) { ?>
+		<li class="webs">
+			<svg xmlns="http://www.w3.org/2000/svg" width="20.16" height="20.16" viewBox="0 0 20.16 20.16"> <path id="Path_4926" data-name="Path 4926" d="M3483.06,1761.11l1.42,1.41a6.975,6.975,0,0,1,1.51,7.63,6.943,6.943,0,0,1-1.51,2.27l-.36.36a7,7,0,0,1-9.9-9.9l1.42,1.41a5.155,5.155,0,0,0-1.1,1.63,4.969,4.969,0,0,0-.38,1.91,4.863,4.863,0,0,0,.37,1.92,5.035,5.035,0,0,0,2.72,2.72,4.863,4.863,0,0,0,1.92.37,4.969,4.969,0,0,0,1.91-.38,5.156,5.156,0,0,0,1.63-1.1l.35-.35a5.01,5.01,0,0,0,0-7.07l-1.41-1.42,1.41-1.41Zm6.72,6.01-1.42-1.41a5.155,5.155,0,0,0,1.1-1.63,4.969,4.969,0,0,0,.38-1.91,4.863,4.863,0,0,0-.37-1.92,5.035,5.035,0,0,0-2.72-2.72,4.863,4.863,0,0,0-1.92-.37,4.969,4.969,0,0,0-1.91.38,5.156,5.156,0,0,0-1.63,1.1l-.35.35a5.01,5.01,0,0,0,0,7.07l1.41,1.41-1.41,1.42-1.41-1.42a6.816,6.816,0,0,1-1.52-2.27,6.9,6.9,0,0,1,0-5.35,6.961,6.961,0,0,1,1.52-2.28l.35-.35a7,7,0,0,1,9.9,9.9Z" transform="translate(-3471.92 -1754.92)" fill="currentColor" stroke="#fff" stroke-width="0.5"/> </svg> <a class="text-white" href="{{USER website}}" target="_blank">{{USER website}}</a>
+		</li>
+		<?php } ?>
+
+		<?php
+        	$fields = GetProfileFields('all');
+        	if (count($fields) > 0) { ?>
+		<?php
+            foreach ($fields as $key => $wo['field']) {
+		$name = $wo['field']['fid'];
+		if (!empty($music->userData->fields[$name])) {
+		$dt = $wo['field'];
+		$dt['value'] = $music->userData->fields[$name];
+		echo LoadPage('user/custom-fields',$dt);
+		}
+		}
+		?>
+		<?php } ?>
+		
+	</ul>
+
+</div>
+<?php echo GetAd('side_bar');?>

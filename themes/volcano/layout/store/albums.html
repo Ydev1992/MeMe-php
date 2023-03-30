@@ -1,0 +1,41 @@
+<div class="track_list" data-id="{{id}}">
+    <div class="track">
+        <div class="cover_art">
+            <a href="{{LINK album/}}{{album_id}}" data-load="album/{{album_id}}">
+                <img src="{{thumbnail}}" />
+            </a>
+            <?php if(IS_LOGGED === true){ ?>
+                <?php if ($data['user_id'] !== $music->user->id && isUserBuyAlbum($data['id']) === false && $data['price'] > 0) { ?>
+                    <!--<div class="play_btn">
+                        <button class="btn btn-primary btn-mat" onclick="purchaseTrack('{{album_id}}', $(this),'buy_album','<?php echo($data['price']) ?>')" data_price="<?php echo($data['price']) ?>">{{LANG Buy}}</button>
+                    </div>-->
+                <?php } ?>
+            <?php }else{ ?>
+                <?php if ($data['price'] > 0) { ?>
+                    <!--<div class="play_btn">
+                        <button class="btn btn-primary btn-mat" onclick="purchaseTrack('{{album_id}}', $(this),'buy_album','<?php echo($data['price']) ?>')" data_price="<?php echo($data['price']) ?>">{{LANG Buy}}</button>
+                    </div>-->
+                <?php } ?>
+            <?php } ?>
+			
+			<?php if( $music->config->artist_sell == 'on' ) { ?>
+				<?php if($data['price'] > 0){?>
+                    <div class="price_info">{{CONFIG currency_symbol}}{{price}}</div>
+				<?php }?>
+			<?php } ?>
+			
+			<a class="play_btn_small" href="{{LINK album/}}{{album_id}}" data-load="album/{{album_id}}">
+				<svg xmlns="http://www.w3.org/2000/svg" width="43.138" height="43.133" viewBox="0 0 43.138 43.133"> <g id="Group_9374" data-name="Group 9374" transform="translate(0 0)"> <rect id="Rectangle_3421" data-name="Rectangle 3421" width="41.611" height="41.611" rx="20.805" transform="translate(1.015 1.015)" fill="#fff"/> <path id="Path_7225" data-name="Path 7225" d="M8827,2861.567a21.569,21.569,0,1,1,21.567,21.565A21.593,21.593,0,0,1,8827,2861.567Zm14.307-17.6a18.472,18.472,0,0,0-6.177,4.069,19.259,19.259,0,0,0,0,27.057,18.5,18.5,0,0,0,6.177,4.073,19.614,19.614,0,0,0,14.523,0,18.437,18.437,0,0,0,6.175-4.073,19.252,19.252,0,0,0,0-27.057,18.458,18.458,0,0,0-6.175-4.069,19.614,19.614,0,0,0-14.523,0Zm2.312,24.5c-.108,0-.218-.181-.271-.181a2.325,2.325,0,0,1-.108-.364v-11.973a2.333,2.333,0,0,1,.108-.364c.054,0,.163-.181.271-.181.126,0,.255-.183.381-.183a.375.375,0,0,0,.362.183l8.855,5.989c.108,0,.181.178.234.178.055.183.091.183.091.364s-.036.178-.091.364c-.054,0-.126.181-.234.181l-8.855,5.987a.377.377,0,0,0-.362.181C8843.874,2868.65,8843.745,2868.469,8843.619,2868.469Z" transform="translate(-8827.001 -2840)" fill="var(--main-color)"/> </g> </svg>
+			</a>
+        </div>
+        <div class="track_info">
+            <a href="{{LINK album/}}{{album_id}}" data-load="album/{{album_id}}"><span class="title">{{title}}</span></a>
+            <a href="{{LINK }}{{artist}}" data-load="{{artist}}">
+				<span class="artist">
+					{{artist_name}}
+					<small title="{{LANG Songs}}">&nbsp;&nbsp;•&nbsp;&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="9.976" height="13.494" viewBox="0 0 9.976 13.494"> <path id="Subtraction_44" data-name="Subtraction 44" d="M3.1,13.194A3.042,3.042,0,0,1,0,10.225a3.043,3.043,0,0,1,3.1-2.97,3.2,3.2,0,0,1,1.973.679l.323.255V.386a.406.406,0,0,1,.811,0V.41a1.339,1.339,0,0,0,.814,1.047,4.726,4.726,0,0,0,2.247.519.387.387,0,1,1,0,.773,5.368,5.368,0,0,1-2.757-.687l-.3-.187v8.32s0,0,0,.006v.015s0,0,0,.006A3.046,3.046,0,0,1,3.1,13.194Zm0-5.166a2.251,2.251,0,0,0-2.3,2.2,2.252,2.252,0,0,0,2.3,2.2,2.25,2.25,0,0,0,2.3-2.2A2.25,2.25,0,0,0,3.1,8.028Z" transform="translate(0.15 0.15)" fill="currentColor" stroke="currentColor" stroke-width="0.3"/> </svg> {{songs}}</small>
+				</span>
+			</a>
+        </div>
+    </div>
+</div>

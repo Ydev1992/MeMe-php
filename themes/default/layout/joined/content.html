@@ -1,0 +1,44 @@
+<div class="ma_page_content" id="container_blog">
+    <div class="ma_pc_inner">
+        <div class="page_padding">
+			<div class="ma_playlists">
+				<div class="text-center banner_header">
+					<div class="circle-1"></div>
+					<div class="circle-2"></div>
+					<div class="position-relative">
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M19,19H5V8H19M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M16.53,11.06L15.47,10L10.59,14.88L8.47,12.76L7.41,13.82L10.59,17L16.53,11.06Z"></path></svg>
+						<h3>{{LANG Joined Events}}</h3>
+						<?php if (IS_LOGGED) { ?>
+							<?php if ($music->config->can_use_event_system) { ?>
+								<a href="{{LINK create-event}}" data-load="create-event" class="btn btn-light btn-mat">{{LANG Create New Event}}</a>
+							<?php } ?>
+						<?php } ?>
+						
+						<?php if (IS_LOGGED) { ?>
+							<div class="sec_header">
+								<div class="btn-group mx-1" role="group"><a href="{{LINK events}}" data-load="events" class="btn btn-sm btn-secondary"> {{LANG Browse Events}}</a></div>
+								<?php if ($music->have_events > 0) { ?>
+									<div class="btn-group mx-1" role="group">
+										<a href="{{LINK manage_events}}" data-load="manage_events" class="btn btn-sm btn-secondary"> {{LANG Manage Events}}</a>
+									</div>
+									<div class="btn-group mx-1" role="group">
+										<a href="{{LINK events_analytics}}" data-load="events_analytics" class="btn btn-sm btn-secondary"> {{LANG Events Analytics}}</a>
+									</div>
+								<?php } ?>
+							</div>
+						<?php } ?>
+					</div>
+				</div>
+				
+				<div class="row" id="events_search_result">
+					{{HTML}}
+				</div>
+				<?php if (!empty($music->events) && count($music->events) == 10) { ?>
+					<div class="text-center see_all">
+						<a href="javascript:void(0); loadMore('joined_events', '');" id="load-more-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M17,13H13V17H11V13H7V11H11V7H13V11H17M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"></path></svg> {{LANG Load More}}</a>
+					</div>
+				<?php } ?>
+			</div>
+        </div>
+    </div>
+</div>

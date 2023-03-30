@@ -1,0 +1,217 @@
+<div class="modal fade" id="2checkout_wallet_modal" role="dialog" data-keyboard="false" >
+	<div class="modal-dialog mat_box">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">{{LANG 2checkout}}</h5>
+			</div>
+			<form class="form form-horizontal" method="post" id="2checkout_form_wallet" action="#">
+				<div class="modal-body twocheckout_modal">
+					<div id="2checkout_alert_wallet"></div>
+					<div class="clear"></div>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group mat_input float">
+								<input id="card_name" type="text" class="form-control" autocomplete="off" placeholder=" ">
+								<label>{{LANG Name}}</label>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group mat_input float">
+								<input id="card_address" type="text" class="form-control" autocomplete="off" placeholder=" ">
+								<label>{{LANG Address}}</label>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group mat_input float">
+								<input id="card_city" type="text" class="form-control" autocomplete="off" placeholder=" ">
+								<label>{{LANG City}}</label>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group mat_input float">
+								<input id="card_state" type="text" class="form-control" autocomplete="off" placeholder=" ">
+								<label>{{LANG State}}</label>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group mat_input float">
+								<input id="card_zip" type="text" class="form-control" autocomplete="off" placeholder=" ">
+								<label>{{LANG zip}}</label>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group mat_input float">
+								<select id="card_country" name="card_country" class="form-control">
+								<?php
+									foreach ($countries_name as $country_ids => $country) {
+								?>
+									<option value="<?php echo $country_ids;?>" ><?php echo $country;?></option>
+								<?php } ?>
+								</select>
+								<label>{{LANG Country}}</label>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group mat_input float">
+								<input id="card_email" type="text" class="form-control" autocomplete="off" placeholder=" ">
+								<label>{{LANG Email}}</label>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group mat_input float">
+								<input id="card_phone" type="text" class="form-control" autocomplete="off" placeholder=" ">
+								<label>{{LANG Phone Number}}</label>
+							</div>
+						</div>
+					</div>
+					<hr>
+					<div class="row two_check_card">
+						<div class="col-12">
+							<div class="form-group mat_input float">
+								<input id="_number_" type="text" class="form-control" autocomplete="off" placeholder=" ">
+								<label>{{LANG Card Number}}</label>
+								<input id="card_number" name="card_number" type="hidden" class="form-control" autocomplete="off">
+							</div>
+						</div>
+						<div class="col-4">
+							<div class="form-group mat_input float">
+								<select id="card_month" name="card_month" type="text" class="form-control" autocomplete="off">
+									<option value="01">01</option>
+									<option value="02">02</option>
+									<option value="03">03</option>
+									<option value="04">04</option>
+									<option value="05">05</option>
+									<option value="06">06</option>
+									<option value="07">07</option>
+									<option value="08">08</option>
+									<option value="09">09</option>
+									<option value="10">10</option>
+									<option value="11">11</option>
+									<option value="12">12</option>
+								</select>
+								<label>{{LANG Month}}</label>
+							</div>
+						</div>
+						<div class="col-4 no-padding-both">
+							<div class="form-group mat_input float">
+								<select id="card_year" name="card_year" type="text" class="form-control" autocomplete="off">
+									<?php for ($i=date('Y'); $i <= date('Y')+15; $i++) {  ?>
+									<option value="<?php echo($i) ?>"><?php echo($i) ?></option>
+									<?php } ?>
+								</select>
+								<label>{{LANG Year}}</label>
+							</div>
+						</div>
+						<div class="col-4">
+							<div class="form-group mat_input float">
+								<input id="card_cvc" name="card_cvc" type="text" class="form-control" autocomplete="off" placeholder=" " maxlength="3" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+								<label>CVC</label>
+							</div>
+						</div>
+					</div>
+          <div class="clear"></div>
+          <input id="card_token" name="token" type="hidden" value="">
+          <input id="checkout_type" name="checkout_type" type="hidden" value="">
+        </div>
+        <div class="clear"></div>
+        <div class="modal-footer">
+          <div class="ball-pulse"><div></div><div></div><div></div></div>
+          <button class="btn btn-default" data-dismiss="modal">{{LANG Close}}</button>
+          <button type="button" class="btn btn-primary btn-mat" onclick="tokenRequest()" id="2checkout_btn_wallet">{{LANG Pay}}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(function() {
+      // Pull in the public encryption key for our environment
+      TCO.loadPubKey("<?php echo($music->config->checkout_mode) ?>");
+  });
+  function checkout_pay(self,type) {
+    $('#checkout_type').val(type)
+    $("#2checkout_alert_wallet").html('');
+    $('#buy_album_modal').modal('hide');
+      $('#2checkout_wallet_modal').modal({
+            show: true
+        });
+  }
+
+  // Called when token created successfully.
+  var successCallback = function(data) {
+    console.log(data);
+    type = $('#checkout_type').val();
+    id    = $('#buy_album_modal').attr('data-id');
+    amount = $('#buy_album_modal').attr('data_price');
+    if ($('#checkout_type').val() == 'buy_song') {
+      id    = $('#payment_modal').attr('data-id');
+    }
+    if ($('#checkout_type').val() == 'wallet') {
+      amount = $('#wallet_payment_modal').attr('data_price');
+    }
+      var myForm = document.getElementById('2checkout_form_wallet');
+      $.post('{{LINK endpoints/checkout}}', {card_number: $("#card_number").val(),card_cvc: $("#card_cvc").val(),card_month: $("#card_month").val(),card_year: $("#card_year").val(),card_name: $("#card_name").val(),card_address: $("#card_address").val(),card_city: $("#card_city").val(),card_state: $("#card_state").val(),card_zip: $("#card_zip").val(),card_country: $("#card_country").val(),card_email: $("#card_email").val(),card_phone: $("#card_phone").val(),type: type,amount: amount,id: amount,id: data.response.token.token}, function(data, textStatus, xhr) {
+        $('#2checkout_btn_wallet').html("{{LANG Pay}}");
+        $('#2checkout_btn_wallet').attr('disabled');
+        $('#2checkout_btn_wallet').removeAttr('disabled');
+        $('#2checkout_form_wallet').find('.ball-pulse').fadeOut(100);
+        if (data.status == 200) {
+            window.location.href = data.url;
+          } else {
+            $('#2checkout_alert_wallet').html("<div class='alert alert-danger'>"+data.error+"</div>");
+        setTimeout(function () {
+          $('#2checkout_alert_wallet').html("");
+        },3000);
+          }
+        /*optional stuff to do after success */
+      });
+  };
+
+  // Called when token creation fails.
+  var errorCallback = function(data) {
+    $('#2checkout_btn_wallet').html("{{LANG Pay}}");
+    $('#2checkout_btn_wallet').removeAttr('disabled');
+    $('#2checkout_form_wallet').find('.ball-pulse').fadeOut(100);
+      if (data.errorCode === 200) {
+          tokenRequest();
+      } else {
+        $('#2checkout_alert_wallet').html("<div class='alert alert-danger'>"+data.errorMsg+"</div>");
+      setTimeout(function () {
+        $('#2checkout_alert_wallet').html("");
+      },3000);
+      }
+  };
+
+  var tokenRequest = function() {
+    $('#card_number').val($('#_number_').val());
+    $('#2checkout_btn_wallet').html("{{LANG Please wait..}}");
+    $('#2checkout_btn_wallet').attr('disabled','true');
+    if ($("#card_number").val() != '' && $("#card_cvc").val() != '' && $("#card_month").val() != '' && $("#card_year").val() != '' && $("#card_name").val() != '' && $("#card_address").val() != '' && $("#card_city").val() != '' && $("#card_state").val() != '' && $("#card_zip").val() != '' && $("#card_country").val() != 0 && $("#card_email").val() != '' && $("#card_phone").val() != '') {
+      $('#2checkout_form_wallet').find('.ball-pulse').fadeIn(100);
+      // Setup token request arguments
+        var args = {
+            sellerId: "<?php echo($music->config->checkout_seller_id) ?>",
+            publishableKey: "<?php echo($music->config->checkout_publishable_key) ?>",
+            ccNo: $("#card_number").val(),
+            cvv: $("#card_cvc").val(),
+            expMonth: $("#card_month").val(),
+            expYear: $("#card_year").val()
+        };
+
+        // Make the token request
+        TCO.requestToken(successCallback, errorCallback, args);
+    }
+    else{
+      $('#2checkout_btn_wallet').html("{{LANG Pay}}");
+      $('#2checkout_btn_wallet').removeAttr('disabled');
+      $('#2checkout_alert_wallet').html("<div class='alert alert-danger'><?php echo(lang("Please check your details")) ?></div>");
+      setTimeout(function () {
+        $('#2checkout_alert_wallet').html("");
+      },3000);
+
+    }
+
+
+  };
+</script>

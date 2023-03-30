@@ -1,0 +1,112 @@
+<div class="col-xl-4 col-lg-6 col-md-6 address_{{id}}">
+	<div class="address_book">
+		<div class="address_book_innr">
+			<div class="address_box border-0 px-3">
+				<p class="addrs_name">{{name}}</p>
+				<p class="addrs_phone">{{phone}}</p>
+				<p class="addrs_street">{{city}}<br>{{country}}</p>
+				<p class="addrs_count">{{zip}}</p>
+			</div>
+			<div class="row mx-0 px-2 pb-3">
+				<div class="col-6 px-2">
+					<a href="javascript:void(0)" class="btn btn-mat btn-info btn-block" onclick="EditAddress('{{id}}')">{{LANG Edit}}</a>
+				</div>
+				<div class="col-6 px-2">
+					<a href="javascript:void(0)" class="btn btn-mat btn-danger btn-block" onclick="DeleteAddress('{{id}}','hide')">{{LANG Delete}}</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="edit_address_modal_{{id}}" tabindex="-1" role="dialog" aria-labelledby="edit_address_modal" aria-hidden="true" data-id="0">
+  <div class="modal-dialog mat_box" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{LANG Edit Address}}</h5>
+      </div>
+      <form class="edit_address_form_{{id}}" method="post">
+      	<div class="modal-body">
+	      	<div class="modal_edit_address_modal_alert_{{id}}"></div>
+	        <div class="form-group mat_input">
+				<div class="col-md-12">
+					<input type="text" name="name" id="name" autofocus placeholder="{{LANG Name}}" value="{{name}}">
+				</div>
+			</div>
+	        <div class="form-group mat_input">
+				<div class="col-md-12">
+					<input type="text" name="phone" id="phone" autofocus placeholder="{{LANG Phone}}" value="{{phone}}">
+				</div>
+			</div>
+	        <div class="form-group mat_input">
+				<div class="col-md-12">
+					<input type="text" name="country" id="country" autofocus placeholder="{{LANG Country}}" value="{{country}}">
+				</div>
+			</div>
+	        <div class="form-group mat_input">
+				<div class="col-md-12">
+					<input type="text" name="city" id="city" autofocus placeholder="{{LANG City}}" value="{{city}}">
+				</div>
+			</div>
+	        <div class="form-group mat_input">
+				<div class="col-md-12">
+					<input type="text" name="zip" id="zip" autofocus placeholder="{{LANG Postcode / Zip}}" value="{{zip}}">
+				</div>
+			</div>
+	        <div class="form-group mat_input">
+				<div class="col-md-12">
+					<textarea placeholder="{{LANG Address}}" name="address">{{address}}</textarea>
+				</div>
+			</div>
+	      </div>  
+	      <input type="hidden" name="id" value="{{id}}">
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">{{LANG Cancel}}</button>
+	        <button type="submit" class="btn btn-primary btn-mat">{{LANG Edit}}</button>
+	      </div>
+      </form>
+    </div>
+  </div>
+</div>
+<style type="text/css">
+	.modal-backdrop {
+	  z-index: -1;
+	}
+</style>
+<script type="text/javascript">
+	$(document).ready(function() { 
+    var options = { 
+    	url: "{{CONFIG ajax_url}}/address/edit?hash_id=" + getHashID(),
+        beforeSubmit:  function () {
+        	$('.modal_edit_address_modal_alert_{{id}}').empty();
+        	$("#edit_address_modal_{{id}}").find('.btn-mat').attr('disabled', 'true');
+        	$("#edit_address_modal_{{id}}").find('.btn-mat').text("{{LANG Please wait..}}");
+        }, 
+        success: function (data) {
+        	$("#edit_address_modal_{{id}}").find('.btn-mat').removeAttr('disabled')
+        	$("#edit_address_modal_{{id}}").find('.btn-mat').text("{{LANG Edit}}");
+        	if (data.status == 200) {
+        		$('.modal_edit_address_modal_alert_{{id}}').html('<div class="alert alert-success bg-success"><i class="fa fa-check"></i> '+
+	            data.message
+	            +'</div>');
+	            if (data.url && data.url != '') {
+	            	setTimeout(function () {
+		            	/*location.href = data.url;*/
+                  $('.modal_edit_address_modal_alert_{{id}}').empty();
+                  $("#edit_address_modal_{{id}}").find('.btn-mat').removeAttr('disabled')
+                  $("#edit_address_modal_{{id}}").find('.btn-mat').text("{{LANG Edit}}");
+                  $('#edit_address_modal_{{id}}').modal('hide');
+                  $('.edit_address_form_{{id}}')[0].reset();
+                  goToAjaxLink("<?php echo (IS_LOGGED && !empty($music->userData) ? 'settings/'. $music->userData->username .'/addresses' : 'feed'); ?>");
+		            },2000);
+	            }
+        	} else {
+        		$('.modal_edit_address_modal_alert_{{id}}').html('<div class="alert alert-danger bg-danger"><i class="fa fa-check"></i> '+
+            data.message
+            +'</div>');
+        	} 
+        }
+    }; 
+    $('.edit_address_form_{{id}}').ajaxForm(options); 
+});
+</script>

@@ -1,0 +1,116 @@
+<div class="ma_page_content">
+	<div class="ma_pc_inner">
+		<div class="page_padding">
+			<div class="ma_tabs store_tabs">
+				<ul class="list-unstyled mb-0">
+					<li class="<?php echo ($music->pageType == 'songs') ? 'active' : ''; ?>">
+						<a href="{{LINK store/songs}}" data-load="store/songs"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M21,3V15.5A3.5,3.5 0 0,1 17.5,19A3.5,3.5 0 0,1 14,15.5A3.5,3.5 0 0,1 17.5,12C18.04,12 18.55,12.12 19,12.34V6.47L9,8.6V17.5A3.5,3.5 0 0,1 5.5,21A3.5,3.5 0 0,1 2,17.5A3.5,3.5 0 0,1 5.5,14C6.04,14 6.55,14.12 7,14.34V6L21,3Z" /></svg> {{LANG Songs}}</a>
+					</li>
+					<li class="<?php echo ($music->pageType == 'album') ? 'active' : ''; ?>">
+						<a href="{{LINK store/album}}" data-load="store/album"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M4,6H2V20A2,2 0 0,0 4,22H18V20H4M18,7H15V12.5A2.5,2.5 0 0,1 12.5,15A2.5,2.5 0 0,1 10,12.5A2.5,2.5 0 0,1 12.5,10C13.07,10 13.58,10.19 14,10.5V5H18M20,2H8A2,2 0 0,0 6,4V16A2,2 0 0,0 8,18H20A2,2 0 0,0 22,16V4A2,2 0 0,0 20,2Z" /></svg> {{LANG Albums}}</a>
+					</li>
+					<?php if( $music->config->artist_sell == 'on' ) { ?>
+					<li class="<?php echo ($music->pageType == 'top') ? 'active' : ''; ?>">
+						<a href="{{LINK store/top}}" data-load="store/top"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M16,11.78L20.24,4.45L21.97,5.45L16.74,14.5L10.23,10.75L5.46,19H22V21H2V3H4V17.54L9.5,8L16,11.78Z" /></svg> {{LANG Top Seller}}</a>
+					</li>
+					<?php } ?>
+					<?php if( $music->config->store_system == 'on' ) { ?>
+					<li class="<?php echo ($music->pageType == 'products') ? 'active' : ''; ?>">
+						<a href="{{LINK store/products}}" data-load="store/products"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M17,18C15.89,18 15,18.89 15,20A2,2 0 0,0 17,22A2,2 0 0,0 19,20C19,18.89 18.1,18 17,18M1,2V4H3L6.6,11.59L5.24,14.04C5.09,14.32 5,14.65 5,15A2,2 0 0,0 7,17H19V15H7.42A0.25,0.25 0 0,1 7.17,14.75C7.17,14.7 7.18,14.66 7.2,14.63L8.1,13H15.55C16.3,13 16.96,12.58 17.3,11.97L20.88,5.5C20.95,5.34 21,5.17 21,5A1,1 0 0,0 20,4H5.21L4.27,2M7,18C5.89,18 5,18.89 5,20A2,2 0 0,0 7,22A2,2 0 0,0 9,20C9,18.89 8.1,18 7,18Z" /></svg> {{LANG Products}}</a>
+					</li>
+					<?php } ?>
+				</ul>
+			</div>
+			<div class="row">
+				<div class="col-md-9">
+					<div class="row mx-n2 store_songs" id="store_result">
+
+						<?php if( $data['records'] > 0 ){?>
+							{{html_content}}
+
+						<?php } else { ?>
+							<div class="no-track-found bg_light"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M21,3V15.5A3.5,3.5 0 0,1 17.5,19A3.5,3.5 0 0,1 14,15.5A3.5,3.5 0 0,1 17.5,12C18.04,12 18.55,12.12 19,12.34V6.47L9,8.6V17.5A3.5,3.5 0 0,1 5.5,21A3.5,3.5 0 0,1 2,17.5A3.5,3.5 0 0,1 5.5,14C6.04,14 6.55,14.12 7,14.34V6L21,3Z" /></svg>{{LANG No more songs}}</div>
+						<?php } ?>
+
+					</div>
+
+					<?php if( $data['records'] > 0 ){?>
+						<div class="text-center see_all">
+							<a href="javascript:void(0); loadMore('products', '');" id="load-more-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M17,13H13V17H11V13H7V11H11V7H13V11H17M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"></path></svg> {{LANG Load More}}</a>
+						</div>
+					<?php } ?>
+
+
+				</div>
+				<input type="hidden" id="filter_type" value="products">
+				<div class="col-md-3">
+
+					<div class="store_filters">
+
+						<div class="store_widget" style="<?php if( $music->config->artist_sell !== 'on' ) { echo "display: none;";} ?>">
+							<div class="s_widget_head">
+								<span class="price"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M3,6H21V18H3V6M12,9A3,3 0 0,1 15,12A3,3 0 0,1 12,15A3,3 0 0,1 9,12A3,3 0 0,1 12,9M7,8A2,2 0 0,1 5,10V14A2,2 0 0,1 7,16H17A2,2 0 0,1 19,14V10A2,2 0 0,1 17,8H7Z"></path></svg></span> {{LANG Price}}
+							</div>
+							<div class="store_pric_range">
+								<p>
+									<label for="amount">{{LANG Price range}}:</label>
+									<input type="text" id="amount" readonly>
+								</p>
+								<div id="slider-range"></div>
+							</div>
+						</div>
+
+						<div class="store_widget">
+							<div class="s_widget_head">
+								<span class="geners"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12,18.54L19.37,12.8L21,14.07L12,21.07L3,14.07L4.62,12.81L12,18.54M12,16L3,9L12,2L21,9L12,16M12,4.53L6.26,9L12,13.47L17.74,9L12,4.53Z"></path></svg></span> {{LANG Category}}
+							</div>
+							<div class="store_categories">
+								<?php foreach($music->products_categories as $key => $category){?>
+								<span class="check_box">
+										<input type="checkbox" name="<?php echo $category;?>" id="<?php echo $category;?>" value="<?php echo $key;?>" class="song_category" data-category="<?php echo $key;?>">
+										<label for="<?php echo $category;?>"><?php echo $category;?></label>
+									</span>
+								<?php } ?>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	$( function() {
+	    $( "#slider-range" ).slider({
+	      range: true,
+	      min: 1,
+	      max: 10000,
+	      values: [ 1, 10000 ],
+	      slide: function( event, ui ) {
+	          filter_search_results(ui.values[ 0 ],ui.values[ 1 ]);
+			  $( "#amount" ).val( "{{CONFIG currency_symbol}}" + ui.values[ 0 ] + " - " + "{{CONFIG currency_symbol}}" + ui.values[ 1 ] );
+	      }
+	    });
+	    $( "#amount" ).val( "{{CONFIG currency_symbol}}" + $( "#slider-range" ).slider( "values", 0 ) + " - {{CONFIG currency_symbol}}" + $( "#slider-range" ).slider( "values", 1 ) );
+	  } );
+
+	  function filter_search_results(from=0.99,to=40){
+	      let category = [];
+	      $('.song_category').each(function(i, obj) {
+	          if(this.checked){
+	              category.push($(obj).attr('data-category'));
+	          }
+	      });
+	      $.get(ajaxUrl() + "/product/product_search", {price_from: from, price_to: to, category: category}, function (data) {
+	          if(data.status == 200){
+	              $('#store_result').html(data.html);
+	              $('#load-more-button').html('<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M17,13H13V17H11V13H7V11H11V7H13V11H17M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"></path></svg> {{LANG Load More}}');
+	          }
+	      });
+	  }
+	  $(document).on('click','.song_category',function(e){
+		  var from = $( "#slider-range" ).slider( "values", 0 );
+		  var to = $( "#slider-range" ).slider( "values", 1 );
+	      filter_search_results(from,to);
+	  });
+</script>

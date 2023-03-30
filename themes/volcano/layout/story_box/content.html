@@ -1,0 +1,99 @@
+<div class="lightbox-container">
+	<div class="lightbox-backgrond" onclick="CloseLightbox();"></div>
+	<div class="lightbox-content <?php if ($music->story->paid > 0) { ?>paid-story<?php } ?> lightpost-<?php echo($music->story->id) ?>" id="post-<?php echo($music->story->id) ?>" data-post-id="<?php echo($music->story->id) ?>">
+		<div class="mfp-wrap"><span class="mfp_progress_line_"><span class="width_ load" style="width: 0%;"></span></span></div>
+	
+		<div class="story-img" id="<?php echo($music->story->id) ?>">
+			<span class="changer previous-btn pointer" onclick="PreviousStory('<?php echo($music->story->user_data->id) ?>','<?php echo($music->story->id) ?>','<?php echo(!empty($music->story->pre) ? $music->story->pre->user_data->id : 0) ?>','<?php echo(!empty($music->story->pre) ? $music->story->pre->id : 0) ?>')" style="display: none;">
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z"></path></svg>
+			</span>
+			<span class="changer next-btn pointer" onclick="NextStory('<?php echo($music->story->user_data->id) ?>','<?php echo($music->story->id) ?>','<?php echo(!empty($music->story->next) ? $music->story->next->user_data->id : 0) ?>','<?php echo(!empty($music->story->next) ? $music->story->next->id : 0) ?>')" style="display: none;">
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"></path></svg>
+			</span>
+			<img src="<?php echo($music->story->image) ?>" alt="media" class="">
+			<?php if ($music->story->url) { ?>
+				<div class="text-center more-info">
+					<a href="<?php echo($music->story->url); ?>" class="btn btn-mat btn-primary" target="_blank">{{LANG More Info}}</a>
+				</div>
+			<?php } ?>
+		</div>
+		
+		<div class="wo_story_header">
+			<div class="wo_stor_h_info">
+				<div class="user-avatar">
+					<img src="<?php echo($music->story->user_data->avatar) ?>" alt="">
+				</div>
+				<div class="wo_s_h_i_r">
+					<div class="user-name h5">
+						<a href="<?php echo($music->story->user_data->url) ?>" data-load="<?php echo($music->story->user_data->username) ?>"><?php echo($music->story->user_data->name) ?></a>
+					</div>
+					<span class="ajax-time" title="<?php echo Time_Elapsed_String($music->story->time); ?>"><?php echo Time_Elapsed_String($music->story->time); ?></span>
+				</div>
+			</div>
+			<div class="wo_stor_h_opts">
+				<?php if ($music->story->user_id == $music->user->id) { ?>
+					<div class="close-lightbox" onclick="$('.lightbox-content').toggleClass('views_open');">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z"></path></svg>
+					</div>
+					<div class="close-lightbox" onclick="DeleteStory(<?php echo $music->story->id; ?>)">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"></path></svg>
+					</div>
+				<?php } ?>
+				<div class="close-lightbox" onclick="CloseLightbox();if (window.playAudio && window.playAudio == 'yes') {Amplitude.play();}">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x" style="margin-top: 0px;width: 24px;height: 24px;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+				</div>
+			</div>
+		</div>
+		
+		<?php if ($music->story->user_id == $music->user->id) { ?>
+			<div class="comment-section">
+				<div class="comment-section-inner">
+					<div class="comment-inner-header views_count">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg> <?php echo($music->story->views_count) ?> {{LANG Views}}
+					</div>
+					<div class="clear"></div>
+					<div class="views_container_">
+						<?php if (!empty($music->story->views_users)) {
+							foreach ($music->story->views_users as $key => $music->view) {
+								echo loadPage("story_box/views_list");
+							}}
+						 ?>
+					</div>
+					<?php if (!empty($music->story->views_users) && count($music->story->views_users) == 10) { ?>
+						<div class="load-more pointer" onclick="GetMoreStoryViews(<?php echo $music->story->id;?>,this);">
+							<button class="btn btn-default text-center pointer" id="load_more_friends">
+								<svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather"><polyline points="6 9 12 15 18 9"></polyline></svg> {{LANG Load More}}
+							</button>
+						</div>
+					<?php } ?>
+				</div>
+				<div class="clear"></div>
+			</div>
+		<?php } ?>
+		
+		<audio class="hidden" autoplay id="story_audio">
+			<source src="<?php echo $music->story->audio; ?>" type="audio/mp3">
+			Your browser does not support the audio element.
+		</audio>
+	</div>
+	
+	<script>
+		jQuery(document).ready(function($) {
+			setTimeout(function () {
+				var audio = document.getElementById('story_audio');
+				audio.onended = function() {
+					if (!$('.lightpost-<?php echo $music->story->id;?>').hasClass('dont_close')) {
+						$('.lightbox-content').find('.next-btn').click();
+					}
+				};
+				$('.width_').css('width', '100%');
+				$('.width_').css('transition', 'all '+parseInt(audio.duration)+'s');
+			},100);
+		});
+		$(document).keydown(function(e) {
+			if (e.keyCode == 27) {
+				CloseLightbox();
+			}
+		});
+	</script>
+</div>

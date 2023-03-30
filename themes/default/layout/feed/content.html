@@ -1,0 +1,62 @@
+<?php if ( $music->announcement !== '' ) {?>
+	<div class="announcement-renderer">
+		{{ANNOUNCEMENT}}
+	</div>
+	<br>
+<?php } ?>
+
+<div class="ma_page_content">
+	<div class="ma_pc_inner">
+		<div class="container">
+			<?php echo GetAd('header');?>
+			<div class="row">
+				<div class="col-md-8">
+                    <?php if ($music->config->story_system == 'on') { ?>
+					<div class="user-status-home">
+						<ul class="status-list">
+							<?php if ($music->config->can_use_story_system) { ?>
+							<li class="create_new">
+								<a href="{{LINK create_story}}" data-load="create_story">
+									<img src="{{ME avatar}}" alt="{{ME name}}">
+									<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="d-block"><path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"></path></svg>{{LANG Create Story}}</p>
+								</a>
+							</li>
+							<?php } ?>
+                            <?php 
+                            $stories = GetAllFollowStories();
+                            if (!empty($stories)) {
+                                foreach ($stories as $key => $value) { ?>
+								<li<?php if ($value->paid > 0) { ?> class="paid_story"<?php } ?>>
+									<a href="javascript:void(0)" onclick="StartStories(<?php echo($value->user_data->id) ?>,<?php echo($value->id) ?>)">
+										<img src="<?php echo($value->image) ?>" alt="<?php echo($value->user_data->name) ?>">
+										<?php if ($value->paid > 0) { ?>
+											<span class="paid_story_ico">
+												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M5 16L3 5L8.5 10L12 4L15.5 10L21 5L19 16H5M19 19C19 19.6 18.6 20 18 20H6C5.4 20 5 19.6 5 19V18H19V19Z" /></svg>
+											</span>
+										<?php } ?>
+										<p><?php echo($value->user_data->name) ?></p>
+									</a>
+								</li>
+                            <?php } } ?>
+						</ul>
+					</div>
+                    <?php } ?>
+					<div class="feed_post_block" id="user-feed-data">
+						{{html}}
+					</div>
+					<?php if($music->feedcount > 0){?>
+						<div class="text-center see_all">
+							<a href="javascript:void(0); loadMore('songs', 'all');" id="load-more-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M17,13H13V17H11V13H7V11H11V7H13V11H17M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"></path></svg> {{LANG Load More}}</a>
+						</div>
+					<?php }?>
+				</div>
+				<div class="col-md-4">
+					{{ads}}
+					<?php echo GetAd('side_bar');?>
+					{{artist_sidebar}}
+					{{weekly_sidebar}}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

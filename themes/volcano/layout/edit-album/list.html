@@ -1,0 +1,13 @@
+<div class="no-min-height uploaded_albm_slist" id="upload-song-form-{{form_id}}" data-id="{{t_id}}">
+	<div class="row" id="upload-form-{{form_id}}">
+		<div class="col-lg-10 offset-lg-1">
+			<div class="form-horizontal no-padding-form submitted" method="POST" id="song-form-{{form_id}}">
+				<p>{{t_title}}</p>
+				<span>
+					<a href="{{LINK edit-track/{{t_audio_id}}}}" data-load="edit-track/{{t_audio_id}}" class="btn btn-success"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M6.414 16L16.556 5.858l-1.414-1.414L5 14.586V16h1.414zm.829 2H3v-4.243L14.435 2.322a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414L7.243 18zM3 20h18v2H3v-2z" /></svg> {{LANG Edit}}</a>&nbsp;&nbsp;&nbsp;
+					<a href="javascript:void(0)" onclick="$('#delete-song').attr('data-id', '{{t_id}}')" data-toggle="modal" data-target="#delete-song" class="btn btn-danger"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M17 6h5v2h-2v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8H2V6h5V3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v3zm1 2H6v12h12V8zm-9 3h2v6H9v-6zm4 0h2v6h-2v-6zM9 4v2h6V4H9z" /></svg> {{LANG Delete}}</a>
+				</span>
+			</div>
+		</div>
+	</div>
+</div>

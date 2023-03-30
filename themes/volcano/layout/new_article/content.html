@@ -1,0 +1,149 @@
+<script src="<?php echo LoadAdminLink('vendors/tinymce/js/tinymce/tinymce.min.js'); ?>"></script>
+<div class="ma_page_content">
+    <div class="ma_pc_inner">
+		<div class="page_padding">
+			<div class="row">
+				<div class="col-lg-8 offset-lg-2">
+					<h2 class="home_widget_title home_big_title mt-0">{{LANG create_new_article}}</h2>
+					<div class="content upload_music no-flex ds_create_edit_ads_cont p-5">
+						<form class="form user-product-form ds_create_edit_prods pp_create_blog" method="POST" id="upload_store_image">
+							<div class="form-group mat_input float">
+								<input type="text" name="title" id="title" placeholder=" " class="form-control" autofocus="" value="">
+								<label for="title">{{LANG title}}</label>
+							</div>
+							
+							<div class="form-group mat_input float">
+								<textarea id="description" name="description" placeholder=" " class="form-control" rows="3"></textarea>
+								<label for="description">{{LANG description}}</label>
+							</div>
+							
+							<div class="form-group mat_input float">
+								<select name="category" id="category" class="form-control">
+									<option value="" selected disabled>{{LANG category}}</option>
+									<?php
+										$store_categories = blog_categories();
+										foreach ($store_categories as $key => $category) {
+											echo '<option value="'.$key.'">'.$category.'</option>';
+										}
+									?>
+								</select>
+								<label for="category">{{LANG category}}</label>
+							</div>
+							
+							<div class="form-group mat_input float tag_float">
+								<input name="tags" id="tags" type="text" placeholder=" " class="form-control">
+								<label>{{LANG tags}}</label>
+							</div>
+							
+							<h3 class="mat_form_title mb-4">{{LANG article}}</h3>
+							<div class="form-group mat_input float">
+								<textarea id="content" name="content" rows="8" placeholder=" "></textarea>
+							</div>
+							
+							<h3 class="mat_form_title mb-4">{{LANG Upload Photo}}</h3>
+							<div class="form-group mat_input">
+								<div class="ds_media_file mt-0 mat_file_upload">
+									<div class="btn btn-file image_file" onclick="document.getElementById('user-photo').click(); return false">
+										<span id="user_image"><svg xmlns="http://www.w3.org/2000/svg" width="62.982" height="57.205" viewBox="0 0 62.982 57.205"> <path id="Path_6622" data-name="Path 6622" d="M3782.481,7254.287l12.127,12.129-4.032,4.033-5.234-5.207V7281.2h-5.721v-15.988l-5.234,5.234-4.032-4.033Zm0-30.289a19.963,19.963,0,0,1,19.878,17.705,15.79,15.79,0,0,1,11.555,16.561,15.735,15.735,0,0,1-14.271,14.3V7266.9a17.168,17.168,0,0,0-34.322-.658v6.32a15.742,15.742,0,0,1-2.717-30.861A19.963,19.963,0,0,1,3782.481,7224Z" transform="translate(-3750.99 -7223.998)" fill="#d8d8d8"></path> </svg> {{LANG select_images_import}}</span>
+									</div>
+								</div>
+							</div>
+							
+							<div class="last-sett-btn modal-footer mat_sett_btn">
+								<button type="submit" class="btn btn-primary btn-mat">{{LANG publish}}</button>
+							</div>
+							
+							<input type="hidden" name="hash_id" value="<?php echo createMainSession();?>">
+							<input type="file" name="thumbnail" class="hidden" id="user-photo" accept="image/x-png,image/jpg,image/jpeg">
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+    </div>
+</div>
+<script>
+    $(function() {
+		$("#tags").tagit({
+			allowSpaces: true
+		});
+	  
+		$("ul.tagit input").focus(function(){
+			$('.tag_float').addClass("done");
+		}).blur(function(){
+			$('.tag_float').removeClass("done");
+		});
+	
+        tinymce.init({
+            selector: '#content',
+            height: 270,
+            entity_encoding : "raw",
+            paste_data_images: true,
+            image_advtab: true,
+            // toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+            // toolbar2: "print preview media | forecolor backcolor",
+            plugins: [
+                "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+                "searchreplace wordcount visualblocks visualchars code fullscreen",
+                "insertdatetime media nonbreaking save table contextmenu directionality",
+                "template paste textcolor colorpicker textpattern"
+            ],
+        });
+    });
+    $(document).ready(function($) {
+        $("#user-photo").change(function (event) {
+            $("#user_image").html("<img src='" + window.URL.createObjectURL(this.files[0]) + "' alt='Picture' width='100%'>")
+        });
+
+        var form_add_settings = $('form#upload_store_image');
+        form_add_settings.ajaxForm({
+            url: '{{CONFIG ajax_url}}/ap/add_new_blog_article',
+            type: 'POST',
+            dataType: 'json',
+            beforeSend: function() {
+                form_add_settings.find('.btn-primary').text('Please wait..');
+            },
+            beforeSubmit : function(arr, $form, options){
+                //arr.splice(0, 1);
+                tinymce.get("content").setContent(tinymce.activeEditor.getContent());
+                document.getElementById("content").value=tinymce.activeEditor.getContent();
+                arr.push({name:'content', value:btoa(unescape(encodeURIComponent($('#content').val())))});
+                arr.push({name:'category', value:$('#category').val()})
+            },
+            success: function(data) {
+                $("html, body").animate({ scrollTop: 0 }, "slow");
+                swal({
+                    title: '{{LANG Success}}',
+                    text: data.message,
+                    type: 'success',
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'OK',
+                    buttonsStyling: true,
+                    confirmButtonClass: 'btn btn-success',
+                }).then(function () { swal.close(); });
+
+                //form_add_settings.find('.pp_load_loader').removeClass('loadingg');
+                form_add_settings.find('button[type="submit"]').removeAttr('disabled');
+                if (data.status == 200) {
+                    setTimeout(function () {
+                        goToAjaxLink('blogs');
+                    },3000);
+                }
+                else if (data.status == 400) {
+                    swal({
+                        title: '{{LANG error_}}',
+                        text: data.message,
+                        type: 'error',
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'OK',
+                        buttonsStyling: true,
+                        confirmButtonClass: 'btn btn-success',
+                    }).then(function () { swal.close(); });
+                }
+                form_add_settings.find('.btn-primary').text('{{LANG save}}');
+            }
+        });
+    });
+</script>

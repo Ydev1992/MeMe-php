@@ -1,0 +1,130 @@
+<div class="container-fluid">
+    <div>
+        <h3>Plugins</h3>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="#">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="#">Manage Plugins</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">Plugins</li>
+            </ol>
+        </nav>
+    </div>
+    <!-- Vertical Layout -->
+		<div class="pro-settings-alert"></div>
+		<form action="#" method="post" class="setting-themes-container">
+			<div class="row">
+                 <?php
+                 $getPlugins = getPlugins();
+                 foreach ($getPlugins as $plugin) {
+                            if (file_exists($plugin['path'])) {
+                 ?>
+                 <div class="col-lg-6">
+					<div class="card">
+						<div class="card-body">
+							<div class="theme <?php echo ($plugin['status'] == '1') ? ' active' : '';?>" id="plugin-<?php echo $plugin['name'];?>">
+								<div class="mr-12">
+								</div>
+								<div>
+									<h5 class="card-title mb-2 themeName"> <img style="width: 50px; margin-right: 10px; border-radius: 5px;" src="{{LINK }}/<?php echo $plugin['config']['thumbnail'];?>" alt="plugin"><?php echo $plugin['config']['plugin_details']['name'];?> </h5>
+                                    <hr>
+                                    <p class="card-text themeAuthor"><strong>Description:</strong> <br> <?php echo $plugin['config']['plugin_details']['description'];?></a></p>
+                                    <p class="card-text themeAuthor"><strong>Author</strong> <br><?php echo $plugin['config']['plugin_details']['author'];?></a></p>
+                                    <p class="card-text themeAuthor"><strong>Version</strong> <br>v<?php echo $plugin['config']['plugin_details']['version'];?></a></p>
+                                    <hr>
+									<?php if($plugin['status'] == '1'  && $plugin['version'] == $plugin['config']['plugin_details']['version']) { ?>
+                                        <div class="row">
+                                            <?php if ($plugin['is_settings'] == true) { ?>
+                                            <div class="col-md-2">
+                                                <div class="active"><a type="button" href="<?php echo LoadAdminLinkSettings('plugins-settings?id=' . $plugin['name']); ?>" class="btn btn-primary" style="box-shadow: none;">Settings</a></div>
+                                            </div>
+                                            <?php } ?>
+                                            <div class="col-md-2">
+                                                <div class="active"><button type="button" class="btn btn-danger" style="box-shadow: none;" onclick="activateStatus('deactivate', this, '<?php echo $plugin['id']?>')"> Deactivate</button></div>
+                                            </div>
+                                        </div>
+									<?php } else if ($plugin['installed'] == false) { ?>
+										<div class="active"><a href="javascript:void(0)" onclick="installPlugin('<?php echo $plugin['name']?>', this, '<?php echo $plugin['config']['plugin_details']['version']?>')" class="btn btn-success">Install</a></div>
+									<?php } else if ($plugin['version'] != $plugin['config']['plugin_details']['version']) {?>
+										<div class="active"><a href="javascript:void(0)" onclick="updatePlugin('<?php echo $plugin['name']?>', this, '<?php echo $plugin['config']['plugin_details']['version']?>')" class="btn btn-success">Update</a></div>
+									<?php } else if ($plugin['status'] == '0')  { ?>
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <div class="active"><button type="button" class="btn btn-info" style="box-shadow: none;" onclick="activateStatus('activate', this, '<?php echo $plugin['id']?>')"> Activate</button></div>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+									<div class="clearfix"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+                 </div>
+                 <?php } }?>
+			</div>
+			<hr>
+            
+			<input type="hidden" name="hash_id" value="<?php echo createMainSession();?>">
+		</form>
+        <?php if(empty($getPlugins)) { ?>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="div alert alert-warning">No plugins found in ./plugins folder.</div>
+                </div>
+            </div>
+        <?php } ?>
+        <div class="clearfix"></div>
+    <!-- #END# Vertical Layout -->
+<script>
+
+function updatePlugin(plugin, input, version) {
+    $(input).text("Updating..");
+    $.post('{{CONFIG ajax_url}}/ap/update-plugin', {plugin: plugin, version:version}, function (data) {
+        if (data.status == 200) {
+            window.location = "<?php echo LoadAdminLinkSettings('manage-plugins'); ?>";
+        } else {
+            $(input).text("Error found while updating.. please contact plugin author.");
+        }
+    });
+}
+function activateStatus(status, input, id) {
+    if (status == 'activate') {
+        $(input).text("Activating..");
+    } else {
+        $(input).text("Deactivating..");
+    }
+    $.post('{{CONFIG ajax_url}}/ap/plugin-status', {id: id, status: status}, function (data) {
+        if (data.status == 200) {
+            window.location = "<?php echo LoadAdminLinkSettings('manage-plugins'); ?>";
+        } 
+    });
+}
+
+function installPlugin(plugin, input, version) {
+    $(input).text("Installing..");
+    $.post('{{CONFIG ajax_url}}/ap/install-plugin', {plugin: plugin, version:version}, function (data) {
+        if (data.status == 200) {
+            window.location = "<?php echo LoadAdminLinkSettings('manage-plugins'); ?>";
+        } else {
+            $(input).text("Error found while installing.. please contact plugin author.");
+        }
+    });
+}
+$(function() {
+   $('a#active').click(function() {
+    $('#theme_name').val($(this).attr('value'));
+     $('form.setting-themes-container').submit();
+   });
+   $('form.setting-themes-container').ajaxForm({
+     url: '{{CONFIG ajax_url}}/ap/save-settings',
+     success: function(data) {
+       if (data.status == 200) {
+         window.location = "<?php echo LoadAdminLinkSettings('manage-themes'); ?>";
+       } 
+     }
+  });
+});
+</script>

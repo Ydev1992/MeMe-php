@@ -1,0 +1,1116 @@
+
+<div class="container-fluid">
+    <div>
+        <h3>General Configuration</h3>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="#">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="#">Settings</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">General Configuration</li>
+            </ol>
+        </nav>
+    </div>
+    <!-- Vertical Layout -->
+        <div class="row">
+        <div class="col-lg-6 col-md-6 pull-left">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">General Configuration</h6>
+                    <div class="fame-settings-alert"></div>
+                    <div class="fame-settings-test-alert"></div>
+                    <form class="fame-settings" method="POST">
+                        <div class="float-left">
+                            <label for="developer_mode" class="main-label">Developer Mode</label>
+                            <br><small class="admin-info">By enabling developer mode, error reporting will be enabled, <br>it's not recommended to enable this mode without the help of a developer,<br> this may occur some issues in your website.</small>
+                        </div>
+                        <div class="form-group float-right switcher">
+                            <input type="hidden" name="developer_mode" value="off" />
+                            <input type="checkbox" name="developer_mode" id="chck-developer_mode" value="on" <?php echo ($music->config->developer_mode == 'on') ? 'checked': '';?>>
+                            <label for="chck-developer_mode" class="check-trail"><span class="check-handler"></span></label>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="float-left">
+                            <label for="developers_page" class="main-label">Developers (API System)</label>
+                            <br><small class="admin-info">Show /developers page to all users for API requests.</small>
+                        </div>
+                        <div class="form-group float-right switcher">
+                            <input type="hidden" name="developers_page" value="off" />
+                            <input type="checkbox" name="developers_page" id="chck-developers_page" value="on" <?php echo ($music->config->developers_page == 'on') ? 'checked': '';?>>
+                            <label for="chck-developers_page" class="check-trail"><span class="check-handler"></span></label>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="float-left">
+                            <label for="maintenance_mode" class="main-label">Maintenance Mode</label>
+                            <br><small class="admin-info">Turn the whole site under Maintenance. <br> You can get the site back by visiting <a href="<?php echo $music->config->site_url?>/?access=admin"><?php echo $music->config->site_url?>/?access=admin</a></small>
+                        </div>
+                        <div class="form-group float-right switcher">
+                            <input type="hidden" name="maintenance_mode" value="off" />
+                            <input type="checkbox" name="maintenance_mode" id="chck-maintenance_mode" value="on" <?php echo ($music->config->maintenance_mode == 'on') ? 'checked': '';?>>
+                            <label for="chck-maintenance_mode" class="check-trail"><span class="check-handler"></span></label>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+
+
+                        <div class="float-left">
+                            <label for="discover_land" class="main-label">Discover Page As Landing Page</label>
+                            <br><small class="admin-info">Set thee discover page as landing page for users.</small>
+                        </div>
+                        <div class="form-group float-right switcher">
+                            <input type="hidden" name="discover_land" value="0" />
+                            <input type="checkbox" name="discover_land" id="chck-discover_land" value="1" <?php echo ($music->config->discover_land == '1') ? 'checked': '';?>>
+                            <label for="chck-discover_land" class="check-trail"><span class="check-handler"></span></label>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                         <label for="language">Default Language</label>
+                        <br><small class="admin-info">Site default language</small>
+                        <div class="form-group">
+                            <select class="form-control show-tick" id="language" name="language">
+                              <option value="">-- Please select --</option>
+                            <?php
+                            $langs__footer = $music->langs;
+                            $langs_html    = '';
+                            foreach ($langs__footer as $key => $language) {
+                                $lang_explode = explode('.', $language);
+                                $language     = $lang_explode[0];
+                                $language_    = ucfirst($language);
+                                $selected = ($music->config->language == $language) ? 'selected': '';
+                                $langs_html .= '<option value="' . $language . '" ' . $selected . '>' . $language_ . '</option>';
+                            }
+                            echo $langs_html;
+                            ?>
+                            </select>
+                        </div>
+                         <div class="clearfix"></div>
+                        <hr>
+                        <label for="maxCharacters">Max Allowed Characters Length</label>
+                        <br><small class="admin-info">Max Allowed Characters Length</small>
+                        <div class="form-group">
+                            <select class="form-control show-tick" id="maxCharacters" name="maxCharacters">
+                              <option value="80"   <?php echo ($music->config->maxCharacters == 80) ? ' selected': '';?>>80 Characters</option>
+                              <option value="160"  <?php echo ($music->config->maxCharacters == 160) ? ' selected': '';?>>160 Characters</option>
+                              <option value="320"  <?php echo ($music->config->maxCharacters == 320) ? ' selected': '';?>>320 Characters</option>
+                              <option value="640"  <?php echo ($music->config->maxCharacters == 640) ? ' selected': '';?>>640 Characters</option>
+                              <option value="1280" <?php echo ($music->config->maxCharacters == 1280) ? ' selected': '';?>>1280 Characters</option>
+                              <option value="5000" <?php echo ($music->config->maxCharacters == 5000) ? ' selected': '';?>>5000 Characters</option>
+                              <option value="10000" <?php echo ($music->config->maxCharacters == 10000) ? ' selected': '';?>>Unlimited</option>
+                            </select>
+                        </div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Censored Words</label>
+                                <input type="text" name="censored_words" class="form-control" value="<?php echo ($music->config->censored_words);?>">
+                                <small class="admin-info"></small>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Song & Player Settings</h6>
+
+                    <div class="fame-settings-alert"></div>
+                    <div class="fame-settings-test-alert"></div>
+                    <form class="fame-settings" method="POST">
+                        <div class="float-left">
+                            <label for="artist_sell" class="main-label">Sell songs</label>
+                            <div class="dropdown user_filter_drop">
+                                <button class="btn btn-light" data-toggle="dropdown">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M8 13C6.14 13 4.59 14.28 4.14 16H2V18H4.14C4.59 19.72 6.14 21 8 21S11.41 19.72 11.86 18H22V16H11.86C11.41 14.28 9.86 13 8 13M8 19C6.9 19 6 18.1 6 17C6 15.9 6.9 15 8 15S10 15.9 10 17C10 18.1 9.1 19 8 19M19.86 6C19.41 4.28 17.86 3 16 3S12.59 4.28 12.14 6H2V8H12.14C12.59 9.72 14.14 11 16 11S19.41 9.72 19.86 8H22V6H19.86M16 9C14.9 9 14 8.1 14 7C14 5.9 14.9 5 16 5S18 5.9 18 7C18 8.1 17.1 9 16 9Z"></path></svg>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <div class="dropdown-menu-innr">
+                                        <b>Who can use this feature?</b>
+                                        <div>
+                                            <div class="round_check">
+                                                <input type="radio" name="who_can_sell" id="who_can_sell-admin" onchange="SelectProModel('can_use_sell',this)" value="admin" <?php echo ($music->config->who_can_sell == 'admin')   ? ' checked' : '';?>>
+                                                <label class="radio-inline" for="who_can_sell-admin" data-toggle="tooltip" data-placement="bottom" title="Admin"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,5A3,3 0 0,1 15,8A3,3 0 0,1 12,11A3,3 0 0,1 9,8A3,3 0 0,1 12,5M17.13,17C15.92,18.85 14.11,20.24 12,20.92C9.89,20.24 8.08,18.85 6.87,17C6.53,16.5 6.24,16 6,15.47C6,13.82 8.71,12.47 12,12.47C15.29,12.47 18,13.79 18,15.47C17.76,16 17.47,16.5 17.13,17Z"></path></svg></label> 
+                                            </div>
+                                            <div class="round_check">
+                                                <input type="radio" name="who_can_sell" id="who_can_sell-all" onchange="SelectProModel('can_use_sell',this)" value="all" <?php echo ($music->config->who_can_sell == 'all')   ? ' checked' : '';?>>
+                                                <label class="radio-inline" for="who_can_sell-all" data-toggle="tooltip" data-placement="bottom" title="All Users"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M16 17V19H2V17S2 13 9 13 16 17 16 17M12.5 7.5A3.5 3.5 0 1 0 9 11A3.5 3.5 0 0 0 12.5 7.5M15.94 13A5.32 5.32 0 0 1 18 17V19H22V17S22 13.37 15.94 13M15 4A3.39 3.39 0 0 0 13.07 4.59A5 5 0 0 1 13.07 10.41A3.39 3.39 0 0 0 15 11A3.5 3.5 0 0 0 15 4Z"></path></svg></label> 
+                                            </div>
+                                            <div class="round_check">
+                                                <input type="radio" name="who_can_sell" id="who_can_sell-pro" onchange="SelectProModel('can_use_sell',this)" value="pro" <?php echo ($music->config->who_can_sell == 'pro')   ? ' checked' : '';?>>
+                                                <label class="radio-inline" for="who_can_sell-pro" data-toggle="tooltip" data-placement="bottom" title="Pro Users Only"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M15,14C12.33,14 7,15.33 7,18V20H23V18C23,15.33 17.67,14 15,14M15,12A4,4 0 0,0 19,8A4,4 0 0,0 15,4A4,4 0 0,0 11,8A4,4 0 0,0 15,12M5,13.28L7.45,14.77L6.8,11.96L9,10.08L6.11,9.83L5,7.19L3.87,9.83L1,10.08L3.18,11.96L2.5,14.77L5,13.28Z"></path></svg></label> 
+                                            </div>
+                                            <div class="round_check">
+                                                <input type="radio" name="who_can_sell" id="who_can_sell-artist" onchange="SelectProModel('can_use_sell',this)" value="artist" <?php echo ($music->config->who_can_sell == 'artist')   ? ' checked' : '';?>>
+                                                <label class="radio-inline" for="who_can_sell-artist" data-toggle="tooltip" data-placement="bottom" title="Artist Only"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M16,9V7H12V12.5C11.58,12.19 11.07,12 10.5,12A2.5,2.5 0 0,0 8,14.5A2.5,2.5 0 0,0 10.5,17A2.5,2.5 0 0,0 13,14.5V9H16M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2Z"></path></svg></label> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ul>
+                            </div>
+                            <br><small class="admin-info">Users will be able to sell songs</small>
+                        </div>
+                        <div class="form-group float-right switcher">
+                            <input type="hidden" name="artist_sell" value="off" />
+                            <input type="checkbox" name="artist_sell" id="chck-artist_sell" value="on" <?php echo ($music->config->artist_sell == 'on') ? 'checked': '';?>>
+                            <label for="chck-artist_sell" class="check-trail"><span class="check-handler"></span></label>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Sales Commission</label>
+                                <input type="text" name="commission" class="form-control" value="<?php echo ($music->config->commission);?>">
+                                <small class="admin-info">How much is your commission from each sale? (%)</small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <label for="who_can_download">Who can download songs?</label>
+                        <div class="dropdown user_filter_drop">
+                            <button class="btn btn-light" data-toggle="dropdown">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M8 13C6.14 13 4.59 14.28 4.14 16H2V18H4.14C4.59 19.72 6.14 21 8 21S11.41 19.72 11.86 18H22V16H11.86C11.41 14.28 9.86 13 8 13M8 19C6.9 19 6 18.1 6 17C6 15.9 6.9 15 8 15S10 15.9 10 17C10 18.1 9.1 19 8 19M19.86 6C19.41 4.28 17.86 3 16 3S12.59 4.28 12.14 6H2V8H12.14C12.59 9.72 14.14 11 16 11S19.41 9.72 19.86 8H22V6H19.86M16 9C14.9 9 14 8.1 14 7C14 5.9 14.9 5 16 5S18 5.9 18 7C18 8.1 17.1 9 16 9Z"></path></svg>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <div class="dropdown-menu-innr">
+                                    <b>Who can use this feature?</b>
+                                    <div>
+                                        <div class="round_check">
+                                            <input type="radio" name="who_can_download" id="who_can_download-admin" onchange="SelectProModel('can_use_download',this)" value="admin" <?php echo ($music->config->who_can_download == 'admin')   ? ' checked' : '';?>>
+                                            <label class="radio-inline" for="who_can_download-admin" data-toggle="tooltip" data-placement="bottom" title="Admin"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,5A3,3 0 0,1 15,8A3,3 0 0,1 12,11A3,3 0 0,1 9,8A3,3 0 0,1 12,5M17.13,17C15.92,18.85 14.11,20.24 12,20.92C9.89,20.24 8.08,18.85 6.87,17C6.53,16.5 6.24,16 6,15.47C6,13.82 8.71,12.47 12,12.47C15.29,12.47 18,13.79 18,15.47C17.76,16 17.47,16.5 17.13,17Z"></path></svg></label> 
+                                        </div>
+                                        <div class="round_check">
+                                            <input type="radio" name="who_can_download" id="who_can_download-all" onchange="SelectProModel('can_use_download',this)" value="all" <?php echo ($music->config->who_can_download == 'all')   ? ' checked' : '';?>>
+                                            <label class="radio-inline" for="who_can_download-all" data-toggle="tooltip" data-placement="bottom" title="All Users"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M16 17V19H2V17S2 13 9 13 16 17 16 17M12.5 7.5A3.5 3.5 0 1 0 9 11A3.5 3.5 0 0 0 12.5 7.5M15.94 13A5.32 5.32 0 0 1 18 17V19H22V17S22 13.37 15.94 13M15 4A3.39 3.39 0 0 0 13.07 4.59A5 5 0 0 1 13.07 10.41A3.39 3.39 0 0 0 15 11A3.5 3.5 0 0 0 15 4Z"></path></svg></label> 
+                                        </div>
+                                        <div class="round_check">
+                                            <input type="radio" name="who_can_download" id="who_can_download-pro" onchange="SelectProModel('can_use_download',this)" value="pro" <?php echo ($music->config->who_can_download == 'pro')   ? ' checked' : '';?>>
+                                            <label class="radio-inline" for="who_can_download-pro" data-toggle="tooltip" data-placement="bottom" title="Pro Users Only"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M15,14C12.33,14 7,15.33 7,18V20H23V18C23,15.33 17.67,14 15,14M15,12A4,4 0 0,0 19,8A4,4 0 0,0 15,4A4,4 0 0,0 11,8A4,4 0 0,0 15,12M5,13.28L7.45,14.77L6.8,11.96L9,10.08L6.11,9.83L5,7.19L3.87,9.83L1,10.08L3.18,11.96L2.5,14.77L5,13.28Z"></path></svg></label> 
+                                        </div>
+                                        <div class="round_check">
+                                            <input type="radio" name="who_can_download" id="who_can_download-artist" onchange="SelectProModel('can_use_download',this)" value="artist" <?php echo ($music->config->who_can_download == 'artist')   ? ' checked' : '';?>>
+                                            <label class="radio-inline" for="who_can_download-artist" data-toggle="tooltip" data-placement="bottom" title="Artist Only"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M16,9V7H12V12.5C11.58,12.19 11.07,12 10.5,12A2.5,2.5 0 0,0 8,14.5A2.5,2.5 0 0,0 10.5,17A2.5,2.5 0 0,0 13,14.5V9H16M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2Z"></path></svg></label> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </ul>
+                        </div>
+                       <br><small class="admin-info">Choose who can download songs.</small>
+                       <div class="clearfix"></div>
+                       <hr>
+                        <div class="float-left">
+                            <label for="multiple_upload" class="main-label">Multiple Song Upload</label>
+                            <div class="dropdown user_filter_drop">
+                                <button class="btn btn-light" data-toggle="dropdown">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M8 13C6.14 13 4.59 14.28 4.14 16H2V18H4.14C4.59 19.72 6.14 21 8 21S11.41 19.72 11.86 18H22V16H11.86C11.41 14.28 9.86 13 8 13M8 19C6.9 19 6 18.1 6 17C6 15.9 6.9 15 8 15S10 15.9 10 17C10 18.1 9.1 19 8 19M19.86 6C19.41 4.28 17.86 3 16 3S12.59 4.28 12.14 6H2V8H12.14C12.59 9.72 14.14 11 16 11S19.41 9.72 19.86 8H22V6H19.86M16 9C14.9 9 14 8.1 14 7C14 5.9 14.9 5 16 5S18 5.9 18 7C18 8.1 17.1 9 16 9Z"></path></svg>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <div class="dropdown-menu-innr">
+                                        <b>Who can use this feature?</b>
+                                        <div>
+                                            <div class="round_check">
+                                                <input type="radio" name="who_can_multi_upload" id="who_can_multi_upload-admin" onchange="SelectProModel('can_use_multi_upload',this)" value="admin" <?php echo ($music->config->who_can_multi_upload == 'admin')   ? ' checked' : '';?>>
+                                                <label class="radio-inline" for="who_can_multi_upload-admin" data-toggle="tooltip" data-placement="bottom" title="Admin"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,5A3,3 0 0,1 15,8A3,3 0 0,1 12,11A3,3 0 0,1 9,8A3,3 0 0,1 12,5M17.13,17C15.92,18.85 14.11,20.24 12,20.92C9.89,20.24 8.08,18.85 6.87,17C6.53,16.5 6.24,16 6,15.47C6,13.82 8.71,12.47 12,12.47C15.29,12.47 18,13.79 18,15.47C17.76,16 17.47,16.5 17.13,17Z"></path></svg></label> 
+                                            </div>
+                                            <div class="round_check">
+                                                <input type="radio" name="who_can_multi_upload" id="who_can_multi_upload-all" onchange="SelectProModel('can_use_multi_upload',this)" value="all" <?php echo ($music->config->who_can_multi_upload == 'all')   ? ' checked' : '';?>>
+                                                <label class="radio-inline" for="who_can_multi_upload-all" data-toggle="tooltip" data-placement="bottom" title="All Users"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M16 17V19H2V17S2 13 9 13 16 17 16 17M12.5 7.5A3.5 3.5 0 1 0 9 11A3.5 3.5 0 0 0 12.5 7.5M15.94 13A5.32 5.32 0 0 1 18 17V19H22V17S22 13.37 15.94 13M15 4A3.39 3.39 0 0 0 13.07 4.59A5 5 0 0 1 13.07 10.41A3.39 3.39 0 0 0 15 11A3.5 3.5 0 0 0 15 4Z"></path></svg></label> 
+                                            </div>
+                                            <div class="round_check">
+                                                <input type="radio" name="who_can_multi_upload" id="who_can_multi_upload-pro" onchange="SelectProModel('can_use_multi_upload',this)" value="pro" <?php echo ($music->config->who_can_multi_upload == 'pro')   ? ' checked' : '';?>>
+                                                <label class="radio-inline" for="who_can_multi_upload-pro" data-toggle="tooltip" data-placement="bottom" title="Pro Users Only"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M15,14C12.33,14 7,15.33 7,18V20H23V18C23,15.33 17.67,14 15,14M15,12A4,4 0 0,0 19,8A4,4 0 0,0 15,4A4,4 0 0,0 11,8A4,4 0 0,0 15,12M5,13.28L7.45,14.77L6.8,11.96L9,10.08L6.11,9.83L5,7.19L3.87,9.83L1,10.08L3.18,11.96L2.5,14.77L5,13.28Z"></path></svg></label> 
+                                            </div>
+                                            <div class="round_check">
+                                                <input type="radio" name="who_can_multi_upload" id="who_can_multi_upload-artist" onchange="SelectProModel('can_use_multi_upload',this)" value="artist" <?php echo ($music->config->who_can_multi_upload == 'artist')   ? ' checked' : '';?>>
+                                                <label class="radio-inline" for="who_can_multi_upload-artist" data-toggle="tooltip" data-placement="bottom" title="Artist Only"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M16,9V7H12V12.5C11.58,12.19 11.07,12 10.5,12A2.5,2.5 0 0,0 8,14.5A2.5,2.5 0 0,0 10.5,17A2.5,2.5 0 0,0 13,14.5V9H16M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2Z"></path></svg></label> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ul>
+                            </div>
+                            <br><small class="admin-info">Enable the ability for users to upload multiple song in same time.</small>
+                        </div>
+                        <div class="form-group float-right switcher">
+                            <input type="hidden" name="multiple_upload" value="off" />
+                            <input type="checkbox" name="multiple_upload" id="chck-multiple_upload" value="on" <?php echo ($music->config->multiple_upload == 'on') ? 'checked': '';?>>
+                            <label for="chck-multiple_upload" class="check-trail"><span class="check-handler"></span></label>
+                        </div>
+                        <input type="hidden" name="hash_id" value="<?php echo createMainSession();?>">
+                    </form>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">User Configuration</h6>
+                    <div class="fame-settings-alert"></div>
+                    <div class="fame-settings-test-alert"></div>
+                    <form class="fame-settings" method="POST">
+                        <div class="float-left">
+                            <label for="delete_account" class="main-label">Delete User Account</label>
+                            <br><small class="admin-info">Allow users to delete their accounts.</small>
+                        </div>
+                        <div class="form-group float-right switcher">
+                            <input type="hidden" name="delete_account" value="off" />
+                            <input type="checkbox" name="delete_account" id="chck-delete_account" value="on" <?php echo ($music->config->delete_account == 'on') ? 'checked': '';?>>
+                            <label for="chck-delete_account" class="check-trail"><span class="check-handler"></span></label>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="float-left">
+                            <label for="emailNotification" class="main-label">Email Notification</label>
+                            <br><small class="admin-info">Users will got an email notification</small>
+                        </div>
+                        <div class="form-group float-right switcher">
+                            <input type="hidden" name="emailNotification" value="off" />
+                            <input type="checkbox" name="emailNotification" id="chck-emailNotification" value="on" <?php echo ($music->config->emailNotification == 'on') ? 'checked': '';?>>
+                            <label for="chck-emailNotification" class="check-trail"><span class="check-handler"></span></label>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="float-left">
+                            <label for="donate_system" class="main-label">Donate System</label>
+                            <div class="dropdown user_filter_drop">
+                                <button class="btn btn-light" data-toggle="dropdown">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M8 13C6.14 13 4.59 14.28 4.14 16H2V18H4.14C4.59 19.72 6.14 21 8 21S11.41 19.72 11.86 18H22V16H11.86C11.41 14.28 9.86 13 8 13M8 19C6.9 19 6 18.1 6 17C6 15.9 6.9 15 8 15S10 15.9 10 17C10 18.1 9.1 19 8 19M19.86 6C19.41 4.28 17.86 3 16 3S12.59 4.28 12.14 6H2V8H12.14C12.59 9.72 14.14 11 16 11S19.41 9.72 19.86 8H22V6H19.86M16 9C14.9 9 14 8.1 14 7C14 5.9 14.9 5 16 5S18 5.9 18 7C18 8.1 17.1 9 16 9Z"></path></svg>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <div class="dropdown-menu-innr">
+                                        <b>Who can use this feature?</b>
+                                        <div>
+                                            <div class="round_check">
+                                                <input type="radio" name="who_can_donate_system" id="who_can_donate_system-admin" onchange="SelectProModel('can_use_donate_system',this)" value="admin" <?php echo ($music->config->who_can_donate_system == 'admin')   ? ' checked' : '';?>>
+                                                <label class="radio-inline" for="who_can_donate_system-admin" data-toggle="tooltip" data-placement="bottom" title="Admin"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,5A3,3 0 0,1 15,8A3,3 0 0,1 12,11A3,3 0 0,1 9,8A3,3 0 0,1 12,5M17.13,17C15.92,18.85 14.11,20.24 12,20.92C9.89,20.24 8.08,18.85 6.87,17C6.53,16.5 6.24,16 6,15.47C6,13.82 8.71,12.47 12,12.47C15.29,12.47 18,13.79 18,15.47C17.76,16 17.47,16.5 17.13,17Z"></path></svg></label> 
+                                            </div>
+                                            <div class="round_check">
+                                                <input type="radio" name="who_can_donate_system" id="who_can_donate_system-all" onchange="SelectProModel('can_use_donate_system',this)" value="all" <?php echo ($music->config->who_can_donate_system == 'all')   ? ' checked' : '';?>>
+                                                <label class="radio-inline" for="who_can_donate_system-all" data-toggle="tooltip" data-placement="bottom" title="All Users"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M16 17V19H2V17S2 13 9 13 16 17 16 17M12.5 7.5A3.5 3.5 0 1 0 9 11A3.5 3.5 0 0 0 12.5 7.5M15.94 13A5.32 5.32 0 0 1 18 17V19H22V17S22 13.37 15.94 13M15 4A3.39 3.39 0 0 0 13.07 4.59A5 5 0 0 1 13.07 10.41A3.39 3.39 0 0 0 15 11A3.5 3.5 0 0 0 15 4Z"></path></svg></label> 
+                                            </div>
+                                            <div class="round_check">
+                                                <input type="radio" name="who_can_donate_system" id="who_can_donate_system-pro" onchange="SelectProModel('can_use_donate_system',this)" value="pro" <?php echo ($music->config->who_can_donate_system == 'pro')   ? ' checked' : '';?>>
+                                                <label class="radio-inline" for="who_can_donate_system-pro" data-toggle="tooltip" data-placement="bottom" title="Pro Users Only"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M15,14C12.33,14 7,15.33 7,18V20H23V18C23,15.33 17.67,14 15,14M15,12A4,4 0 0,0 19,8A4,4 0 0,0 15,4A4,4 0 0,0 11,8A4,4 0 0,0 15,12M5,13.28L7.45,14.77L6.8,11.96L9,10.08L6.11,9.83L5,7.19L3.87,9.83L1,10.08L3.18,11.96L2.5,14.77L5,13.28Z"></path></svg></label> 
+                                            </div>
+                                            <div class="round_check">
+                                                <input type="radio" name="who_can_donate_system" id="who_can_donate_system-artist" onchange="SelectProModel('can_use_donate_system',this)" value="artist" <?php echo ($music->config->who_can_donate_system == 'artist')   ? ' checked' : '';?>>
+                                                <label class="radio-inline" for="who_can_donate_system-artist" data-toggle="tooltip" data-placement="bottom" title="Artist Only"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M16,9V7H12V12.5C11.58,12.19 11.07,12 10.5,12A2.5,2.5 0 0,0 8,14.5A2.5,2.5 0 0,0 10.5,17A2.5,2.5 0 0,0 13,14.5V9H16M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2Z"></path></svg></label> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ul>
+                            </div>
+                            <br><small class="admin-info">Allow donate to users.</small>
+                        </div>
+                        <div class="form-group float-right switcher">
+                            <input type="hidden" name="donate_system" value="0" />
+                            <input type="checkbox" name="donate_system" id="chck-donate_system" value="1" <?php echo ($music->config->donate_system == '1') ? 'checked': '';?>>
+                            <label for="chck-donate_system" class="check-trail"><span class="check-handler"></span></label>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="float-left">
+                            <label for="tag_artist_system" class="main-label">Tag Other Artists</label>
+                            <br><small class="admin-info">Allow tag to artists.</small>
+                        </div>
+                        <div class="form-group float-right switcher">
+                            <input type="hidden" name="tag_artist_system" value="0" />
+                            <input type="checkbox" name="tag_artist_system" id="chck-tag_artist_system" value="1" <?php echo ($music->config->tag_artist_system == '1') ? 'checked': '';?>>
+                            <label for="chck-tag_artist_system" class="check-trail"><span class="check-handler"></span></label>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="float-left">
+                            <label for="invite_links_system" class="main-label">User Invite System</label>
+                            <br><small class="admin-info">Allow users to invite other users to your site.</small>
+                        </div>
+                        <div class="form-group float-right switcher">
+                            <input type="hidden" name="invite_links_system" value="0" />
+                            <input type="checkbox" name="invite_links_system" id="chck-invite_links_system" value="1" <?php echo ($music->config->invite_links_system == 1) ? 'checked': '';?>>
+                            <label for="chck-invite_links_system" class="check-trail"><span class="check-handler"></span></label>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="form-group form-float">
+                            <label class="form-label" class="main-label">How Many Links Can A User Generate?</label>
+                            <div class="form-line">
+                                <input type="text" id="user_links_limit" name="user_links_limit" class="form-control" value="<?php echo $music->config->user_links_limit?>">
+                            </div>
+                        </div>
+                        <div class="form-group form-float">
+                            <label class="form-label" class="main-label">User Can Generate X Links Within?</label>
+                            <div class="form-line">
+                                <select class="form-control show-tick" id="expire_user_links" name="expire_user_links">
+                                      <option value="hour" <?php echo ($music->config->expire_user_links == 'hour')   ? ' selected': '';?>>1 Hour</option>
+                                      <option value="day" <?php echo ($music->config->expire_user_links == 'day')   ? ' selected': '';?>>1 Day</option>
+                                      <option value="week" <?php echo ($music->config->expire_user_links == 'week')   ? ' selected': '';?>>1 Week</option>
+                                      <option value="month" <?php echo ($music->config->expire_user_links == 'month')   ? ' selected': '';?>>1 Month</option>
+                                      <option value="year" <?php echo ($music->config->expire_user_links == 'year')   ? ' selected': '';?>>1 Year</option>
+                                </select>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="float-left">
+                            <label for="channel_trailer" class="main-label">Upload Video Trailer Cover</label>
+                            <div class="dropdown user_filter_drop">
+                                <button class="btn btn-light" data-toggle="dropdown">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M8 13C6.14 13 4.59 14.28 4.14 16H2V18H4.14C4.59 19.72 6.14 21 8 21S11.41 19.72 11.86 18H22V16H11.86C11.41 14.28 9.86 13 8 13M8 19C6.9 19 6 18.1 6 17C6 15.9 6.9 15 8 15S10 15.9 10 17C10 18.1 9.1 19 8 19M19.86 6C19.41 4.28 17.86 3 16 3S12.59 4.28 12.14 6H2V8H12.14C12.59 9.72 14.14 11 16 11S19.41 9.72 19.86 8H22V6H19.86M16 9C14.9 9 14 8.1 14 7C14 5.9 14.9 5 16 5S18 5.9 18 7C18 8.1 17.1 9 16 9Z"></path></svg>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <div class="dropdown-menu-innr">
+                                        <b>Who can use this feature?</b>
+                                        <div>
+                                            <div class="round_check">
+                                                <input type="radio" name="channel_trailer_upload" id="channel_trailer_upload-admin" onchange="SelectProModel('can_use_channel_trailer',this)" value="admin" <?php echo ($music->config->channel_trailer_upload == 'admin')   ? ' checked' : '';?>>
+                                                <label class="radio-inline" for="channel_trailer_upload-admin" data-toggle="tooltip" data-placement="bottom" title="Admin"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,5A3,3 0 0,1 15,8A3,3 0 0,1 12,11A3,3 0 0,1 9,8A3,3 0 0,1 12,5M17.13,17C15.92,18.85 14.11,20.24 12,20.92C9.89,20.24 8.08,18.85 6.87,17C6.53,16.5 6.24,16 6,15.47C6,13.82 8.71,12.47 12,12.47C15.29,12.47 18,13.79 18,15.47C17.76,16 17.47,16.5 17.13,17Z"></path></svg></label> 
+                                            </div>
+                                            <div class="round_check">
+                                                <input type="radio" name="channel_trailer_upload" id="channel_trailer_upload-all" onchange="SelectProModel('can_use_channel_trailer',this)" value="all" <?php echo ($music->config->channel_trailer_upload == 'all')   ? ' checked' : '';?>>
+                                                <label class="radio-inline" for="channel_trailer_upload-all" data-toggle="tooltip" data-placement="bottom" title="All Users"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M16 17V19H2V17S2 13 9 13 16 17 16 17M12.5 7.5A3.5 3.5 0 1 0 9 11A3.5 3.5 0 0 0 12.5 7.5M15.94 13A5.32 5.32 0 0 1 18 17V19H22V17S22 13.37 15.94 13M15 4A3.39 3.39 0 0 0 13.07 4.59A5 5 0 0 1 13.07 10.41A3.39 3.39 0 0 0 15 11A3.5 3.5 0 0 0 15 4Z"></path></svg></label> 
+                                            </div>
+                                            <div class="round_check">
+                                                <input type="radio" name="channel_trailer_upload" id="channel_trailer_upload-pro" onchange="SelectProModel('can_use_channel_trailer',this)" value="pro" <?php echo ($music->config->channel_trailer_upload == 'pro')   ? ' checked' : '';?>>
+                                                <label class="radio-inline" for="channel_trailer_upload-pro" data-toggle="tooltip" data-placement="bottom" title="Pro Users Only"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M15,14C12.33,14 7,15.33 7,18V20H23V18C23,15.33 17.67,14 15,14M15,12A4,4 0 0,0 19,8A4,4 0 0,0 15,4A4,4 0 0,0 11,8A4,4 0 0,0 15,12M5,13.28L7.45,14.77L6.8,11.96L9,10.08L6.11,9.83L5,7.19L3.87,9.83L1,10.08L3.18,11.96L2.5,14.77L5,13.28Z"></path></svg></label> 
+                                            </div>
+                                            <div class="round_check">
+                                                <input type="radio" name="channel_trailer_upload" id="channel_trailer_upload-artist" onchange="SelectProModel('can_use_channel_trailer',this)" value="artist" <?php echo ($music->config->channel_trailer_upload == 'artist')   ? ' checked' : '';?>>
+                                                <label class="radio-inline" for="channel_trailer_upload-artist" data-toggle="tooltip" data-placement="bottom" title="Artist Only"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M16,9V7H12V12.5C11.58,12.19 11.07,12 10.5,12A2.5,2.5 0 0,0 8,14.5A2.5,2.5 0 0,0 10.5,17A2.5,2.5 0 0,0 13,14.5V9H16M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2Z"></path></svg></label> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ul>
+                            </div>
+                            <br><small class="admin-info">Enable the ability for users to upload video trailer as channel cover.</small>
+                        </div>
+                        <div class="form-group float-right switcher">
+                            <input type="hidden" name="channel_trailer" value="off" />
+                            <input type="checkbox" name="channel_trailer" id="chck-channel_trailer" value="on" <?php echo ($music->config->channel_trailer == 'on') ? 'checked': '';?>>
+                            <label for="chck-channel_trailer" class="check-trail"><span class="check-handler"></span></label>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="float-left">
+                            <label for="allow_user_create_blog" class="main-label">Blog System</label>
+                            <div class="dropdown user_filter_drop">
+                                <button class="btn btn-light" data-toggle="dropdown">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M8 13C6.14 13 4.59 14.28 4.14 16H2V18H4.14C4.59 19.72 6.14 21 8 21S11.41 19.72 11.86 18H22V16H11.86C11.41 14.28 9.86 13 8 13M8 19C6.9 19 6 18.1 6 17C6 15.9 6.9 15 8 15S10 15.9 10 17C10 18.1 9.1 19 8 19M19.86 6C19.41 4.28 17.86 3 16 3S12.59 4.28 12.14 6H2V8H12.14C12.59 9.72 14.14 11 16 11S19.41 9.72 19.86 8H22V6H19.86M16 9C14.9 9 14 8.1 14 7C14 5.9 14.9 5 16 5S18 5.9 18 7C18 8.1 17.1 9 16 9Z"></path></svg>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <div class="dropdown-menu-innr">
+                                        <b>Who can use this feature?</b>
+                                        <div>
+                                            <div class="round_check">
+                                                <input type="radio" name="who_can_blog" id="who_can_blog-admin" onchange="SelectProModel('can_use_blog',this)" value="admin" <?php echo ($music->config->who_can_blog == 'admin')   ? ' checked' : '';?>>
+                                                <label class="radio-inline" for="who_can_blog-admin" data-toggle="tooltip" data-placement="bottom" title="Admin"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,5A3,3 0 0,1 15,8A3,3 0 0,1 12,11A3,3 0 0,1 9,8A3,3 0 0,1 12,5M17.13,17C15.92,18.85 14.11,20.24 12,20.92C9.89,20.24 8.08,18.85 6.87,17C6.53,16.5 6.24,16 6,15.47C6,13.82 8.71,12.47 12,12.47C15.29,12.47 18,13.79 18,15.47C17.76,16 17.47,16.5 17.13,17Z"></path></svg></label> 
+                                            </div>
+                                            <div class="round_check">
+                                                <input type="radio" name="who_can_blog" id="who_can_blog-all" onchange="SelectProModel('can_use_blog',this)" value="all" <?php echo ($music->config->who_can_blog == 'all')   ? ' checked' : '';?>>
+                                                <label class="radio-inline" for="who_can_blog-all" data-toggle="tooltip" data-placement="bottom" title="All Users"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M16 17V19H2V17S2 13 9 13 16 17 16 17M12.5 7.5A3.5 3.5 0 1 0 9 11A3.5 3.5 0 0 0 12.5 7.5M15.94 13A5.32 5.32 0 0 1 18 17V19H22V17S22 13.37 15.94 13M15 4A3.39 3.39 0 0 0 13.07 4.59A5 5 0 0 1 13.07 10.41A3.39 3.39 0 0 0 15 11A3.5 3.5 0 0 0 15 4Z"></path></svg></label> 
+                                            </div>
+                                            <div class="round_check">
+                                                <input type="radio" name="who_can_blog" id="who_can_blog-pro" onchange="SelectProModel('can_use_blog',this)" value="pro" <?php echo ($music->config->who_can_blog == 'pro')   ? ' checked' : '';?>>
+                                                <label class="radio-inline" for="who_can_blog-pro" data-toggle="tooltip" data-placement="bottom" title="Pro Users Only"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M15,14C12.33,14 7,15.33 7,18V20H23V18C23,15.33 17.67,14 15,14M15,12A4,4 0 0,0 19,8A4,4 0 0,0 15,4A4,4 0 0,0 11,8A4,4 0 0,0 15,12M5,13.28L7.45,14.77L6.8,11.96L9,10.08L6.11,9.83L5,7.19L3.87,9.83L1,10.08L3.18,11.96L2.5,14.77L5,13.28Z"></path></svg></label> 
+                                            </div>
+                                            <div class="round_check">
+                                                <input type="radio" name="who_can_blog" id="who_can_blog-artist" onchange="SelectProModel('can_use_blog',this)" value="artist" <?php echo ($music->config->who_can_blog == 'artist')   ? ' checked' : '';?>>
+                                                <label class="radio-inline" for="who_can_blog-artist" data-toggle="tooltip" data-placement="bottom" title="Artist Only"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M16,9V7H12V12.5C11.58,12.19 11.07,12 10.5,12A2.5,2.5 0 0,0 8,14.5A2.5,2.5 0 0,0 10.5,17A2.5,2.5 0 0,0 13,14.5V9H16M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2Z"></path></svg></label> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ul>
+                            </div>
+                            <br><small class="admin-info">Users will be able to create blog articles.</small>
+                        </div>
+                        <div class="form-group float-right switcher">
+                            <input type="hidden" name="allow_user_create_blog" value="off" />
+                            <input type="checkbox" name="allow_user_create_blog" id="chck-allow_user_create_blog" value="on" <?php echo ($music->config->allow_user_create_blog == 'on') ? 'checked': '';?>>
+                            <label for="chck-allow_user_create_blog" class="check-trail"><span class="check-handler"></span></label>
+                        </div>
+                        <div class="clearfix"></div>
+                    </form>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Hall Of Fame</h6>
+                    <div class="fame-settings-alert"></div>
+                    <div class="fame-settings-test-alert"></div>
+                    <form class="fame-settings" method="POST">
+                        <div class="float-left">
+                            <label for="fame_system" class="main-label">Hall Of Fame Of Artists</label>
+                            <br><small class="admin-info">This feature shows the hall of fame page, top users with view count.</small>
+                        </div>
+                        <div class="form-group float-right switcher">
+                            <input type="hidden" name="fame_system" value="0" />
+                            <input type="checkbox" name="fame_system" id="chck-fame_system" value="1" <?php echo ($music->config->fame_system == '1') ? 'checked': '';?>>
+                            <label for="chck-fame_system" class="check-trail"><span class="check-handler"></span></label>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Views Count</label>
+                                <input type="text" name="views_count" class="form-control" value="<?php echo ($music->config->views_count);?>">
+                                <small class="admin-info">Minumum views required to show in hall of fame page</small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <input type="hidden" name="hash_id" value="<?php echo createMainSession();?>">
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-lg-6 col-md-6 pull-right">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Login & Registration</h6>
+                    <div class="fame-settings-alert"></div>
+                    <div class="fame-settings-test-alert"></div>
+                    <form class="fame-settings" method="POST">
+                        <div class="float-left">
+                            <label for="user_registration" class="main-label">User Registration</label>
+                            <br><small class="admin-info">Allow users to create accounts in your site.</small>
+                        </div>
+                        <div class="form-group float-right switcher">
+                            <input type="hidden" name="user_registration" value="off" />
+                            <input type="checkbox" name="user_registration" id="chck-user_registration" value="on" <?php echo ($music->config->user_registration == 'on') ? 'checked': '';?>>
+                            <label for="chck-user_registration" class="check-trail"><span class="check-handler"></span></label>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="float-left">
+                            <label for="validation" class="main-label">User E-mail Verification</label>
+                            <br><small class="admin-info">Send an activation link after registration.</small>
+                        </div>
+                        <div class="form-group float-right switcher">
+                            <input type="hidden" name="validation" value="off" />
+                            <input type="checkbox" name="validation" id="chck-validation" value="on" <?php echo ($music->config->validation == 'on') ? 'checked': '';?>>
+                            <label for="chck-validation" class="check-trail"><span class="check-handler"></span></label>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="float-left">
+                            <label for="login_auth" class="main-label">Unusual Login</label>
+                            <br><small class="admin-info">Send confirmation link when user logins from new location</small>
+                        </div>
+                        <div class="form-group float-right switcher">
+                            <input type="hidden" name="login_auth" value="0" />
+                            <input type="checkbox" name="login_auth" id="chck-login_auth" value="1" <?php echo ($music->config->login_auth == '1') ? 'checked': '';?>>
+                            <label for="chck-login_auth" class="check-trail"><span class="check-handler"></span></label>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="float-left">
+                            <label for="two_factor" class="main-label">Two-factor authentication</label>
+                            <br><small class="admin-info">Send confirmation code to email or to SMS when user logins</small>
+                        </div>
+                        <div class="form-group float-right switcher">
+                            <input type="hidden" name="two_factor" value="0" />
+                            <input type="checkbox" name="two_factor" id="chck-two_factor" value="1" <?php echo ($music->config->two_factor == '1') ? 'checked': '';?>>
+                            <label for="chck-two_factor" class="check-trail"><span class="check-handler"></span></label>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <label for="two_factor_type">Send Two-factor authentication code to</label>
+                        <br><small class="admin-info">Where to send two-factor authentication code</small>
+                        <div class="form-group">
+                            <select class="form-control show-tick" id="two_factor_type" name="two_factor_type">
+                              <option value="email" <?php echo ($music->config->two_factor_type == 'email') ? 'selected': '';?>>Email</option>
+                              <option value="phone" <?php echo ($music->config->two_factor_type == 'phone') ? 'selected': '';?>>Phone</option>
+                              <option value="both" <?php echo ($music->config->two_factor_type == 'both') ? 'selected': '';?>>Both</option>
+                            </select>
+                        </div>
+                        <hr>
+
+                        <div class="float-left">
+                            <label for="reserved_usernames_system" class="main-label">Reserved usernames System</label>
+                            <br><small class="admin-info">Reserved usernames System</small>
+                        </div>
+                        <div class="form-group float-right switcher">
+                            <input type="hidden" name="reserved_usernames_system" value="0" />
+                            <input type="checkbox" name="reserved_usernames_system" id="chck-reserved_usernames_system" value="1" <?php echo ($music->config->reserved_usernames_system == '1') ? 'checked': '';?>>
+                            <label for="chck-reserved_usernames_system" class="check-trail"><span class="check-handler"></span></label>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Reserved usernames</label>
+                                <textarea name="reserved_usernames" class="form-control"><?php echo ($music->config->reserved_usernames);?></textarea>
+                                <small class="admin-info">Reserved usernames</small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="float-left">
+                            <label for="password_complexity_system" class="main-label">Password Complexity System</label>
+                            <br><small class="admin-info">The system will require a powerful password on sign up, <br>including letters, numbers and special characters.</small>
+                        </div>
+                        <div class="form-group float-right switcher">
+                            <input type="hidden" name="password_complexity_system" value="0" />
+                            <input type="checkbox" name="password_complexity_system" id="chck-password_complexity_system" value="1" <?php echo ($music->config->password_complexity_system == 1) ? 'checked': '';?>>
+                            <label for="chck-password_complexity_system" class="check-trail"><span class="check-handler"></span></label>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="float-left">
+                            <label for="remember_device" class="main-label">Remember This Device</label>
+                            <br><small class="admin-info">Remember this device in welcome page.</small>
+                        </div>
+                        <div class="form-group float-right switcher">
+                            <input type="hidden" name="remember_device" value="0" />
+                            <input type="checkbox" name="remember_device" id="chck-remember_device" value="1" <?php echo ($music->config->remember_device == 1) ? 'checked': '';?>>
+                            <label for="chck-remember_device" class="check-trail"><span class="check-handler"></span></label>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="float-left">
+                            <label for="auto_username" class="main-label">Auto Username On Register</label>
+                            <br><small class="admin-info">Generate an auto username on sign up. <br> Registration form will ask for user's first name and last name.</small>
+                        </div>
+                        <div class="form-group float-right switcher">
+                            <input type="hidden" name="auto_username" value="0" />
+                            <input type="checkbox" name="auto_username" id="chck-auto_username" value="1" <?php echo ($music->config->auto_username == 1) ? 'checked': '';?>>
+                            <label for="chck-auto_username" class="check-trail"><span class="check-handler"></span></label>
+                        </div> 
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="float-left">
+                            <label for="prevent_system" class="main-label">Prevent Bad Login Attempts</label>
+                            <br><small class="admin-info">Enable this feature to track and stop brute-force attacks.</small>
+                        </div>
+                        <div class="form-group float-right switcher">
+                            <input type="hidden" name="prevent_system" value="0" />
+                            <input type="checkbox" name="prevent_system" id="chck-prevent_system" value="1" <?php echo ($music->config->prevent_system == '1') ? 'checked': '';?>>
+                            <label for="chck-prevent_system" class="check-trail"><span class="check-handler"></span></label>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Bad Login Limit</label>
+                                <input type="text" name="bad_login_limit" class="form-control" value="<?php echo ($music->config->bad_login_limit);?>">
+                                <small class="admin-info">How many times a user can try to login before a lockout?</small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Lockout Time (Minutes)</label>
+                                <input type="text" name="lock_time" class="form-control" value="<?php echo ($music->config->lock_time);?>">
+                                <small class="admin-info">Lockout Time (In Minutes)</small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="float-left">
+                            <label for="recaptcha" class="main-label">reCaptcha</label>
+                            <br><small class="admin-info">Enable reCaptcha to prevent spam.</small>
+                        </div>
+                        <div class="form-group float-right switcher">
+                            <input type="hidden" name="recaptcha" value="off" />
+                            <input type="checkbox" name="recaptcha" id="chck-recaptcha" value="on" <?php echo ($music->config->recaptcha == 'on') ? 'checked': '';?>>
+                            <label for="chck-recaptcha" class="check-trail"><span class="check-handler"></span></label>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Recaptcha Key</label>
+                                <input type="text" name="recaptcha_key" class="form-control" value="<?php echo ($music->config->recaptcha_key);?>">
+                                <small class="admin-info"></small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                    </form>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Point System Settings</h6>
+                    <div class="payment-settings-alert"></div>
+                    <form class="payment-settings" method="POST">
+                        <div class="float-left">
+                            <label for="point_system" class="main-label">Point System</label>
+                            <div class="dropdown user_filter_drop">
+                                <button class="btn btn-light" data-toggle="dropdown">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M8 13C6.14 13 4.59 14.28 4.14 16H2V18H4.14C4.59 19.72 6.14 21 8 21S11.41 19.72 11.86 18H22V16H11.86C11.41 14.28 9.86 13 8 13M8 19C6.9 19 6 18.1 6 17C6 15.9 6.9 15 8 15S10 15.9 10 17C10 18.1 9.1 19 8 19M19.86 6C19.41 4.28 17.86 3 16 3S12.59 4.28 12.14 6H2V8H12.14C12.59 9.72 14.14 11 16 11S19.41 9.72 19.86 8H22V6H19.86M16 9C14.9 9 14 8.1 14 7C14 5.9 14.9 5 16 5S18 5.9 18 7C18 8.1 17.1 9 16 9Z"></path></svg>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <div class="dropdown-menu-innr">
+                                        <b>Who can use this feature?</b>
+                                        <div>
+                                            <div class="round_check">
+                                                <input type="radio" name="who_can_point_system" id="who_can_point_system-admin" onchange="SelectProModel('can_use_point_system',this)" value="admin" <?php echo ($music->config->who_can_point_system == 'admin')   ? ' checked' : '';?>>
+                                                <label class="radio-inline" for="who_can_point_system-admin" data-toggle="tooltip" data-placement="bottom" title="Admin"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,5A3,3 0 0,1 15,8A3,3 0 0,1 12,11A3,3 0 0,1 9,8A3,3 0 0,1 12,5M17.13,17C15.92,18.85 14.11,20.24 12,20.92C9.89,20.24 8.08,18.85 6.87,17C6.53,16.5 6.24,16 6,15.47C6,13.82 8.71,12.47 12,12.47C15.29,12.47 18,13.79 18,15.47C17.76,16 17.47,16.5 17.13,17Z"></path></svg></label> 
+                                            </div>
+                                            <div class="round_check">
+                                                <input type="radio" name="who_can_point_system" id="who_can_point_system-all" onchange="SelectProModel('can_use_point_system',this)" value="all" <?php echo ($music->config->who_can_point_system == 'all')   ? ' checked' : '';?>>
+                                                <label class="radio-inline" for="who_can_point_system-all" data-toggle="tooltip" data-placement="bottom" title="All Users"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M16 17V19H2V17S2 13 9 13 16 17 16 17M12.5 7.5A3.5 3.5 0 1 0 9 11A3.5 3.5 0 0 0 12.5 7.5M15.94 13A5.32 5.32 0 0 1 18 17V19H22V17S22 13.37 15.94 13M15 4A3.39 3.39 0 0 0 13.07 4.59A5 5 0 0 1 13.07 10.41A3.39 3.39 0 0 0 15 11A3.5 3.5 0 0 0 15 4Z"></path></svg></label> 
+                                            </div>
+                                            <div class="round_check">
+                                                <input type="radio" name="who_can_point_system" id="who_can_point_system-pro" onchange="SelectProModel('can_use_point_system',this)" value="pro" <?php echo ($music->config->who_can_point_system == 'pro')   ? ' checked' : '';?>>
+                                                <label class="radio-inline" for="who_can_point_system-pro" data-toggle="tooltip" data-placement="bottom" title="Pro Users Only"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M15,14C12.33,14 7,15.33 7,18V20H23V18C23,15.33 17.67,14 15,14M15,12A4,4 0 0,0 19,8A4,4 0 0,0 15,4A4,4 0 0,0 11,8A4,4 0 0,0 15,12M5,13.28L7.45,14.77L6.8,11.96L9,10.08L6.11,9.83L5,7.19L3.87,9.83L1,10.08L3.18,11.96L2.5,14.77L5,13.28Z"></path></svg></label> 
+                                            </div>
+                                            <div class="round_check">
+                                                <input type="radio" name="who_can_point_system" id="who_can_point_system-artist" onchange="SelectProModel('can_use_point_system',this)" value="artist" <?php echo ($music->config->who_can_point_system == 'artist')   ? ' checked' : '';?>>
+                                                <label class="radio-inline" for="who_can_point_system-artist" data-toggle="tooltip" data-placement="bottom" title="Artist Only"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M16,9V7H12V12.5C11.58,12.19 11.07,12 10.5,12A2.5,2.5 0 0,0 8,14.5A2.5,2.5 0 0,0 10.5,17A2.5,2.5 0 0,0 13,14.5V9H16M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2Z"></path></svg></label> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ul>
+                            </div>
+                            <br><small class="admin-info">Gives the ability for users to earn points from <br>liking, sharing, commenting etc.</small>
+                        </div>
+                        <div class="form-group float-right switcher">
+                            <input type="hidden" name="point_system" value="off" />
+                            <input type="checkbox" name="point_system" id="chck-point_system" value="on" <?php echo ($music->config->point_system == 'on') ? 'checked': '';?>>
+                            <label for="chck-point_system" class="check-trail"><span class="check-handler"></span></label>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="float-left">
+                            <label for="points_to" class="main-label">Withdrawal System</label>
+                            <br><small class="admin-info">Allow users to withdrawal thier points as USD. <br>If disabled users can use points only to upgrade to pro, purchase songs, products etc.</small>
+                        </div>
+                        <div class="form-group float-right switcher">
+                            <input type="hidden" name="points_to" value="off" />
+                            <input type="checkbox" name="points_to" id="chck-points_to" value="on" <?php echo ($music->config->points_to == 'on') ? 'checked': '';?>>
+                            <label for="chck-points_to" class="check-trail"><span class="check-handler"></span></label>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">1 Point = ?<?php echo $music->config->currency_symbol;?></label>
+                                <input type="text" name="point_system_points_to_dollar" class="form-control" value="<?php echo ($music->config->point_system_points_to_dollar);?>">
+                                <small class="admin-info">How much does 1 dollar equal in points?</small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Listen To Song</label>
+                                <input type="text" name="point_system_listen_to_song_cost" class="form-control" value="<?php echo ($music->config->point_system_listen_to_song_cost);?>">
+                                <small class="admin-info">How many points does a user earn by listening to a new song?</small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Upload Song</label>
+                                <input type="text" name="point_system_upload_cost" class="form-control" value="<?php echo ($music->config->point_system_upload_cost);?>">
+                                <small class="admin-info">How many points does a user earn by uploading a new song?</small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Import Song</label>
+                                <input type="text" name="point_system_import_cost" class="form-control" value="<?php echo ($music->config->point_system_import_cost);?>">
+                                <small class="admin-info">How many points does a user earn by importing a new song?</small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">New Comment</label>
+                                <input type="text" name="point_system_comment_cost" class="form-control" value="<?php echo ($music->config->point_system_comment_cost);?>">
+                                <small class="admin-info">How many points does a user earn by creating comments?</small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Reply To Comment</label>
+                                <input type="text" name="point_system_replay_comment_cost" class="form-control" value="<?php echo ($music->config->point_system_replay_comment_cost);?>">
+                                <small class="admin-info">How many points does a user earn by replying to a comment?</small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Like Song</label>
+                                <input type="text" name="point_system_like_track_cost" class="form-control" value="<?php echo ($music->config->point_system_like_track_cost);?>">
+                                <small class="admin-info">How many points does a user earn by liking someone's track?</small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Dislike Song</label>
+                                <input type="text" name="point_system_dislike_track_cost" class="form-control" value="<?php echo ($music->config->point_system_dislike_track_cost);?>">
+                                <small class="admin-info">How many points does a user earn by disliking someone's track?</small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Like Comment</label>
+                                <input type="text" name="point_system_like_comment_cost" class="form-control" value="<?php echo ($music->config->point_system_like_comment_cost);?>">
+                                <small class="admin-info">How many points does a user earn by liking someone's comment?</small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Repost Song</label>
+                                <input type="text" name="point_system_repost_cost" class="form-control" value="<?php echo ($music->config->point_system_repost_cost);?>">
+                                <small class="admin-info">How many points does a user earn by re-posting a track?</small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Download Songs</label>
+                                <input type="text" name="point_system_track_download_cost" class="form-control" value="<?php echo ($music->config->point_system_track_download_cost);?>">
+                                <small class="admin-info">How many points does a user earn by downloading a track?</small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Like Blog Comment</label>
+                                <input type="text" name="point_system_like_blog_comment_cost" class="form-control" value="<?php echo ($music->config->point_system_like_blog_comment_cost);?>">
+                                <small class="admin-info">How many points does a user earn by liking a blog comment?</small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Dislike Comment</label>
+                                <input type="text" name="point_system_unlike_comment_cost" class="form-control" value="<?php echo ($music->config->point_system_unlike_comment_cost);?>">
+                                <small class="admin-info">How many points does a user earn by disliking a comment?</small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Dislike Blog Comment</label>
+                                <input type="text" name="point_system_unlike_blog_comment_cost" class="form-control" value="<?php echo ($music->config->point_system_unlike_blog_comment_cost);?>">
+                                <small class="admin-info">How many points does a user earn by disliking blog comment?</small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Purchase Track</label>
+                                <input type="text" name="point_system_purchase_track_cost" class="form-control" value="<?php echo ($music->config->point_system_purchase_track_cost);?>">
+                                <small class="admin-info">How many points does a user earn by purchasing a track?</small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Go Pro</label>
+                                <input type="text" name="point_system_go_pro_cost" class="form-control" value="<?php echo ($music->config->point_system_go_pro_cost);?>">
+                                <small class="admin-info">How many points does a user earn by going PRO?</small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Review Song</label>
+                                <input type="text" name="point_system_review_track_cost" class="form-control" value="<?php echo ($music->config->point_system_review_track_cost);?>">
+                                <small class="admin-info">How many points does a user earn by reviewing someon's track?</small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Report Song</label>
+                                <input type="text" name="point_system_report_track_cost" class="form-control" value="<?php echo ($music->config->point_system_report_track_cost);?>">
+                                <small class="admin-info">How many points does a user earn by reporting someon's track?</small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Report Comment</label>
+                                <input type="text" name="point_system_report_comment_cost" class="form-control" value="<?php echo ($music->config->point_system_report_comment_cost);?>">
+                                <small class="admin-info">How many points does a user earn by reporting a comment?</small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Add To Playlist</label>
+                                <input type="text" name="point_system_add_to_playlist_cost" class="form-control" value="<?php echo ($music->config->point_system_add_to_playlist_cost);?>">
+                                <small class="admin-info">How many points does a user earn by adding a song to playlist?</small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Create Playlist</label>
+                                <input type="text" name="point_system_create_new_playlist_cost" class="form-control" value="<?php echo ($music->config->point_system_create_new_playlist_cost);?>">
+                                <small class="admin-info">How many points does a user earn by creating a new playlist?</small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Update Profile Picture</label>
+                                <input type="text" name="point_system_update_profile_picture_cost" class="form-control" value="<?php echo ($music->config->point_system_update_profile_picture_cost);?>">
+                                <small class="admin-info">How many points does a user earn by user updating his profile picture? - 1st time only</small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Update Profile Cover Image</label>
+                                <input type="text" name="point_system_update_profile_cover_cost" class="form-control" value="<?php echo ($music->config->point_system_update_profile_cover_cost);?>">
+                                <small class="admin-info">How many points does a user earn by user updating his profile cover? - 1st time only</small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">AdMob</label>
+                                <input type="text" name="point_system_admob_cost" class="form-control" value="<?php echo ($music->config->point_system_admob_cost);?>">
+                                <small class="admin-info">How many points does a user earn by AdMob?</small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+      </div>
+
+    </div>
+    <!-- #END# Vertical Layout -->
+<script>
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+});
+$(function() {
+    $('.round_check input[type=radio]').click(function () {
+        var configName = $(this).attr('name');
+        var hash_id = $('input[name=hash_id]').val();
+        var objData = {};
+        if ($(this).is(":checked") === true) {
+            objData[configName] = $(this).val();
+        }
+        else{
+            if ($('input[name='+configName+']')[0]) {
+                objData[configName] = $($('input[name='+configName+']')[0]).val();
+            }
+        }
+        objData['hash_id'] = hash_id;
+        $.post('{{CONFIG ajax_url}}/ap/save-settings', objData);
+    });
+    $('.switcher input[type=checkbox]').click(function () {
+        var configName = $(this).attr('name');
+        var hash_id = $('input[name=hash_id]').val();
+        var objData = {};
+        if ($(this).is(":checked") === true) {
+            objData[configName] = $(this).val();
+        }
+        else{
+            if ($('input[name='+configName+']')[0]) {
+                objData[configName] = $($('input[name='+configName+']')[0]).val();
+            }
+        }
+        objData['hash_id'] = hash_id;
+        $.post('{{CONFIG ajax_url}}/ap/save-settings', objData);
+    });
+
+    var setTimeOutColor = setTimeout(function (){});
+    $('select').on('change', function() {
+         clearTimeout(setTimeOutColor);
+        var thisElement = $(this);
+        var configName = thisElement.attr('name');
+        var hash_id = $('input[name=hash_id]').val();
+        var objData = {};
+        objData[configName] = thisElement.val();
+        objData['hash_id'] = hash_id;
+        thisElement.addClass('warning');
+        $.post("{{CONFIG ajax_url}}/ap/save-settings", objData, function (data) {
+            if (data.status == 200) {
+                thisElement.removeClass('warning');
+                thisElement.addClass('success');
+            } else {
+                thisElement.addClass('error');
+            }
+            var setTimeOutColor = setTimeout(function () {
+                thisElement.removeClass('success');
+                thisElement.removeClass('warning');
+                thisElement.removeClass('error');
+            }, 2000);
+        });
+    });
+    $('input[type=text], input[type=number] , textarea').on('input', delay(function() {
+            clearTimeout(setTimeOutColor);
+            var thisElement = $(this);
+            var configName = thisElement.attr('name');
+            var hash_id = $('input[name=hash_id]').val();
+            var objData = {};
+            objData[configName] = this.value;
+            objData['hash_id'] = hash_id;
+            thisElement.addClass('warning');
+            $.post("{{CONFIG ajax_url}}/ap/save-settings", objData, function (data) {
+                if (data.status == 200) {
+                    thisElement.removeClass('warning');
+                    thisElement.addClass('success');
+                } else {
+                    thisElement.addClass('error');
+                }
+                var setTimeOutColor = setTimeout(function () {
+                    thisElement.removeClass('success');
+                    thisElement.removeClass('warning');
+                    thisElement.removeClass('error');
+                }, 2000);
+                //thisElement.focus();
+            });
+    }, 500));
+    $('input[type=color]').on('change', delay(function() {
+            clearTimeout(setTimeOutColor);
+            var thisElement = $(this);
+            var configName = thisElement.attr('name');
+            var hash_id = $('input[name=hash_id]').val();
+            var objData = {};
+            objData[configName] = this.value;
+            objData['hash_id'] = hash_id;
+            thisElement.addClass('warning');
+            $.post("{{CONFIG ajax_url}}/ap/save-settings", objData, function (data) {
+                if (data.status == 200) {
+                    thisElement.removeClass('warning');
+                    thisElement.addClass('success');
+                } else {
+                    thisElement.addClass('error');
+                }
+                var setTimeOutColor = setTimeout(function () {
+                    thisElement.removeClass('success');
+                    thisElement.removeClass('warning');
+                    thisElement.removeClass('error');
+                }, 2000);
+                //thisElement.focus();
+            });
+    }, 500));
+});
+
+
+
+
+
+
+$(function() {
+    $('#upload_system_type').change(function(event) {
+        if ($(this).val() == 1) {
+            $('#p_f_users_').removeClass('hidden');
+            $('#all_users_').addClass('hidden');
+        }
+        else{
+            $('#all_users_').removeClass('hidden');
+            $('#p_f_users_').addClass('hidden');
+        }
+    });
+
+    var form_fame_settings = $('form.fame-settings');
+
+    form_fame_settings.ajaxForm({
+        url: '{{CONFIG ajax_url}}/ap/save-settings',
+        beforeSend: function() {
+            form_fame_settings.find('button').text("Please wait");
+        },
+        success: function(data) {
+            if (data.status == 200) {
+                form_fame_settings.find('button').text('Save');
+                $('.fame-settings-test-alert').html('<div class="alert alert-success"><i class="fa fa-check"></i> Settings updated successfully</div>');
+                setTimeout(function () {
+                    $('.fame-settings-test-alert').empty();
+                }, 2000);
+            }
+        }
+    });
+
+    var form_lock_settings = $('form.lock-settings');
+
+    form_lock_settings.ajaxForm({
+        url: '{{CONFIG ajax_url}}/ap/save-settings',
+        beforeSend: function() {
+            form_lock_settings.find('button').text("Please wait");
+        },
+        success: function(data) {
+            if (data.status == 200) {
+                form_lock_settings.find('button').text('Save');
+                $('.lock-settings-test-alert').html('<div class="alert alert-success"><i class="fa fa-check"></i> Settings updated successfully</div>');
+                setTimeout(function () {
+                    $('.lock-settings-test-alert').empty();
+                }, 2000);
+            }
+        }
+    });
+
+    var form_user_settings = $('form.user-settings');
+
+    form_user_settings.ajaxForm({
+        url: '{{CONFIG ajax_url}}/ap/save-settings',
+        beforeSend: function() {
+            form_user_settings.find('button').text("Please wait");
+        },
+        success: function(data) {
+            if (data.status == 200) {
+                form_user_settings.find('button').text('Save');
+                $('.user-settings-alert').html('<div class="alert alert-success"><i class="fa fa-check"></i> Settings updated successfully</div>');
+                setTimeout(function () {
+                    $('.user-settings-alert').empty();
+                }, 2000);
+            }
+        }
+    });
+
+    var ffmpeg_settings = $('form.ffmpeg-settings');
+    ffmpeg_settings.ajaxForm({
+        url: '{{CONFIG ajax_url}}/ap/save-settings',
+        beforeSend: function() {
+            ffmpeg_settings.find('.waves-effect').text("Please wait");
+        },
+        success: function(data) {
+            if (data.status == 200) {
+                ffmpeg_settings.find('.waves-effect').text('Save');
+                $('.ffmpeg-settings-alert').html('<div class="alert alert-success"><i class="fa fa-check"></i> Settings updated successfully</div>');
+                setTimeout(function () {
+                    $('.ffmpeg-settings-alert').empty();
+                }, 2000);
+            }
+        }
+    });
+
+});
+</script>

@@ -1,0 +1,162 @@
+<div class="ma_sidebar">
+	<div class="sidebar">
+		<div class="sidebar_innr" data-simplebar>
+			<ul class="sections">
+				<h3>{{LANG browse_music}}</h3>
+				<li class="<?php if( $music->site_pagename == 'discover' ) { echo 'active'; }?>" >
+					<a href="{{LINK discover}}" data-load="discover">
+						<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24.997" viewBox="0 0 25 24.997"> <path id="Subtraction_4" data-name="Subtraction 4" d="M8853.4,2866.4h-10.287v-10.285H8853.4V2866.4Zm-8.828-8.826v7.369h7.366v-7.369Zm-5.885,8.826H8828.4v-10.285h10.287V2866.4Zm-8.828-8.826v7.369h7.37v-7.369Zm23.541-5.884h-10.287V2841.4H8853.4v10.286Zm-8.828-8.828v7.369h7.366v-7.369Zm-5.885,8.828H8828.4V2841.4h10.287v10.286Zm-8.828-8.828v7.369h7.37v-7.369Z" transform="translate(-8828.399 -2841.4)" fill="currentColor"/> </svg> {{LANG discover}}
+					</a>
+				</li>
+				
+				<li class="<?php if( $music->site_pagename == 'feed' ) { echo 'active'; }?> <?php if (!IS_LOGGED) { ?> hidden<?php } ?>">
+					<a href="{{LINK feed}}" data-load="feed">
+						<svg enable-background="new 0 0 24 24" height="512" viewBox="0 0 24 24" width="512" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="m20.5 24h-12c-1.378 0-2.5-1.121-2.5-2.5v-15c0-1.379 1.122-2.5 2.5-2.5h12c1.378 0 2.5 1.121 2.5 2.5v15c0 1.379-1.122 2.5-2.5 2.5zm-12-19c-.827 0-1.5.673-1.5 1.5v15c0 .827.673 1.5 1.5 1.5h12c.827 0 1.5-.673 1.5-1.5v-15c0-.827-.673-1.5-1.5-1.5z"/><path fill="currentColor" d="m4.5 21h-1c-1.378 0-2.5-1.121-2.5-2.5v-16c0-1.379 1.122-2.5 2.5-2.5h12c1.378 0 2.5 1.121 2.5 2.5 0 .276-.224.5-.5.5s-.5-.224-.5-.5c0-.827-.673-1.5-1.5-1.5h-12c-.827 0-1.5.673-1.5 1.5v16c0 .827.673 1.5 1.5 1.5h1c.276 0 .5.224.5.5s-.224.5-.5.5z"/><path fill="currentColor" d="m18.5 17h-8c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h8c.276 0 .5.224.5.5s-.224.5-.5.5z"/><path fill="currentColor" d="m18.5 21h-8c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h8c.276 0 .5.224.5.5s-.224.5-.5.5z"/><path fill="currentColor" d="m18.5 13h-8c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h8c.276 0 .5.224.5.5s-.224.5-.5.5z"/><path fill="currentColor" d="m18.5 9h-8c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h8c.276 0 .5.224.5.5s-.224.5-.5.5z"/></svg> {{LANG Feed}}
+					</a>
+				</li>
+				
+				<li class="<?php if( $music->site_pagename == 'new_music' ) { echo 'active'; }?>">
+					<a href="{{LINK new_music}}" data-load="new_music">
+						<svg xmlns="http://www.w3.org/2000/svg" width="17.533" height="25" viewBox="0 0 17.533 25"> <path id="Subtraction_5" data-name="Subtraction 5" d="M8833.326,2865.7a5.626,5.626,0,1,1,3.574-9.967l.59.484v-14.786a.732.732,0,0,1,1.464,0v.046a2.538,2.538,0,0,0,1.479,1.985,8.266,8.266,0,0,0,4.07.982.732.732,0,0,1,0,1.464,9.4,9.4,0,0,1-5-1.3l-.553-.354v15.764a.055.055,0,0,1,0,.013v.017a.017.017,0,0,0,0,.007v.006a.055.055,0,0,1,0,.012A5.636,5.636,0,0,1,8833.326,2865.7Zm0-9.789a4.164,4.164,0,1,0,4.164,4.164A4.168,4.168,0,0,0,8833.326,2855.911Z" transform="translate(-8827.701 -2840.7)" fill="currentColor"/> </svg> {{LANG New Music}}
+					</a>
+				</li>
+				<li class="<?php if( $music->site_pagename == 'top_music' ) { echo 'active'; }?>">
+					<a href="{{LINK top_music}}" data-load="top_music">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24.699" height="25" viewBox="0 0 24.699 25"> <path id="Path_7218" data-name="Path 7218" d="M8843.883,2857.355a3.644,3.644,0,0,1,5.96-2.812l.082.069v-8.76a.624.624,0,1,1,1.247,0v.029a1.414,1.414,0,0,0,.828,1.076,4.939,4.939,0,0,0,2.425.583.623.623,0,1,1,0,1.247,5.98,5.98,0,0,1-3.175-.83l-.078-.049v9.448a3.645,3.645,0,1,1-7.289,0Zm1.248,0a2.4,2.4,0,1,0,2.4-2.4A2.4,2.4,0,0,0,8845.131,2857.355Zm-14.779-3.431a5.2,5.2,0,0,1,8.511-4.017l.545.447v-13.677a.677.677,0,0,1,1.354,0v.042a2.347,2.347,0,0,0,1.367,1.835,7.667,7.667,0,0,0,3.768.908.677.677,0,0,1,0,1.354,8.718,8.718,0,0,1-4.623-1.2l-.512-.33v14.583a.023.023,0,0,1,0,.013v.027a.016.016,0,0,1,0,.011,5.205,5.205,0,1,1-10.41,0Zm1.351,0a3.853,3.853,0,1,0,3.853-3.853A3.855,3.855,0,0,0,8831.7,2853.924Z" transform="translate(-8830.352 -2836)" fill="currentColor"/> </svg> {{LANG Top Music}}
+					</a>
+				</li>
+				<li class="<?php if( $music->site_pagename == 'albums' ) { echo 'active'; }?>">
+					<a href="{{LINK albums}}" data-load="albums">
+						<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24.899" viewBox="0 0 25 24.899"> <path id="Subtraction_7" data-name="Subtraction 7" d="M8840.7,2866.271a12.482,12.482,0,0,1-9.5-20.6,12.858,12.858,0,0,1,7.555-4.3v1.47a10.64,10.64,0,0,0-6.635,3.837,11.324,11.324,0,0,0-2.529,7.79,11.224,11.224,0,0,0,11.106,10.437,11.009,11.009,0,0,0,7.088-2.511,11.145,11.145,0,0,0,3.851-6.535,10.987,10.987,0,0,0-1.144-7.384,11.373,11.373,0,0,0-5.617-5l-.868-.352v10.651a3.474,3.474,0,0,1-.633,1.981,3.556,3.556,0,0,1-1.678,1.228,2.367,2.367,0,0,1-.74.112,4.252,4.252,0,0,1-1.321-.243,3.423,3.423,0,0,1-1.646-1.22,3.183,3.183,0,0,1-.6-1.979,3.126,3.126,0,0,1,.67-1.853l0-.007a3.554,3.554,0,0,1,1.7-1.228,2.424,2.424,0,0,1,.739-.112,4.152,4.152,0,0,1,1.31.242l.829.275v-9.6a12.856,12.856,0,0,1,7.553,4.3,12.482,12.482,0,0,1-9.5,20.6Z" transform="translate(-8828.199 -2841.371)" fill="currentColor"/> </svg> {{LANG Albums}}
+					</a>
+				</li>
+				<li class="<?php if( $music->site_pagename == 'spotlight' ) { echo 'active'; }?>">
+					<a href="{{LINK spotlight}}" data-load="spotlight">
+						<svg xmlns="http://www.w3.org/2000/svg" width="20.631" height="24.9" viewBox="0 0 20.631 24.9"> <path id="Path_7233" data-name="Path 7233" d="M8838.615,2866.2h0l-7.295-7.285a10.323,10.323,0,1,1,14.594,0l-7.3,7.287Zm0-23.534a8.946,8.946,0,0,0-8.264,5.517,8.753,8.753,0,0,0-.508,5.178,8.9,8.9,0,0,0,2.445,4.579l6.326,6.34,6.326-6.34a8.911,8.911,0,0,0,2.445-4.576,8.946,8.946,0,0,0-3.8-9.191A8.886,8.886,0,0,0,8838.615,2842.665Z" transform="translate(-8828.301 -2841.3)" fill="currentColor"/> </svg> {{LANG Spotlight}}
+					</a>
+				</li>
+				<li class="<?php if( $music->site_pagename == 'genres' ) { echo 'active'; }?>">
+					<a href="{{LINK genres}}" data-load="genres">
+						<svg xmlns="http://www.w3.org/2000/svg" width="19.093" height="23.901" viewBox="0 0 19.093 23.901"> <path id="Subtraction_34" data-name="Subtraction 34" d="M8837.182,2863.9h-1.264v-4.6l-.45-.044a9.68,9.68,0,0,1-5.761-2.684,10.215,10.215,0,0,1-2.707-5.26h1.283a8.426,8.426,0,0,0,16.535,0h1.274a10.15,10.15,0,0,1-2.7,5.26,9.682,9.682,0,0,1-5.761,2.684l-.453.044v4.6Zm-.631-9.056a4.925,4.925,0,0,1-3.641-1.543l-.018-.016a5.1,5.1,0,0,1-1.5-3.6V2847.7h1.266v1.985a3.9,3.9,0,0,0,7.79,0V2847.7h1.264v1.985a5.109,5.109,0,0,1-1.5,3.6l-.02.016A4.934,4.934,0,0,1,8836.551,2854.846Zm-3.894-8.142h-1.266v-1.545a5.1,5.1,0,0,1,1.5-3.6l.018-.015a4.932,4.932,0,0,1,3.641-1.541,4.2,4.2,0,0,1,1.937.4l.033.016.037.011a3.967,3.967,0,0,1,1.635,1.112l.037.033a4.466,4.466,0,0,1,1.088,1.625,4.909,4.909,0,0,1,.394,1.958v1.544h-1.264v-1.545a3.9,3.9,0,0,0-7.79,0v1.545Z" transform="translate(-8827 -2840)" fill="currentColor"/> </svg> {{LANG Genres}}
+					</a>
+				</li>
+				<li class="<?php if( $music->site_pagename == 'playlists' ) { echo 'active'; }?>">
+					<a href="{{LINK playlists}}" data-load="playlists">
+						<svg xmlns="http://www.w3.org/2000/svg" width="23.707" height="19.162" viewBox="0 0 23.707 19.162"> <g id="Group_9318" data-name="Group 9318" transform="translate(-2.51 -457.207)"> <path id="Path_6453" data-name="Path 6453" d="M3469,13930.909h11.364v2.272H3469Zm0-7.955h15.909v2.273H3469Zm0-7.954h22.727v2.272H3469Z" transform="translate(-3466 -13457.303)" fill="currentColor" class="icon_stroke" stroke-width="0.98"/> <path id="Path_7235" data-name="Path 7235" d="M82.656,1.8a3.89,3.89,0,0,1-1.892-.448c-.4-.234-.634-.527-.634-.8V.524a.531.531,0,0,0-1.063,0V7.255A2.865,2.865,0,1,0,80.13,9.472c0-.005,0-.01,0-.016s0-.005,0-.008V2.193a4.8,4.8,0,0,0,2.526.652.524.524,0,1,0,0-1.048Zm-5.44,9.5a1.826,1.826,0,1,1,1.851-1.826A1.84,1.84,0,0,1,77.217,11.3Z" transform="translate(-57.46 463.533)" fill="currentColor"/> </g> </svg> {{LANG Playlists}}
+					</a>
+				</li>
+				<?php if ($music->config->fame_system == 1) { ?>
+					<li class="<?php if( $music->site_pagename == 'fame' ) { echo 'active'; }?>">
+						<a href="{{LINK fame}}" data-load="fame">
+							<svg xmlns="http://www.w3.org/2000/svg" width="26" height="23.728" viewBox="0 0 26 23.728"> <path id="Path_6305" data-name="Path 6305" d="M3584.546,13078.682h2.272v11.363h-2.272Zm-4.546,3.409h2.272v4.545H3580Zm9.091-9.091h2.273v20.454h-2.273Zm4.545,2.271h2.273v20.456h-2.273Zm4.546,3.41h2.272v11.363h-2.272Zm4.546,3.409H3605v4.545h-2.272Z" transform="translate(-3579.5 -13072.5)" fill="currentColor" class="icon_stroke" stroke-width="1"/> </svg>
+							{{LANG Hall of fame}}
+						</a>
+					</li>
+				<?php } ?>
+				<?php if($music->config->radio_station_import == 'on'){?>
+				<li class="<?php if( $music->site_pagename == 'stations' ) { echo 'active'; }?>">
+					<a href="{{LINK stations}}" data-load="stations">
+						<svg xmlns="http://www.w3.org/2000/svg" width="26.2" height="19.475" viewBox="0 0 26.2 19.475"> <path id="Path_6361" data-name="Path 6361" d="M3360.663,13409.9l1.763,1.75a12.072,12.072,0,0,0-2.163,3.25,9.961,9.961,0,0,0-.763,3.875,10.272,10.272,0,0,0,2.925,7.125l-1.763,1.75a13.959,13.959,0,0,1-2.712-4.125,12.348,12.348,0,0,1,0-9.5A13.959,13.959,0,0,1,3360.663,13409.9Zm17.675,0a13.959,13.959,0,0,1,2.712,4.125,12.348,12.348,0,0,1,0,9.5,13.959,13.959,0,0,1-2.712,4.125l-1.763-1.75a12.072,12.072,0,0,0,2.163-3.25,9.961,9.961,0,0,0,.763-3.875,10.216,10.216,0,0,0-2.925-7.125l1.763-1.75Zm-14.137,3.625,1.762,1.75a4.093,4.093,0,0,0-1.087,1.625,5.016,5.016,0,0,0-.375,1.875,4.878,4.878,0,0,0,1.462,3.5l-1.762,1.75a6.817,6.817,0,0,1-1.625-2.375,7.156,7.156,0,0,1-.575-2.875A7.062,7.062,0,0,1,3364.2,13413.525Zm10.6,0a6.817,6.817,0,0,1,1.625,2.375,7.473,7.473,0,0,1,0,5.75,6.817,6.817,0,0,1-1.625,2.375l-1.762-1.75a4.093,4.093,0,0,0,1.087-1.625,4.875,4.875,0,0,0,0-3.75,4.093,4.093,0,0,0-1.087-1.625Zm-5.3,7.75a2.371,2.371,0,0,1-1.762-.75,2.444,2.444,0,0,1,0-3.5,2.445,2.445,0,0,1,3.524,0,2.444,2.444,0,0,1,0,3.5A2.371,2.371,0,0,1,3369.5,13421.275Z" transform="translate(-3356.4 -13409.038)" fill="currentColor" class="icon_stroke" stroke-width="1.2"/> </svg> {{LANG Stations}}
+					</a>
+				</li>
+				<?php } ?>
+				{{HOOK LOAD_SIDEBAR_LINK}}
+				<?php if($music->config->point_system == 'on' && $music->config->can_use_point_system){?>
+					<li class="<?php if( $music->site_pagename == 'payment_system' ) { echo 'active'; }?>">
+						<a href="{{LINK point-system}}" data-load="point-system">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24.659" height="22.655" viewBox="0 0 24.659 22.655"> <g id="Group_9322" data-name="Group 9322" transform="translate(-7.751 -625.474)"> <path id="Path_7236" data-name="Path 7236" d="M8820.372,2870.056a15.79,15.79,0,0,1-7.756-1.818l-.677-.375-.253.729a.493.493,0,0,1-.187.233l-.014.009a.422.422,0,0,1-.261.077h-3.432a.481.481,0,0,1-.492-.494v-10.291a.484.484,0,0,1,.492-.494h3.432a.53.53,0,0,1,.35.142.535.535,0,0,1,.143.352v.65h.649a7.381,7.381,0,0,1,4.549,1.576l.177.14h2.707a4.485,4.485,0,0,1,3.346,1.5l.194.217h3.894a5.1,5.1,0,0,1,2.7.78,5.168,5.168,0,0,1,1.691,1.76,14.286,14.286,0,0,1-4.992,3.9A14.773,14.773,0,0,1,8820.372,2870.056Zm-8.654-10.291v6.759l.316.188.038.022a14.183,14.183,0,0,0,8.3,2.334,13.654,13.654,0,0,0,5.136-.993,13.157,13.157,0,0,0,4.264-2.764l.7-.645-.705-.59-.016-.011a4.084,4.084,0,0,0-2.246-.858l-.239-.013h-3.252l.173.789a4.665,4.665,0,0,1,.111,1v.494H8815.3v-.989h8.055l-.333-.878-.044-.124-.016-.029a3.6,3.6,0,0,0-1.2-1.379,3.471,3.471,0,0,0-1.737-.6l-3.308,0a6.347,6.347,0,0,0-4.352-1.714Zm-3.43-1.144v9.3h2.442v-9.3Z" transform="translate(-8799.4 -2222.076)" fill="currentColor" class="icon_stroke" stroke-width="0.3"/> <path id="Path_6605" data-name="Path 6605" d="M3366.446,7177.582l-3.682,2.248,1-4.2-3.276-2.806,4.3-.345,1.659-3.983,1.653,3.983,4.3.345-3.275,2.806,1,4.2Z" transform="translate(-3344.385 -6543.025)" fill="currentColor"/> </g> </svg> {{LANG Earn Points}}
+						</a>
+					</li>
+				<?php } ?>
+			</ul>
+
+			<ul class="sections">
+			<?php if( $music->config->artist_sell == 'on' ) { ?>
+				<h3>{{LANG Store}}</h3>
+				<li class="<?php if( $music->site_pagename == 'store' ) { echo 'active'; }?>">
+					<a href="{{LINK store/songs}}" data-load="store/songs">
+						<svg xmlns="http://www.w3.org/2000/svg" width="28.05" height="28.05" viewBox="0 0 28.05 28.05"> <g id="Group_9324" data-name="Group 9324" transform="translate(-2.94 -712.3)"> <path id="Path_6772" data-name="Path 6772" d="M3772.806,8082.976l5.555,5.554-1.83,1.83-5.555-5.555a11.672,11.672,0,1,1,1.83-1.829Zm-2.609-.962a9.053,9.053,0,1,0-.182.183Z" transform="translate(-3748.36 -7351)" fill="currentColor" class="icon_stroke" stroke-width="1.4"/> <g id="Icon_feather-globe" data-name="Icon feather-globe" transform="translate(9.476 718.914)"> <path id="Path_7238" data-name="Path 7238" d="M14.747,8.873A5.873,5.873,0,1,1,8.873,3,5.873,5.873,0,0,1,14.747,8.873Z" transform="translate(-3 -3)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.9"/> <path id="Path_7239" data-name="Path 7239" d="M3,18H14.747" transform="translate(-3 -12.127)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.9"/> <path id="Path_7240" data-name="Path 7240" d="M14.349,3A8.986,8.986,0,0,1,16.7,8.873a8.986,8.986,0,0,1-2.349,5.873A8.986,8.986,0,0,1,12,8.873,8.986,8.986,0,0,1,14.349,3Z" transform="translate(-8.476 -3)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.9"/> </g> </g> </svg> {{LANG Browse}}
+					</a>
+				</li>
+				<li class="<?php if( $music->site_pagename == 'purchased' ) { echo 'active'; }?>">
+					<a href="{{LINK purchased}}" data-load="purchased">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24.999" height="25.196" viewBox="0 0 24.999 25.196"> <path id="Union_6" data-name="Union 6" d="M8827.667,2865.2a.66.66,0,0,1-.667-.667v-.083l1.126-14.553a.634.634,0,0,1,.206-.425l.015-.01a.641.641,0,0,1,.446-.178h2.082v-.659a8.666,8.666,0,0,1,2.524-6.1,8.63,8.63,0,0,1,12.2,0,8.659,8.659,0,0,1,2.528,6.1v.659h2.078a.646.646,0,0,1,.448.178l.015.01a.631.631,0,0,1,.207.422l1.127,14.581a.694.694,0,0,1-.163.493.7.7,0,0,1-.432.232Zm.719-1.332h22.225l-1.02-13.254H8829.4Zm6.067-20.509a7.208,7.208,0,0,0-2.234,4.941l-.043.982h14.611v-.659a7.274,7.274,0,0,0-6.967-7.277l-.292-.012-.028,0A7.267,7.267,0,0,0,8834.453,2843.356Zm2.395,13.218v-2.653h5.306v2.653Z" transform="translate(-8827 -2840)" fill="currentColor"/> </svg> {{LANG Purchased}}
+					</a>
+				</li>
+			<?php } ?>
+			<?php if( $music->config->store_system == 'on' && IS_LOGGED && $music->config->can_use_store_system) {
+				$have_product = $db->where('user_id',$music->user->id)->getValue(T_PRODUCTS,'COUNT(*)');
+				if ($have_product > 0) {
+			?>
+				<li onclick="OpenStoreMenu(this)">
+					<a href="javascript:void(0)" class="mystore_menu_parent">
+						<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"> <path id="Path_4908" data-name="Path 4908" d="M3440.75,1557.063v11.687a1.238,1.238,0,0,1-1.25,1.25h-20a1.238,1.238,0,0,1-1.25-1.25v-11.687a4.986,4.986,0,0,1-1.25-3.313v-7.5a1.238,1.238,0,0,1,1.25-1.25h22.5a1.238,1.238,0,0,1,1.25,1.25v7.5A5.033,5.033,0,0,1,3440.75,1557.063Zm-2.5,1.525a4.879,4.879,0,0,1-2.713-.063,4.948,4.948,0,0,1-2.287-1.462,5.217,5.217,0,0,1-1.688,1.25,5.078,5.078,0,0,1-4.125,0,5.206,5.206,0,0,1-1.687-1.25,5.077,5.077,0,0,1-2.288,1.475,5,5,0,0,1-2.713.05v8.912h17.5Zm-6.25-4.838a1.25,1.25,0,1,1,2.5,0,2.5,2.5,0,0,0,5,0v-6.25h-20v6.25a2.5,2.5,0,0,0,5,0,1.25,1.25,0,1,1,2.5,0,2.5,2.5,0,0,0,5,0Z" transform="translate(-3416.5 -1544.5)" fill="currentColor" class="icon_stroke" stroke-width="1"/> </svg>
+						{{LANG My Store}}<span><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></span>
+					</a>
+				</li>
+				<div class="mystore_menu" style="display: none;">
+					<li class="<?php if( $music->site_pagename == 'orders' ) { echo 'active'; }?>">
+						<a href="{{LINK orders}}" data-load="orders">{{LANG Store Orders}}</a>
+					</li>
+					<li class="<?php if( $music->site_pagename == 'manage-products' ) { echo 'active'; }?>">
+						<a href="{{LINK manage_products}}" data-load="manage_products">{{LANG Manage Products}}</a>
+					</li>
+					<li class="<?php if( $music->site_pagename == 'store_analytics' ) { echo 'active'; }?>">
+						<a href="{{LINK store_analytics}}" data-load="store_analytics">{{LANG Store Analytics}}</a>
+					</li>
+				</div>
+			<?php } } ?>
+			</ul>
+			<?php if ($music->config->event_system == 1) { ?>
+
+			<ul class="sections">
+				<h3>{{LANG Events}}</h3>
+				<li  class="<?php if( $music->site_pagename == 'events' ) { echo 'active'; }?>">
+					<a href="{{LINK events}}" data-load="events">
+						<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.25" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><rect x="4" y="5" width="16" height="16" rx="2"></rect><line x1="16" y1="3" x2="16" y2="7"></line><line x1="8" y1="3" x2="8" y2="7"></line><line x1="4" y1="11" x2="20" y2="11"></line><rect x="8" y="15" width="2" height="2"></rect></svg> {{LANG Events}}
+					</a>
+				</li>
+			</ul>
+			<?php } ?>
+			<ul class="sections">
+				<h3>{{LANG Your Music}}</h3>
+				<li  class="<?php if( $music->site_pagename == 'recently_played' ) { echo 'active'; }?>">
+					<a href="{{LINK recently_played}}" data-load="recently_played">
+						<svg xmlns="http://www.w3.org/2000/svg" width="26.1" height="23.654" viewBox="0 0 26.1 23.654"> <g id="Group_9328" data-name="Group 9328" transform="translate(-37.95 -889.95)"> <path id="Path_6433" data-name="Path 6433" d="M3477.775,13807.426l6.1,4.123c.075,0,.125.125.162.125.038.125.063.125.063.25s-.025.123-.062.25c-.037,0-.087.123-.162.123l-6.1,4.125a.259.259,0,0,0-.25.125c-.087,0-.175-.125-.262-.125s-.15-.125-.187-.125a1.658,1.658,0,0,1-.075-.25v-8.246a1.646,1.646,0,0,1,.075-.252c.038,0,.112-.123.188-.123s.175-.127.262-.127A.257.257,0,0,0,3477.775,13807.426Z" transform="translate(-3429.128 -12910.147)" fill="currentColor"/> <path id="Path_7243" data-name="Path 7243" d="M3468.993,13802h24.914l.086,21.242v1.309l-24.992-.176v-1.133Zm2.508,2.5v17.494h19.993V13804.5Z" transform="translate(-3430.493 -12911.5)" fill="currentColor" class="icon_stroke" stroke-width="1.1"/> </g> </svg> {{LANG Recently Played}}
+					</a>
+				</li>
+				<li  class="<?php if( $music->site_pagename == 'my_playlists' ) { echo 'active'; }?>">
+					<a href="{{LINK my_playlists}}" data-load="my_playlists">
+						<svg xmlns="http://www.w3.org/2000/svg" width="23.707" height="19.162" viewBox="0 0 23.707 19.162"> <g id="Group_9318" data-name="Group 9318" transform="translate(-2.51 -457.207)"> <path id="Path_6453" data-name="Path 6453" d="M3469,13930.909h11.364v2.272H3469Zm0-7.955h15.909v2.273H3469Zm0-7.954h22.727v2.272H3469Z" transform="translate(-3466 -13457.303)" fill="currentColor" class="icon_stroke" stroke-width="0.98"/> <path id="Path_7235" data-name="Path 7235" d="M82.656,1.8a3.89,3.89,0,0,1-1.892-.448c-.4-.234-.634-.527-.634-.8V.524a.531.531,0,0,0-1.063,0V7.255A2.865,2.865,0,1,0,80.13,9.472c0-.005,0-.01,0-.016s0-.005,0-.008V2.193a4.8,4.8,0,0,0,2.526.652.524.524,0,1,0,0-1.048Zm-5.44,9.5a1.826,1.826,0,1,1,1.851-1.826A1.84,1.84,0,0,1,77.217,11.3Z" transform="translate(-57.46 463.533)" fill="currentColor"/> </g> </svg> {{LANG My Playlists}}
+					</a>
+				</li>
+				<li class="<?php if( $music->site_pagename == 'favourites' ) { echo 'active'; }?>">
+					<a href="{{LINK favourites}}" data-load="favourites">
+						<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.25" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428m0 0a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572"></path></svg> {{LANG Favourites}}
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<script>
+function OpenStoreMenu(self) {
+	$(self).find('span').find('svg').remove();
+	if ($(".mystore_menu").is(":visible")) {
+		$(".mystore_menu").slideUp();
+		$(self).find('span').append('<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>');
+	}
+	else{
+		$(".mystore_menu").slideDown();
+		$(self).find('span').append('<svg style="float: right;width: 15px !important;height: 15px !important;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="15" height="15" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024"><path d="M872 474H152c-4.4 0-8 3.6-8 8v60c0 4.4 3.6 8 8 8h720c4.4 0 8-3.6 8-8v-60c0-4.4-3.6-8-8-8z" fill="currentColor"/></svg>');
+	}
+}
+
+current_width = $(window).width();
+
+if(current_width < 1190) {
+$(document).on('click', '.sidebar .sidebar_innr a', function() {
+	$('body').removeClass('side_open');
+});
+}
+</script>

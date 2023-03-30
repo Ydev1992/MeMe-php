@@ -1,0 +1,65 @@
+<div class="feed_post" data-id="{{s_id}}" id="feed_{{s_id}}">
+	<div class="fp_head">
+		<div class="avatar user-image">
+			<a href="{{USER url}}" data-load="{{USER username}}">
+				<img src="{{USER avatar}}" alt="User Avatar">
+			</a>
+			<?php if ($music->config->go_pro == 'on') { ?>
+			<?php if ($music->songData->publisher->is_pro == 1) { ?>
+			<div class="is-pro-badge-small" title="{{LANG PRO Memeber}}">
+				<?php if (!empty($music->songData->publisher->pro_type) && in_array($music->songData->publisher->pro_type, array_keys($music->pro_packages) )) {
+					echo($music->pro_packages[$music->songData->publisher->pro_type]['html_icon']);
+				}
+					?>
+			</div>
+			<?php } ?>
+			<?php } ?>
+		</div>
+		<div class="user_info">
+			<a href="{{USER url}}" data-load="{{USER username}}">{{USER name_v}}</a>
+			<span>
+				<?php if (empty($music->a_type) || $music->a_type == 'uploaded_track') { ?>
+				{{LANG Uploaded new song}} {{s_time}}
+			<?php }else{ ?>
+				{{LANG Created new product}} {{s_time}}
+			<?php } ?> 
+			</span>
+		</div>
+		<?php if (!empty($music->songData->audio_id)) { ?>
+		<div class="opts_feed dropdown">
+			<button type="button" class="btn" data-display="static" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M16,12A2,2 0 0,1 18,10A2,2 0 0,1 20,12A2,2 0 0,1 18,14A2,2 0 0,1 16,12M10,12A2,2 0 0,1 12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12M4,12A2,2 0 0,1 6,10A2,2 0 0,1 8,12A2,2 0 0,1 6,14A2,2 0 0,1 4,12Z"></path></svg></button>
+			<div class="dropdown-menu dropdown-menu-right mat-dropdown">
+				<ul class="list-unstyled mb-0">
+					<?php if ($music->isSongOwner == true ) { ?>
+						<!-- <li><a href="#">{{LANG Pin}}</a></li> -->
+						<li><a href="{{LINK edit-track/{{s_audio_id}}}}" data-load="edit-track/{{s_audio_id}}"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path fill="currentColor" d="M6.414 16L16.556 5.858l-1.414-1.414L5 14.586V16h1.414zm.829 2H3v-4.243L14.435 2.322a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414L7.243 18zM3 20h18v2H3v-2z"/></svg>&nbsp;{{LANG Edit Info}}</a></li>
+						<li><a href="javascript:void(0)" onclick="$('#delete-song').attr('data-id', '{{s_id}}')" data-toggle="modal" data-target="#delete-song"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path fill="currentColor" d="M17 6h5v2h-2v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8H2V6h5V3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v3zm1 2H6v12h12V8zm-9 3h2v6H9v-6zm4 0h2v6h-2v-6zM9 4v2h6V4H9z"/></svg>&nbsp;{{LANG Delete Track}}</a></li>
+						<?php if ($music->songData->album_id == 0) { ?>
+						<li><a href="javascript:void(0)" onclick="moveToAlbum({{s_id}})"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path fill="currentColor" d="M15 4.582V12a3 3 0 1 1-2-2.83V2.05c5.053.501 9 4.765 9 9.95 0 5.523-4.477 10-10 10S2 17.523 2 12c0-5.185 3.947-9.449 9-9.95v2.012A8.001 8.001 0 0 0 12 20a8 8 0 0 0 3-15.418z"/></svg>&nbsp;{{LANG Move to album}}</a></li>
+						<?php } ?>
+					<?php } else { ?>
+						<li><a class="track_report" href="javascript:void(0);" onclick="$('#report_track_id').val('2');" data-toggle="modal" data-target="#report_track" data-track-id="2" data-uid="2" rel="nofollow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path fill="currentColor" d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm-1-5h2v2h-2v-2zm0-8h2v6h-2V7z"/></svg>&nbsp;{{LANG Report}}</a></li>
+					<?php } ?>
+						<li><a href="javascript:void(0)" onclick="getPlayLists({{s_id}})"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path fill="currentColor" d="M2 18h10v2H2v-2zm0-7h20v2H2v-2zm0-7h20v2H2V4zm16 14v-3h2v3h3v2h-3v3h-2v-3h-3v-2h3z"/></svg>&nbsp;{{LANG Add to playlist}}</a></li>
+				</ul>
+			</div>
+		</div>
+		<?php } elseif(IS_LOGGED && (IsAdmin() || $music->songData->user_id == $music->user->id)) { ?>
+		<div class="opts_feed dropdown">
+			<button type="button" class="btn" data-display="static" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M16,12A2,2 0 0,1 18,10A2,2 0 0,1 20,12A2,2 0 0,1 18,14A2,2 0 0,1 16,12M10,12A2,2 0 0,1 12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12M4,12A2,2 0 0,1 6,10A2,2 0 0,1 8,12A2,2 0 0,1 6,14A2,2 0 0,1 4,12Z"></path></svg></button>
+			<div class="dropdown-menu dropdown-menu-right mat-dropdown">
+				<ul class="list-unstyled mb-0">
+					<li><a href="<?php echo($music->songData->edit_url) ?>" data-load="<?php echo($music->songData->edit_data_load) ?>"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path fill="currentColor" d="M6.414 16L16.556 5.858l-1.414-1.414L5 14.586V16h1.414zm.829 2H3v-4.243L14.435 2.322a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414L7.243 18zM3 20h18v2H3v-2z"/></svg>&nbsp;{{LANG Edit Info}}</a></li>
+					<li><a href="javascript:void(0)" onclick="$('#delete-post').attr('data-id', '{{a_id}}')" data-toggle="modal" data-target="#delete-post"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path fill="currentColor" d="M17 6h5v2h-2v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8H2V6h5V3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v3zm1 2H6v12h12V8zm-9 3h2v6H9v-6zm4 0h2v6h-2v-6zM9 4v2h6V4H9z"/></svg>&nbsp;{{LANG Delete Post}}</a></li>
+				</ul>
+			</div>
+		</div>
+	<?php } ?>
+	</div>
+	<?php echo loadPage('post/post-body'); ?>
+	<?php 
+		if (!empty($music->songData->audio_id)) {
+			echo loadPage('post/post-actions');
+		}
+	?>
+</div>

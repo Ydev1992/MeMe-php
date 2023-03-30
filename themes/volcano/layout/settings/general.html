@@ -1,0 +1,189 @@
+<div class="ma_page_content">
+	<div class="ma_pc_inner">
+		<div class="page_padding">
+			<!-- Settings -->
+				<div class="sett_page">
+					<div class="row">
+						<div class="col-lg-4">
+							<?php echo loadPage("settings/sidebar"); ?>
+						</div>
+						<div class="col-lg-8">
+							<div class="st_content">
+								<h2 class="home_widget_title home_big_title mt-4 mb-3">{{LANG General Settings}}</h2>
+								
+								<div class="st_form">
+									<form method="post" action="" id="general-form">
+										<div class="alert alert-danger alert-empty" id="output-general-errors"></div>
+										
+										<div class="ds_sett_avatar mt-4" onclick="$('#avatar-media').trigger('click'); return false;">
+											<div class="avatar" id="ds_sett_avatar_img">
+												<svg xmlns="http://www.w3.org/2000/svg" width="38.125" height="38.125" viewBox="0 0 38.125 38.125"> <path id="Subtraction_139" data-name="Subtraction 139" d="M4945.174-6601.375h-35.224a1.36,1.36,0,0,1-1.012-.422,1.374,1.374,0,0,1-.438-1.028v-35.222a1.392,1.392,0,0,1,.437-1.033,1.377,1.377,0,0,1,1.013-.42h35.224a1.378,1.378,0,0,1,1.013.42,1.4,1.4,0,0,1,.438,1.033v35.222a1.379,1.379,0,0,1-.438,1.028A1.368,1.368,0,0,1,4945.174-6601.375Zm-8.807-15.939-12.963,13.036h20.319v-5.682l-7.355-7.355Zm-19.812-4.4-5.153,5.154v12.285h7.887l7.33-7.354-10.063-10.086Zm0-4.044h0l12.106,12.106,7.7-7.7,7.355,7.35V-6636.6H4911.4v15.992l5.153-5.154Zm18.712.172a3.493,3.493,0,0,1-1.835-.7,2.852,2.852,0,0,1-.717-1.856,2.837,2.837,0,0,1,.717-1.855,3.458,3.458,0,0,1,1.835-.7,3.461,3.461,0,0,1,1.835.7,2.837,2.837,0,0,1,.716,1.855,2.849,2.849,0,0,1-.716,1.856A3.494,3.494,0,0,1,4935.268-6625.59Z" transform="translate(-4908.5 6639.5)" fill="currentColor"/> </svg>
+											</div>
+											<div class="info">
+												<h4>{{LANG upload_profile_img}}</h4>
+												<p>{{LANG prof_img_reso}}</p>
+											</div>
+										</div>
+										<input type="file" class="hidden" id="avatar-media" name="image" accept="image/*">
+										
+										<div class="row">
+											<div class="col-md-6">
+												<div class="form-group mat_input float">
+													<input type="text" name="username" class="form-control" id="username" autofocus placeholder=" " value="{{USER username}}">
+													<label class="col-md-12" for="username">{{LANG Username}}</label>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group mat_input float">
+													<input type="email" name="email" class="form-control" id="email" placeholder=" " value="{{USER email}}">
+													<label class="col-md-12" for="email">{{LANG Email}}</label>
+												</div>
+											</div>
+										</div>
+										<div class="form-group mat_input float">
+											<select id="country" class="form-control" name="country">
+												{{COUNTRIES_LAYOUT}}
+											</select>
+											<label class="col-md-12" for="country">{{LANG Country}}</label>
+										</div>
+										<div class="row">
+											<div class="col-md-6">
+												<div class="form-group mat_input float">
+													<select id="age" name="age" class="form-control">
+														<option value="0">Not selected</option>
+														<?php
+														for ($i=1; $i < 100; $i++) { 
+															?>
+															<option value="<?php echo $i;?>" <?php echo ($music->userData->age == $i) ? 'selected': '';?>><?php echo $i;?></option>
+															<?php
+														}
+														?>
+													</select>
+													<label class="col-md-12" for="age">{{LANG Age}}</label>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group mat_input float">
+													<select id="gender" class="form-control" name="gender">
+														<option value="male" <?php echo ($music->userData->gender == 'male') ? 'selected': '';?>>{{LANG Male}}</option>
+														<option value="female" <?php echo ($music->userData->gender == 'female') ? 'selected': '';?>>{{LANG Female}}</option>
+													</select>
+													<label class="col-md-12" for="gender">{{LANG Gender}}</label>
+												</div>
+											</div>
+										</div>
+
+										<div class="row">
+											<?php
+											$fields = GetProfileFields('general');
+											if (count($fields) > 0) {
+											foreach ($fields as $key => $wo['field']) {
+											echo LoadPage('settings/profile-fields',$wo['field']);
+											}
+											echo '<input name="custom_fields" type="hidden" value="1">';
+											}
+											?>
+										</div>
+
+										<?php if (isAdmin()) {?>
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group mat_input float">
+														<select id="ispro" class="form-control" name="ispro">
+															<option value="no" <?php echo ($music->userData->is_pro == 0) ? 'selected': '';?>>{{LANG No}}</option>
+															<?php foreach ($music->pro_packages as $key => $value) { ?>
+																<option value="<?php echo $key; ?>" <?php echo ($music->userData->pro_type == $key && $music->userData->is_pro != 0) ? 'selected': '';?>><?php echo $value['name']; ?></option>
+															<?php } ?>
+														</select>
+														<label class="col-md-12" for="ispro">{{LANG Pro user}}</label>
+													</div>
+												</div>
+												<div class="col-md-6">
+													<div class="form-group mat_input float">
+														<select id="verified" class="form-control" name="verified">
+															<option value="yes" <?php echo ($music->userData->verified == 1) ? 'selected': '';?>>{{LANG Yes}}</option>
+															<option value="no" <?php echo ($music->userData->verified == 0) ? 'selected': '';?>>{{LANG No}}</option>
+														</select>
+														<label class="col-md-12" for="verified">{{LANG Verified}}</label>
+													</div>
+												</div>
+											</div>
+
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group mat_input float">
+														<select id="user_type" class="form-control" name="user_type">
+															<option value="yes" <?php echo ($music->userData->artist == 1) ? 'selected': '';?>>{{LANG Artist}}</option>
+															<option value="no" <?php echo ($music->userData->artist == 0) ? 'selected': '';?>>{{LANG Normal User}}</option>
+														</select>
+														<label class="col-md-12" for="ispro">{{LANG User Type}}</label>
+													</div>
+												</div>
+												<div class="col-md-6">
+													<div class="form-group mat_input float">
+														<input type="text" name="wallet" id="wallet" class="form-control" placeholder=" " autofocus value="{{USER wallet}}">
+														<label class="col-md-12" for="wallet">{{LANG Wallet}}</label>
+													</div>
+												</div>
+											</div>
+										<?php } ?>
+										
+										<?php if ($music->config->donate_system == 1 && $music->config->can_use_donate_system) { ?>
+											<h3 class="mat_form_title mb-4">{{LANG Donate Button}}</h3>
+											<div class="form-group mat_input float">
+												<input type="paypal_email" name="paypal_email" class="form-control" id="paypal_email" value="{{USER paypal_email}}" placeholder=" ">
+												<label class="col-md-12" for="paypal_email">{{LANG PayPal E-mail}}</label>
+											</div>
+										<?php } ?>
+
+										<div class="last-sett-btn modal-footer mat_sett_btn pb-3">
+											<input type="hidden" id="user-id" name="user_id" value="{{USER id}}">
+											<button type="submit" class="btn btn-primary btn-mat" id="btn-general-submit">{{LANG Save}}</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			<!-- End Settings -->
+		</div>
+	</div>
+</div>
+
+<script>
+$("#avatar-media").on('change', function() {
+	//Get count of selected files
+	$("#ds_sett_avatar_img").html("<img src='" + window.URL.createObjectURL(this.files[0]) + "' alt='Picture'>");
+});
+	
+$(document).ready(function() { 
+    var options = { 
+    	url: "{{CONFIG ajax_url}}/user/general?hash_id=" + getHashID(),
+        beforeSubmit:  function () {
+        	$('#output-general-errors').removeClass("alert-success").addClass('alert-danger');
+        	$('#output-general-errors').empty();
+        	$("#btn-general-submit").text("{{LANG Please wait..}}");
+        }, 
+        success: function (data) {
+			scrollToTop();
+        	$("#btn-general-submit").text("{{LANG Save}}");
+        	if (data.status == 200) {
+        		$('#output-general-errors').removeClass("alert-danger").addClass('alert-success');
+        		$('#output-general-errors').html(data.message);
+				if (data.img.length > 0) {
+					$("#my-profile-picture").attr("src", data.img);
+				}
+        		setTimeout(function () {
+        			$('#output-general-errors').html("");
+        		}, 2000);
+
+        	} else if (data.status == 400) {
+        		var errros = data.errors.join("<br>");
+        		$('#output-general-errors').html(errros);
+        	} 
+        }
+    }; 
+    $('#general-form').ajaxForm(options); 
+}); 
+</script>

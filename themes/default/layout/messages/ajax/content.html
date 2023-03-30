@@ -1,0 +1,382 @@
+<div class="ma_page_content">
+    <div class="ma_pc_inner">
+        <div class="container">
+			<h2 class="home_widget_title border-0">{{LANG Chat}}</h2>
+            <div class="row chatcontainer">
+                <div class="col-md-4">
+                    {{SIDEBAR}}
+                </div>
+                <div class="col-md-8">
+                    <ul class="pt_msg_main">
+                        <div class="settings-header pt_msg_header">
+                            <h3 class="pull-left"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left mobilemsgclose"><polyline points="15 18 9 12 15 6"></polyline></svg> <?php echo (!empty($music->chat_user->name)) ? "<a href='" . $music->chat_user->url . "' data-load='" . $music->chat_user->username . "' >" . $music->chat_user->name . "</a>" : "<a class='text-white' class='user-link'></a>";?></h3>
+                            <?php echo (!empty($music->chat_user->name)) ? '<div class="pull-right" id="delete-conversation"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></div>' : '';?>
+                            <div class="clear"></div>
+                        </div>
+                        <button id="load-more-messages" title="{{LANG Load more messages}}"><i class="fa fa-angle-up"></i></button>
+                        <div class="pt_msg_joint">
+                            <div class="user-messages user-setting-panel pt_msg_area">
+                                {{HTML}}
+                            </div>
+                            <div class="user-send-message">
+                                <form action="#" method="POST" id="new-message-form">
+									<span class="dropup">
+                                        <span data-display="static" data-toggle="dropdown" role="button" class="dropdown-toggle"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12M22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2A10,10 0 0,1 22,12M10,9.5C10,10.3 9.3,11 8.5,11C7.7,11 7,10.3 7,9.5C7,8.7 7.7,8 8.5,8C9.3,8 10,8.7 10,9.5M17,9.5C17,10.3 16.3,11 15.5,11C14.7,11 14,10.3 14,9.5C14,8.7 14.7,8 15.5,8C16.3,8 17,8.7 17,9.5M12,17.23C10.25,17.23 8.71,16.5 7.81,15.42L9.23,14C9.68,14.72 10.75,15.23 12,15.23C13.25,15.23 14.32,14.72 14.77,14L16.19,15.42C15.29,16.5 13.75,17.23 12,17.23Z"></path></svg></span>
+										<ul class="dropdown-menu mat-dropdown">
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😀');"><span>😀</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😁');"><span>😁</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😂');"><span>😂</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🤣');"><span>🤣</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😃');"><span>😃</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😄');"><span>😄</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😅');"><span>😅</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😆');"><span>😆</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😉');"><span>😉</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😊');"><span>😊</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😋');"><span>😋</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😎');"><span>😎</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😍');"><span>😍</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😘');"><span>😘</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😗');"><span>😗</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😙');"><span>😙</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😚');"><span>😚</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🙂');"><span>🙂</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🤗');"><span>🤗</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🤩');"><span>🤩</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🤔');"><span>🤔</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🤨');"><span>🤨</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😐');"><span>😐</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😑');"><span>😑</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😶');"><span>😶</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🙄');"><span>🙄</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😏');"><span>😏</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😣');"><span>😣</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😥');"><span>😥</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😮');"><span>😮</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🤐');"><span>🤐</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😯');"><span>😯</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😪');"><span>😪</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😫');"><span>😫</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😴');"><span>😴</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😌');"><span>😌</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😛');"><span>😛</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😜');"><span>😜</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😝');"><span>😝</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🤤');"><span>🤤</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😒');"><span>😒</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😓');"><span>😓</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😔');"><span>😔</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😕');"><span>😕</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🙃');"><span>🙃</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🤑');"><span>🤑</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😲');"><span>😲</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','☹️');"><span>☹️</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🙁');"><span>🙁</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😖');"><span>😖</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😞');"><span>😞</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😟');"><span>😟</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😤');"><span>😤</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😢');"><span>😢</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😭');"><span>😭</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😦');"><span>😦</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😧');"><span>😧</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😨');"><span>😨</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😩');"><span>😩</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🤯');"><span>🤯</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😬');"><span>😬</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😰');"><span>😰</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😱');"><span>😱</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😳');"><span>😳</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🤪');"><span>🤪</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😵');"><span>😵</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😡');"><span>😡</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😠');"><span>😠</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🤬');"><span>🤬</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😷');"><span>😷</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🤒');"><span>🤒</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🤕');"><span>🤕</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🤢');"><span>🤢</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🤮');"><span>🤮</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🤧');"><span>🤧</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😇');"><span>😇</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🤠');"><span>🤠</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🤡');"><span>🤡</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🤥');"><span>🤥</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🤫');"><span>🤫</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🤭');"><span>🤭</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🧐');"><span>🧐</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🤓');"><span>🤓</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😈');"><span>😈</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','👿');"><span>👿</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','👹');"><span>👹</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','👺');"><span>👺</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','💀');"><span>💀</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','👻');"><span>👻</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','👽');"><span>👽</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🤖');"><span>🤖</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','💩');"><span>💩</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😺');"><span>😺</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😸');"><span>😸</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😹');"><span>😹</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😻');"><span>😻</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😼');"><span>😼</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😽');"><span>😽</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🙀');"><span>🙀</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😿');"><span>😿</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','😾');"><span>😾</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','👶');"><span>👶</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','👧');"><span>👧</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🧒');"><span>🧒</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','👦');"><span>👦</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','👩');"><span>👩</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🧑');"><span>🧑</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','👨');"><span>👨</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','👵');"><span>👵</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🧓');"><span>🧓</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','👴');"><span>👴</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','👲');"><span>👲</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','💅');"><span>💅</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🤳');"><span>🤳</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','💃');"><span>💃</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🕺');"><span>🕺</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🕴');"><span>🕴</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','👫');"><span>👫</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','👭');"><span>👭</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','👬');"><span>👬</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','💑');"><span>💑</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🤲');"><span>🤲</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','👐');"><span>👐</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🙌');"><span>🙌</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','👏');"><span>👏</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🤝');"><span>🤝</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','👍');"><span>👍</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','👎');"><span>👎</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','👊');"><span>👊</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','✊');"><span>✊</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🤛');"><span>🤛</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🤜');"><span>🤜</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🤞');"><span>🤞</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','✌️');"><span>✌️</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🤟');"><span>🤟</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🤘');"><span>🤘</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','👌');"><span>👌</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','👈');"><span>👈</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','👉');"><span>👉</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','👆');"><span>👆</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','👇');"><span>👇</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','☝️');"><span>☝️</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','✋');"><span>✋</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🤚');"><span>🤚</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🖐');"><span>🖐</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🖖');"><span>🖖</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','👋');"><span>👋</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🤙');"><span>🤙</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','💪');"><span>💪</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🖕');"><span>🖕</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','✍️');"><span>✍️</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🙏');"><span>🙏</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','💍');"><span>💍</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','💄');"><span>💄</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','💋');"><span>💋</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','👄');"><span>👄</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','👅');"><span>👅</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','👂');"><span>👂</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','👃');"><span>👃</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','👣');"><span>👣</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','👁');"><span>👁</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','👀');"><span>👀</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🧠');"><span>🧠</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','🗣');"><span>🗣</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','👤');"><span>👤</span></span>
+											<span class="emoji_holder" onclick="ds_addemo_msg('.user-send-message textarea','👥');"><span>👥</span></span>
+										</ul>
+                                    </span>
+									
+                                    <textarea name="new-message" id="new-message" cols="30" rows="2" placeholder="{{LANG Write message}}" ></textarea>
+
+                                    <span onclick="document.getElementById('chat_message_upload_media_file').click(); return false" class="pointer">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M8.5,13.5L11,16.5L14.5,12L19,18H5M21,19V5C21,3.89 20.1,3 19,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19Z"></path></svg>
+                                    </span>
+                                    <div class="chat_message_upload_media_imgprogress hide">
+                                        <div class="progress">
+                                            <div class="chat_message_upload_media_imgdeterminate determinate" style="width: 0%;"></div>
+                                        </div>
+                                    </div>
+                                    <input type="file" id="chat_message_upload_media_file" class="hide" accept="image/x-png, image/gif, image/jpeg, image/webp" name="avatar">
+
+                                    <button class="btn btn-primary" type="submit" id="send-button">{{LANG Send}} <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M2,21L23,12L2,3V10L17,12L2,14V21Z" /></svg></button>
+                                    <input type="hidden" id="user-id" name="id" value="<?php echo $music->chat_id; ?>">
+                                    <input type="hidden" id="user-avatar" value="<?php echo (isset($music->chat_user->avatar)) ? $music->chat_user->avatar : '';?>">
+                                </form>
+                            </div>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<style>
+    .chat_message_upload_media_imgprogress{
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+    }
+    .chat_message_upload_media_imgprogress .progress {
+        margin: 0;
+        background-color: #dadada;
+        border-radius: 0;
+        height: 3px;
+    }
+    .chat_message_upload_media_imgprogress .progress .determinate {
+        background-color: #FF9800;
+    }
+</style>
+<script>
+	function ds_addemo_msg(input, code) {
+		tareaTag = $(input);
+		tareaVal = tareaTag.val();
+		if(typeof (tareaTag.attr('placeholder')) != "undefined") {
+			inputPlaceholder = tareaTag.attr('placeholder');
+			if(inputPlaceholder == tareaVal) {
+				tareaTag.val('');
+				tareaVal = tareaTag.val();
+			}
+		}
+		if(tareaVal.length == 0) {
+			tareaTag.val(code);
+		} else {
+			tareaTag.val(tareaVal + ' ' + code);
+		}
+		tareaTag.keyup().focus();
+	}
+
+    $('.mobilemsgclose').on('click',function (){
+        $('.mobileleftpane').fadeOut(100);
+        $('.mobilerightpane').fadeIn(100);
+    });
+
+    var messagesInterval = 5000;
+    function fetchMessages() {
+        clearTimeout(window.UpdateChatU);
+        if(window.chatfetch === true) {
+            var last_id = $('.message:last').attr('data-id');
+            if( last_id > 0 ) {
+                $.post('{{LINK endpoints/messages/fetch}}', {
+                    id: $('#user-id').val(),
+                    last_id: $('.message:last').attr('data-id')
+                }, function (data, textStatus, xhr) {
+                    if (data.status == 200) {
+                        if (data.message.length > 0) {
+                            $('.messages').append(data.message);
+                            $('.user-messages').scrollTop($('.user-messages')[0].scrollHeight);
+                        }
+                        if ($('#search-list').val() == 0) {
+                            $('.messages-sidebar .list-group').html(data.users);
+                        }
+                    }
+                    window.UpdateChatU = setTimeout(function () {
+                        fetchMessages();
+                    }, messagesInterval);
+                });
+            }
+        }
+    }
+    $(document).on('click', '.messages-sidebar a', function(event) {
+        clearTimeout(window.UpdateChatU);
+    });
+    $(document).on('click', '#load-more-messages', function(event) {
+        event.preventDefault();
+        $('#load-more-messages i').removeClass('fa-angle-up');
+        $('#load-more-messages i').addClass('fa-spinner fa-spin');
+        $.post('{{LINK endpoints/messages/fetch}}', {id: $('#user-id').val(), first_id: $('.message:first').attr('data-id')}, function(data, textStatus, xhr) {
+            $('#load-more-messages i').removeClass('fa-spinner fa-spin');
+            $('#load-more-messages i').addClass('fa-angle-up');
+            if (data.status == 200) {
+                if (data.message.length > 0) {
+                    $('.messages').prepend(data.message);
+                } else {
+                    $('#load-more-messages').animate({
+                        top: "-50",
+                    }, 200, function() {
+                        $('#load-more-messages').hide();
+                        $('#load-more-messages').css('top', '60px');
+                    });
+                }
+                $('.user-messages').scrollTop(0);
+            }
+            $('#load-more-messages i').removeClass('fa-spinner fa-spin');
+            $('#load-more-messages i').addClass('fa-angle-up');
+        });
+    });
+
+    $(document).on('click', '#delete-conversation', function(event) {
+        if (!confirm("{{LANG are_you_sure_you_want_delete_chat}}")) {
+            return false;
+        }
+        $(this).find('i').toggleClass('fa-trash fa-spinner fa-spin');
+        $.post('{{LINK endpoints/messages/delete_chat}}', {id: $('#user-id').val()}, function(data, textStatus, xhr) {
+            $('#delete-conversation').find('i').removeClass('fa-spinner fa-spin');
+            $('#delete-conversation').find('i').addClass('fa-trash');
+            $('.messages').empty();
+            window.location = window.location.href;
+        });
+    });
+
+    $(function() {
+
+        var $id = makeid();
+        window.message_id = $id;
+        var form = $('form#new-message-form');
+
+        window.UpdateChatU = setTimeout(function () {
+            fetchMessages();
+        }, messagesInterval);
+        $('.user-messages').scrollTop($('.user-messages')[0].scrollHeight);
+
+        $('#search-list').on('keyup', function(event) {
+            $('#search-icon').toggleClass('fa-search fa-spinner fa-spin');
+            $.post('{{LINK endpoints/messages/search}}', {keyword: $(this).val()}, function(data, textStatus, xhr) {
+                $('#search-icon').toggleClass('fa-spinner fa-spin fa-search ');
+                if (data.status == 200) {
+                    $('.messages-sidebar .list-group').html(data.users);
+                }
+            });
+        });
+
+        $('#new-message').on('keyup', function(event) {
+            if (event.keyCode == 13 && !event.shiftKey) {
+                $id = makeid();
+                if ($(this).val().length > 1) {
+                    form.submit();
+                } else {
+                    $('#new-message').val('');
+                }
+            }
+        });
+
+        form.ajaxForm({
+            url: '{{LINK endpoints/messages/new}}?hash_id=' + $('.main_session').val(),
+            data: {message_id: $('#message_id').val()},
+            beforeSubmit: function(formData, jqForm, options) {
+                if ($('.messages').length == 0) {
+                    $('.user-messages').html('<div class="messages"></div>');
+                }
+                if ($('#new-message').val().length >= 1) {
+                    formData.push({ name: 'message_id', value: $id });
+                    $('.messages').append('<div class="data_message" data-id="' + $id + '"><div class="message to-user pull-right" data-id=""><div class="user-message">' + nl2br(escapeHTML($('#new-message').val())) + '</div><div class="clear"></div></div><div class="clear"></div></div>');
+                    $('#new-message').val('');
+                    $('.user-messages').scrollTop($('.user-messages')[0].scrollHeight);
+                    $id = makeid();
+                } else {
+                    $('#new-message').val('');
+                }
+            },
+            success: function(data) {
+                $('.data_message[data-id="' + data.message_id + '"]').replaceWith(data.message);
+            }
+        });
+    });
+</script>

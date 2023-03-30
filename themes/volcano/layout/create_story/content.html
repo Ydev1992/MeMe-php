@@ -1,0 +1,288 @@
+<div class="ma_page_content" id="container_blog">
+    <div class="ma_pc_inner">
+        <div class="page_padding">
+			<h2 class="home_widget_title home_big_title mt-0">
+				{{LANG Create Story}}
+			</h2>
+			
+            <div class="content upload_music no-flex ds_create_edit_ads_cont p-5">
+				<form class="user-story-form ds_create_edit_prods" method="POST">
+					<div class="row">
+						<div class="col-lg-7">
+							<div class="user-story-alert"></div>
+							<div class="alert alert-success ads-settings-alert hidden"></div>
+							<div class="progress hidden">
+								<div class="upload-progress-bar bar progress-bar progress-bar-striped active"></div>
+								<div class="percent">0%</div>
+							</div>
+							
+							<div class="form-group mat_input float">
+								<input type="text" id="url" name="url" placeholder=" " class="form-control">
+								<label for="url">{{LANG URL}}</label>
+							</div>
+							
+							<div class="form-group mat_input float">
+								<select name="who" id="who" class="form-control" onchange="CheckWallet(this)">
+									<option value="followers">{{LANG Show to my followers only}}</option>
+									<option value="all">{{LANG Show to all users}} <?php echo(!empty($music->config->story_price) && is_numeric($music->config->story_price) && $music->config->story_price > 0 ? $music->config->currency_symbol.$music->config->story_price : '') ?></option>
+								</select>
+								<label for="who">{{LANG Who can see}}</label>
+							</div>
+							
+							<h3 class="mat_form_title mt-4 mb-4">{{LANG Story Image}}</h3>
+							<div class="form-group mat_input">
+								<div class="ds_media_file mt-0 mat_file_upload">
+									<div class="btn btn-file image_file" onclick="$('#story-media').trigger('click'); return false;">
+										<span id="story-media-holder"><svg xmlns="http://www.w3.org/2000/svg" width="62.982" height="57.205" viewBox="0 0 62.982 57.205"> <path id="Path_6622" data-name="Path 6622" d="M3782.481,7254.287l12.127,12.129-4.032,4.033-5.234-5.207V7281.2h-5.721v-15.988l-5.234,5.234-4.032-4.033Zm0-30.289a19.963,19.963,0,0,1,19.878,17.705,15.79,15.79,0,0,1,11.555,16.561,15.735,15.735,0,0,1-14.271,14.3V7266.9a17.168,17.168,0,0,0-34.322-.658v6.32a15.742,15.742,0,0,1-2.717-30.861A19.963,19.963,0,0,1,3782.481,7224Z" transform="translate(-3750.99 -7223.998)" fill="#d8d8d8"></path> </svg> {{LANG select_images_import}}</span>
+									</div>
+									<input type="file" class="media" id="story-media" name="image" accept="image/*">
+								</div>
+							</div>
+							
+							<h3 class="mat_form_title mt-4 mb-4">{{LANG Upload Song}}</h3>
+							<div class="form-group mat_input">
+								<div class="ds_media_file mt-0 mat_file_upload">
+									<div class="btn btn-file image_file" onclick="$('#story-audio').trigger('click'); return false;">
+										<span id="story-audio-holder"><svg xmlns="http://www.w3.org/2000/svg" width="62.982" height="57.205" viewBox="0 0 62.982 57.205"> <path id="Path_6622" data-name="Path 6622" d="M3782.481,7254.287l12.127,12.129-4.032,4.033-5.234-5.207V7281.2h-5.721v-15.988l-5.234,5.234-4.032-4.033Zm0-30.289a19.963,19.963,0,0,1,19.878,17.705,15.79,15.79,0,0,1,11.555,16.561,15.735,15.735,0,0,1-14.271,14.3V7266.9a17.168,17.168,0,0,0-34.322-.658v6.32a15.742,15.742,0,0,1-2.717-30.861A19.963,19.963,0,0,1,3782.481,7224Z" transform="translate(-3750.99 -7223.998)" fill="#d8d8d8"></path> </svg> {{LANG select_files_import}}</span>
+									</div>
+									<input type="file" class="audio" id="story-audio" name="audio" accept="<?php if ($music->config->ffmpeg_system == "off") {?>audio/mpeg<?php } else { ?>audio/mpeg,audio/ogg,audio/x-wav<?php } ?>">
+									<input type="text" readonly id="audio_name" style="display: none;">
+								</div>
+							</div>
+							
+							<div class="last-sett-btn modal-footer mat_sett_btn">
+								<button type="submit" class="btn btn-primary btn-mat" id="submit-btn">{{LANG Publish}}</button>
+							</div>
+						</div>
+						
+						<div class="col-lg-5">
+							<div class="lightbox-content create-story-preview">
+								<div class="story-img">
+								</div>
+								<div class="wo_story_header">
+									<div class="wo_stor_h_info">
+										<div class="user-avatar">
+											<img src="{{ME avatar}}" alt="">
+										</div>
+										<div class="wo_s_h_i_r">
+											<div class="user-name h5">
+												<a href="{{ME url}}" data-load="{{ME username}}">{{ME name}}</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+				</form>
+            </div>
+		</div>
+    </div>
+</div>
+
+
+<script>
+function PayForStory() {
+  $(".modal_story_pay_alert").html('');
+  id = $('#story_pay_id').val();
+  file = $('#story_pay_file').val();
+  $.post('{{CONFIG ajax_url}}/story/pay?hash_id=' + getHashID(), {id: id}, function(data, textStatus, xhr) {
+    if (data.status == 200) {
+      $(".modal_story_pay_alert").html('<div class="alert alert-success"><i class="fa fa-check"></i> '+
+            data.message
+            +'</div>');
+      _Delay(function(){
+        $('#story_pay').modal('hide');
+        $(".modal_story_pay_alert").html('');
+        <?php if ($music->config->ffmpeg_system == "on") { ?>
+        $('.user-story-alert').html('<div class="alert alert-success"><i class="fa fa-check"></i> {{LANG Please wait, your track is being coverted to mp3 audio file. This might take a few minutes.}}</div>');
+        $.post('{{CONFIG ajax_url}}/convert-track', {id: id, type: 'story',file:file}, function(dataSecond, textStatus, xhr) {
+          if (dataSecond.status == 200) {
+            goToAjaxLink('<?php echo($music->config->discover_land == 1 ? 'discover' : 'feed'); ?>');
+          }
+        });
+        <?php }else{ ?>
+          goToAjaxLink('<?php echo($music->config->discover_land == 1 ? 'discover' : 'feed'); ?>');
+        <?php } ?>
+
+      },2000);
+    }
+    else{
+      $(".modal_story_pay_alert").html('<div class="alert alert-danger"><i class="fa fa-info-circle"></i> '+
+            data.message
+            +'</div>');
+    }
+  });
+}
+function CheckWallet(self) {
+  if ($(self).val() == 'all') {
+    <?php if ($music->user->org_wallet < $music->config->story_price) { ?>
+      $(".user-story-alert").html("<div class='alert alert-danger'><i class='fa fa-info-circle'></i> {{LANG You don't have enough wallet}} <a href='{{LINK settings/{{ME username}}/wallet}}'>{{LANG Please top up your wallet}}</a></div>");
+      $('#submit-btn').attr('disabled', true)
+    <?php } ?>
+  }
+  else{
+    $('#submit-btn').removeAttr('disabled')
+    $(".user-story-alert").html();
+  }
+}
+
+
+
+$(document).ready(function() {
+	$("#story-media").on('change', function() {
+	//Get count of selected files
+	$("#story-media-holder").html("<img src='" + window.URL.createObjectURL(this.files[0]) + "' alt='Picture'>");
+	$(".story-img").html("<img src='" + window.URL.createObjectURL(this.files[0]) + "' alt='Picture'>");
+	});
+  $("#story-audio").on('change', function() {
+        var allowed = [<?php echo ($music->config->ffmpeg_system == "off") ? '"mp3"' : '"mp3","ogg","wav","opus","oga"'?>];
+        var file_size = $("#story-audio").prop('files')[0].size;
+        if (file_size > <?php echo $music->config->user_max_upload?>) {
+          showResponseAlert('.user-story-alert','danger',"{{LANG file_is_large}}",2000);
+          return false;
+        } else if (!validate_fileupload($('#story-audio').val(), allowed)) {
+          showResponseAlert('.user-story-alert','danger',"<?php echo ($music->config->ffmpeg_system == "off") ? lang("Invalid file format, only mp3 is allowed") : lang("Invalid file format, only mp3, ogg, opus, oga, wav, and mpeg is allowed")?>",2000);
+          return false;
+        } else {
+          var filename = $('#story-audio').val().split('\\').pop();
+          $('#audio_name').slideDown();
+          $('#audio_name').val(filename);
+        }
+  });
+});
+
+    var _Delay = (function(){
+        var timer = 0;
+        return function(callback, ms){
+            clearTimeout (timer);
+            timer = setTimeout(callback, ms);
+        };
+    })();
+
+    function scrollToTop() {
+        verticalOffset = typeof (verticalOffset) != 'undefined' ? verticalOffset : 0;
+        element = $('html');
+        offset = element.offset();
+        offsetTop = offset.top;
+        $('html, body').animate({
+            scrollTop: offsetTop
+        }, 300, 'linear');
+    }
+    function HasExtension(id, exts) {
+        var fileName = $(id).val();
+        return (new RegExp('(' + exts.join('|').replace(/\./g, '\\.') + ')$')).test(fileName);
+    }
+  var bar         = $('.bar');
+  var percent     = $('.percent');
+
+	jQuery(document).ready(function($) {
+	  $('.selectpicker').selectpicker({});
+
+    $("#ad-placement").change(function(event) {
+      if ($(this).val() == 2) {
+        $("#cost").find("option[value='2']").removeAttr('selected').attr('disabled', 'disabled');
+      }
+      
+      else{
+        $("#cost").find("option").removeAttr('disabled');
+      }
+    });
+
+    $('.user-story-form').submit(function(event) {
+        var mediafile = HasExtension('#story-media', ['.jpg', '.gif', '.png', '.jpeg', '.webp']);
+        if (!mediafile){
+          scrollToTop();
+          $('#story-media').val('');
+          $(".user-story-alert").html("<div class='alert alert-danger'><i class='fa fa-info-circle'></i> {{LANG Media file is invalid. Please select a valid image}}</div>");
+          return false;
+        }
+    });
+
+    $('.user-story-form').ajaxForm({
+      url: '{{CONFIG ajax_url}}/story/create?hash_id=' + getHashID(),
+      dataType:"json",
+      beforeSend: function() {
+
+        var mediafile = $("#story-media").prop('files');
+        if( $("#story-media").val() ) {
+            if (mediafile[0].size > "{{CONFIG max_upload}}") {
+                swal({
+                    title: '{{LANG Error!}}',
+                    text: "{{LANG File is too big, Max upload size is}} <?php echo size_format($music->config->max_upload); ?>",
+                    type: 'error',
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'OK',
+                    buttonsStyling: true,
+                    confirmButtonClass: 'btn btn-success',
+                }).then(function () {
+                        swal.close();
+                        $("#story-media").val('');
+                    },
+                    function () {
+                        swal.close();
+                        $("#story-media").val('');
+                    });
+                return false;
+            }
+        }
+        if ($("#story-media").val()) {
+          $(".user-story-alert").html($('.progress').clone(true).addClass('progress-clone').removeClass('hidden'));
+          bar     = $('.progress-clone').find('.bar');
+          percent = $('.progress-clone').find('.percent');
+        }
+
+        $('#submit-btn').attr('disabled', true).find('span').text("{{LANG Please wait..}}");
+        
+      },
+      uploadProgress: function(event, position, total, percentComplete) {
+          if(percentComplete > 50) {
+            percent.addClass('white');
+          }
+          var percentVal = percentComplete + '%';
+          bar.width(percentVal);
+          percent.html(percentVal);
+
+          if (percentComplete == 100) {
+            $(".user-story-alert").empty();
+          }
+      },
+      success: function(data) {
+        scrollToTop();
+        if (data.status == 200){
+          $(".user-story-alert").html('<div class="alert alert-success"><i class="fa fa-check"></i> '+
+            data.message
+            +'</div>');
+            _Delay(function(){
+              if (data.show_modal == 'yes') {
+                $('#story_pay').modal('show');
+                $('#story_pay_id').val(data.story_id);
+                $('#story_pay_file').val(data.audio);
+              }
+              else{
+                <?php if ($music->config->ffmpeg_system == "on") { ?>
+                $('.user-story-alert').html('<div class="alert alert-success"><i class="fa fa-check"></i> {{LANG Please wait, your track is being coverted to mp3 audio file. This might take a few minutes.}}</div>');
+                $.post('{{CONFIG ajax_url}}/convert-track', {id: data.story_id, type: 'story',file:data.audio}, function(dataSecond, textStatus, xhr) {
+                  if (dataSecond.status == 200) {
+                    goToAjaxLink('<?php echo($music->config->discover_land == 1 ? 'discover' : 'feed'); ?>');
+                  }
+                });
+                <?php }else{ ?>
+                  goToAjaxLink('<?php echo($music->config->discover_land == 1 ? 'discover' : 'feed'); ?>');
+                <?php } ?>
+              }
+          },2000);
+          
+        }
+        else {
+          $('#submit-btn').removeAttr('disabled').find('span').text('{{LANG Publish}}');
+          $(".user-story-alert").html('<div class="alert alert-danger"><i class="fa fa-info-circle"></i> '+
+            data.message
+            +'</div>');
+        }
+      }
+    });
+	});
+</script>

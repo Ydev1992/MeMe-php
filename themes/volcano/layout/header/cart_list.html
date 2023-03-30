@@ -1,0 +1,12 @@
+<li class="ma_notifs" id="cart_product_<?php echo $music->cart->product->id; ?>">
+	<a href="<?php echo($music->cart->product->url) ?>">
+		<div class="avatar">
+			<img src="<?php echo $music->cart->product->images[0]['image']; ?>" alt="site avatar">
+		</div>
+		<div class="n_detail">
+			<p><?php echo $music->cart->product->title; ?></p>
+			<div>{{ME name}}</div>
+		</div>
+		<div type="button" onclick="RemoveProductFromCart(<?php echo $music->cart->product->id; ?>)" class="btn" title="{{LANG Remove From Cart}}"><svg xmlns="http://www.w3.org/2000/svg" width="22.507" height="24.534" viewBox="0 0 22.507 24.534"> <g id="Remove_from_cart_icon" data-name="Remove from cart icon" transform="translate(-1798.4 -2548.899)"> <path id="Subtraction_160" data-name="Subtraction 160" d="M-6763.6-4451.413a1.828,1.828,0,0,1-1.1-.368,10.442,10.442,0,0,0,1.292-3.322,1.792,1.792,0,0,1,1.109.533l.005.007a1.825,1.825,0,0,1,.543,1.3,1.811,1.811,0,0,1-.542,1.3l-.007.008A1.83,1.83,0,0,1-6763.6-4451.413Zm1.374-6.749h-1.018a10.694,10.694,0,0,0-.233-1.45h.686l2.449-9.8h-14.1v-1.45h15.031a.7.7,0,0,1,.316.07.808.808,0,0,1,.261.206.742.742,0,0,1,.134.292.694.694,0,0,1,0,.314l-2.815,11.265,0,.006a.736.736,0,0,1-.255.4A.737.737,0,0,1-6762.23-4458.162Zm-16.721-8.175v-6.448h-2.249v-1.45h2.976a.766.766,0,0,1,.516.209.766.766,0,0,1,.209.516v6.485a10.711,10.711,0,0,0-1.451.687Z" transform="translate(8579.6 7023.133)" fill="currentColor"/> <path id="Path_6634" data-name="Path 6634" d="M3311.5,7351a7.5,7.5,0,1,1,7.5-7.5A7.5,7.5,0,0,1,3311.5,7351Zm0-8.557-2.122-2.121-1.057,1.058,2.122,2.122-2.122,2.122,1.057,1.058,2.122-2.122,2.123,2.122,1.057-1.058-2.122-2.122,2.122-2.122-1.057-1.058Z" transform="translate(-1505.219 -4777.564)" fill="#ea7b67"/> </g> </svg></div>
+	</a>
+</li>

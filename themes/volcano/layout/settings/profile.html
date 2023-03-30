@@ -1,0 +1,99 @@
+<div class="ma_page_content">
+	<div class="ma_pc_inner">
+		<div class="page_padding">
+			<!-- Settings -->
+				<div class="sett_page">
+					<div class="row">
+						<div class="col-lg-4">
+							<?php echo loadPage("settings/sidebar"); ?>
+						</div>
+						<div class="col-lg-8">
+							<div class="st_content profile">
+						<h2 class="home_widget_title home_big_title mt-4 mb-5">{{LANG Profile Settings}}</h2>
+						
+						<div class="st_form">
+							<form method="post" action="" id="general-form">
+								<div class="alert alert-danger alert-empty" id="output-general-errors"></div>
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group mat_input float">
+												<input type="text" name="name" class="form-control" id="name" value="{{USER name}}" placeholder=" ">
+												<label for="name">{{LANG Full Name}}</label>
+										</div>
+									</div>
+								</div>
+								<div class="form-group mat_input float">
+									
+									<textarea name="about_me" id="about_me" class="form-control" rows="3" placeholder=" ">{{USER about_decoded}}</textarea>
+									<label for="about_me">{{LANG About Me}}</label>
+								</div>
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group mat_input float">
+												<input type="text" name="facebook" class="form-control" id="facebook" value="{{USER facebook}}" placeholder=" ">
+												<label for="facebook">{{LANG Facebook Username}}</label>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group mat_input float">
+												<input type="text" name="website" class="form-control" id="website" value="{{USER website}}" placeholder=" ">
+												<label for="website">{{LANG Website}}</label>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<?php
+         								$fields = GetProfileFields('profile');
+         								if (count($fields) > 0) {
+									foreach ($fields as $key => $wo['field']) {
+									echo LoadPage('settings/profile-fields',$wo['field']);
+									}
+									echo '<input name="custom_fields" type="hidden" value="1">';
+									}
+									?>
+								</div>
+								<div class="last-sett-btn modal-footer mat_sett_btn pb-3">
+									<input type="hidden" id="user-id" name="user_id" value="{{USER id}}">
+									<button type="submit" class="btn btn-primary btn-mat" id="btn-general-submit">{{LANG Save}}</button>
+								</div>
+							</form>
+						</div>
+					</div>
+						</div>
+					</div>
+					
+
+					
+				</div>
+			<!-- End Settings -->
+		</div>
+	</div>
+</div>
+
+<script>
+$(document).ready(function() { 
+    var options = { 
+    	url: "{{CONFIG ajax_url}}/user/profile?hash_id=" + getHashID(),
+        beforeSubmit:  function () {
+        	$('#output-general-errors').removeClass("alert-success").addClass('alert-danger');
+        	$('#output-general-errors').empty();
+        	$("#btn-general-submit").text("{{LANG Please wait..}}");
+        }, 
+        success: function (data) {
+			scrollToTop();
+        	$("#btn-general-submit").text("{{LANG Save}}");
+        	if (data.status == 200) {
+        		$('#output-general-errors').removeClass("alert-danger").addClass('alert-success');
+        		$('#output-general-errors').html(data.message);
+        		setTimeout(function () {
+        			$('#output-general-errors').html("");
+        		}, 2000);
+        	} else if (data.status == 400) {
+        		var errros = data.errors.join("<br>");
+        		$('#output-general-errors').html(errros);
+        	} 
+        }
+    }; 
+    $('#general-form').ajaxForm(options); 
+}); 
+</script>

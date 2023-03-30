@@ -1,0 +1,27 @@
+<div class="event_browse_list" data-event="{{ID}}">
+	<div class="events-list-cover">
+		<div class="event_cover">
+			<a href="{{URL}}" data-load="{{DATA_LOAD}}">
+				<img src="{{IMAGE}}" class="events-list-cover-img">
+			</a>
+		</div>
+		<div class="event-l-info">
+			<h3 class="events-list-name">
+				<a href="{{URL}}"  data-load="{{DATA_LOAD}}">{{NAME}}</a>
+			</h3>
+			<span><?php echo $music->event->start_date; ?></span>&nbsp;•&nbsp;<span><?php echo $music->event->end_date; ?></span>
+		</div>
+	</div>
+	<div class="short_event_btns">
+		<span id="going-{{ID}}">
+			<a href="{{EDIT_URL}}" class="btn btn-light btn-mat" data-load="{{EDIT_DATA_LOAD}}" title="{{LANG Edit Event}}">
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M5 19h1.414l9.314-9.314-1.414-1.414L5 17.586V19zm16 2H3v-4.243L16.435 3.322a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414L9.243 19H21v2zM15.728 6.858l1.414 1.414 1.414-1.414-1.414-1.414-1.414 1.414z"></path></svg> <span class="button-text"> {{LANG Edit Event}}</span>
+			</a>
+		</span>       
+		<span id="interested-{{ID}}">
+			<button type="button" onclick="DeleteEvent('{{ID}}','hide')" class="btn btn-light btn-mat" title="{{LANG Delete Event}}">
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M17 6h5v2h-2v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8H2V6h5V3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v3zm1 2H6v12h12V8zm-9 3h2v6H9v-6zm4 0h2v6h-2v-6zM9 4v2h6V4H9z"></path></svg>
+			</button>
+		</span>
+	</div>
+</div>

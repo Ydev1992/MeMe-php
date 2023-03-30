@@ -1,0 +1,54 @@
+<div class="ma_page_content">
+	<div class="ma_pc_inner">
+		<center><?php echo GetAd('header');?></center>
+		<div class="page_padding">
+			<!-- Top Songs -->
+			<h2 class="home_widget_title home_big_title mt-0"> {{LANG Top Songs}}</h2>
+			<div class="row">
+				<div class="col-lg-4">
+					<div class="top_music_img mt-2">
+						<img src="{{CONFIG theme_url}}/img/top-music/top.png">
+					</div>
+					<div class="top_music_btns">
+						<a href="{{LINK top-genres}}" data-load="top-genres" class="btn btn-primary"><svg xmlns="http://www.w3.org/2000/svg" class="play" width="69.896" height="69.896" viewBox="0 0 69.896 69.896"> <path d="M36.948,2A34.948,34.948,0,1,0,71.9,36.948,34.961,34.961,0,0,0,36.948,2Zm-6.99,50.675V21.221L50.927,36.948Z" transform="translate(-2 -2)" fill="currentColor"/> </svg> {{LANG Show All}}</a>
+					</div>
+				</div>
+				<div class="col-lg-8">
+					<div class="sq_music_tracks mb-60">
+						<div class="short_list_cont albm_song_listz top_dic_son_listz">
+							<div class="short_list_card">
+								<ul class="s_list_songs home_tp_songs_list">
+									{{TOP_FIRST_6}}
+									{{TOP_SECOND_6}}
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- End Top Songs -->
+			
+			<!-- Top Albums -->
+			<div class="sq_music_tracks mb-60">
+				<h2 class="home_widget_title home_big_title">
+					{{LANG Top Albums}}
+					<div class="slide_btns">
+						<a href="{{LINK top_music_album}}" data-load="top_music_album">{{LANG See All}}</a>
+					</div>
+				</h2>
+				<div class="sq_track_slider no-slider top_albums_lists_pag mus_top_albms">
+					{{TOP_ALBUMS}}
+				</div>
+			</div>
+			<!-- End Top Albums -->
+		</div>
+	</div>
+</div>
+
+<script>
+$('svg .verified_ico').tooltip({
+	title: '{{LANG verified}}',
+	placement: 'top',
+	container: 'body'
+});
+</script>

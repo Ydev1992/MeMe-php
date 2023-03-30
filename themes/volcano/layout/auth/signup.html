@@ -1,0 +1,278 @@
+<?php
+$fields = GetWelcomeFields();
+?>
+<!-- Modal -->
+<div class="modal fade auth_box_prnt" id="signup_box" tabindex="-1" role="dialog" aria-labelledby="signup_box" aria-hidden="true">
+	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /></svg></button>
+	<div class="modal-dialog auth_box" role="document">
+		<div class="modal-content">
+			<div class="right_combo">
+				<div class="navbar-brand">
+					<?php if( $music->mode_link == 'day' ){?>
+						<img src="{{CONFIG theme_url}}/img/logo.png?cache={{CONFIG logo_cache}}" alt="">
+					<?php }else{ ?>
+						<img src="{{CONFIG theme_url}}/img/logo-white.png?cache={{CONFIG logo_cache}}" alt="">
+					<?php } ?>
+				</div>
+				<h2>{{LANG Signup}}</h2>
+				<p>{{LANG Get access to your Music, Playlists and Account}}</p>
+				
+				<div class="alert alert-danger alert-empty" id="output-singup-errors"></div>
+				<form method="post" action="POST" id="signup-form">
+					<?php if ($music->config->auto_username == 1) { ?>
+					<div class="form-group mat_input">
+						<input type="text" name="first_name" class="form-control" placeholder="{{LANG first_name}}" autofocus>
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path fill="currentColor" d="M4 22a8 8 0 1 1 16 0h-2a6 6 0 1 0-12 0H4zm8-9c-3.315 0-6-2.685-6-6s2.685-6 6-6 6 2.685 6 6-2.685 6-6 6zm0-2c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z"/></svg>
+					</div>
+					<div class="form-group mat_input">
+						<input type="text" name="last_name" class="form-control" placeholder="{{LANG last_name}}">
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path fill="currentColor" d="M4 22a8 8 0 1 1 16 0h-2a6 6 0 1 0-12 0H4zm8-9c-3.315 0-6-2.685-6-6s2.685-6 6-6 6 2.685 6 6-2.685 6-6 6zm0-2c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z"/></svg>
+					</div>
+				    <?php }else{ ?>
+					<div class="form-group mat_input">
+						<input type="text" name="name" class="form-control" placeholder="{{LANG Full Name}}" autofocus>
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path fill="currentColor" d="M4 22a8 8 0 1 1 16 0h-2a6 6 0 1 0-12 0H4zm8-9c-3.315 0-6-2.685-6-6s2.685-6 6-6 6 2.685 6 6-2.685 6-6 6zm0-2c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z"/></svg>
+					</div>
+					<div class="form-group mat_input">
+						<input type="text" name="username" class="form-control" placeholder="{{LANG Username}}">
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path fill="currentColor" d="M4 22a8 8 0 1 1 16 0h-2a6 6 0 1 0-12 0H4zm8-9c-3.315 0-6-2.685-6-6s2.685-6 6-6 6 2.685 6 6-2.685 6-6 6zm0-2c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z"/></svg>
+					</div>
+					<?php } ?>
+					<div class="form-group mat_input">
+						<input type="email" name="email" class="form-control" placeholder="{{LANG Email address}}">
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path fill="currentColor" d="M3 3h18a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm17 4.238l-7.928 7.1L4 7.216V19h16V7.238zM4.511 5l7.55 6.662L19.502 5H4.511z"/></svg>
+					</div>
+					<div class="form-group mat_input">
+						<input type="password" name="password" class="form-control" placeholder="{{LANG Password}}" id="password">
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path fill="currentColor" d="M18 8h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1h2V7a6 6 0 1 1 12 0v1zM5 10v10h14V10H5zm6 4h2v2h-2v-2zm-4 0h2v2H7v-2zm8 0h2v2h-2v-2zm1-6V7a4 4 0 1 0-8 0v1h8z"/></svg>
+						<?php if ($music->config->password_complexity_system == 1) { ?>
+							<ul class="register-helper-text">
+								<li class="length">{{LANG least_characters}}</li>
+								<li class="lowercase">{{LANG contain_lowercase}}</li>
+								<li class="uppercase">{{LANG contain_uppercase}}</li>
+								<li class="special">{{LANG number_special}}</li>
+							</ul>
+						<?php } ?>
+					</div>
+					<div class="form-group mat_input">
+						<input type="password" name="c_password" class="form-control" placeholder="{{LANG Confirm Password}}">
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path fill="currentColor" d="M18 8h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1h2V7a6 6 0 1 1 12 0v1zM5 10v10h14V10H5zm6 4h2v2h-2v-2zm-4 0h2v2H7v-2zm8 0h2v2h-2v-2zm1-6V7a4 4 0 1 0-8 0v1h8z"/></svg>
+					</div>
+					<?php
+						if (!empty($fields) && count($fields) > 0) {
+					foreach ($fields as $key => $wo['field']) {
+					echo LoadPage('auth/fields',$wo['field']);
+					}
+					}
+					?>
+					<div class="recaptcha">
+						<?php if ($music->config->recaptcha == 'on') { ?>
+						<div class="g-recaptcha" data-sitekey="{{CONFIG recaptcha_key}}"></div><br>
+						<?php } ?>
+					</div>
+					<div class="terms_check">
+						<span>{{LANG By signing up, you agree to our}}</span>
+						<a href="{{LINK terms/terms}}">{{LANG Terms}}</a>
+						<span>{{LANG and}}</span>
+						<a href="{{LINK terms/privacy}}">{{LANG Privacy Policy}}</a>
+					</div>
+					<button type="submit" class="btn btn-primary btn-mat" id="btn-singup-submit">{{LANG Signup}}</button>
+				</form>
+				<div class="signup_">
+					<span>{{LANG Already have an account?}}</span>
+					<a href="#" data-dismiss="modal" data-toggle="modal" data-target="#login_box">{{LANG Login}}</a>
+				</div>
+			</div>
+			<div class="left_combo register" style="background-image: url({{CONFIG theme_url}}/img/auth/register.png);">
+				<h3>{{LANG register_songs_line}}</h3>
+				<div class="row">
+					<div class="col-3">
+						<svg class="top" xmlns="http://www.w3.org/2000/svg" width="51.633" height="51.682" viewBox="0 0 51.633 51.682"> <g id="Group_9888" data-name="Group 9888" transform="translate(-1109 -695.318)"> <g transform="translate(10.051 -42.949)"> <g id="Rectangle_3432" data-name="Rectangle 3432" transform="translate(1098.949 749.949)" fill="none" stroke="#fff" stroke-width="1"> <rect width="40" height="40" rx="6" stroke="none"/> <rect x="0.5" y="0.5" width="39" height="39" rx="5.5" fill="none"/> </g> <g id="Group_9318" data-name="Group 9318" transform="translate(1108.972 761.968)"> <path id="Subtraction_45" data-name="Subtraction 45" d="M9.464,15.535H0V14.164H9.464v1.37Zm4.048-7.082H0V7.082H13.512v1.37Zm6.069-7.082H0V0H19.581V1.37Z" transform="translate(0 0)" fill="#fff"/> <path id="Path_7235" data-name="Path 7235" d="M81.74,1.6a3.463,3.463,0,0,1-1.685-.4C79.7.993,79.491.732,79.491.486V.467a.473.473,0,0,0-.946,0V6.459a2.551,2.551,0,1,0,.946,1.974s0-.009,0-.014,0,0,0-.007V1.953a4.27,4.27,0,0,0,2.249.58.467.467,0,1,0,0-.933ZM76.9,10.059a1.625,1.625,0,1,1,1.648-1.625A1.639,1.639,0,0,1,76.9,10.059Z" transform="translate(-62.306 4.869)" fill="#fff"/> </g> </g> <path id="Subtraction_46" data-name="Subtraction 46" d="M10856.77,1580.2h0a13.591,13.591,0,0,0-4.876-5.964l.494-1.774a15.166,15.166,0,0,1,6.233,7.628l-1.851.111Zm6.592-.363h0a19.572,19.572,0,0,0-3.637-6.947,19.283,19.283,0,0,0-6.1-4.976l.473-1.752a21.064,21.064,0,0,1,7.01,5.622,21.318,21.318,0,0,1,4.082,7.959l-1.824.1Z" transform="translate(-9704.555 -870.846)" fill="#fff"/> </g> </svg>
+						<p>{{LANG create_own_playlist}}</p>
+					</div>
+					<div class="col-5">
+						<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"> <g transform="translate(-1098.949 -749.949)"> <g id="Rectangle_3432" data-name="Rectangle 3432" transform="translate(1098.949 749.949)" fill="none" stroke="#fff" stroke-width="1"> <rect width="40" height="40" rx="6" stroke="none"/> <rect x="0.5" y="0.5" width="39" height="39" rx="5.5" fill="none"/> </g> <path id="Subtraction_47" data-name="Subtraction 47" d="M10709.106,1626.985a3.671,3.671,0,0,1-1.342-.249,3.749,3.749,0,0,1-2.247-4.4l.085-.342-4.99-2.734-.238.257a3.647,3.647,0,0,1-1.892,1.091l0,0a3.753,3.753,0,0,1-.823.093,3.619,3.619,0,0,1-1.358-.264,3.659,3.659,0,0,1-1.708-1.372,3.765,3.765,0,0,1,0-4.2,3.646,3.646,0,0,1,1.708-1.372,3.75,3.75,0,0,1,1.373-.262,3.576,3.576,0,0,1,.808.091l.007,0a3.614,3.614,0,0,1,1.89,1.091l.238.257,4.99-2.734-.085-.342a3.745,3.745,0,0,1,2.247-4.4,3.679,3.679,0,0,1,1.342-.252,3.734,3.734,0,0,1,.01,7.468,3.353,3.353,0,0,1-.35-.017,3.72,3.72,0,0,1-2.359-1.169l-.238-.254-4.987,2.734.083.342a3.774,3.774,0,0,1,0,1.832l-.083.342,4.99,2.734.238-.257a3.651,3.651,0,0,1,2.356-1.166c.113-.011.229-.016.343-.016a3.749,3.749,0,0,1,2.184.706,3.73,3.73,0,0,1-2.187,6.759Zm.013-6.282a2.557,2.557,0,0,0-2.534,2.548,2.543,2.543,0,0,0,.747,1.8,2.512,2.512,0,0,0,3.577,0,2.541,2.541,0,0,0,0-3.6A2.513,2.513,0,0,0,10709.119,1620.7Zm-11.457-6.284a2.509,2.509,0,0,0-1.787.751,2.541,2.541,0,0,0,0,3.6,2.506,2.506,0,0,0,3.577,0,2.538,2.538,0,0,0,0-3.6A2.511,2.511,0,0,0,10697.662,1614.419Zm11.457-6.284a2.507,2.507,0,0,0-1.787.751,2.538,2.538,0,0,0,0,3.6,2.506,2.506,0,0,0,3.577,0,2.549,2.549,0,0,0-1.79-4.348Z" transform="translate(-9584.443 -847.019)" fill="#fff"/> </g> </svg>
+						<p>{{LANG share_music_family}}</p>
+					</div>
+					<div class="col-4">
+						<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"> <g transform="translate(-1098.949 -749.949)"> <g id="Rectangle_3432" data-name="Rectangle 3432" transform="translate(1098.949 749.949)" fill="none" stroke="#fff" stroke-width="1"> <rect width="40" height="40" rx="6" stroke="none"/> <rect x="0.5" y="0.5" width="39" height="39" rx="5.5" fill="none"/> </g> <path id="Path_6728" data-name="Path 6728" d="M3535.636,7856.374l-7.81-7.811.029-.059a5.6,5.6,0,0,1,4.3-8.935c.069,0,.138,0,.207,0a5.607,5.607,0,0,0,6.54,0c.069,0,.138,0,.207,0a5.6,5.6,0,0,1,4.312,8.924l.031.059Zm-6.5-8.184,6.5,6.5,6.5-6.5.132-.153a4.417,4.417,0,0,0-6.24-6.217l-.388.335-.388-.335a4.412,4.412,0,0,0-2.882-1.07c-.054,0-.109,0-.163,0a4.414,4.414,0,0,0-3.2,7.284Z" transform="translate(-2417.124 -7077.917)" fill="#fff"/> </g> </svg>
+						<p>{{LANG save_favourite}}</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<style>
+<?php if ($music->config->recaptcha == 'on') { ?>
+.auth_box .modal-content {
+	min-height: 560px;
+}
+<?php } ?>
+</style>
+<script>
+<?php if ($music->config->password_complexity_system == 1) { ?>
+
+(function(){
+	var helperText = {
+		charLength: document.querySelector('.register-helper-text .length'),
+		lowercase: document.querySelector('.register-helper-text .lowercase'),
+		uppercase: document.querySelector('.register-helper-text .uppercase'),
+		special: document.querySelector('.register-helper-text .special')
+	};
+	var password = document.querySelector('#password');
+	
+	
+	
+	var pattern = {
+		charLength: function() {
+			if( password.value.length >= 6 ) {
+				return true;
+			}
+		},
+		lowercase: function() {
+			var regex = /^(?=.*[a-z]).+$/; // Lowercase character pattern
+
+			if( regex.test(password.value) ) {
+				return true;
+			}
+		},
+		uppercase: function() {
+			var regex = /^(?=.*[A-Z]).+$/; // Uppercase character pattern
+
+			if( regex.test(password.value) ) {
+				return true;
+			}
+		},
+		special: function() {
+			var regex = /^(?=.*[0-9_\W]).+$/; // Special character or number pattern
+
+			if( regex.test(password.value) ) {
+				return true;
+			}
+		}   
+	};
+	
+	// Listen for keyup action on password field
+	function CheckCPassword() {
+		$('.register-helper-text').slideDown('slow', function() {
+  	    	
+  	    });
+		// Check that password is a minimum of 8 characters
+		patternTest( pattern.charLength(), helperText.charLength );
+		
+		// Check that password contains a lowercase letter		
+		patternTest( pattern.lowercase(), helperText.lowercase );
+		
+		// Check that password contains an uppercase letter
+		patternTest( pattern.uppercase(), helperText.uppercase );
+		
+		// Check that password contains a number or special character
+		patternTest( pattern.special(), helperText.special );
+    
+	    // Check that all requirements are fulfilled
+	    if( hasClass(helperText.charLength, 'valid') &&
+				  hasClass(helperText.lowercase, 'valid') && 
+				 	hasClass(helperText.uppercase, 'valid') && 
+				  hasClass(helperText.special, 'valid')
+			) {
+				addClass(password.parentElement, 'valid');
+	    }
+	    else {
+	      removeClass(password.parentElement, 'valid');
+	    }
+	}
+  password.addEventListener('keyup', CheckCPassword);
+  password.addEventListener('input', CheckCPassword);
+	
+	function patternTest(pattern, response) {
+		if(pattern) {
+      addClass(response, 'valid');
+    }
+    else {
+      removeClass(response, 'valid');
+    }
+	}
+	
+	function addClass(el, className) {
+		if (el.classList) {
+			el.classList.add(className);
+		}
+		else {
+			el.className += ' ' + className;
+		}
+	}
+	
+	function removeClass(el, className) {
+		if (el.classList)
+				el.classList.remove(className);
+			else
+				el.className = el.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
+	}
+	
+	function hasClass(el, className) {
+		if (el.classList) {
+			// console.log(el.classList);
+			return el.classList.contains(className);	
+		}
+		else {
+			new RegExp('(^| )' + className + '( |$)', 'gi').test(el.className);	
+		}
+	}
+	
+})();
+<?php } ?>
+$(document).ready(function() { 
+    var options = { 
+    	url: "{{CONFIG ajax_url}}/auth/signup?hash_id=" + getHashID() + '<?php if( isset($_GET["invite"]) && !empty($_GET["invite"]) ){ echo "&invite=".secure($_GET["invite"]);}?>',
+        beforeSubmit:  function () {
+        	<?php if ($music->config->password_complexity_system == 1) { ?>
+	    	if ($('.register-helper-text .length').hasClass('valid') && $('.register-helper-text .lowercase').hasClass('valid') && $('.register-helper-text .uppercase').hasClass('valid') && $('.register-helper-text .special').hasClass('valid')) {
+	    		$('#output-singup-errors').removeClass("alert-success").addClass('alert-danger');
+	        	$('#output-singup-errors').empty();
+	        	$("#btn-singup-submit").text("{{LANG Please wait..}}");
+	    	}
+	    	else{
+	    		$('#output-singup-errors').html("{{LANG complexity_requirements}}");
+	    		return false;
+	    	}
+	      <?php }else{ ?>
+        	$('#output-singup-errors').removeClass("alert-success").addClass('alert-danger');
+        	$('#output-singup-errors').empty();
+        	$("#btn-singup-submit").text("{{LANG Please wait..}}");
+        <?php } ?>
+        }, 
+        success: function (data) {
+        	$("#btn-singup-submit").text("{{LANG Signup}}");
+        	if (data.status == 200) {
+
+        	    if( typeof data.link !== "undefined" ){
+                    location.href = '{{CONFIG site_url}}';
+				}
+
+        		if ($('#page').attr('data-page') != 'home' && $('#page').attr('data-page') != 'forgot' && $('#page').attr('data-page') != 'reset') {
+        			$('#main-header').html(data.header);
+        			$('#signup_box').modal('hide');
+
+        			if (Amplitude.getActiveSongMetadata().price > 0) {
+        				location.href = '{{CONFIG site_url}}/interest';//window.location.href;
+        			} else {
+        				ajaxRedirect('interest');
+        			}
+        		} else {
+        			location.href = '{{CONFIG site_url}}/interest';//window.location.href;
+        		}
+        	} else if (data.status == 400) {
+        		var errros = data.errors.join("<br>");
+        		$('#output-singup-errors').html(errros);
+        	} else if (data.status == 403) {
+        		$('#output-singup-errors').removeClass("alert-danger").addClass('alert-success');
+        		$('#output-singup-errors').html(data.message);
+            }
+        }
+    }; 
+
+    $('#signup-form').ajaxForm(options); 
+}); 
+</script>

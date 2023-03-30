@@ -1,0 +1,33 @@
+<div class="track_list playlist-p-list album-p-list" data-id="{{id}}">
+	<style>.plst-img-{{id}} .art_innr:before {background-image: url({{thumbnail}})}</style>
+	<div class="track">
+		<div class="cover_art plst-img-{{id}}">
+			<div class="art_innr">
+				<div class="upr_head">
+					<div class="user_info">
+						<span class="user_ava">
+							<a href="{{USER url}}" data-load="{{USER username}}"><img src="{{USER avatar}}" alt="" /></a>
+						</span>
+						<span class="user_name">
+							<a href="{{USER url}}" data-load="{{USER username}}">{{USER name_v}}</a>
+						</span>
+					</div>
+				</div>
+				<a class="block" href="{{url}}" data-load="album/{{album_id}}">
+					<img src="{{thumbnail}}" />
+				</a>
+				<div class="ftor">
+					<div>
+						<p class="title"><a href="{{url}}" data-load="album/{{album_id}}">{{title}}</a></p>
+						<span class="plist_info">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M21,3V15.5A3.5,3.5 0 0,1 17.5,19A3.5,3.5 0 0,1 14,15.5A3.5,3.5 0 0,1 17.5,12C18.04,12 18.55,12.12 19,12.34V6.47L9,8.6V17.5A3.5,3.5 0 0,1 5.5,21A3.5,3.5 0 0,1 2,17.5A3.5,3.5 0 0,1 5.5,14C6.04,14 6.55,14.12 7,14.34V6L21,3Z"></path></svg>&nbsp;{{songs}}
+						</span>
+					</div>
+					<div class="play_btn" onclick="playPlayListSongs({{id}}, 'album')">
+						<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"><path fill="currentColor" d="M10,16.5V7.5L16,12M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"></path></svg>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

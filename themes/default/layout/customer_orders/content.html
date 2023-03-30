@@ -1,0 +1,73 @@
+<div class="ma_page_content">
+	<div class="ma_pc_inner">
+		<div class="page_padding">
+			<div class="row">
+				<div class="col-md-9">
+					<div class="store_songs" id="store_result">
+						<?php if( !empty($music->orders) ){?>
+							{{html}}
+						<?php } else { ?>
+							<div class="no-track-found bg_light"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+							<path fill="currentColor" d="M12,18H6V14H12M21,14V12L20,7H4L3,12V14H4V20H14V14H18V20H20V14M20,4H4V6H20V4Z"></path>
+						</svg>{{LANG No orders found}}</div>
+						<?php } ?>
+					</div>
+				</div>
+				<?php if( !empty($music->items) ){?>
+				<div class="col-md-3">
+					<?php if ($music->topup == 'show') { ?>
+						<div class='alert alert-danger bg-danger wallet_alert'><i class='fa fa-info-circle'></i> {{LANG You don't have enough wallet}} <a href='{{LINK settings/{{ME username}}/wallet}}' target="_blank">{{LANG Please top up your wallet}}</a></div>
+					<?php } ?>
+
+					<h4>{{LANG Total}}</h4>
+					<p>{{CONFIG currency_symbol}}{{total}}</p>
+					<ul class="list-unstyled mb-0 cart_chos_addrs">
+						<?php 
+							$addresses = $db->where('user_id',$music->user->id)->get(T_ADDRESS);
+						    if (!empty($addresses)) {
+						        foreach ($addresses as $key => $music->address) {
+						        	?>
+						    <li>
+								<input type="radio" name="choose-address" id="choose_adrs_<?php echo($music->address->id) ?>" value="<?php echo($music->address->id) ?>">
+								<label for="choose_adrs_<?php echo($music->address->id) ?>">
+									<p class="mb-0"><?php echo($music->address->name) ?> &nbsp;<b><?php echo($music->address->phone) ?></b></p>
+									<p class="mb-0"><?php echo($music->address->country) ?>, <?php echo($music->address->city) ?> - <?php echo($music->address->zip) ?></p>
+								</label>
+							</li>
+						<?php  } } ?>
+						<button type="button" class="btn btn-default btn-mat" onclick="NewAddress()">{{LANG Add New Address}}</button>
+					</ul>
+					<br>
+					<button type="button" class="btn btn-default btn-mat buy_button" onclick="BuyProducts('hide','{{total}}')" <?php if ($music->topup == 'show' || empty($addresses)) { ?>disabled="true"<?php } ?>>{{LANG Buy}}</button>
+				</div>
+				<?php } ?>
+			</div>
+		</div>
+	</div>
+</div>
+<a href="{{LINK checkout}}" data-load="checkout" id="load_checkout"></a>
+<script type="text/javascript">
+	<?php if ($music->topup == 'show') { ?>
+	var check_wallet = setInterval(function(){ 
+		$.post('{{CONFIG ajax_url}}/product/check_wallet', function(data, textStatus, xhr) {
+			if (data.status == 200) {
+				if (data.topup == 'hide') {
+					$('.wallet_alert').remove();
+					$('.buy_button').removeAttr('disabled');
+					clearInterval(check_wallet);
+				}
+			}
+		});
+	 }, 3000);
+	<?php } ?>
+</script>
+<style type="text/css">
+	.cart_chos_addrs input, .cart_chos_paymnt input[type=radio] {display: none;}
+.cart_chos_addrs label, .cart_chos_paymnt label {border-bottom: 1px solid rgba(255, 255, 255, 0.15);width: 100%;cursor: pointer;display: block;margin: 0;padding: 10px 10px 10px 45px;position: relative;transition: all 0.1s;user-select: none;}
+.cart_chos_addrs label:hover, .cart_chos_paymnt label:hover {background-color: rgba(255, 255, 255, 0.05);}
+.cart_chos_addrs label:before, .cart_chos_paymnt label:before {content: '';position: absolute;width: 18px;height: 18px;border: 2px solid rgba(255, 255, 255, 0.7);border-radius: 50%;transition: .2s;top: 15px;left: 10px;}
+.cart_chos_addrs label:after, .cart_chos_paymnt label:after {content: '';display: block;height: 9px;width: 9px;background: #000;border-radius: 50%;opacity: 0;transition: .2s;position: absolute;top: 24px;left: 19px;transform: translate(-50%,-50%);}
+.cart_chos_addrs input:checked + label:before, .cart_chos_paymnt input:checked + label:before {border-color: #000;}
+.cart_chos_addrs input:checked + label:after, .cart_chos_paymnt input:checked + label:after {opacity: 1;}
+.cart_chos_addrs input:checked + label, .cart_chos_paymnt input:checked + label {color: #000;}
+</style>

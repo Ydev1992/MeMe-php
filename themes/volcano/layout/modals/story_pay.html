@@ -1,0 +1,19 @@
+<div class="modal fade" id="story_pay" tabindex="-1" role="dialog" aria-labelledby="story_pay" aria-hidden="true" data-id="0">
+  <div class="modal-dialog mat_box" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{LANG Pay for story}}</h5>
+      </div>
+      <div class="modal-body">
+        <div class="modal_story_pay_alert"></div>
+        {{LANG Are you sure you want to pay for create story?}}
+      </div>
+      <div class="modal-footer">
+        <input type="hidden" id="story_pay_id">
+        <input type="hidden" id="story_pay_file">
+        <button type="button" class="btn btn-default" data-dismiss="modal">{{LANG Cancel}}</button>
+        <button type="button" class="btn btn-primary btn-mat" onclick="PayForStory()">{{LANG pay}} <?php echo $music->config->currency_symbol.$music->config->story_price; ?></button>
+      </div>
+    </div>
+  </div>
+</div>

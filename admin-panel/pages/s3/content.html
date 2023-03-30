@@ -1,0 +1,1271 @@
+<?php
+$music->config->ffmpeg  = is_executable($music->config->ffmpeg_binary_file);
+
+?>
+<div class="container-fluid">
+    <div>
+        <h3>Import & Upload Configuration</h3>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="#">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="#">Settings</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">Import & Upload Configuration</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 col-md-6 ">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Upload & File Sharing Configuration</h6>
+                    <div class="s3-settings-alert"></div>
+                    <form class="s3-settings" method="POST">
+                        <label for="who_can_upload" class="main-label">Who Can Upload</label>
+                        <div class="dropdown user_filter_drop">
+                            <button class="btn btn-light" data-toggle="dropdown">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M8 13C6.14 13 4.59 14.28 4.14 16H2V18H4.14C4.59 19.72 6.14 21 8 21S11.41 19.72 11.86 18H22V16H11.86C11.41 14.28 9.86 13 8 13M8 19C6.9 19 6 18.1 6 17C6 15.9 6.9 15 8 15S10 15.9 10 17C10 18.1 9.1 19 8 19M19.86 6C19.41 4.28 17.86 3 16 3S12.59 4.28 12.14 6H2V8H12.14C12.59 9.72 14.14 11 16 11S19.41 9.72 19.86 8H22V6H19.86M16 9C14.9 9 14 8.1 14 7C14 5.9 14.9 5 16 5S18 5.9 18 7C18 8.1 17.1 9 16 9Z"></path></svg>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <div class="dropdown-menu-innr">
+                                    <b>Who can use this feature?</b>
+                                    <div>
+                                        <div class="round_check">
+                                            <input type="radio" name="who_can_upload" id="who_can_upload-admin" onchange="SelectProModel('can_use_upload',this)" value="admin" <?php echo ($music->config->who_can_upload == 'admin')   ? ' checked' : '';?>>
+                                            <label class="radio-inline" for="who_can_upload-admin" data-toggle="tooltip" data-placement="bottom" title="Admin"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,5A3,3 0 0,1 15,8A3,3 0 0,1 12,11A3,3 0 0,1 9,8A3,3 0 0,1 12,5M17.13,17C15.92,18.85 14.11,20.24 12,20.92C9.89,20.24 8.08,18.85 6.87,17C6.53,16.5 6.24,16 6,15.47C6,13.82 8.71,12.47 12,12.47C15.29,12.47 18,13.79 18,15.47C17.76,16 17.47,16.5 17.13,17Z"></path></svg></label> 
+                                        </div>
+                                        <div class="round_check">
+                                            <input type="radio" name="who_can_upload" id="who_can_upload-all" onchange="SelectProModel('can_use_upload',this)" value="all" <?php echo ($music->config->who_can_upload == 'all')   ? ' checked' : '';?>>
+                                            <label class="radio-inline" for="who_can_upload-all" data-toggle="tooltip" data-placement="bottom" title="All Users"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M16 17V19H2V17S2 13 9 13 16 17 16 17M12.5 7.5A3.5 3.5 0 1 0 9 11A3.5 3.5 0 0 0 12.5 7.5M15.94 13A5.32 5.32 0 0 1 18 17V19H22V17S22 13.37 15.94 13M15 4A3.39 3.39 0 0 0 13.07 4.59A5 5 0 0 1 13.07 10.41A3.39 3.39 0 0 0 15 11A3.5 3.5 0 0 0 15 4Z"></path></svg></label> 
+                                        </div>
+                                        <div class="round_check">
+                                            <input type="radio" name="who_can_upload" id="who_can_upload-pro" onchange="SelectProModel('can_use_upload',this)" value="pro" <?php echo ($music->config->who_can_upload == 'pro')   ? ' checked' : '';?>>
+                                            <label class="radio-inline" for="who_can_upload-pro" data-toggle="tooltip" data-placement="bottom" title="Pro Users Only"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M15,14C12.33,14 7,15.33 7,18V20H23V18C23,15.33 17.67,14 15,14M15,12A4,4 0 0,0 19,8A4,4 0 0,0 15,4A4,4 0 0,0 11,8A4,4 0 0,0 15,12M5,13.28L7.45,14.77L6.8,11.96L9,10.08L6.11,9.83L5,7.19L3.87,9.83L1,10.08L3.18,11.96L2.5,14.77L5,13.28Z"></path></svg></label> 
+                                        </div>
+                                        <div class="round_check">
+                                            <input type="radio" name="who_can_upload" id="who_can_upload-artist" onchange="SelectProModel('can_use_upload',this)" value="artist" <?php echo ($music->config->who_can_upload == 'artist')   ? ' checked' : '';?>>
+                                            <label class="radio-inline" for="who_can_upload-artist" data-toggle="tooltip" data-placement="bottom" title="Artist Only"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M16,9V7H12V12.5C11.58,12.19 11.07,12 10.5,12A2.5,2.5 0 0,0 8,14.5A2.5,2.5 0 0,0 10.5,17A2.5,2.5 0 0,0 13,14.5V9H16M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2Z"></path></svg></label> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </ul>
+                        </div>
+                        <br><small class="admin-info">Choose who can upload songs.</small>
+                        <hr>
+                        <label for="max_upload" class="main-label">Max Upload Size</label>
+                        <br><small class="admin-info">Set max upload size.</small>
+                        <div class="form-group">
+                            <select class="form-control show-tick" id="max_upload" name="max_upload">
+                              <option value="2000000" <?php if($music->config->max_upload == '2000000'){ echo "selected";} ?>>2MB</option>
+                                <option value="6000000" <?php if($music->config->max_upload == '6000000'){ echo "selected";} ?>>6MB</option>
+                                <option value="12000000" <?php if($music->config->max_upload == '12000000'){ echo "selected";} ?>>12MB</option>
+                                <option value="24000000" <?php if($music->config->max_upload == '24000000'){ echo "selected";} ?>>24MB</option>
+                                <option value="48000000" <?php if($music->config->max_upload == '48000000'){ echo "selected";} ?>>48MB</option>
+                                <option value="96000000" <?php if($music->config->max_upload == '96000000'){ echo "selected";} ?>>96MB</option>
+                                <option value="256000000" <?php if($music->config->max_upload == '256000000'){ echo "selected";} ?>>256MB</option>
+                                <option value="512000000" <?php if($music->config->max_upload == '512000000'){ echo "selected";} ?>>512MB</option>
+                                <option value="1000000000" <?php if($music->config->max_upload == '1000000000'){ echo "selected";} ?>>1GB</option>
+                                <option value="10000000000" <?php if($music->config->max_upload == '10000000000'){ echo "selected";} ?>>10GB</option>
+                            </select>
+                        </div>
+                        <hr>
+                        <label for="user_max_upload" class="main-label">Max User Upload Size</label>
+                        <br><small class="admin-info">Set max user upload size.</small>
+                        <div class="form-group">
+                            <select class="form-control show-tick" id="user_max_upload" name="user_max_upload">
+                              <option value="2000000" <?php if($music->config->user_max_upload == '2000000'){ echo "selected";} ?>>2MB</option>
+                                <option value="6000000" <?php if($music->config->user_max_upload == '6000000'){ echo "selected";} ?>>6MB</option>
+                                <option value="12000000" <?php if($music->config->user_max_upload == '12000000'){ echo "selected";} ?>>12MB</option>
+                                <option value="24000000" <?php if($music->config->user_max_upload == '24000000'){ echo "selected";} ?>>24MB</option>
+                                <option value="48000000" <?php if($music->config->user_max_upload == '48000000'){ echo "selected";} ?>>48MB</option>
+                                <option value="96000000" <?php if($music->config->user_max_upload == '96000000'){ echo "selected";} ?>>96MB</option>
+                                <option value="256000000" <?php if($music->config->user_max_upload == '256000000'){ echo "selected";} ?>>256MB</option>
+                                <option value="512000000" <?php if($music->config->user_max_upload == '512000000'){ echo "selected";} ?>>512MB</option>
+                                <option value="1000000000" <?php if($music->config->user_max_upload == '1000000000'){ echo "selected";} ?>>1GB</option>
+                                <option value="10000000000" <?php if($music->config->user_max_upload == '10000000000'){ echo "selected";} ?>>10GB</option>
+                            </select>
+                        </div>
+                        <input type="hidden" name="hash_id" value="<?php echo createMainSession();?>">
+                    </form>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Songs Import Configuration</h6>
+                    <div class="s3-settings-alert"></div>
+                    <form class="s3-settings" method="POST">
+                        <div class="float-left">
+                            <label for="soundcloud_import" class="main-label">SoundCloud Import</label>
+                            <div class="dropdown user_filter_drop">
+                                <button class="btn btn-light" data-toggle="dropdown">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M8 13C6.14 13 4.59 14.28 4.14 16H2V18H4.14C4.59 19.72 6.14 21 8 21S11.41 19.72 11.86 18H22V16H11.86C11.41 14.28 9.86 13 8 13M8 19C6.9 19 6 18.1 6 17C6 15.9 6.9 15 8 15S10 15.9 10 17C10 18.1 9.1 19 8 19M19.86 6C19.41 4.28 17.86 3 16 3S12.59 4.28 12.14 6H2V8H12.14C12.59 9.72 14.14 11 16 11S19.41 9.72 19.86 8H22V6H19.86M16 9C14.9 9 14 8.1 14 7C14 5.9 14.9 5 16 5S18 5.9 18 7C18 8.1 17.1 9 16 9Z"></path></svg>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <div class="dropdown-menu-innr">
+                                        <b>Who can use this feature?</b>
+                                        <div>
+                                            <div class="round_check">
+                                                <input type="radio" name="who_can_soundcloud_import" id="who_can_soundcloud_import-admin" onchange="SelectProModel('can_use_soundcloud_import',this)" value="admin" <?php echo ($music->config->who_can_soundcloud_import == 'admin')   ? ' checked' : '';?>>
+                                                <label class="radio-inline" for="who_can_soundcloud_import-admin" data-toggle="tooltip" data-placement="bottom" title="Admin"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,5A3,3 0 0,1 15,8A3,3 0 0,1 12,11A3,3 0 0,1 9,8A3,3 0 0,1 12,5M17.13,17C15.92,18.85 14.11,20.24 12,20.92C9.89,20.24 8.08,18.85 6.87,17C6.53,16.5 6.24,16 6,15.47C6,13.82 8.71,12.47 12,12.47C15.29,12.47 18,13.79 18,15.47C17.76,16 17.47,16.5 17.13,17Z"></path></svg></label> 
+                                            </div>
+                                            <div class="round_check">
+                                                <input type="radio" name="who_can_soundcloud_import" id="who_can_soundcloud_import-all" onchange="SelectProModel('can_use_soundcloud_import',this)" value="all" <?php echo ($music->config->who_can_soundcloud_import == 'all')   ? ' checked' : '';?>>
+                                                <label class="radio-inline" for="who_can_soundcloud_import-all" data-toggle="tooltip" data-placement="bottom" title="All Users"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M16 17V19H2V17S2 13 9 13 16 17 16 17M12.5 7.5A3.5 3.5 0 1 0 9 11A3.5 3.5 0 0 0 12.5 7.5M15.94 13A5.32 5.32 0 0 1 18 17V19H22V17S22 13.37 15.94 13M15 4A3.39 3.39 0 0 0 13.07 4.59A5 5 0 0 1 13.07 10.41A3.39 3.39 0 0 0 15 11A3.5 3.5 0 0 0 15 4Z"></path></svg></label> 
+                                            </div>
+                                            <div class="round_check">
+                                                <input type="radio" name="who_can_soundcloud_import" id="who_can_soundcloud_import-pro" onchange="SelectProModel('can_use_soundcloud_import',this)" value="pro" <?php echo ($music->config->who_can_soundcloud_import == 'pro')   ? ' checked' : '';?>>
+                                                <label class="radio-inline" for="who_can_soundcloud_import-pro" data-toggle="tooltip" data-placement="bottom" title="Pro Users Only"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M15,14C12.33,14 7,15.33 7,18V20H23V18C23,15.33 17.67,14 15,14M15,12A4,4 0 0,0 19,8A4,4 0 0,0 15,4A4,4 0 0,0 11,8A4,4 0 0,0 15,12M5,13.28L7.45,14.77L6.8,11.96L9,10.08L6.11,9.83L5,7.19L3.87,9.83L1,10.08L3.18,11.96L2.5,14.77L5,13.28Z"></path></svg></label> 
+                                            </div>
+                                            <div class="round_check">
+                                                <input type="radio" name="who_can_soundcloud_import" id="who_can_soundcloud_import-artist" onchange="SelectProModel('can_use_soundcloud_import',this)" value="artist" <?php echo ($music->config->who_can_soundcloud_import == 'artist')   ? ' checked' : '';?>>
+                                                <label class="radio-inline" for="who_can_soundcloud_import-artist" data-toggle="tooltip" data-placement="bottom" title="Artist Only"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M16,9V7H12V12.5C11.58,12.19 11.07,12 10.5,12A2.5,2.5 0 0,0 8,14.5A2.5,2.5 0 0,0 10.5,17A2.5,2.5 0 0,0 13,14.5V9H16M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2Z"></path></svg></label> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ul>
+                            </div>
+                            <br><small class="admin-info">Import from SoundCloud</small>
+                        </div>
+                        <div class="form-group float-right switcher">
+                            <input type="hidden" name="soundcloud_import" value="off" />
+                            <input type="checkbox" name="soundcloud_import" id="chck-soundcloud_import" value="on" <?php echo ($music->config->soundcloud_import == 'on') ? 'checked': '';?>>
+                            <label for="chck-soundcloud_import" class="check-trail"><span class="check-handler"></span></label>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Soundcloud clientID</label>
+                                <input type="text" name="sound_cloud_client_id" class="form-control" value="<?php echo ($music->config->sound_cloud_client_id);?>">
+                                <small class="admin-info"></small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="float-left">
+                            <label for="soundcloud_go" class="main-label">Import SoundCloud GO+ tracks</label>
+                            <br><small class="admin-info"><a href="https://help.soundcloud.com/hc/en-us/articles/115003453667-SoundCloud-Go-tracks" target="_blank">More info</a></small>
+                        </div>
+                        <div class="form-group float-right switcher">
+                            <input type="hidden" name="soundcloud_go" value="off" />
+                            <input type="checkbox" name="soundcloud_go" id="chck-soundcloud_go" value="on" <?php echo ($music->config->soundcloud_go == 'on') ? 'checked': '';?>>
+                            <label for="chck-soundcloud_go" class="check-trail"><span class="check-handler"></span></label>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="float-left">
+                            <label for="deezer_import" class="main-label">Deezer Import</label>
+                            <div class="dropdown user_filter_drop">
+                                <button class="btn btn-light" data-toggle="dropdown">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M8 13C6.14 13 4.59 14.28 4.14 16H2V18H4.14C4.59 19.72 6.14 21 8 21S11.41 19.72 11.86 18H22V16H11.86C11.41 14.28 9.86 13 8 13M8 19C6.9 19 6 18.1 6 17C6 15.9 6.9 15 8 15S10 15.9 10 17C10 18.1 9.1 19 8 19M19.86 6C19.41 4.28 17.86 3 16 3S12.59 4.28 12.14 6H2V8H12.14C12.59 9.72 14.14 11 16 11S19.41 9.72 19.86 8H22V6H19.86M16 9C14.9 9 14 8.1 14 7C14 5.9 14.9 5 16 5S18 5.9 18 7C18 8.1 17.1 9 16 9Z"></path></svg>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <div class="dropdown-menu-innr">
+                                        <b>Who can use this feature?</b>
+                                        <div>
+                                            <div class="round_check">
+                                                <input type="radio" name="who_can_deezer_import" id="who_can_deezer_import-admin" onchange="SelectProModel('can_use_deezer_import',this)" value="admin" <?php echo ($music->config->who_can_deezer_import == 'admin')   ? ' checked' : '';?>>
+                                                <label class="radio-inline" for="who_can_deezer_import-admin" data-toggle="tooltip" data-placement="bottom" title="Admin"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,5A3,3 0 0,1 15,8A3,3 0 0,1 12,11A3,3 0 0,1 9,8A3,3 0 0,1 12,5M17.13,17C15.92,18.85 14.11,20.24 12,20.92C9.89,20.24 8.08,18.85 6.87,17C6.53,16.5 6.24,16 6,15.47C6,13.82 8.71,12.47 12,12.47C15.29,12.47 18,13.79 18,15.47C17.76,16 17.47,16.5 17.13,17Z"></path></svg></label> 
+                                            </div>
+                                            <div class="round_check">
+                                                <input type="radio" name="who_can_deezer_import" id="who_can_deezer_import-all" onchange="SelectProModel('can_use_deezer_import',this)" value="all" <?php echo ($music->config->who_can_deezer_import == 'all')   ? ' checked' : '';?>>
+                                                <label class="radio-inline" for="who_can_deezer_import-all" data-toggle="tooltip" data-placement="bottom" title="All Users"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M16 17V19H2V17S2 13 9 13 16 17 16 17M12.5 7.5A3.5 3.5 0 1 0 9 11A3.5 3.5 0 0 0 12.5 7.5M15.94 13A5.32 5.32 0 0 1 18 17V19H22V17S22 13.37 15.94 13M15 4A3.39 3.39 0 0 0 13.07 4.59A5 5 0 0 1 13.07 10.41A3.39 3.39 0 0 0 15 11A3.5 3.5 0 0 0 15 4Z"></path></svg></label> 
+                                            </div>
+                                            <div class="round_check">
+                                                <input type="radio" name="who_can_deezer_import" id="who_can_deezer_import-pro" onchange="SelectProModel('can_use_deezer_import',this)" value="pro" <?php echo ($music->config->who_can_deezer_import == 'pro')   ? ' checked' : '';?>>
+                                                <label class="radio-inline" for="who_can_deezer_import-pro" data-toggle="tooltip" data-placement="bottom" title="Pro Users Only"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M15,14C12.33,14 7,15.33 7,18V20H23V18C23,15.33 17.67,14 15,14M15,12A4,4 0 0,0 19,8A4,4 0 0,0 15,4A4,4 0 0,0 11,8A4,4 0 0,0 15,12M5,13.28L7.45,14.77L6.8,11.96L9,10.08L6.11,9.83L5,7.19L3.87,9.83L1,10.08L3.18,11.96L2.5,14.77L5,13.28Z"></path></svg></label> 
+                                            </div>
+                                            <div class="round_check">
+                                                <input type="radio" name="who_can_deezer_import" id="who_can_deezer_import-artist" onchange="SelectProModel('can_use_deezer_import',this)" value="artist" <?php echo ($music->config->who_can_deezer_import == 'artist')   ? ' checked' : '';?>>
+                                                <label class="radio-inline" for="who_can_deezer_import-artist" data-toggle="tooltip" data-placement="bottom" title="Artist Only"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M16,9V7H12V12.5C11.58,12.19 11.07,12 10.5,12A2.5,2.5 0 0,0 8,14.5A2.5,2.5 0 0,0 10.5,17A2.5,2.5 0 0,0 13,14.5V9H16M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2Z"></path></svg></label> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ul>
+                            </div>
+                            <br><small class="admin-info">Enable the ability to import songs from Deezer</small>
+                        </div>
+                        <div class="form-group float-right switcher">
+                            <input type="hidden" name="deezer_import" value="off" />
+                            <input type="checkbox" name="deezer_import" id="chck-deezer_import" value="on" <?php echo ($music->config->deezer_import == 'on') ? 'checked': '';?>>
+                            <label for="chck-deezer_import" class="check-trail"><span class="check-handler"></span></label>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="float-left">
+                            <label for="kkbox_import" class="main-label">Kkbox Import</label>
+                            <br><small class="admin-info">Enable the ability to import songs from Kkbox</small>
+                        </div>
+                        <div class="form-group float-right switcher">
+                            <input type="hidden" name="kkbox_import" value="off" />
+                            <input type="checkbox" name="kkbox_import" id="chck-kkbox_import" value="on" <?php echo ($music->config->kkbox_import == 'on') ? 'checked': '';?>>
+                            <label for="chck-kkbox_import" class="check-trail"><span class="check-handler"></span></label>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="float-left">
+                            <label for="itunes_import" class="main-label">Itunes Import</label>
+                            <div class="dropdown user_filter_drop">
+                                <button class="btn btn-light" data-toggle="dropdown">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M8 13C6.14 13 4.59 14.28 4.14 16H2V18H4.14C4.59 19.72 6.14 21 8 21S11.41 19.72 11.86 18H22V16H11.86C11.41 14.28 9.86 13 8 13M8 19C6.9 19 6 18.1 6 17C6 15.9 6.9 15 8 15S10 15.9 10 17C10 18.1 9.1 19 8 19M19.86 6C19.41 4.28 17.86 3 16 3S12.59 4.28 12.14 6H2V8H12.14C12.59 9.72 14.14 11 16 11S19.41 9.72 19.86 8H22V6H19.86M16 9C14.9 9 14 8.1 14 7C14 5.9 14.9 5 16 5S18 5.9 18 7C18 8.1 17.1 9 16 9Z"></path></svg>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <div class="dropdown-menu-innr">
+                                        <b>Who can use this feature?</b>
+                                        <div>
+                                            <div class="round_check">
+                                                <input type="radio" name="who_can_itunes_import" id="who_can_itunes_import-admin" onchange="SelectProModel('can_use_itunes_import',this)" value="admin" <?php echo ($music->config->who_can_itunes_import == 'admin')   ? ' checked' : '';?>>
+                                                <label class="radio-inline" for="who_can_itunes_import-admin" data-toggle="tooltip" data-placement="bottom" title="Admin"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,5A3,3 0 0,1 15,8A3,3 0 0,1 12,11A3,3 0 0,1 9,8A3,3 0 0,1 12,5M17.13,17C15.92,18.85 14.11,20.24 12,20.92C9.89,20.24 8.08,18.85 6.87,17C6.53,16.5 6.24,16 6,15.47C6,13.82 8.71,12.47 12,12.47C15.29,12.47 18,13.79 18,15.47C17.76,16 17.47,16.5 17.13,17Z"></path></svg></label> 
+                                            </div>
+                                            <div class="round_check">
+                                                <input type="radio" name="who_can_itunes_import" id="who_can_itunes_import-all" onchange="SelectProModel('can_use_itunes_import',this)" value="all" <?php echo ($music->config->who_can_itunes_import == 'all')   ? ' checked' : '';?>>
+                                                <label class="radio-inline" for="who_can_itunes_import-all" data-toggle="tooltip" data-placement="bottom" title="All Users"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M16 17V19H2V17S2 13 9 13 16 17 16 17M12.5 7.5A3.5 3.5 0 1 0 9 11A3.5 3.5 0 0 0 12.5 7.5M15.94 13A5.32 5.32 0 0 1 18 17V19H22V17S22 13.37 15.94 13M15 4A3.39 3.39 0 0 0 13.07 4.59A5 5 0 0 1 13.07 10.41A3.39 3.39 0 0 0 15 11A3.5 3.5 0 0 0 15 4Z"></path></svg></label> 
+                                            </div>
+                                            <div class="round_check">
+                                                <input type="radio" name="who_can_itunes_import" id="who_can_itunes_import-pro" onchange="SelectProModel('can_use_itunes_import',this)" value="pro" <?php echo ($music->config->who_can_itunes_import == 'pro')   ? ' checked' : '';?>>
+                                                <label class="radio-inline" for="who_can_itunes_import-pro" data-toggle="tooltip" data-placement="bottom" title="Pro Users Only"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M15,14C12.33,14 7,15.33 7,18V20H23V18C23,15.33 17.67,14 15,14M15,12A4,4 0 0,0 19,8A4,4 0 0,0 15,4A4,4 0 0,0 11,8A4,4 0 0,0 15,12M5,13.28L7.45,14.77L6.8,11.96L9,10.08L6.11,9.83L5,7.19L3.87,9.83L1,10.08L3.18,11.96L2.5,14.77L5,13.28Z"></path></svg></label> 
+                                            </div>
+                                            <div class="round_check">
+                                                <input type="radio" name="who_can_itunes_import" id="who_can_itunes_import-artist" onchange="SelectProModel('can_use_itunes_import',this)" value="artist" <?php echo ($music->config->who_can_itunes_import == 'artist')   ? ' checked' : '';?>>
+                                                <label class="radio-inline" for="who_can_itunes_import-artist" data-toggle="tooltip" data-placement="bottom" title="Artist Only"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M16,9V7H12V12.5C11.58,12.19 11.07,12 10.5,12A2.5,2.5 0 0,0 8,14.5A2.5,2.5 0 0,0 10.5,17A2.5,2.5 0 0,0 13,14.5V9H16M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2Z"></path></svg></label> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ul>
+                            </div>
+                            <br><small class="admin-info">Enable the ability to import songs from Itunes</small>
+                        </div>
+                        <div class="form-group float-right switcher">
+                            <input type="hidden" name="itunes_import" value="off" />
+                            <input type="checkbox" name="itunes_import" id="chck-itunes_import" value="on" <?php echo ($music->config->itunes_import == 'on') ? 'checked': '';?>>
+                            <label for="chck-itunes_import" class="check-trail"><span class="check-handler"></span></label>
+                        </div>
+                        <div class="clearfix"></div>
+                        <label for="itunes_affiliate">Itunes Affiliate System</label>
+                        <div class="dropdown user_filter_drop">
+                            <button class="btn btn-light" data-toggle="dropdown">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M8 13C6.14 13 4.59 14.28 4.14 16H2V18H4.14C4.59 19.72 6.14 21 8 21S11.41 19.72 11.86 18H22V16H11.86C11.41 14.28 9.86 13 8 13M8 19C6.9 19 6 18.1 6 17C6 15.9 6.9 15 8 15S10 15.9 10 17C10 18.1 9.1 19 8 19M19.86 6C19.41 4.28 17.86 3 16 3S12.59 4.28 12.14 6H2V8H12.14C12.59 9.72 14.14 11 16 11S19.41 9.72 19.86 8H22V6H19.86M16 9C14.9 9 14 8.1 14 7C14 5.9 14.9 5 16 5S18 5.9 18 7C18 8.1 17.1 9 16 9Z"></path></svg>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <div class="dropdown-menu-innr">
+                                    <b>Who can use this feature?</b>
+                                    <div>
+                                        <div class="round_check">
+                                            <input type="radio" name="itunes_affiliate" id="itunes_affiliate-admin" onchange="SelectProModel('can_use_itunes_affiliate',this)" value="admin" <?php echo ($music->config->itunes_affiliate == 'admin')   ? ' checked' : '';?>>
+                                            <label class="radio-inline" for="itunes_affiliate-admin" data-toggle="tooltip" data-placement="bottom" title="Admin"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,5A3,3 0 0,1 15,8A3,3 0 0,1 12,11A3,3 0 0,1 9,8A3,3 0 0,1 12,5M17.13,17C15.92,18.85 14.11,20.24 12,20.92C9.89,20.24 8.08,18.85 6.87,17C6.53,16.5 6.24,16 6,15.47C6,13.82 8.71,12.47 12,12.47C15.29,12.47 18,13.79 18,15.47C17.76,16 17.47,16.5 17.13,17Z"></path></svg></label> 
+                                        </div>
+                                        <div class="round_check">
+                                            <input type="radio" name="itunes_affiliate" id="itunes_affiliate-all" onchange="SelectProModel('can_use_itunes_affiliate',this)" value="all" <?php echo ($music->config->itunes_affiliate == 'all')   ? ' checked' : '';?>>
+                                            <label class="radio-inline" for="itunes_affiliate-all" data-toggle="tooltip" data-placement="bottom" title="All Users"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M16 17V19H2V17S2 13 9 13 16 17 16 17M12.5 7.5A3.5 3.5 0 1 0 9 11A3.5 3.5 0 0 0 12.5 7.5M15.94 13A5.32 5.32 0 0 1 18 17V19H22V17S22 13.37 15.94 13M15 4A3.39 3.39 0 0 0 13.07 4.59A5 5 0 0 1 13.07 10.41A3.39 3.39 0 0 0 15 11A3.5 3.5 0 0 0 15 4Z"></path></svg></label> 
+                                        </div>
+                                        <div class="round_check">
+                                            <input type="radio" name="itunes_affiliate" id="itunes_affiliate-pro" onchange="SelectProModel('can_use_itunes_affiliate',this)" value="pro" <?php echo ($music->config->itunes_affiliate == 'pro')   ? ' checked' : '';?>>
+                                            <label class="radio-inline" for="itunes_affiliate-pro" data-toggle="tooltip" data-placement="bottom" title="Pro Users Only"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M15,14C12.33,14 7,15.33 7,18V20H23V18C23,15.33 17.67,14 15,14M15,12A4,4 0 0,0 19,8A4,4 0 0,0 15,4A4,4 0 0,0 11,8A4,4 0 0,0 15,12M5,13.28L7.45,14.77L6.8,11.96L9,10.08L6.11,9.83L5,7.19L3.87,9.83L1,10.08L3.18,11.96L2.5,14.77L5,13.28Z"></path></svg></label> 
+                                        </div>
+                                        <div class="round_check">
+                                            <input type="radio" name="itunes_affiliate" id="itunes_affiliate-artist" onchange="SelectProModel('can_use_itunes_affiliate',this)" value="artist" <?php echo ($music->config->itunes_affiliate == 'artist')   ? ' checked' : '';?>>
+                                            <label class="radio-inline" for="itunes_affiliate-artist" data-toggle="tooltip" data-placement="bottom" title="Artist Only"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M16,9V7H12V12.5C11.58,12.19 11.07,12 10.5,12A2.5,2.5 0 0,0 8,14.5A2.5,2.5 0 0,0 10.5,17A2.5,2.5 0 0,0 13,14.5V9H16M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2Z"></path></svg></label> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </ul>
+                        </div>
+                        <br><small class="admin-info"></small>
+                        <div class="form-group form-float itunes_partner_div" <?php echo $music->config->itunes_affiliate != 'admin' ? 'style="display:none"' : ''; ?>>
+                            <div class="form-line">
+                                <label class="form-label">Itunes Partner Token</label>
+                                <input type="text" name="itunes_partner_token" class="form-control" value="<?php echo ($music->config->itunes_partner_token);?>">
+                                <small class="admin-info"></small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="float-left">
+                            <label for="youtube_import" class="main-label">YouTube Import</label>
+                            <div class="dropdown user_filter_drop">
+                                <button class="btn btn-light" data-toggle="dropdown">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M8 13C6.14 13 4.59 14.28 4.14 16H2V18H4.14C4.59 19.72 6.14 21 8 21S11.41 19.72 11.86 18H22V16H11.86C11.41 14.28 9.86 13 8 13M8 19C6.9 19 6 18.1 6 17C6 15.9 6.9 15 8 15S10 15.9 10 17C10 18.1 9.1 19 8 19M19.86 6C19.41 4.28 17.86 3 16 3S12.59 4.28 12.14 6H2V8H12.14C12.59 9.72 14.14 11 16 11S19.41 9.72 19.86 8H22V6H19.86M16 9C14.9 9 14 8.1 14 7C14 5.9 14.9 5 16 5S18 5.9 18 7C18 8.1 17.1 9 16 9Z"></path></svg>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <div class="dropdown-menu-innr">
+                                        <b>Who can use this feature?</b>
+                                        <div>
+                                            <div class="round_check">
+                                                <input type="radio" name="who_can_youtube_import" id="who_can_youtube_import-admin" onchange="SelectProModel('can_use_youtube_import',this)" value="admin" <?php echo ($music->config->who_can_youtube_import == 'admin')   ? ' checked' : '';?>>
+                                                <label class="radio-inline" for="who_can_youtube_import-admin" data-toggle="tooltip" data-placement="bottom" title="Admin"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,5A3,3 0 0,1 15,8A3,3 0 0,1 12,11A3,3 0 0,1 9,8A3,3 0 0,1 12,5M17.13,17C15.92,18.85 14.11,20.24 12,20.92C9.89,20.24 8.08,18.85 6.87,17C6.53,16.5 6.24,16 6,15.47C6,13.82 8.71,12.47 12,12.47C15.29,12.47 18,13.79 18,15.47C17.76,16 17.47,16.5 17.13,17Z"></path></svg></label> 
+                                            </div>
+                                            <div class="round_check">
+                                                <input type="radio" name="who_can_youtube_import" id="who_can_youtube_import-all" onchange="SelectProModel('can_use_youtube_import',this)" value="all" <?php echo ($music->config->who_can_youtube_import == 'all')   ? ' checked' : '';?>>
+                                                <label class="radio-inline" for="who_can_youtube_import-all" data-toggle="tooltip" data-placement="bottom" title="All Users"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M16 17V19H2V17S2 13 9 13 16 17 16 17M12.5 7.5A3.5 3.5 0 1 0 9 11A3.5 3.5 0 0 0 12.5 7.5M15.94 13A5.32 5.32 0 0 1 18 17V19H22V17S22 13.37 15.94 13M15 4A3.39 3.39 0 0 0 13.07 4.59A5 5 0 0 1 13.07 10.41A3.39 3.39 0 0 0 15 11A3.5 3.5 0 0 0 15 4Z"></path></svg></label> 
+                                            </div>
+                                            <div class="round_check">
+                                                <input type="radio" name="who_can_youtube_import" id="who_can_youtube_import-pro" onchange="SelectProModel('can_use_youtube_import',this)" value="pro" <?php echo ($music->config->who_can_youtube_import == 'pro')   ? ' checked' : '';?>>
+                                                <label class="radio-inline" for="who_can_youtube_import-pro" data-toggle="tooltip" data-placement="bottom" title="Pro Users Only"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M15,14C12.33,14 7,15.33 7,18V20H23V18C23,15.33 17.67,14 15,14M15,12A4,4 0 0,0 19,8A4,4 0 0,0 15,4A4,4 0 0,0 11,8A4,4 0 0,0 15,12M5,13.28L7.45,14.77L6.8,11.96L9,10.08L6.11,9.83L5,7.19L3.87,9.83L1,10.08L3.18,11.96L2.5,14.77L5,13.28Z"></path></svg></label> 
+                                            </div>
+                                            <div class="round_check">
+                                                <input type="radio" name="who_can_youtube_import" id="who_can_youtube_import-artist" onchange="SelectProModel('can_use_youtube_import',this)" value="artist" <?php echo ($music->config->who_can_youtube_import == 'artist')   ? ' checked' : '';?>>
+                                                <label class="radio-inline" for="who_can_youtube_import-artist" data-toggle="tooltip" data-placement="bottom" title="Artist Only"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M16,9V7H12V12.5C11.58,12.19 11.07,12 10.5,12A2.5,2.5 0 0,0 8,14.5A2.5,2.5 0 0,0 10.5,17A2.5,2.5 0 0,0 13,14.5V9H16M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2Z"></path></svg></label> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ul>
+                            </div>
+                            <br><small class="admin-info">Enable the ability to import songs from Youtube <br> Note: This feature requires FFMPEG to be enabled on your server, <a href="https://docs.deepsoundscript.com/#idocs_ffmpeg" target="_blank">Read More</a>. </small>
+                        </div>
+                        <div class="form-group float-right switcher">
+                            <input type="hidden" name="youtube_import" value="off" />
+                            <input type="checkbox" name="youtube_import" id="chck-youtube_import" value="on" <?php echo ($music->config->youtube_import == 'on') ? 'checked': '';?>>
+                            <label for="chck-youtube_import" class="check-trail"><span class="check-handler"></span></label>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">YouTube API Key</label>
+                                <input type="text" name="youtube_key" class="form-control" value="<?php echo ($music->config->youtube_key);?>">
+                                <small class="admin-info"></small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="float-left">
+                            <label for="youtube_video" class="main-label">YouTube Video Player</label>
+                            <br><small class="admin-info">Show and play YouTube video player when playing an imported song.</small>
+                        </div>
+                        <div class="form-group float-right switcher">
+                            <input type="hidden" name="youtube_video" value="off" />
+                            <input type="checkbox" name="youtube_video" id="chck-youtube_video" value="on" <?php echo ($music->config->youtube_video == 'on') ? 'checked': '';?>>
+                            <label for="chck-youtube_video" class="check-trail"><span class="check-handler"></span></label>
+                        </div>
+                        <div class="clearfix"></div>
+
+                        <input type="hidden" name="hash_id" value="<?php echo createMainSession();?>">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 ">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">FFMPEG System Settings</h6>
+                    <div class="ffmpeg-settings-alert"></div>
+                    <form class="ffmpeg-settings" method="POST">
+                        <div class="float-left">
+                            <label for="ffmpeg_system" class="main-label">FFMPEG System</label>
+                            <br><small class="admin-info">This system will compress, convert, and optimzise videos to mp4. <br>This system require "ffmpeg" to be installed in your server. </small>
+                        </div>
+                        <div class="form-group float-right switcher">
+                            <input type="hidden" name="ffmpeg_system" value="off" />
+                            <input type="checkbox" name="ffmpeg_system" id="chck-ffmpeg_system" value="on" <?php echo ($music->config->ffmpeg_system == 'on') ? 'checked': '';?>>
+                            <label for="chck-ffmpeg_system" class="check-trail"><span class="check-handler"></span></label>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <?php if (!$music->config->ffmpeg): ?>
+                                <label class="form-label" style="color: red;">
+                                    FFmpeg binary does not exist on path: {{CONFIG ffmpeg_binary_file}}
+                                </label>
+                                <?php else: ?>
+                                <label class="form-label">
+                                    FFmpeg binary file path: on Linux(/usr/bin/ffmpeg) or Windows(C:\\ffmpeg\bin\ffmpeg.exe)
+                                </label>
+                                <?php endif; ?>
+                                <input type="text" name="ffmpeg_binary_file" class="form-control" value="<?php echo ($music->config->ffmpeg_binary_file);?>">
+                                <small class="admin-info">Example: Linux(/usr/bin/ffmpeg) or Windows(C:\\ffmpeg\bin\ffmpeg.exe)</small>
+                            </div>
+                        </div>
+                        <hr>
+                        <?php if ($music->config->ffmpeg_system == 'on'): ?>
+                        <label for="convert_speed">Convert speed</label>
+                        <br><small class="admin-info">This affect the encoding speed. Using a slower preset gives you better compression, or quality per filesize, whereas faster presets give you worse compression and higher filesize.</small>
+                        <div class="form-group">
+                            <select class="form-control show-tick" id="convert_speed" name="convert_speed">
+                              <option value="ultrafast" <?php echo ($music->config->convert_speed == 'ultrafast') ? 'selected': '';?>>Ultrafast</option>
+                            <option value="superfast" <?php echo ($music->config->convert_speed == 'superfast') ? 'selected': '';?>>Superfast</option>
+                            <option value="veryfast" <?php echo ($music->config->convert_speed == 'veryfast') ? 'selected': '';?>>Veryfast</option>
+                            <option value="faster" <?php echo ($music->config->convert_speed == 'faster') ? 'selected': '';?>>Faster</option>
+                            <option value="fast" <?php echo ($music->config->convert_speed == 'fast') ? 'selected': '';?>>Fast</option>
+                            <option value="medium" <?php echo ($music->config->convert_speed == 'medium') ? 'selected': '';?>>Medium</option>
+                            <option value="slow" <?php echo ($music->config->convert_speed == 'slow') ? 'selected': '';?>>Slow</option>
+                            <option value="slower" <?php echo ($music->config->convert_speed == 'slower') ? 'selected': '';?>>Slower</option>
+                            <option value="veryslow" <?php echo ($music->config->convert_speed == 'veryslow') ? 'selected': '';?>>Veryslow</option>
+                            </select>
+                        </div> <div class="alert alert-info">"Convert video speed" affect the encoding speed. Using a slower preset gives you better compression, or quality per filesize, whereas faster presets give you worse compression and higher filesize.</div>
+
+                        <?php endif; ?>
+                        <hr>
+                        <div class="alert alert-info">
+                           <i class="fa fa-fw fa-exclamation-triangle"></i> <strong>Info: </strong> For more information on how to setup FFMPEG, please visit our <a href="https://docs.deepsoundscript.com/#idocs_ffmpeg" target="_blank">Documentation</a> page.
+                       </div>
+                       <div class="alert alert-warning">
+                          Make sure to debug FFMPEG below after configuring ffmpeg.
+                      </div>
+                        <input type="hidden" name="hash_id" value="<?php echo createMainSession();?>">
+                    </form>
+                </div>
+            </div>
+            <div class="card">
+               <div class="card-body">
+                   <h6 class="card-title">Debug FFMPEG</h6>
+                   <div class="alert alert-info">This feature will test the FFMPEG Configuration and make sure the system is working fine.</div>
+                   <form class="debug-settings" method="POST">
+                       <div class="form-group form-float">
+                           <div class="form-line">
+                               <label class="form-label">Debug Log</label>
+                               <textarea name="debug_ffmpeg" id="debug_ffmpeg" class="form-control" cols="30" rows="5" style="height: 700px !important;" disabled>Click on Debug FFMPEG to show test results.</textarea>
+                           </div>
+                       </div>
+                       <input type="hidden" name="hash_id" value="<?php echo createMainSession();?>">
+                       <div class="debug-settings-alert"></div>
+                       <button type="submit" class="btn btn-success m-t-15 waves-effect">Debug FFMPEG</button>
+                   </form>
+               </div>
+           </div>
+        </div>
+
+        <div class="col-lg-12 col-md-12">
+            <h3>Storage &amp; CDN Configuration <br><hr></h3>
+             <div class="alert alert-warning">
+                <i class="fa fa-fw fa-exclamation-triangle"></i> <strong>Important:</strong> You can't enable two storages at the same time.
+            </div>
+            <div class="alert alert-info">
+               <i class="fa fa-fw fa-exclamation-triangle"></i> <strong>Info: </strong> For more information on how to setup third party storage, please visit our <a href="https://docs.deepsoundscript.com/#idocs_amazon_s3" target="_blank">Documentation</a> page.
+           </div>
+        </div>
+        <div class="col-lg-6 col-md-6 ">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Amazon S3 Configuration</h6>
+                    <div class="s3-settings-alert"></div>
+                    <form class="s3-settings" method="POST">
+                        <div class="float-left">
+                            <label for="s3_upload" class="main-label">Amazon S3 Storage</label>
+                            <br><small class="admin-info">Enable Amazon Storage to store your files in Amazon S3.</small>
+                        </div>
+                        <div class="form-group float-right switcher">
+                            <input type="hidden" name="s3_upload" value="off" />
+                            <input type="checkbox" name="s3_upload" id="chck-s3_upload" value="on" <?php echo ($music->config->s3_upload == 'on') ? 'checked': '';?>>
+                            <label for="chck-s3_upload" class="check-trail"><span class="check-handler"></span></label>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Amazon Bucket Name</label>
+                                <input type="text" name="s3_bucket_name" class="form-control" value="<?php echo ($music->config->s3_bucket_name);?>">
+                                <small class="admin-info">Your Amazon S3 Bucket Name</small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Amazon S3 Key</label>
+                                <input type="text" name="amazone_s3_key" class="form-control" value="<?php echo ($music->config->amazone_s3_key);?>">
+                                <small class="admin-info">Your Amazon Key from AWS credentials</small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Amazon S3 Secret Key</label>
+                                <input type="text" name="amazone_s3_s_key" class="form-control" value="<?php echo ($music->config->amazone_s3_s_key);?>">
+                                <small class="admin-info">Your Amazon Secret from AWS credentials</small>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Amazon S3 Custom Endpoint (Optional)</label>
+                                <input type="text" name="amazon_endpoint" class="form-control" value="<?php echo ($music->config->amazon_endpoint);?>">
+                                <small class="admin-info">Your Amazon custom domain name, e.g: https://customCDNdomain.com</small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <label for="region">Amazon S3 bucket Region</label>
+                        <br><small class="admin-info">Your Amazon's S3 Region</small>
+                        <div class="form-group">
+                            <select class="form-control show-tick" id="region" name="region">
+                              <option value="us-east-2" <?php echo ($music->config->region == 'us-east-2')   ? ' selected' : '';?> >US East (Ohio) [us-east-2]</option>
+                              <option value="us-east-1" <?php echo ($music->config->region == 'us-east-1')   ? ' selected' : '';?> >US East (N. Virginia) [us-east-1]</option>
+                              <option value="us-west-1" <?php echo ($music->config->region == 'us-west-1')   ? ' selected' : '';?> >US West (N. California) [us-west-1]</option>
+                              <option value="us-west-2" <?php echo ($music->config->region == 'us-west-2')   ? ' selected' : '';?> >US West (Oregon) [us-west-2]</option>
+                              <option value="af-south-1" <?php echo ($music->config->region == 'af-south-1')   ? ' selected' : '';?> >Africa (Cape Town) [af-south-1]</option>
+                              <option value="ap-east-1" <?php echo ($music->config->region == 'ap-east-1')   ? ' selected' : '';?> >Asia Pacific (Hong Kong) [ap-east-1]</option>
+                              <option value="ap-south-1" <?php echo ($music->config->region == 'ap-south-1')   ? ' selected' : '';?> >Asia Pacific (Mumbai) [ap-south-1]</option>
+                              <option value="ap-northeast-3" <?php echo ($music->config->region == 'ap-northeast-3')   ? ' selected' : '';?> >Asia Pacific (Osaka) [ap-northeast-3]</option>
+                              <option value="ap-northeast-2" <?php echo ($music->config->region == 'ap-northeast-2')   ? ' selected' : '';?> >Asia Pacific (Seoul) [ap-northeast-2]</option>
+                              <option value="ap-southeast-1" <?php echo ($music->config->region == 'ap-southeast-1')   ? ' selected' : '';?> >Asia Pacific (Singapore) [ap-southeast-1]</option>
+                              <option value="ap-southeast-2" <?php echo ($music->config->region == 'ap-southeast-2')   ? ' selected' : '';?> >Asia Pacific (Sydney) [ap-southeast-2]</option>
+                              <option value="ap-northeast-1" <?php echo ($music->config->region == 'ap-northeast-1')   ? ' selected' : '';?> >Asia Pacific (Tokyo) [ap-northeast-1]</option>
+                              <option value="ca-central-1" <?php echo ($music->config->region == 'ca-central-1')   ? ' selected' : '';?> >Canada (Central) [ca-central-1]</option>
+                              <option value="cn-northwest-1" <?php echo ($music->config->region == 'cn-northwest-1')   ? ' selected' : '';?> >China (Ningxia) [cn-northwest-1]</option>
+                              <option value="eu-central-1" <?php echo ($music->config->region == 'eu-central-1')   ? ' selected' : '';?> >Europe (Frankfurt) [eu-central-1]</option>
+                              <option value="eu-west-1" <?php echo ($music->config->region == 'eu-west-1')   ? ' selected' : '';?> >Europe (Ireland) [eu-west-1]</option>
+                              <option value="eu-west-2" <?php echo ($music->config->region == 'eu-west-2')   ? ' selected' : '';?> >Europe (London) [eu-west-2]</option>
+                              <option value="eu-south-1" <?php echo ($music->config->region == 'eu-south-1')   ? ' selected' : '';?> >Europe (Milan) [eu-south-1]</option>
+                              <option value="eu-west-3" <?php echo ($music->config->region == 'eu-west-3')   ? ' selected' : '';?> >Europe (Paris) [eu-west-3]</option>
+                              <option value="eu-north-1" <?php echo ($music->config->region == 'eu-north-1')   ? ' selected' : '';?> >Europe (Stockholm) [eu-north-1]</option>
+                              <option value="ap-southeast-3" <?php echo ($music->config->region == 'ap-southeast-3')   ? ' selected' : '';?> >Asia Pacific (Jakarta) [ap-southeast-3]</option>
+                              <option value="me-south-1" <?php echo ($music->config->region == 'me-south-1')   ? ' selected' : '';?> >Middle East(Bahrain) [me-south-1]</option>
+                              <option value="sa-east-1" <?php echo ($music->config->region == 'sa-east-1')   ? ' selected' : '';?> >South America (São Paulo) [sa-east-1]</option>
+                              <option value="us-gov-east-1" <?php echo ($music->config->region == 'us-gov-east-1')   ? ' selected' : '';?> >AWS GovCloud (US-East) [us-gov-east-1]</option>
+                              <option value="us-gov-west-1" <?php echo ($music->config->region == 'us-gov-west-1')   ? ' selected' : '';?> >AWS GovCloud (US-West) [us-gov-west-1]</option>
+                            </select>
+                        </div>
+                        <hr>
+                        <div class="alert alert-info">
+                           Before enabling Amazon S3, make sure you upload the whole "upload/" folder to your bucket. <br>
+                            Before disabling Amazon S3, make sure you download the whole "upload/" folder to your server.<br>
+                            We recommend to upload the folder and files via <a href="http://s3tools.org/s3cmd">S3cmd</a>.<br>
+                            If your site is still brand new, you can escape the upload step, but make sure to click on "Test Connection".<br>
+                        </div>
+                        <button type="button" class="btn btn-warning m-t-15 waves-effect test-con" onclick="test_s3();">Test Connection</button>
+                        <a href="<?php echo PT_LoadAdminLinkSettings('upload-to-storage?storage=amazon'); ?>" class="btn btn-success m-t-15 waves-effect">Upload Files To Amazon</a>
+                        <input type="hidden" name="hash_id" value="<?php echo createMainSession();?>">
+                    </form>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Digitalocean Spaces Configuration</h6>
+                    <div class="spaces-settings-alert"></div>
+                    <form class="spaces-settings" method="POST">
+                        <div class="float-left">
+                            <label for="spaces" class="main-label">Digitalocean Spaces Storage</label>
+                            <br><small class="admin-info">Enable Digitalocean Storage to store your files in Digitalocean Spaces.</small>
+                        </div>
+                        <div class="form-group float-right switcher">
+                            <input type="hidden" name="spaces" value="off" />
+                            <input type="checkbox" name="spaces" id="chck-spaces" value="on" <?php echo ($music->config->spaces == 'on') ? 'checked': '';?>>
+                            <label for="chck-spaces" class="check-trail"><span class="check-handler"></span></label>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Digitalocean Space Name</label>
+                                <input type="text" name="space_name" class="form-control" value="<?php echo ($music->config->space_name);?>">
+                                <small class="admin-info">Your Digitalocean Space Bucket name.</small>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Digitalocean Key</label>
+                                <input type="text" name="spaces_key" class="form-control" value="<?php echo ($music->config->spaces_key);?>">
+                                <small class="admin-info">Your Digitalocean Space credentials key.</small>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Digitalocean Secret</label>
+                                <input type="text" name="spaces_secret" class="form-control" value="<?php echo ($music->config->spaces_secret);?>">
+                                <small class="admin-info">Your Digitalocean Space credentials secret key.</small>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Digitalocean Custom Endpoint (Optional)</label>
+                                <input type="text" name="spaces_endpoint" class="form-control" value="<?php echo ($music->config->spaces_endpoint);?>">
+                                <small class="admin-info">Your Digitalocean custom domain name, e.g: https://customCDNdomain.com</small>
+                            </div>
+                        </div>
+                        <hr>
+                        <label for="space_region">Digitalocean bucket region</label>
+                        <br><small class="admin-info">Your Digitalocean's S3 Region</small>
+                        <div class="form-group">
+                            <select class="form-control show-tick" id="space_region" name="space_region">
+                              <option value="nyc1" <?php echo ($music->config->space_region == 'nyc1')   ? ' selected' : '';?> >New York [NYC1]</option>
+                          <option value="nyc2" <?php echo ($music->config->space_region == 'nyc2')   ? ' selected' : '';?> >New York [NYC2]</option>
+                          <option value="nyc3" <?php echo ($music->config->space_region == 'nyc3')   ? ' selected' : '';?> >New York [NYC3]</option>
+
+                          <option value="sfo1" <?php echo ($music->config->space_region == 'sfo1')   ? ' selected' : '';?> >SAN FRANCISCO [SFO1]</option>
+                          <option value="sfo2" <?php echo ($music->config->space_region == 'sfo2')   ? ' selected' : '';?> >SAN FRANCISCO [SFO2]</option>
+
+                          <option value="tor1" <?php echo ($music->config->space_region == 'tor1')   ? ' selected' : '';?> >TORONTO [TOR1]</option>
+
+                          <option value="lon1" <?php echo ($music->config->space_region == 'lon1')   ? ' selected' : '';?> >LONDON [LON1]</option>
+
+                          <option value="FRA1" <?php echo ($music->config->space_region == 'FRA1')   ? ' selected' : '';?> >Frankfurt [FRA1]</option>
+
+
+                          <option value="ams2" <?php echo ($music->config->space_region == 'ams2')   ? ' selected' : '';?> >Amsterdam [AMS2]</option>
+                          <option value="ams3" <?php echo ($music->config->space_region == 'ams3')   ? ' selected' : '';?> >Amsterdam [AMS3]</option>
+                          <option value="sgp1" <?php echo ($music->config->space_region == 'sgp1')   ? ' selected' : '';?> >Singapore [SGP1]</option>
+                          <option value="blr1" <?php echo ($music->config->space_region == 'blr1')   ? ' selected' : '';?> >Bangalore [BLR1]</option>
+                            </select>
+                        </div>
+                        <hr>
+                        <div class="clearfix"></div>
+                        <br>
+                        <div class="alert alert-info">
+                            Before enabling Digitalocean, make sure you upload the whole "upload/" folder to your bucket. <br>
+                            Before disabling Digitalocean, make sure you download the whole "upload/" folder to your server. <br>
+                            If your site is still brand new, you can escape the upload step, but make sure to click on "Test Connection". <br>
+                        </div>
+                        <button type="button" class="btn btn-warning m-t-15 waves-effect" onclick="TestSpaces()">Test Connection</button>
+                        <a href="<?php echo PT_LoadAdminLinkSettings('upload-to-storage?storage=digitalocean'); ?>" class="btn btn-success m-t-15 waves-effect">Upload Files To Digitalocean</a>
+                    </form>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Backblaze Configuration</h6>
+                    <form class="backblaze_storage-settings" method="POST">
+                         <div class="float-left">
+                            <label for="backblaze_storage" class="main-label">Backblaze Storage</label>
+                            <br><small class="admin-info">Enable Backblaze Storage to store your files in Backblaze Spaces.</small>
+                        </div>
+                        <div class="form-group float-right switcher">
+                            <input type="hidden" name="backblaze_storage" value="off" />
+                            <input type="checkbox" name="backblaze_storage" id="chck-backblaze_storage" value="on" <?php echo ($music->config->backblaze_storage == 'on') ? 'checked': '';?>>
+                            <label for="chck-backblaze_storage" class="check-trail"><span class="check-handler"></span></label>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Backblaze Bucket ID</label>
+                                <input type="text" id="backblaze_bucket_id" name="backblaze_bucket_id" class="form-control" value="<?php echo $music->config->backblaze_bucket_id?>">
+                                <small class="admin-info">Your Backblaze Bucket ID.</small>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Backblaze Bucket Name</label>
+                                <input type="text" id="backblaze_bucket_name" name="backblaze_bucket_name" class="form-control" value="<?php echo $music->config->backblaze_bucket_name?>">
+                                <small class="admin-info">Your Backblaze Bucket Name.</small>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Backblaze Bucket Region</label>
+                                <input type="text" id="backblaze_region" name="backblaze_region" class="form-control" value="<?php echo $music->config->backblaze_region?>">
+                                <small class="admin-info">Your Backblaze Bucket Region.</small>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Backblaze Access Key ID</label>
+                                <input type="text" id="backblaze_access_key_id" name="backblaze_access_key_id" class="form-control" value="<?php echo $music->config->backblaze_access_key_id ?>">
+                                <small class="admin-info">Your Backblaze Access Key ID.</small>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Backblaze Access Key</label>
+                                <input type="text" id="backblaze_access_key" name="backblaze_access_key" class="form-control" value="<?php echo $music->config->backblaze_access_key ?>">
+                                <small class="admin-info">Your Backblaze Access Key.</small>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">BackBlaze Custom Endpoint (Optional)</label>
+                                <input type="text" name="backblaze_endpoint" class="form-control" value="<?php echo ($music->config->backblaze_endpoint);?>">
+                                <small class="admin-info">Your BackBlaze custom domain name, e.g: https://customCDNdomain.com</small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <br>
+                        <div class="alert alert-info">
+                            Before enabling Backblaze, make sure you upload the whole "upload/" folder to your bucket. <br><br>
+                            Before disabling Backblaze, make sure you download the whole "upload/" folder to your server. <br><br>
+                        </div>
+                        <div class="backblaze_storage_alert"></div>
+                        <button type="button" class="btn btn-warning m-t-15 waves-effect" onclick="Wo_TestBackblaze()">Test & Verify Connection</button>
+                        <a href="<?php echo PT_LoadAdminLinkSettings('upload-to-storage?storage=backblaze'); ?>" class="btn btn-success m-t-15 waves-effect">Upload Files To BackBlaze</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 ">
+
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">FTP Settings</h6>
+                    <div class="alert alert-info">
+                      You can upload files directly from your server to another FTP server and load them from there. <br>
+                      Impotant: This may slow down your site's upload/delete speed, make sure to use fast FTP server.
+                    </div>
+                    <div class="ftp-settings-alert"></div>
+                    <form class="ftp-settings" method="POST">
+                        <div class="float-left">
+                            <label for="ftp_upload" class="main-label">FTP Storage</label>
+                            <br><small class="admin-info">Enable FTP Storage to store your files in your own FTP server.</small>
+                        </div>
+                        <div class="form-group float-right switcher">
+                            <input type="hidden" name="ftp_upload" value="off" />
+                            <input type="checkbox" name="ftp_upload" id="chck-ftp_upload" value="on" <?php echo ($music->config->ftp_upload == 'on') ? 'checked': '';?>>
+                            <label for="chck-ftp_upload" class="check-trail"><span class="check-handler"></span></label>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">FTP Hostname</label>
+                                <input type="text" name="ftp_host" class="form-control" value="<?php echo ($music->config->ftp_host);?>">
+                                <small class="admin-info">Your FTP hostname, could be IP or domain name.</small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">FTP Username</label>
+                                <input type="text" name="ftp_username" class="form-control" value="<?php echo ($music->config->ftp_username);?>">
+                                <small class="admin-info">Your FTP account's username.</small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">FTP Password</label>
+                                <input type="text" name="ftp_password" class="form-control" value="<?php echo ($music->config->ftp_password);?>">
+                                <small class="admin-info">Your FTP account's password.</small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">FTP Port</label>
+                                <input type="text" name="ftp_port" class="form-control" value="<?php echo ($music->config->ftp_port);?>">
+                                <small class="admin-info">Your FTP server's port.</small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">FTP Path</label>
+                                <input type="text" name="ftp_path" class="form-control" value="<?php echo ($music->config->ftp_path);?>">
+                                <small class="admin-info">The path to /upload files.</small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">FTP Endpoint</label>
+                                <input type="text" name="ftp_endpoint" class="form-control" value="<?php echo ($music->config->ftp_endpoint);?>">
+                                <small class="admin-info">(IP or domain where the FTP server is pointed to) example: wowonderstorage.com, files will be loaded from here.</small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="alert alert-info">
+                            Before enabling FTP, make sure you upload the whole "upload/" folder to your FTP server.<br>
+                        Before disabling FTP, make sure you download the whole "upload/" folder to your server.<br>
+                        If your site is still brand new, you can escape the upload step, but make sure to click on "Test Connection".<br>
+                        </div>
+                        <button type="button" class="btn btn-warning m-t-15 waves-effect" onclick="TestFTP()">Test FTP Connection</button>
+                        <input type="hidden" name="hash_id" value="<?php echo createMainSession();?>">
+                    </form>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Wasabi Configuration</h6>
+                    <form class="wasabi_storage-settings" method="POST">
+                        <div class="alert alert-warning">Please note that if your account is in trial mode, the files will be uploaded but not loaded, you need to have billing actiivated.</div>
+                         <div class="float-left">
+                            <label for="wasabi_storage" class="main-label">Wasabi Storage</label>
+                            <br><small class="admin-info">Enable Wasabi Storage to store your files in Wasabi Spaces.</small>
+
+                        </div>
+
+                        <div class="form-group float-right switcher">
+                            <input type="hidden" name="wasabi_storage" value="off" />
+                            <input type="checkbox" name="wasabi_storage" id="chck-wasabi_storage" value="on" <?php echo ($music->config->wasabi_storage == 'on') ? 'checked': '';?>>
+                            <label for="chck-wasabi_storage" class="check-trail"><span class="check-handler"></span></label>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Wasabi Bucket Name</label>
+                                <input type="text" id="wasabi_bucket_name" name="wasabi_bucket_name" class="form-control" value="<?php echo $music->config->wasabi_bucket_name?>">
+                                <small class="admin-info">Your Wasabi Bucket Name.</small>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Wasabi Access Key</label>
+                                <input type="text" id="wasabi_access_key" name="wasabi_access_key" class="form-control" value="<?php echo $music->config->wasabi_access_key?>">
+                                <small class="admin-info">Your Wasabi Access Key.</small>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Wasabi Secret Key</label>
+                                <input type="text" id="wasabi_secret_key" name="wasabi_secret_key" class="form-control" value="<?php echo $music->config->wasabi_secret_key?>">
+                                <small class="admin-info">Your Wasabi Secret Key.</small>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Wasabi Custom Endpoint (Optional)</label>
+                                <input type="text" name="wasabi_endpoint" class="form-control" value="<?php echo ($music->config->wasabi_endpoint);?>">
+                                <small class="admin-info">Your Wasabi custom domain name, e.g: https://customCDNdomain.com</small>
+                            </div>
+                        </div>
+                        <label for="wasabi_bucket_region">Wasabi bucket region</label>
+                        <select class="form-control show-tick" id="wasabi_bucket_region" name="wasabi_bucket_region">
+                            <option value="us-east-1" <?php echo ($music->config->wasabi_bucket_region == 'us-east-1')   ? ' selected' : '';?> >us-east-1</option>
+                            <option value="us-east-2" <?php echo ($music->config->wasabi_bucket_region == 'us-east-2')   ? ' selected' : '';?> >us-east-2</option>
+                            <option value="us-central-1" <?php echo ($music->config->wasabi_bucket_region == 'us-central-1')   ? ' selected' : '';?> >us-central-1</option>
+                            <option value="us-west-1" <?php echo ($music->config->wasabi_bucket_region == 'us-west-1')   ? ' selected' : '';?> >us-west-1</option>
+                            <option value="ca-central-1" <?php echo ($music->config->wasabi_bucket_region == 'ca-central-1')   ? ' selected' : '';?> >ca-central-1</option>
+                            <option value="eu-central-1" <?php echo ($music->config->wasabi_bucket_region == 'eu-central-1')   ? ' selected' : '';?> >eu-central-1</option>
+                            <option value="eu-central-2" <?php echo ($music->config->wasabi_bucket_region == 'eu-central-2')   ? ' selected' : '';?> >eu-central-2</option>
+                            <option value="eu-west-1" <?php echo ($music->config->wasabi_bucket_region == 'eu-west-1')   ? ' selected' : '';?> >eu-west-1</option>
+                            <option value="eu-west-2" <?php echo ($music->config->wasabi_bucket_region == 'eu-west-2')   ? ' selected' : '';?> >eu-west-2</option>
+                            <option value="ap-northeast-1" <?php echo ($music->config->wasabi_bucket_region == 'ap-northeast-1')   ? ' selected' : '';?> >ap-northeast-1</option>
+                            <option value="ap-northeast-2" <?php echo ($music->config->wasabi_bucket_region == 'ap-northeast-2')   ? ' selected' : '';?> >ap-northeast-2</option>
+                            <option value="ap-southeast-1" <?php echo ($music->config->wasabi_bucket_region == 'ap-southeast-1')   ? ' selected' : '';?> >ap-southeast-1</option>
+                            <option value="ap-southeast-2" <?php echo ($music->config->wasabi_bucket_region == 'ap-southeast-2')   ? ' selected' : '';?> >ap-southeast-2</option>
+                        </select>
+                        <div class="clearfix"></div>
+                        <br>
+                        <div class="alert alert-info">
+                            Before enabling Wasabi, make sure you upload the whole "upload/" folder to your bucket. <br><br>
+                            Before disabling Wasabi, make sure you download the whole "upload/" folder to your server. <br><br>
+                        </div>
+                        <div class="wasabi_storage_alert"></div>
+                        <button type="button" class="btn btn-warning m-t-15 waves-effect" onclick="Wo_TestWasabi()">Test & Verify Connection</button>
+                        <a href="<?php echo PT_LoadAdminLinkSettings('upload-to-storage?storage=wasabi'); ?>" class="btn btn-success m-t-15 waves-effect ">Upload Files To Wasabi</a>
+                    </form>
+                </div>
+            </div>
+            <div class="card" id="google-drive">
+                <div class="card-body">
+                    <h6 class="card-title">Google Drive</h6>
+                    <div class="alert alert-danger">
+                      <strong>Google Drive Limitations!</strong> <br> <br><ol>
+                        <li>It is <strong>NOT</strong> possible to download or upload files from server to Google Drive or vice versa. It is only possible thru DeepSound script.</li>
+                        <li>Your website load speed will be <strong>decreased</strong>, as Google drive doesn't use direct link to storage, the files will be loaded using redirection method.</li>
+                        <li><strong>FFMPEG</strong> is required.</li>
+                        <li>Please <strong>Backup</strong> the folder /upload and database before syncing to or from Google Drive.</li>
+                      </ol>
+                    </div>
+
+                    <div class="drive-settings-alert"></div>
+                    <form class="drive-settings" method="POST">
+                      <div class="float-left">
+                          <label for="google_drive" class="main-label">Google Drive Storage</label>
+                          <br><small class="admin-info">Enable Google Drive Storage to store your files in drive.</small>
+                      </div>
+                      <div class="form-group float-right switcher">
+                          <input type="hidden" name="google_drive" value="off" />
+                          <input type="checkbox" name="google_drive" id="chck-google_drive" value="on" <?php echo ($music->config->google_drive == 'on') ? 'checked': '';?>>
+                          <label for="chck-google_drive" class="check-trail"><span class="check-handler"></span></label>
+                      </div>
+                      <div class="clearfix"></div>
+                      <hr>
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                              <label class="form-label">Client ID</label>
+                              <input type="text" name="google_ClientId" class="form-control" value="<?php echo ($music->config->google_ClientId);?>">
+                              <small class="admin-info">Your Google Project Client ID.</small>
+                          </div>
+                      </div>
+                      <div class="clearfix"></div>
+                      <hr>
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                              <label class="form-label">Client Secret</label>
+                              <input type="text" name="google_ClientSecret" class="form-control" value="<?php echo ($music->config->google_ClientSecret);?>">
+                              <small class="admin-info">Your Google Project Client Secret.</small>
+                          </div>
+                      </div>
+                      <hr>
+                        <!-- <div class="alert alert-info">
+                            Before enabling FTP, make sure you upload the whole "upload/" folder to your FTP server.<br><br>
+                        Before disabling FTP, make sure you download the whole "upload/" folder to your server.<br><br>
+                        If your site is still brand new, you can escape the upload step, but make sure to click on "Test Connection".<br>
+                        </div> -->
+                        <?php if (empty($music->config->google_refreshToken)) {
+                          ?>
+                          <button type="button" class="btn btn-warning m-t-15 waves-effect" onclick="setupDrive()">Click Here To Connect Google Drive</button>
+                          <?php } else {
+
+                            $getUpload = getFilesShouldUpload();
+                            $getDownload = getFilesShouldDownload();
+                            ?>
+                            <div class="alert alert-warning">
+                              <?php if (count($getUpload) > 0) {?>
+                              In case you want to enable Google Drive, first click on Upload Files From Server.<br>
+                              <?php } ?>
+                              <?php if (count($getDownload) > 0) {?>
+                              In case you want to disable Google Drive, first click on Download Files From Google Drive.
+                              <?php } ?>
+
+                            </div>
+                            <ol id="sync-info">
+
+                              <?php if (count($getUpload) > 0) {?>
+                              <li><a href="{{LINK google.php?upload}}" style="color: #0a7496" >Upload Files From Server</a>. (<?php echo count($getUpload);?> Files will be uploaded from server to Google Drive).</li>
+                              <?php } ?>
+                              <?php if (count($getDownload) > 0) {?>
+                              <li><a href="{{LINK google.php?download}}" style="color: #0a7496">Download Files From Google Drive</a>. (<?php echo count($getDownload);?> Files will be downloaded from Drive to your server).</li>
+                               <?php } ?>
+                            </ol>
+                            <hr>
+                            <div class="alert alert-success">
+                              Your Google account is connected!
+                            </div>
+                            <button type="button" class="btn btn-warning m-t-15 waves-effect" onclick="setupDrive()">Refresh Connection</button>
+                            <button type="button" class="btn btn-danger m-t-15 waves-effect" onclick="resetDrive()">Reset Connection</button>
+                          <?php } ?>
+                        <input type="hidden" name="hash_id" value="<?php echo createMainSession();?>">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <!-- #END# Vertical Layout -->
+<script>
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+});
+    $('.round_check input[type=radio]').click(function () {
+        var configName = $(this).attr('name');
+        var hash_id = $('input[name=hash_id]').val();
+        var objData = {};
+        if ($(this).is(":checked") === true) {
+            objData[configName] = $(this).val();
+        }
+        else{
+            if ($('input[name='+configName+']')[0]) {
+                objData[configName] = $($('input[name='+configName+']')[0]).val();
+            }
+        }
+        objData['hash_id'] = hash_id;
+        $.post('{{CONFIG ajax_url}}/ap/save-settings', objData);
+    });
+  <?php if (isset($_GET['drive'])) {?>
+  document.getElementById('google-drive').scrollIntoView();
+  <?php } ?>
+function handleClick(self) {
+    if ($(self).val() == 'admin') {
+        $('.itunes_partner_div').slideDown();
+    }
+    else{
+        $('.itunes_partner_div').slideUp();
+    }
+}
+function TestSpaces() {
+    $('form.spaces-settings').find('.btn-warning').text('Please wait..');
+    $.get('{{CONFIG ajax_url}}/ap/test_spaces', function (data) {
+        if (data.status == 200) {
+            $('.spaces-settings-alert').html("<div class='alert alert-success'>Connection established!</div>");
+            setTimeout(function () {
+                $('.spaces-settings-alert').empty();
+            }, 2000);
+        } else if (data.status == 300) {
+            $('.spaces-settings-alert').html("<div class='alert alert-danger'>Bucket doesn\'t exists</div>");
+            setTimeout(function () {
+                $('.spaces-settings-alert').empty();
+            }, 2000);
+        } else if (data.status == 500) {
+            $('.spaces-settings-alert').html("<div class='alert alert-danger'>Your s3 account doesn\'t have any buckets, please create one.</div>");
+            setTimeout(function () {
+                $('.spaces-settings-alert').empty();
+            }, 2000);
+        } else if (data.status == 400) {
+            $('.spaces-settings-alert').html("<div class='alert alert-danger'>"+data.message+"</div>");
+            setTimeout(function () {
+                $('.spaces-settings-alert').empty();
+            }, 2000);
+        } else  {
+            $('.spaces-settings-alert').html("<div class='alert alert-danger'>Error while connecting to amazone, please check your details</div>");
+            setTimeout(function () {
+                $('.spaces-settings-alert').empty();
+            }, 2000);
+        }
+        $('form.spaces-settings').find('.btn-warning').text('Test Connection');
+    });
+}
+function TestFTP() {
+    $('form.ftp-settings').find('.btn-warning').text('Please wait..');
+    $.get('{{CONFIG ajax_url}}/ap/test_ftp', function (data) {
+        if (data.status == 200) {
+            $('.ftp-settings-alert').html('<div class="alert alert-success">Connection established!</div>');
+            setTimeout(function () {
+                $('.ftp-settings-alert').empty();
+            }, 2000);
+        } else if (data.status == 400) {
+            $('.ftp-settings-alert').html('<div class="alert alert-danger">'+data.message+'</div>');
+            setTimeout(function () {
+                $('.ftp-settings-alert').empty();
+            }, 2000);
+        }
+        else{
+            $('.ftp-settings-alert').html('<div class="alert alert-danger">Error while connecting to ftp, please check your details</div>');
+            setTimeout(function () {
+                $('.ftp-settings-alert').empty();
+            }, 2000);
+        }
+        $('form.ftp-settings').find('.btn-warning').text('Test FTP Connection');
+    });
+}
+
+function setupDrive() {
+  $('form.drive-settings').find('.btn-warning').text('Please wait..');
+  $.get('{{CONFIG ajax_url}}/ap/setup_google_drive', function (data) {
+      if (data.status == 200) {
+          location.href = data.authUrl;
+      } else if (data.status == 400) {
+          $('.drive-settings-alert').html('<div class="alert alert-danger">'+data.message+'</div>');
+          $('form.drive-settings').find('.btn-warning').text('Setup Google Drive');
+      }
+
+  });
+}
+function resetDrive() {
+  $('form.drive-settings').find('.btn-danger').text('Please wait..');
+  $.get('{{CONFIG ajax_url}}/ap/reset_google_drive', function (data) {
+      if (data.status == 200) {
+          $('#sync-info').remove();
+          $('form.drive-settings').find('.btn-warning').text('Click Here To Connect Google Drive');
+          $('form.drive-settings').find('.btn-danger').remove();
+          $('form.drive-settings').find('.alert-success').remove();
+      }
+  });
+}
+
+function Wo_TestBackblaze() {
+    $('form.backblaze_storage-settings').find('.btn-warning').text('Please wait..');
+    $.get('{{CONFIG ajax_url}}/ap/test_backblaze', function (data) {
+        if (data.status == 200) {
+            $('.backblaze_storage_alert').html('<div class="alert alert-success"><i class="fa fa-check"></i> Connection established!</div>');
+            setTimeout(function () {
+                $('.backblaze_storage_alert').empty();
+            }, 2000);
+        } else if (data.status == 300) {
+            $('.backblaze_storage_alert').html('<div class="alert alert-danger">Bucket doesn\'t exists</div>');
+            setTimeout(function () {
+                $('.backblaze_storage_alert').empty();
+            }, 5000);
+        } else if (data.status == 500) {
+            $('.backblaze_storage_alert').html('<div class="alert alert-danger">Your s3 account doesn\'t have any buckets, please create one.</div>');
+            setTimeout(function () {
+                $('.backblaze_storage_alert').empty();
+            }, 5000);
+        } else if (data.status == 400) {
+            $('.backblaze_storage_alert').html('<div class="alert alert-danger">'+data.message+'</div>');
+            setTimeout(function () {
+                $('.backblaze_storage_alert').empty();
+            }, 5000);
+        } else  {
+            $('.backblaze_storage_alert').html('<div class="alert alert-danger">Error while connecting to BackBlaze, please check your details</div>');
+            setTimeout(function () {
+                $('.backblaze_storage_alert').empty();
+            }, 5000);
+        }
+        $('form.backblaze_storage-settings').find('.btn-warning').text('Test & Verify Connection');
+    });
+}
+    
+
+function Wo_TestWasabi() {
+    $('form.wasabi_storage-settings').find('.btn-warning').text('Please wait..');
+    $.get('{{CONFIG ajax_url}}/ap/test_wasabi', function (data) {
+        if (data.status == 200) {
+            $('.wasabi_storage_alert').html('<div class="alert alert-success"><i class="fa fa-check"></i> Connection established!</div>');
+            setTimeout(function () {
+                $('.wasabi_storage_alert').empty();
+            }, 2000);
+        } else if (data.status == 300) {
+            $('.wasabi_storage_alert').html('<div class="alert alert-danger">Bucket doesn\'t exists</div>');
+            setTimeout(function () {
+                $('.wasabi_storage_alert').empty();
+            }, 5000);
+        } else if (data.status == 500) {
+            $('.wasabi_storage_alert').html('<div class="alert alert-danger">Your s3 account doesn\'t have any buckets, please create one.</div>');
+            setTimeout(function () {
+                $('.wasabi_storage_alert').empty();
+            }, 5000);
+        } else if (data.status == 400) {
+            $('.wasabi_storage_alert').html('<div class="alert alert-danger">'+data.message+'</div>');
+            setTimeout(function () {
+                $('.wasabi_storage_alert').empty();
+            }, 5000);
+        } else  {
+            $('.wasabi_storage_alert').html('<div class="alert alert-danger">Error while connecting to Wasabi, please check your details</div>');
+            setTimeout(function () {
+                $('.wasabi_storage_alert').empty();
+            }, 5000);
+        }
+        $('form.wasabi_storage-settings').find('.btn-warning').text('Test & Verify Connection');
+    });
+}
+
+function test_s3() {
+    $('.test-con').text('Please wait..');
+    $.get('{{CONFIG ajax_url}}/ap/testS3',function (data) {
+        if (data.status == 200) {
+            $('.s3-settings-alert').html('<div class="alert alert-success"><i class="fa fa-check"></i> Connection successfully established!</div>');
+            setTimeout(function () {
+                $('.s3-settings-alert').empty();
+            }, 2000);
+        }
+
+    else if (data.status == 300) {
+        $('.s3-settings-alert').html('<div class="alert alert-danger">Bucket doesn\'t exists!</div>');
+            setTimeout(function () {
+                $('.s3-settings-alert').empty();
+            }, 2000);
+        }
+
+    else if (data.status == 500) {
+        $('.s3-settings-alert').html('<div class="alert alert-danger">Your s3 account doesn\'t have any buckets, please create one.</div>');
+            setTimeout(function () {
+                $('.s3-settings-alert').empty();
+            }, 2000);
+        }
+
+    else if (data.status == 400) {
+        $('.s3-settings-alert').html('<div class="alert alert-danger">'+data.message+'</div>');
+            setTimeout(function () {
+                $('.s3-settings-alert').empty();
+            }, 2000);
+        }
+
+    else  {
+        $('.s3-settings-alert').html('<div class="alert alert-danger">Error while connecting to amazone, please check your details</div>');
+            setTimeout(function () {
+                $('.s3-settings-alert').empty();
+            }, 2000);
+        }
+        $('.test-con').text('Test Connection');
+    });
+}
+$(function() {
+  var debug_settings = $('form.debug-settings');
+  debug_settings.ajaxForm({
+      url: '{{CONFIG ajax_url}}/ap/debug-ffmpeg',
+      beforeSend: function() {
+          $('.debug-settings-alert').html('');
+          debug_settings.find('.waves-effect').text("Please wait..");
+      },
+      success: function(data) {
+          if (data.status == 200) {
+              debug_settings.find('.waves-effect').text('Debug');
+              $('#debug_ffmpeg').val(data.data);
+              if (data.video_url) {
+                  $('.debug-settings-alert').html('<div class="alert alert-success"><a href="'+data.video_url+'" target="_blank">You can check the converted audio <strong>test_converted.mp3</strong></a></div>');
+              }
+          }
+      }
+  });
+    $('.switcher input[type=checkbox]').click(function () {
+        var configName = $(this).attr('name');
+        var hash_id = $('input[name=hash_id]').val();
+        var objData = {};
+        if ($(this).is(":checked") === true) {
+            objData[configName] = $(this).val();
+        }
+        else{
+            if ($('input[name='+configName+']')[0]) {
+                objData[configName] = $($('input[name='+configName+']')[0]).val();
+            }
+        }
+        objData['hash_id'] = hash_id;
+        $.post('{{CONFIG ajax_url}}/ap/save-settings', objData);
+    });
+
+    var setTimeOutColor = setTimeout(function (){});
+    $('select').on('change', function() {
+         clearTimeout(setTimeOutColor);
+        var thisElement = $(this);
+        var configName = thisElement.attr('name');
+        var hash_id = $('input[name=hash_id]').val();
+        var objData = {};
+        objData[configName] = thisElement.val();
+        objData['hash_id'] = hash_id;
+        thisElement.addClass('warning');
+        $.post("{{CONFIG ajax_url}}/ap/save-settings", objData, function (data) {
+            if (data.status == 200) {
+                thisElement.removeClass('warning');
+                thisElement.addClass('success');
+            } else {
+                thisElement.addClass('error');
+            }
+            var setTimeOutColor = setTimeout(function () {
+                thisElement.removeClass('success');
+                thisElement.removeClass('warning');
+                thisElement.removeClass('error');
+            }, 2000);
+        });
+    });
+    $('input[type=color]').on('change', delay(function() {
+            clearTimeout(setTimeOutColor);
+            var thisElement = $(this);
+            var configName = thisElement.attr('name');
+            var hash_id = $('input[name=hash_id]').val();
+            var objData = {};
+            objData[configName] = this.value;
+            objData['hash_id'] = hash_id;
+            thisElement.addClass('warning');
+            $.post("{{CONFIG ajax_url}}/ap/save-settings", objData, function (data) {
+                if (data.status == 200) {
+                    thisElement.removeClass('warning');
+                    thisElement.addClass('success');
+                } else {
+                    thisElement.addClass('error');
+                }
+                var setTimeOutColor = setTimeout(function () {
+                    thisElement.removeClass('success');
+                    thisElement.removeClass('warning');
+                    thisElement.removeClass('error');
+                }, 2000);
+                //thisElement.focus();
+            });
+    }, 500));
+    $('input[type=text], input[type=number], input[type=color] , textarea').on('input', delay(function() {
+            clearTimeout(setTimeOutColor);
+            var thisElement = $(this);
+            var configName = thisElement.attr('name');
+            var hash_id = $('input[name=hash_id]').val();
+            var objData = {};
+            objData[configName] = this.value;
+            objData['hash_id'] = hash_id;
+            thisElement.addClass('warning');
+            $.post("{{CONFIG ajax_url}}/ap/save-settings", objData, function (data) {
+                if (data.status == 200) {
+                    thisElement.removeClass('warning');
+                    thisElement.addClass('success');
+                } else {
+                    thisElement.addClass('error');
+                }
+                var setTimeOutColor = setTimeout(function () {
+                    thisElement.removeClass('success');
+                    thisElement.removeClass('warning');
+                    thisElement.removeClass('error');
+                }, 2000);
+                //thisElement.focus();
+            });
+    }, 500));
+});
+
+</script>

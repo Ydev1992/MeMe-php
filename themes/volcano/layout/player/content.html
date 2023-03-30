@@ -1,0 +1,119 @@
+<div class="ma_player <?php if (empty($_SESSION['songs'])) { ?>closed<?php } ?>">
+	<div class="player">
+		<div class="player-video-preview" id="my_video_player_container">
+			<div class="y_player_cover"></div>
+			<div class="plyr__video-embed" id="my_video_player_">
+			  <iframe
+			    src="https://www.youtube.com/watch?v=rMHx_iUAGd0?origin=https://plyr.io&amp;iv_load_policy=3&amp;modestbranding=1&amp;playsinline=1&amp;showinfo=0&amp;rel=0&amp;enablejsapi=1"
+			    allowfullscreen
+			    allowtransparency
+			    allow="autoplay"
+			  ></iframe>
+			</div>
+		</div>
+		<div class="song_details">
+			<div class="song_details_inner player-song-url" data-load="">
+				<div class="song_art">
+					<a href="#" class="player-song-url" data-load=""><img amplitude-song-info="cover_art_url" amplitude-main-song-info="true"/></a>
+				</div>
+				<div class="song_title">
+					<a href="#" class="player-song-url" data-load="">
+						<h3 amplitude-song-info="name" amplitude-main-song-info="true" class="song_name"></h3>
+					</a>
+					<div class="song_fav" title="Favorite" id="song-fav-button"></div>
+					<div class="song_time_sec">
+						<span class="current_time">
+						<span class="amplitude-current-hours" amplitude-main-current-hours="true"></span>:<span class="amplitude-current-minutes" amplitude-main-current-minutes="true"></span>:<span class="amplitude-current-seconds" amplitude-main-current-seconds="true"></span>
+						</span>
+						<span class="duration_seperate">/</span>
+						<span class="duration_time">
+						<span class="amplitude-duration-hours" amplitude-main-duration-hours="true"></span>:<span class="amplitude-duration-minutes" amplitude-main-duration-minutes="true"></span>:<span class="amplitude-duration-seconds" amplitude-main-duration-seconds="true"></span>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="song_progress">
+			<div class="song_time">
+				<span class="current_time">
+				<span class="amplitude-current-hours" amplitude-main-current-hours="true"></span>:<span class="amplitude-current-minutes" amplitude-main-current-minutes="true"></span>:<span class="amplitude-current-seconds" amplitude-main-current-seconds="true"></span>
+				</span>
+				<div class="song_prog_mobi">
+					<div class="progress_container">
+						<input type="range" class="amplitude-song-slider" amplitude-main-song-slider="true"/>
+						<progress id="song-played-progress" class="amplitude-song-played-progress" amplitude-main-song-played-progress="true"></progress>
+						<progress id="song-buffered-progress" class="amplitude-buffered-progress" value="0"></progress>
+					</div>
+				</div>
+				<span class="duration_seperate">/</span>
+				<span class="duration_time">
+				<span class="amplitude-duration-hours" amplitude-main-duration-hours="true"></span>:<span class="amplitude-duration-minutes" amplitude-main-duration-minutes="true"></span>:<span class="amplitude-duration-seconds" amplitude-main-duration-seconds="true"></span>
+				</span>
+			</div>
+			<div class="song_controls">
+				<div class="amplitude-shuffle amplitude-shuffle-off" id="shuffle" title="{{LANG Shuffle}}">
+					<svg xmlns="http://www.w3.org/2000/svg" width="23.062" height="23.601" viewBox="0 0 23.062 23.601"> <g id="music-suffle" transform="translate(-4.723 -4.567)"> <path id="Path_215762" data-name="Path 215762" d="M27.548,5.354l-1.039,7.023-2.5-2.5L6,27.885l-1-1L23.015,8.88l-2.5-2.5ZM20.135,18.863,24.07,22.8l2.439-2.439L27.54,27.39l-7.023-1.037,2.558-2.558L19.136,19.86l1-1ZM6.008,4.85l8.157,8.159-1,1L5.009,5.849Z" transform="translate(0 0)" fill="currentColor" class="icon_stroke" stroke-width="0.4" fill-rule="evenodd"/> </g> </svg>
+				</div>
+				<div class="amplitude-prev" id="previous">
+					<svg xmlns="http://www.w3.org/2000/svg" width="14.182" height="23.035" viewBox="0 0 14.182 23.035"> <path id="Subtraction_40" data-name="Subtraction 40" d="M8828.667,2864.033a.622.622,0,0,1-.461-.189.648.648,0,0,1-.207-.479v-21.7a.647.647,0,0,1,.207-.477.653.653,0,0,1,.923,0,.637.637,0,0,1,.206.477v21.7a.638.638,0,0,1-.206.479A.624.624,0,0,1,8828.667,2864.033Zm13.407-3.185h0a.7.7,0,0,0-.1-.042l-11.855-7.888-.6-.4,12.459-8.289a.814.814,0,0,0,.1-.044.658.658,0,0,0,.08.036c.006.013.012.024.018.034l0,.007h0l.006.01v16.494a.237.237,0,0,1-.015.03l-.01.019a.832.832,0,0,0-.082.035Zm-1.228-14.291h0l-8.859,5.957,8.859,5.961v-11.918Z" transform="translate(-8827.999 -2840.999)" fill="currentColor"/> </svg>
+				</div>
+				<div class="amplitude-play-pause" amplitude-main-play-pause="true" id="play-pause"></div>
+				<div class="amplitude-next" id="next">
+					<svg xmlns="http://www.w3.org/2000/svg" width="14.182" height="23.035" viewBox="0 0 14.182 23.035"> <path id="Subtraction_42" data-name="Subtraction 42" d="M.668,0A.622.622,0,0,0,.207.189.648.648,0,0,0,0,.668v21.7a.647.647,0,0,0,.207.477.618.618,0,0,0,.461.191.62.62,0,0,0,.462-.191.637.637,0,0,0,.206-.477V.668A.638.638,0,0,0,1.13.189.624.624,0,0,0,.668,0ZM14.075,3.185h0a.7.7,0,0,1-.1.042L2.115,11.115l-.6.4,12.459,8.289a.814.814,0,0,1,.1.044.658.658,0,0,1,.08-.036c.006-.013.012-.024.018-.034l0-.007h0l.006-.01V3.269a.237.237,0,0,0-.015-.03l-.01-.019a.832.832,0,0,1-.082-.035ZM12.848,17.475h0L3.988,11.518l8.859-5.961V17.475Z" transform="translate(14.182 23.035) rotate(180)" fill="currentColor"/> </svg>
+				</div>
+				<div class="amplitude-repeat amplitude-repeat-on" id="repeat" title="{{LANG Repeat}}">
+					<svg xmlns="http://www.w3.org/2000/svg" width="26.435" height="26.914" viewBox="0 0 26.435 26.914"> <path id="Path_6414" data-name="Path 6414" d="M3529.644,13691.386h16.932a1.081,1.081,0,0,1,.8.339,1.1,1.1,0,0,1,.327.79v7.9h-2.258v-6.771h-15.8v3.386l-5.644-4.516,5.644-4.516Zm13.546,18.062h-16.932a1.083,1.083,0,0,1-.8-.339,1.1,1.1,0,0,1-.327-.79v-7.9h2.258v6.773h15.8v-3.387l5.644,4.516-5.644,4.515Z" transform="translate(-3523.2 -13686.959)" fill="currentColor" class="icon_stroke" stroke-width="1"/> </svg>
+				</div>
+			</div>
+			
+		</div>
+		<div class="song_progress_right">
+			<div class="song_volume">
+				<div class="volume_controls">
+					<div class="amplitude-mute amplitude-not-muted"></div>
+					<div class="plyr_vol_mobi">
+						<input type="range" class="amplitude-volume-slider"/>
+						<div class="ms-range-fix"></div>
+					</div>
+				</div>
+			</div>
+			<div class="song_rs_controls">
+				<div class="repeat_container">
+					<div class="amplitude-playback-speed amplitude-playback-speed-10"></div>
+				</div>
+			</div>
+			<div class="song_queue song_queued" onclick="Ma_ShowQueue();">
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M18 5v8.333c-.455-.216-.957-.346-1.493-.346-1.934 0-3.507 1.573-3.507 3.507S14.573 20 16.507 20s3.507-1.573 3.507-3.507c0-.177-.027-.347-.053-.517H20V6h2V4h-3C18.447 4 18 4.448 18 5zM2 5H16V7H2z"/><path fill="currentColor" d="M2 9H16V11H2zM2 13H11V15H2zM2 17H11V19H2z"/></svg>
+			</div>
+			<div class="song_queue" onclick="clearQueues();">
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/></svg>
+			</div>
+		</div>
+		<div class="ma_player_playlist" data-simplebar>
+			<div class="queue_head">
+				<h4>{{LANG Queue}}</h4>
+				<span onclick="clearQueues();" title="{{LANG Clear}}"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/></svg></span>
+			</div>
+			<div id="queue-list">
+				<?php 
+				if (!empty($_SESSION['songs'])) { 
+				  $songs = json_decode(html_entity_decode($_SESSION['songs']));
+				  if (is_array($songs)) {
+					 foreach($songs as $key => $song) {
+						?>
+						<div class="song amplitude-song-container amplitude-play-pause" id="queue-<?php echo $song->id?>" onclick="playSong('<?php echo $song->id?>')" amplitude-song-index="<?php echo $key?>">
+							<div class="song_icon_container">
+								<img class="now-playing" src="<?php echo $song->cover_art_url?>"/>
+								<span class="song_duration"><?php echo $song->duration?></span>
+							</div>
+							<div class="song_meta_data"><span class="song_title"><?php echo $song->name?></span><span class="song_artist"><?php echo $song->artist?></span></div>
+						</div>
+						<?php
+					 }
+				  }
+				?>
+				<?php } ?>
+			</div>
+		</div>
+	</div>
+</div>

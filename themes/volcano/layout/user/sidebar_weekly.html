@@ -1,0 +1,23 @@
+<div class="sidebar_widget mt-4 mb-0 feed_sidebar_song">
+	<h2 class="home_widget_title home_big_title mt-2 mb-3">{{LANG Weekly Top Tracks}}</h2>
+	<?php
+	if(isset($music->top_weekly)){
+	foreach($music->top_weekly as $key => $value){?>
+		<div class="store_songs">
+			<div class="song_list">
+				<div class="avatar">
+					<a href="{{LINK track/}}<?php echo $value->audio_id;?>" data-load="track/<?php echo $value->audio_id;?>"><img src="<?php echo $value->thumbnail;?>"></a>
+				</div>
+				<div class="song_right_part">
+					<div class="song_upper">
+						<div class="song_meta_info">
+							<a href="{{LINK track/}}<?php echo $value->audio_id;?>" data-load="track/<?php echo $value->audio_id;?>"><h3><?php echo $value->title;?></h3></a>
+							<a href="{{LINK <?php echo $value->publisher->username;?>}}" data-load="<?php echo $value->publisher->username;?>"><p><?php echo $value->publisher->name;?></p></a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<svg onclick="playSong('<?php echo $value->audio_id;?>');" xmlns="http://www.w3.org/2000/svg" width="30" height="29.996" viewBox="0 0 30 29.996"> <path id="Path_7225" data-name="Path 7225" d="M8827,2855a15,15,0,1,1,15,15A15.016,15.016,0,0,1,8827,2855Zm9.949-12.238a12.831,12.831,0,0,0-4.295,2.829,13.393,13.393,0,0,0,0,18.817,12.853,12.853,0,0,0,4.295,2.833,13.645,13.645,0,0,0,10.1,0,12.827,12.827,0,0,0,4.294-2.833,13.388,13.388,0,0,0,0-18.817,12.833,12.833,0,0,0-4.294-2.829,13.642,13.642,0,0,0-10.1,0Zm1.607,17.038c-.075,0-.15-.126-.187-.126a1.6,1.6,0,0,1-.076-.253v-8.327a1.6,1.6,0,0,1,.076-.253c.037,0,.112-.125.188-.125s.178-.128.266-.128a.259.259,0,0,0,.251.128l6.159,4.165c.075,0,.125.124.163.124a.624.624,0,0,1,.063.253c0,.124-.024.124-.062.253-.038,0-.088.126-.163.126l-6.159,4.163a.261.261,0,0,0-.251.125C8838.735,2859.924,8838.646,2859.8,8838.558,2859.8Z" transform="translate(-8827.001 -2840)" fill="var(--main-color)"/> </svg>
+		</div>
+	<?php }}?>
+</div>

@@ -1,0 +1,41 @@
+<tr class="ds_ads_table" data-ads-list="{{ID}}">
+    <!--<td width="15%">-->
+        <!--{{TYPE}}-->
+    <!--</td>-->
+    <td width="45%">
+        <img src="{{ME avatar}}" class="avatar"> {{NAME}}
+    </td>
+    <td>
+		<span class="results main">{{RESULTS}}</span>
+        <span class="results">{{PR_METHOD}}</span>
+    </td>
+    <td>
+		<span class="spends">
+			{{CURRENCY}}{{SPENT}}
+		</span>
+    </td>
+	<td width="10%" class="text-center">
+        <div class="ds_toggle_switch" onclick="ToggleAdsStatus('{{ID}}');">
+            <label>
+                <input type="checkbox" {{ACTIVE}} data-toggle="toggle" data-onstyle="main" data-offstyle="warning" data-on='<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"> <g id="Group_9862" data-name="Group 9862" transform="translate(-1576 -442)"> <path id="Path_6700" data-name="Path 6700" d="M3650,7692a10,10,0,1,1,10-10A10,10,0,0,1,3650,7692Z" transform="translate(-2064 -7230)" class="ads_check_fill"/> <path id="Path_6652" data-name="Path 6652" d="M3757.937,7402.188l6.209-6.209.959.953-7.168,7.168-4.3-4.3.953-.959Z" transform="translate(-2173.641 -6947.979)" fill="#50cd89"/> </g> </svg>' data-off='<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#f44336" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" ></path></svg>'>
+            </label>
+        </div>
+    </td>
+    <td width="15%" class="text-right">
+		<span class="ds_ads_action">
+			<a href="{{LINK ad-analytics/}}{{ID}}" data-load="ad-analytics/{{ID}}">
+				<svg id="Group_9864" data-name="Group 9864" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"> <g id="Rectangle_3407" data-name="Rectangle 3407" class="ads_stat_fill" stroke="#009ef7" stroke-width="1"> <rect width="30" height="30" rx="15" stroke="none"/> <rect x="0.5" y="0.5" width="29" height="29" rx="14.5" fill="none"/> </g> <path id="Path_5067" data-name="Path 5067" d="M3530.383,2540v11.066h11.066v1.383H3529V2540Zm10.575,2.275.982.982-3.949,3.942-2.075-2.075-2.967,2.974-.981-.982,3.949-3.942,2.075,2.075Z" transform="translate(-3520.443 -2531.443)" fill="#009ef7" stroke="#f1faff" stroke-width="0.6"/> </svg>
+			</a>
+		</span>
+        <span class="ds_ads_action">
+			<a href="{{LINK edit-ad/}}{{ID}}" data-load="edit-ad/{{ID}}">
+				<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"> <g id="Group_9863" data-name="Group 9863" transform="translate(0.486)"> <g id="Rectangle_3407" data-name="Rectangle 3407" transform="translate(-0.486)" class="ads_edit_fill" stroke="#ffc700" stroke-width="1"> <rect width="30" height="30" rx="15" stroke="none"/> <rect x="0.5" y="0.5" width="29" height="29" rx="14.5" fill="none"/> </g> <path id="Path_5231" data-name="Path 5231" d="M3751.438,9548.509h1.013l6.7-6.691-1.021-1.021-6.692,6.7Zm11.5,1.438H3750V9546.9l9.653-9.659a.72.72,0,0,1,.51-.209.708.708,0,0,1,.51.209l2.034,2.033a.712.712,0,0,1,.208.511.723.723,0,0,1-.208.51l-8.222,8.216h8.453Zm-3.788-10.163,1.013,1.013,1.021-1.013-1.021-1.021Z" transform="translate(-3741.443 -9528.473)" fill="#ffc700" stroke="#fff8dd" stroke-width="0.8"/> </g> </svg>
+			</a>
+		</span>
+		<span class="ds_ads_action" onclick="DeleteAd('{{ID}}');">
+			<a href="javascript:void(0);">
+				<svg id="Group_9865" data-name="Group 9865" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"> <g id="Path_215934" data-name="Path 215934" transform="translate(0 0)" class="ads_delete_fill"> <path d="M 15 29.5 C 11.12691020965576 29.5 7.485640048980713 27.99173927307129 4.746950149536133 25.25304985046387 C 2.008260011672974 22.51436042785645 0.5 18.87309074401855 0.5 15 C 0.5 11.12691020965576 2.008260011672974 7.485640048980713 4.746950149536133 4.746950149536133 C 7.485640048980713 2.008260011672974 11.12691020965576 0.5 15 0.5 C 18.87309074401855 0.5 22.51436042785645 2.008260011672974 25.25304985046387 4.746950149536133 C 27.99173927307129 7.485640048980713 29.5 11.12691020965576 29.5 15 C 29.5 18.87309074401855 27.99173927307129 22.51436042785645 25.25304985046387 25.25304985046387 C 22.51436042785645 27.99173927307129 18.87309074401855 29.5 15 29.5 Z" stroke="none"/> <path d="M 15 1 C 11.26046943664551 1 7.744760513305664 2.456249237060547 5.100509643554688 5.100509643554688 C 2.456249237060547 7.744760513305664 1 11.26046943664551 1 15 C 1 18.73952865600586 2.456249237060547 22.25523948669434 5.100509643554688 24.89949035644531 C 7.744760513305664 27.54375076293945 11.26046943664551 29 15 29 C 18.73952865600586 29 22.25523948669434 27.54375076293945 24.89949035644531 24.89949035644531 C 27.54375076293945 22.25523948669434 29 18.73952865600586 29 15 C 29 11.26046943664551 27.54375076293945 7.744760513305664 24.89949035644531 5.100509643554688 C 22.25523948669434 2.456249237060547 18.73952865600586 1 15 1 M 15 0 C 23.28426933288574 0 30 6.715730667114258 30 15 C 30 23.28426933288574 23.28426933288574 30 15 30 C 6.715730667114258 30 0 23.28426933288574 0 15 C 0 6.715730667114258 6.715730667114258 0 15 0 Z" stroke="none" fill="#f1416c"/> </g> <path id="Path_215786" data-name="Path 215786" d="M3755.235,7729.295V7728h6.47v1.294h3.235v1.293h-1.294v9.7a.639.639,0,0,1-.647.646h-9.058a.664.664,0,0,1-.459-.187.671.671,0,0,1-.187-.459v-9.7H3752v-1.293Zm-.647,1.293v9.058h7.764v-9.058Zm1.941,1.94h1.294v5.177h-1.294Zm2.587,0h1.294v5.177h-1.294Z" transform="translate(-3743.443 -7719.443)" fill="#f1416c" stroke="#fff" stroke-width="0.7"/> </svg>
+			</a>
+		</span>
+    </td>
+</tr>

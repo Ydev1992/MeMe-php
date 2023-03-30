@@ -1,0 +1,537 @@
+<div class="container-fluid">
+    <div>
+        <h3>Pro System Settings</h3>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="#">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="#">Pro System</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">Pro System Settings</li>
+            </ol>
+        </nav>
+    </div>
+    <!-- Vertical Layout -->
+    <div class="row">
+        <div class="col-lg-6 col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Pro System Settings</h6>
+                    <div class="pro-settings-alert"></div>
+                    <form class="pro-settings" method="POST">
+                        <div class="float-left">
+                            <label for="go_pro" class="main-label">Pro System</label>
+                            <br><small class="admin-info">Enable extra features with Pro System & Get paid.</small>
+                        </div>
+                        <div class="form-group float-right switcher">
+                            <input type="hidden" name="go_pro" value="off" />
+                            <input type="checkbox" name="go_pro" id="chck-go_pro" value="on" <?php echo ($music->config->go_pro == 'on') ? 'checked': '';?>>
+                            <label for="chck-go_pro" class="check-trail"><span class="check-handler"></span></label>
+                        </div>
+                        <input type="hidden" name="hash_id" value="<?php echo createMainSession();?>">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Edit Pro Packages</h6>
+                    <button type="button" class="btn btn-success m-t-15 waves-effect" onclick="AddNewPackage()">Add New Package</button>
+                    <div class="clearfix"></div>
+                    <br>
+                  <div class="table-responsive1">
+                        <table class="table table-bordered table-striped table-hover">
+                          <thead>
+                            <tr>
+                              <th>Name</th>
+                              <th width="150">Status</th>
+                              <th width="150">Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <?php foreach ($music->pro_packages as $key => $value) { ?>
+                                <tr class="setting-userlist">
+                                    <td style="color:<?php echo (!empty($value['color']) ? $value['color'] : '') ?>">
+                                        <div class="pro-pack-name">
+                                            <?php if (!empty($value['image']) || !empty($value['night_image'])) { ?>
+                                                <img src="<?php echo(!empty($value['image']) ? $value['image'] : $value['night_image']) ?>" class="pro_packages_icon_inline">
+                                            <?php }elseif ($value['id'] == 1) { ?>
+                                                <span style="background-color:<?php echo !empty($value['color']) ? $value['color'] : '#4c7737' ?>"><i class="fa fa-star fa-fw"></i> </span>
+                                            <?php }elseif ($value['id'] == 2) { ?>
+                                                <span style="background-color:<?php echo !empty($value['color']) ? $value['color'] : '#ffbb42' ?>"><i class="fa fa-fire fa-fw"></i> </span>
+                                            <?php }elseif ($value['id'] == 3) { ?>
+                                                <span style="background-color:<?php echo !empty($value['color']) ? $value['color'] : '#e13c4c' ?>"><i class="fa fa-bolt fa-fw"></i> </span>
+                                            <?php }elseif ($value['id'] == 4) { ?>
+                                                <span style="background-color:<?php echo !empty($value['color']) ? $value['color'] : '#3f4bb8' ?>"><i class="fa fa-rocket fa-fw"></i> </span>
+                                            <?php } ?>
+                                            &nbsp;<?php echo $value['name'] ?>
+                                            <?php if ($value['time_count'] == 0 && $value["time"] != 'unlimited') { ?>
+                                                <div class="alert alert-warning m-0 mt-2 p-2 text-capitalize">Please update the package time</div>
+                                            <?php } ?>
+                                            <td><?php echo ($value['status'] == 1) ? '<span class="label label-success"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="green" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" /></svg> Enabled</span>': '<span class="label label-danger"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="red" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /></svg> Disabled</span>';?></td>
+                                            <td>
+                                                <a class="btn bg-info admn_table_btn" href="javascript:void(0)" onclick="ShowEditPro(this)" data_pro_type="<?php echo $value['id'] ?>">Edit</a>
+                                                <a class="btn bg-danger admn_table_btn" href="javascript:void(0)" onclick="DeleteProPackage('<?php echo $value['id'] ?>','hide')">Delete</a>
+                                            </td>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php } ?>
+                          </tbody>
+                        </table>
+                  </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <!-- #END# Vertical Layout -->
+<div class="modal fade" id="addProModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Pro Package</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body pt-2">
+                <div id="addProModalAlert"></div>
+                <form class="addProModalForm" method="POST">
+                    <div class="form-group">
+                        <label for="status" class="main-label">Status</label>
+                        <div class="form-group float-right switcher">
+                            <input type="hidden" name="status" value="0" />
+                            <input type="checkbox" name="status" id="status-enabled" value="1" checked>
+                            <label for="status-enabled" class="check-trail"><span class="check-handler"></span></label>
+                        </div>
+                    </div>
+                    
+                    <div class="clearfix"></div>
+                    <hr>
+                    
+                    <div class="row">
+                        <div class="col-md-7">
+                            <div class="form-group form-float">
+                                <div class="form-line focused">
+                                    <label class="form-label">Name</label>
+                                    <input type="text" name="name" class="form-control" value="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group form-float">
+                                <div class="form-line focused">
+                                    <label class="form-label">Price</label>
+                                    <input type="number" name="price" class="form-control" value="0">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <label class="form-label">Color</label>
+                                    <input type="color" name="color" class="form-control" value="#fafafa">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="clearfix"></div>
+                    <hr>
+                    
+                    <div class="form-group">
+                        <label for="featured_member" class="main-label">Featured member</label>
+                        <div class="form-group float-right switcher">
+                            <input type="hidden" name="featured_member" value="0" />
+                            <input type="checkbox" name="featured_member" id="featured_member-enabled" value="1">
+                            <label for="featured_member-enabled" class="check-trail"><span class="check-handler"></span></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="verified_badge" class="main-label">Verified badge</label>
+                        <div class="form-group float-right switcher">
+                            <input type="hidden" name="verified_badge" value="0" />
+                            <input type="checkbox" name="verified_badge" id="verified_badge-enabled" value="1">
+                            <label for="verified_badge-enabled" class="check-trail"><span class="check-handler"></span></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="artist_member" class="main-label">Artist</label>
+                        <div class="form-group float-right switcher">
+                            <input type="hidden" name="artist_member" value="0" />
+                            <input type="checkbox" name="artist_member" id="artist_member-enabled" value="1">
+                            <label for="artist_member-enabled" class="check-trail"><span class="check-handler"></span></label>
+                        </div>
+                    </div>
+                    
+                    <div class="clearfix"></div>
+                    <hr>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group form-float">
+                                <div class="form-line focused">
+                                    <label class="form-label">Max Upload Size</label>
+                                    <select class="form-control show-tick" name="max_upload">
+                                        <option value="2000000">2 MB</option>
+                                        <option value="6000000">6 MB</option>
+                                        <option value="12000000">12 MB</option>
+                                        <option value="24000000">24 MB</option>
+                                        <option value="48000000">48 MB</option>
+                                        <option value="96000000">96 MB</option>
+                                        <option value="256000000">256 MB</option>
+                                        <option value="512000000">512 MB</option>
+                                        <option value="1000000000">1 GB</option>
+                                        <option value="5000000000">5 GB</option>
+                                        <option value="10000000000">10 GB</option>
+                                        <option value="1000000000000">Unlimited</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group form-float">
+                                <div class="form-line focused">
+                                    <label class="form-label">Discount %</label>
+                                    <input type="number" name="discount" class="form-control" value="0">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group form-float">
+                                <div class="form-line focused">
+                                    <label class="form-label">Paid Every</label>
+                                    <input type="number" name="count" class="form-control" value="0">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group form-float">
+                                <div class="form-line focused">
+                                    <label class="d-block mt-4"></label>
+                                    <select class="form-control show-tick" name="time">
+                                        <option value="day">Day</option>
+                                        <option value="week">Week</option>
+                                        <option value="month">Month</option>
+                                        <option value="year">Year</option>
+                                        <option value="unlimited">Unlimited</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="clearfix"></div>
+                    <hr>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="btn-file d-flex align-items-center mb-3">
+                                <input type="file" id="pro-icon" name="icon" class="hidden">
+                                <div class="mr-3 change-file-ico">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M16.5,6V17.5A4,4 0 0,1 12.5,21.5A4,4 0 0,1 8.5,17.5V5A2.5,2.5 0 0,1 11,2.5A2.5,2.5 0 0,1 13.5,5V15.5A1,1 0 0,1 12.5,16.5A1,1 0 0,1 11.5,15.5V6H10V15.5A2.5,2.5 0 0,0 12.5,18A2.5,2.5 0 0,0 15,15.5V5A4,4 0 0,0 11,1A4,4 0 0,0 7,5V17.5A5.5,5.5 0 0,0 12.5,23A5.5,5.5 0 0,0 18,17.5V6H16.5Z"></path></svg>
+                                </div>
+                                <div>
+                                    <b>Icon</b>
+                                    <div class="mt-1 hidden" id="pro-icon-i">
+                                        <input type="text" class="change-file-input" readonly="">
+                                    </div>
+                                </div>
+                            </div>
+                            <small>The icon size (width = 32px and height: 32px and .png)</small>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="btn-file d-flex align-items-center mb-3">
+                                <input type="file" id="pro-night-icon" name="night_icon" class="hidden">
+                                <div class="mr-3 change-file-ico">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M16.5,6V17.5A4,4 0 0,1 12.5,21.5A4,4 0 0,1 8.5,17.5V5A2.5,2.5 0 0,1 11,2.5A2.5,2.5 0 0,1 13.5,5V15.5A1,1 0 0,1 12.5,16.5A1,1 0 0,1 11.5,15.5V6H10V15.5A2.5,2.5 0 0,0 12.5,18A2.5,2.5 0 0,0 15,15.5V5A4,4 0 0,0 11,1A4,4 0 0,0 7,5V17.5A5.5,5.5 0 0,0 12.5,23A5.5,5.5 0 0,0 18,17.5V6H16.5Z"></path></svg>
+                                </div>
+                                <div>
+                                    <b>Night Icon</b>
+                                    <div class="mt-1 hidden" id="pro-night-icon-i">
+                                        <input type="text" class="change-file-input" readonly="">
+                                    </div>
+                                </div>
+                            </div>
+                            <small>The icon size (width = 32px and height: 32px and .png)</small>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="clearfix"></div>
+                    <hr>
+                    
+                    <div class="form-group form-float">
+                        <div class="form-line focused">
+                            <label class="form-label">Description</label>
+                            <textarea class="form-control show-tick" name="description"></textarea> 
+                        </div>
+                    </div>
+                    <input type="hidden" name="hash_id" value="<?php echo createMainSession();?>">
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" onclick="Wo_SubmitAddProForm(this);" class="btn btn-primary waves-effect" id="add_pro_btn">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="DeleteProModal" tabindex="-1" role="dialog" aria-labelledby="exampleModal1Label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModal1Label">Delete Pro Package?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this Pro Package?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="proModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="proModalLabel">Edit Pro Package</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body pt-2">
+                <div id="proModalAlert"></div>
+                <form class="proModalForm" method="POST">
+                    <div id="pro_form_data"></div>
+                    <input type="hidden" name="hash_id" value="<?php echo createMainSession();?>">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" onclick="Wo_SubmitProForm(this);" class="btn btn-primary waves-effect" id="save_pro_btn">SAVE CHANGES</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+function Wo_SubmitProForm(self) {
+    $('#save_pro_btn').text('Please wait..');
+    $('.proModalForm').submit();
+}
+function DeleteProPackage(id,type = 'show') {
+    if (type == 'hide') {
+        $('#DeleteProModal').find('.btn-primary').attr('onclick', "DeleteProPackage('"+id+"')");
+        $('#DeleteProModal').modal('show');
+        return false;
+    }
+    hash_id = "<?php echo createMainSession();?>";
+    $.get('{{CONFIG ajax_url}}/ap/delete_pro_package',{ id: id, hash_id: hash_id},function(data) {
+        if (data.status == 200) {
+            location.reload();
+        }
+    });
+}
+$("#pro-icon").change(function () {
+    var filename = $(this).val().replace(/C:\\fakepath\\/i, '');
+    $("#pro-icon-i input").val(filename);
+    $("#pro-icon-i").removeClass('hidden');
+});
+$("#pro-night-icon").change(function () {
+    var filename = $(this).val().replace(/C:\\fakepath\\/i, '');
+    $("#pro-night-icon-i input").val(filename);
+    $("#pro-night-icon-i").removeClass('hidden');
+});
+function ShowEditPro(self) {
+    $(self).text('Please wait ..');
+    type = $(self).attr('data_pro_type');
+    $.post('{{CONFIG ajax_url}}/ap/get_pro', {type: type}, function(data, textStatus, xhr) {
+        $(self).text('EDIT');
+        if (data.status == 200) {
+            $('#pro_form_data').html(data.html);
+            $('#proModal').modal('show');
+        }
+    });
+}
+function AddNewPackage() {
+    $('#addProModal').modal('show');
+}
+function Wo_SubmitAddProForm(self) {
+    $(self).text('Please wait..');
+    $('.addProModalForm').submit();
+}
+$(function() {
+    let form_add_pro = $('.addProModalForm');
+    form_add_pro.ajaxForm({
+        url: '{{CONFIG ajax_url}}/ap/add_pro_package',
+        beforeSend: function() {
+            form_add_pro.find('.waves-effect').text('Please wait..');
+        },
+        success: function(data) {
+            form_add_pro.find('.waves-effect').text('Add');
+            $('#addProModal').animate({
+                scrollTop : 0                       // Scroll to top of body
+            }, 500);
+            if (data.status == 200) {
+                $('#addProModalAlert').html('<div class="alert alert-success"><i class="fa fa-check"></i> Package added successfully</div>');
+                setTimeout(function () {
+                    location.reload();
+                }, 2000);
+            }
+            else{
+                $('#addProModalAlert').html('<div class="alert alert-danger">'+data.message+'</div>');
+            }
+        }
+    });
+
+    var form_pro = $('form.proModalForm');
+    form_pro.ajaxForm({
+        url: '{{CONFIG ajax_url}}/ap/update_pro_member',
+        beforeSend: function() {
+            form_pro.find('.waves-effect').text('Please wait..');
+        },
+        success: function(data) {
+            $('#proModal').animate({
+                scrollTop : 0                       // Scroll to top of body
+            }, 500);
+            $('#save_pro_btn').text('SAVE CHANGES');
+            if (data.status == 200) {
+                form_pro.find('.waves-effect').text('Save');
+                $('#proModalAlert').html('<div class="alert alert-success"><i class="fa fa-check"></i> Settings updated successfully</div>');
+                setTimeout(function () {
+                    location.reload();
+                }, 2000);
+            }
+            else{
+                $('#proModalAlert').html('<div class="alert alert-danger">'+data.message+'</div>');
+            }
+        }
+    });
+
+
+    $('.round_check input[type=radio]').click(function () {
+        var configName = $(this).attr('name');
+        var hash_id = $('input[name=hash_id]').val();
+        var objData = {};
+        if ($(this).is(":checked") === true) {
+            objData[configName] = $(this).val();
+        }
+        else{
+            if ($('input[name='+configName+']')[0]) {
+                objData[configName] = $($('input[name='+configName+']')[0]).val();
+            }
+        }
+        objData['hash_id'] = hash_id;
+        $.post('{{CONFIG ajax_url}}/ap/save-settings', objData);
+    });
+    
+    $('.card-body .switcher input[type=checkbox]').click(function () {
+        var configName = $(this).attr('name');
+        var hash_id = $('input[name=hash_id]').val();
+        var objData = {};
+        if ($(this).is(":checked") === true) {
+            objData[configName] = $(this).val();
+        }
+        else{
+            if ($('input[name='+configName+']')[0]) {
+                objData[configName] = $($('input[name='+configName+']')[0]).val();
+            }
+        }
+        objData['hash_id'] = hash_id;
+        $.post('{{CONFIG ajax_url}}/ap/save-settings', objData);
+    });
+
+    var setTimeOutColor = setTimeout(function (){});
+    $('.card-body select').on('change', function() {
+         clearTimeout(setTimeOutColor);
+        var thisElement = $(this);
+        var configName = thisElement.attr('name');
+        var hash_id = $('input[name=hash_id]').val();
+        var objData = {};
+        objData[configName] = thisElement.val();
+        objData['hash_id'] = hash_id;
+        thisElement.addClass('warning');
+        $.post("{{CONFIG ajax_url}}/ap/save-settings", objData, function (data) {
+            if (data.status == 200) {
+                thisElement.removeClass('warning');
+                thisElement.addClass('success');
+            } else {
+                thisElement.addClass('error');
+            }
+            var setTimeOutColor = setTimeout(function () {
+                thisElement.removeClass('success');
+                thisElement.removeClass('warning');
+                thisElement.removeClass('error');
+            }, 2000);
+        });
+    });
+    $('.card-body input[type=color]').on('change', delay(function() {
+            clearTimeout(setTimeOutColor);
+            var thisElement = $(this);
+            var configName = thisElement.attr('name');
+            var hash_id = $('input[name=hash_id]').val();
+            var objData = {};
+            objData[configName] = this.value;
+            objData['hash_id'] = hash_id;
+            thisElement.addClass('warning');
+            $.post("{{CONFIG ajax_url}}/ap/save-settings", objData, function (data) {
+                if (data.status == 200) {
+                    thisElement.removeClass('warning');
+                    thisElement.addClass('success');
+                } else {
+                    thisElement.addClass('error');
+                }
+                var setTimeOutColor = setTimeout(function () {
+                    thisElement.removeClass('success');
+                    thisElement.removeClass('warning');
+                    thisElement.removeClass('error');
+                }, 2000);
+                //thisElement.focus();
+            });
+    }, 500));
+    $('.card-body input[type=text], .card-body input[type=number], .card-body input[type=color] , .card-body textarea').on('input', delay(function() {
+            clearTimeout(setTimeOutColor);
+            var thisElement = $(this);
+            var configName = thisElement.attr('name');
+            var hash_id = $('input[name=hash_id]').val();
+            var objData = {};
+            objData[configName] = this.value;
+            objData['hash_id'] = hash_id;
+            thisElement.addClass('warning');
+            $.post("{{CONFIG ajax_url}}/ap/save-settings", objData, function (data) {
+                if (data.status == 200) {
+                    thisElement.removeClass('warning');
+                    thisElement.addClass('success');
+                } else {
+                    thisElement.addClass('error');
+                }
+                var setTimeOutColor = setTimeout(function () {
+                    thisElement.removeClass('success');
+                    thisElement.removeClass('warning');
+                    thisElement.removeClass('error');
+                }, 2000);
+                //thisElement.focus();
+            });
+    }, 500));
+});
+</script>
+<style type="text/css">
+    .btn-file { position: relative; overflow: hidden;cursor: pointer;}
+    .btn-file input[type=file] { position: absolute; top: 0; right: 0; min-width: 100%; min-height: 100%; font-size: 100px; text-align: right; opacity: 0; outline: none; background: #fff; cursor: inherit; display: block; }
+    .change-file-ico svg {border-radius: 50%;background: rgb(168 72 73 / 15%);color: <?php echo $wo['config']['btn_background_color'];?>;padding: 10px;width: 50px;height: 50px;}
+    .change-file-input {padding: 3px 6px;border: 0;line-height: 1;background: rgb(0 0 0 / 10%);border-radius: 2em;font-size: 13px;width: 100%;}
+</style>

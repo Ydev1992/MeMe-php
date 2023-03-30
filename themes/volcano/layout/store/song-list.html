@@ -1,0 +1,45 @@
+<div class="col-lg-12 song_list" data-id="{{t_id}}">
+	<div class="song_list_innr">
+		<div class="info">
+			<div class="avatar">
+				<a href="{{t_url}}" data-load="track/{{t_audio_id}}"><img src="{{t_thumbnail}}"></a>
+			</div>
+			<div class="song_right_part">
+				<div class="song_upper">
+					<div class="song_meta_info">
+						<a href="javascript:void(0)" onclick="playSong('{{t_audio_id}}')"><h3>{{t_title}}</h3></a>
+						<div class="subb">
+							<span class="duration" title="Duration">{{t_duration}}</span><span class="mx-3">•</span>
+							<a href="{{t_artist_url}}" data-load="{{t_uartist}}"><p>{{t_artist}}</p></a><span class="mx-3">•</span>
+							<span class="r_time" title="Released on">{{t_posted}}</span>
+						</div>
+					</div>
+				</div>
+				<ul class="song_lower mb-0">
+					<a href="{{t_url}}" data-load="track/{{t_audio_id}}" class="btn btn-mat btn-primary"><svg xmlns="http://www.w3.org/2000/svg" width="17.847" height="17.847" viewBox="0 0 17.847 17.847"> <path id="ic_play_circle_filled_24px" d="M10.924,2a8.924,8.924,0,1,0,8.924,8.924A8.927,8.927,0,0,0,10.924,2ZM9.139,14.939V6.908l5.354,4.016Z" transform="translate(-2 -2)" fill="#fff"/> </svg> {{LANG listen_now}}</a>
+					<div class="mx-3 song_price_info">
+						<?php if (IS_LOGGED) { ?>
+							<?php if($music->config->artist_sell == 'on'){ ?>
+								<?php if( isTrackPurchased($data['t_id'], $music->user->id) === true ){ ?>
+									<button class="btn btn-default btn-mat" title="{{LANG You have bought this track.}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M0.41,13.41L6,19L7.41,17.58L1.83,12M22.24,5.58L11.66,16.17L7.5,12L6.07,13.41L11.66,19L23.66,7M18,7L16.59,5.58L10.24,11.93L11.66,13.34L18,7Z" /></svg> {{LANG Purchased}}</button>
+								<?php } else { ?>
+									<button class="btn btn-default btn-mat" onclick="purchaseTrack('{{t_audio_id}}', $(this),'buy_song','{{t_price}}')"  data-title="{{t_title}}" data-price="{{t_price}}">{{CONFIG currency_symbol}}{{t_price}} {{LANG Purchase}}</button>
+								<?php } ?>
+							<?php } ?>
+						<?php } ?>
+					</div>
+					<span class="fav_song"><?php echo getFavButton($music->songData->id, 'fav-icon');?></span>
+				</ul>
+			</div>
+		</div>
+		<div class="dropdown">
+			<svg data-display="static" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M16,12A2,2 0 0,1 18,10A2,2 0 0,1 20,12A2,2 0 0,1 18,14A2,2 0 0,1 16,12M10,12A2,2 0 0,1 12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12M4,12A2,2 0 0,1 6,10A2,2 0 0,1 8,12A2,2 0 0,1 6,14A2,2 0 0,1 4,12Z"></path></svg>
+			<div class="dropdown-menu dropdown-menu-right mat-dropdown">
+				<ul class="list-unstyled mb-0">
+					<li><a href="javascript:void(0)" onclick="getPlayLists({{t_id}})"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"></path><path fill="currentColor" d="M2 18h10v2H2v-2zm0-7h20v2H2v-2zm0-7h20v2H2V4zm16 14v-3h2v3h3v2h-3v3h-2v-3h-3v-2h3z"></path></svg> {{LANG Add to Playlist}}</a></li>
+					<li><a onclick="getShareModal('{{t_id}}', $(this));"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"></path><path fill="currentColor" d="M13.12 17.023l-4.199-2.29a4 4 0 1 1 0-5.465l4.2-2.29a4 4 0 1 1 .959 1.755l-4.2 2.29a4.008 4.008 0 0 1 0 1.954l4.199 2.29a4 4 0 1 1-.959 1.755zM6 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm11-6a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm0 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path></svg> Share</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>

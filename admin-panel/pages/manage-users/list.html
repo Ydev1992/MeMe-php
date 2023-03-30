@@ -1,0 +1,38 @@
+<tr id="list-{{USER id}}" data_selected="{{USER id}}">
+  <td class="check"><input type="checkbox" id="check-data-{{USER id}}" class="delete-checkbox filled-in"><label for="check-data-{{USER id}}"></label></td>
+  <td>{{USER id}}</td>
+  <td><a href="{{USER url}}"><img src="{{USER avatar}}" class="td-avatar" alt="user avatar">&nbsp;&nbsp;{{USER username}}</a></td>
+  <td>{{USER email}}</td>
+    <td><?php echo ($data['USER_DATA']->artist == 1) ? 'Artist' : 'Normal user';?></td>
+  <!--<td>{{USER ip_address}}</td>-->
+  <td>{{STATUS}}</td>
+  <td>
+    <div class="switcher">
+        <input type="hidden" name="upload_import_{{USER id}}" value="0" />
+        <input type="checkbox" name="upload_import_{{USER id}}" id="chck-upload_import_{{USER id}}" value="1" data_user="{{USER id}}" <?php echo ((int)$data["USER_DATA"]->upload_import == 1) ? 'checked': '';?>>
+        <label for="chck-upload_import_{{USER id}}" class="check-trail" style="margin: auto;"><span class="check-handler"></span></label>
+    </div>
+	<!-- <form>
+		<div class="form-group">
+			<div class="form-check form-check-inline">
+                <input class="form-check-input" onclick="Import_Upload_Enable({{USER id}});" type="radio" id="upload_import_{{USER id}}_enabled" name="upload_import_{{USER id}}" value="1" <?php echo ( (int)$data["USER_DATA"]->upload_import === 1 ) ? 'checked=""' : '';?>>
+                <label class="form-check-label" for="upload_import_{{USER id}}_enabled">Enabled</label>
+            </div>
+			<div class="form-check form-check-inline">
+                <input class="form-check-input" onclick="Import_Upload_Disable({{USER id}});" type="radio" id="upload_import_{{USER id}}_disabled" name="upload_import_{{USER id}}" value="0" <?php echo ( (int)$data["USER_DATA"]->upload_import === 0 ) ? 'checked=""' : '';?>>
+                <label class="form-check-label" for="upload_import_{{USER id}}_disabled">Disabled</label>
+            </div>
+      </div>
+	  </form> -->
+  </td>
+  <td>
+	<a class="btn bg-info admn_table_btn" href="javascript:void(0)" onclick="getUserId({{USER id}});" data-toggle="modal" data-target="#FollowersForm">Add Followers</a>
+	<a class="btn bg-success admn_table_btn" href="{{SETTINGS_LINK}}" target="_blank">Edit</a>
+	<?php if($music->user->admin == 1 && $music->user->id != $data["USER_DATA"]->id){ ?>
+		<a href="<?php echo LoadAdminLinkSettings('manage-permission?id='.$data["USER_DATA"]->id); ?>" class="btn bg-warning admn_table_btn"> Permissions</a>
+	<?php }?>
+	
+	<button class="btn bg-danger admn_table_btn" data-id="{{USER id}}" onclick="Wo_DeleteUser('{{USER id}}','hide');">Delete</button>
+
+  </td>
+</tr>

@@ -1,0 +1,45 @@
+<div class="col-lg-2 col-md-4 px-2 events-list-wrapper" data-id="{{t_id}}">
+	<div class="events-list-cover text-center store_products">
+		<?php if (empty($music->product)) { ?>
+			<span class="fav_song">{{fav_button}}</span>
+		<?php } ?>
+		<a href="{{url}}" data-load="{{data_load}}" class="event_cover store_products_hdr">
+			<img src="{{thumbnail}}" class="events-list-cover-img">
+			<span class="numbers">{{key}}</span>
+			<?php if (empty($music->product)) { ?>
+				<p class="store_products-cat">{{duration}}</p>
+			<?php }else{ ?>
+				<p class="store_products-cat"><?php echo $music->products_categories[$music->product->cat_id]; ?></p>
+			<?php } ?>
+		</a>
+		<div class="store_products-info">
+			<h3 class="store_products-name">
+				<a href="{{url}}" data-load="{{data_load}}">{{title}}</a>
+			</h3>
+			<?php if (empty($music->product)) { ?>
+				<p class="mb-0">{{USER name_v}}</p>
+			<?php }else{ ?>
+				<b class="main store_products-price text-truncate">{{CONFIG currency_symbol}}{{price}}</b>
+			<?php } ?>
+			<div class="store_products-btns">
+				<?php if (empty($music->product)) { ?>
+					<div class="best_selling_song_item_foot">
+						<span>
+							<button type="button" onclick="getPlayLists({{id}})" class="btn btn-secondary btn-mat btn-block" title="{{LANG Add to Playlist}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M2,16H10V14H2M18,14V10H16V14H12V16H16V20H18V16H22V14M14,6H2V8H14M14,10H2V12H14V10Z" /></svg> {{LANG Add to Playlist}}</button>
+						</span>&nbsp;&nbsp;
+						<span>
+							<button type="button" onclick="getShareModal('{{id}}', $(this));" class="btn btn-secondary btn-mat share btn-block" title="{{LANG Share}}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M18,16.08C17.24,16.08 16.56,16.38 16.04,16.85L8.91,12.7C8.96,12.47 9,12.24 9,12C9,11.76 8.96,11.53 8.91,11.3L15.96,7.19C16.5,7.69 17.21,8 18,8A3,3 0 0,0 21,5A3,3 0 0,0 18,2A3,3 0 0,0 15,5C15,5.24 15.04,5.47 15.09,5.7L8.04,9.81C7.5,9.31 6.79,9 6,9A3,3 0 0,0 3,12A3,3 0 0,0 6,15C6.79,15 7.5,14.69 8.04,14.19L15.16,18.34C15.11,18.55 15.08,18.77 15.08,19C15.08,20.61 16.39,21.91 18,21.91C19.61,21.91 20.92,20.61 20.92,19A2.92,2.92 0 0,0 18,16.08Z" /></svg></button>
+						</span>
+					</div>
+				<?php }else{ ?>
+					<?php if ($music->product->user_data->id != $music->user->id) { ?>
+						<span>
+							<button type="button" onclick="AddProductToCart(this,'<?php echo($music->product->id) ?>','<?php echo(!empty($music->product->added_to_cart) && $music->product->added_to_cart > 0 ? 'remove' : 'add') ?>')" class="btn btn-primary btn-mat btn-block"><?php echo(!empty($music->product->added_to_cart) && $music->product->added_to_cart > 0 ? lang('Remove From Cart') : lang('Add To Cart')) ?></button>
+						</span>  
+					<?php } ?>
+				<?php } ?>
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>

@@ -1,0 +1,369 @@
+<div class="ma_page_content">
+	<div class="ma_pc_inner">
+		<div class="page_padding">
+			<!-- Upload Music -->
+			<div class="upload_music">
+				<div class="upload_music_alert"></div>
+				<div class="upload" data-block="audio-drop-zone">
+					<div class="circle_blue circle_opacity"></div>
+					<div class="circle_red circle_opacity"></div>
+					<div class="circle_orange circle_opacity"></div>
+					<h3>{{LANG Upload single song}}</h3>
+					<div class="upload_innr">
+						<svg xmlns="http://www.w3.org/2000/svg" width="53.294" height="57.206" viewBox="0 0 53.294 57.206"> <path id="Union_15" data-name="Union 15" d="M4946.552-6160v-4.47h7.131a2.156,2.156,0,0,0,2.133-1.9,9.148,9.148,0,0,0-2.813-2.116,30.456,30.456,0,0,0-2.755-1.4l-1.35-.582V-6173l3.015-2.863h-5.36v-4.47h13.071v3.306l-4.718,4.486c.276.154.562.318.846.49,3.1,1.871,4.543,3.615,4.543,5.491a6.594,6.594,0,0,1-6.611,6.563Zm-17.43,0v-20.335h8.658a6.209,6.209,0,0,1,6.2,6.2,6.209,6.209,0,0,1-6.2,6.2h-4.189V-6160Zm4.469-12.4h4.189a1.734,1.734,0,0,0,1.732-1.732,1.733,1.733,0,0,0-1.732-1.73h-4.189Zm-12.625,12.4v-11.715l-4.753,6.251-4.745-6.272V-6160H4907v-20.335h3.57l5.653,7.476,5.683-7.476h3.529V-6160Zm30.711-24.8v-13.283h-7.931a6.712,6.712,0,0,1-6.705-6.7v-7.945H4917.5a2.237,2.237,0,0,0-2.234,2.236v25.7H4910.8v-25.7a6.711,6.711,0,0,1,6.7-6.7h22.765l15.881,15.962v16.439Zm-10.165-19.987a2.236,2.236,0,0,0,2.234,2.234h4.79l-7.024-7.062Zm-9.256,18.071v-7.344l-2.4,2.4-1.852-1.852,5.572-5.572,5.57,5.572-1.852,1.852-2.406-2.392v7.332Z" transform="translate(-4907 6217.206)" fill="#d8d8d8"/> </svg>
+						<h4>{{LANG Select files to upload}}</h4>
+						<p>{{LANG or drag & drop files here}}</p>
+					</div>
+					<div class="progress hidden">
+					  <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+					</div>
+				</div>
+				<form action="" method="POST" id="upload-audio" class="v-hidden">
+					<?php if ($music->config->ffmpeg_system == "off") {?>
+						<input type="file" name="audio" accept="audio/mpeg" class="upload-audio-file hidden">
+					<?php } else { ?>
+						<input type="file" name="audio" accept="audio/mpeg,audio/ogg,audio/x-wav" class="upload-audio-file hidden">
+					<?php } ?>
+				</form>
+				<div class="row hidden" id="upload-form">
+					<div class="col-lg-10 offset-lg-1">
+						<h2 class="home_widget_title home_big_title mt-0">{{LANG Upload single song}}</h2>
+						
+						<form action="" class="form-horizontal content p-5 ds_create_edit_prods upload_form" method="POST" id="song-form">
+							<div id="output-song-errors"></div>
+							
+							<div class="progress mb-3 hidden" id="img_upload_progress">
+								<div id="img_upload_progress_bar" class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+							</div>
+							
+							<div class="row">
+								<div class="col-lg-7 mb-5">
+									<div class="ds_sett_avatar song_thumb" onclick="document.getElementById('thumbnail').click(); return false">
+										<div class="avatar upload-image-content">
+											<svg xmlns="http://www.w3.org/2000/svg" width="38.125" height="38.125" viewBox="0 0 38.125 38.125"> <path id="Subtraction_139" data-name="Subtraction 139" d="M4945.174-6601.375h-35.224a1.36,1.36,0,0,1-1.012-.422,1.374,1.374,0,0,1-.438-1.028v-35.222a1.392,1.392,0,0,1,.437-1.033,1.377,1.377,0,0,1,1.013-.42h35.224a1.378,1.378,0,0,1,1.013.42,1.4,1.4,0,0,1,.438,1.033v35.222a1.379,1.379,0,0,1-.438,1.028A1.368,1.368,0,0,1,4945.174-6601.375Zm-8.807-15.939-12.963,13.036h20.319v-5.682l-7.355-7.355Zm-19.812-4.4-5.153,5.154v12.285h7.887l7.33-7.354-10.063-10.086Zm0-4.044h0l12.106,12.106,7.7-7.7,7.355,7.35V-6636.6H4911.4v15.992l5.153-5.154Zm18.712.172a3.493,3.493,0,0,1-1.835-.7,2.852,2.852,0,0,1-.717-1.856,2.837,2.837,0,0,1,.717-1.855,3.458,3.458,0,0,1,1.835-.7,3.461,3.461,0,0,1,1.835.7,2.837,2.837,0,0,1,.716,1.855,2.849,2.849,0,0,1-.716,1.856A3.494,3.494,0,0,1,4935.268-6625.59Z" transform="translate(-4908.5 6639.5)" fill="currentColor"></path> </svg>
+										</div>
+										<div class="info">
+											<h4>{{LANG upload_track_img}}</h4>
+											<p>{{LANG prof_img_reso}}</p>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-5 mb-5">
+									<?php if ($music->config->can_use_sell && $music->config->artist_sell == 'on') {?>
+										<div class="song_price">
+											<label class="col-md-12 p-0">{{LANG Price}}</label>
+											<?php foreach($music->song_prices as $key => $value){?>
+												<div class="custom-control custom-radio upld_song_radio col-md-6">
+													<input type="radio" id="<?php echo $key;?>" name="song-price" class="custom-control-input" value="<?php echo $value;?>">
+													<label class="custom-control-label" for="<?php echo $key;?>">{{CONFIG currency_symbol}}<?php echo $value;?></label>
+												</div>
+											<?php }?>
+										</div>
+									<?php } ?>
+								</div>
+							</div>
+						
+							<div class="form-group mat_input float">
+								<input id="title" name="title" type="text" placeholder=" " class="form-control">
+								<label for="title">{{LANG Title}}</label>  
+								<span class="help-block">{{LANG Your song title, 2 - 55 characters}}</span>
+							</div>
+	
+							<div class="form-group mat_input float">
+								<textarea name="description" id="description" placeholder=" " rows="5" class="form-control"></textarea>
+								<label for="description">{{LANG Description}}</label>  
+							</div>
+
+							<div class="form-group mat_input float">
+								<textarea name="lyrics" id="lyrics" placeholder=" " rows="5" class="form-control"></textarea>
+								<label for="lyrics">{{LANG Lyrics}}</label>
+							</div>
+							
+							<?php if ($music->config->tag_artist_system == 1) { ?>
+								<div class="form-group mat_input float">
+									<input name="artist_tag" id="artist_tag" type="text" placeholder=" " class="form-control" onkeydown="GetArtist(this.value)">
+									<label for="artist_tag">{{LANG Tag Artists}} <span id="artists_count"></span></label>  
+									<span class="help-block">{{LANG Tag other artists to show they performed together}}</span>
+									<input type="hidden" name="parts" id="artists_ids">
+									<div class="group_chat_mbr_list_prnt"><div class="group_chat_mbr_list"></div></div>
+								</div>
+							<?php } ?>
+
+							<div class="form-group mat_input float tag_float">
+								<input name="tags" id="tags" type="text" placeholder=" " class="form-control">
+								<label for="tags">{{LANG Tags}}</label>  
+								<span class="help-block">{{LANG Add tags to describe more about your track}}</span>
+							</div>
+							
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group mat_input float">
+										<select name="category_id" id="category_id" class="form-control">
+											<?php foreach($music->categories as $key => $category) {?>
+													<option value="<?php echo $key?>"><?php echo $category?></option>
+											<?php } ?>
+										</select>
+										<label for="category_id">{{LANG Genre}}</label>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group mat_input float">
+										<select name="privacy" id="privacy" class="form-control">
+											<option value="0">{{LANG Public}}</option>
+											<option value="1">{{LANG Private}}</option>
+										</select>
+										<label for="privacy">{{LANG Availability}}</label>  
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group mat_input float">
+										<select name="allow_downloads" id="allow_downloads" class="form-control">
+											<option value="1">{{LANG Yes}}</option>
+											<option value="0">{{LANG No}}</option>
+										</select>
+										<label for="allow_downloads">{{LANG Allow downloads}}</label>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group mat_input float">
+										<select name="display_embed" id="display_embed" class="form-control">
+											<option value="1">{{LANG Yes}}</option>
+											<option value="0">{{LANG No}}</option>
+										</select>
+										<label for="display_embed">{{LANG Display embed code}}</label>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group mat_input float">
+								<select name="age_restriction" id="age_restriction" class="form-control">
+									<option value="0" selected>{{LANG All ages can listen this song}}</option>
+									<option value="1">{{LANG Only +18}}</option>
+								</select>
+								<label for="age_restriction">{{LANG Age Restriction}}</label>  
+							</div>
+							
+
+							<div class="last-sett-btn modal-footer mat_sett_btn">
+								<button type="submit" class="btn btn-primary btn-mat" id="btn-song-submit">{{LANG Publish}}</button>
+							</div>
+							<input type="hidden" name="song-location" id="song-location" value="">
+							<input type="hidden" name="song-thumbnail" id="song-thumbnail" value="">
+						</form>
+					</div>
+				</div>
+			</div>
+			<!-- End Upload Music -->
+		</div>
+	</div>
+</div>
+<form action="" id="thumbnail-form" method="POST">
+   <input id="thumbnail" name="thumbnail" type="file" style="visibility: hidden;" accept="image/*">
+</form>
+<script>
+var chat_part_array = [];
+// Upload Music Page
+$(function () {
+	$(document).on('click', '.group_chat_mbr_part', function(event) {
+	    event.preventDefault();
+	    var self_id    = $(this).attr('id');
+	    if ($.inArray(self_id, chat_part_array) == -1) {
+	        chat_part_array.push(self_id);
+	        $("#artists_count").text("("+chat_part_array.length+")");
+	        
+	        $(this).fadeOut(100,function(){
+	            $("#artists_ids").val(chat_part_array.join());
+	            $(this).remove();
+	        })
+	    }
+	    else{
+	      $(this).addClass('disabled').removeAttr('title');
+	    }
+	});
+	$('[type=radio]').uncheckableRadio();
+	$("#tags").tagit({
+		allowSpaces: true
+	});
+	
+	$("ul.tagit input").focus(function(){
+		$('.tag_float').addClass("done");
+	}).blur(function(){
+		$('.tag_float').removeClass("done");
+	});
+	
+	var audio_drop_block = $("[data-block='audio-drop-zone']");
+
+	if (typeof(window.FileReader)){
+		audio_drop_block[0].ondragover = function() {
+			audio_drop_block.addClass('drag_active');
+			return false;
+		};
+		audio_drop_block[0].ondragleave = function() {
+			audio_drop_block.removeClass('drag_active');
+			return false;
+		};
+		audio_drop_block[0].ondrop = function(event) {
+			event.preventDefault();
+			audio_drop_block.removeClass('drag_active');
+			var file = event.dataTransfer.files;
+			$('#upload-audio').find('input').prop('files', file);
+			$('#upload-audio').submit();
+		};
+	}
+
+	$(document).ready(function() { 
+	    var options = { 
+	    	url: "{{CONFIG ajax_url}}/submit-song?hash_id=" + getHashID(),
+	        beforeSubmit:  function () {
+	        	$('#output-song-errors').removeClass("alert alert-success").addClass('alert alert-danger');
+	        	$('#output-song-errors').empty();
+	        	$("#btn-song-submit").text("{{LANG Please wait..}}");
+	        	$("#btn-song-submit").attr("disabled", "true");
+	        	
+	        }, 
+	        success: function (data) {
+	        	if (data.status == 200) {
+	        		$('#output-song-errors').removeClass("alert alert-danger").addClass('alert alert-success');
+	        		<?php if ($music->config->ffmpeg_system == "on") { ?>
+	        		$('#output-song-errors').html("{{LANG Please wait, your track is being coverted to mp3 audio file. This might take a few minutes.}}");
+	        		$.post('{{CONFIG ajax_url}}/convert-track', {id: data.audio_id, file: data.song_location}, function(dataSecond, textStatus, xhr) {
+	        			if (dataSecond.status == 300) {
+							checkForSongStatus(data.audio_id);
+	        			}
+	        		});
+	        		<?php } else { ?>
+	        			location.href = data.link;
+	        		<?php } ?>
+	        	} else if (data.status == 400) {
+	        		$("#btn-song-submit").removeAttr("disabled");
+	        		$("#btn-song-submit").text("{{LANG Publish}}");
+	        		$('#output-song-errors').html(data.message);
+	        	}
+	        	$('html, body').animate({scrollTop:0},500);
+	        }
+	    }; 
+
+	    $('#song-form').ajaxForm(options); 
+	}); 
+
+	$('#upload-audio').submit(function(event) {
+		var allowed = [<?php echo ($music->config->ffmpeg_system == "off") ? '"mp3"' : '"mp3","ogg","wav","opus","oga"'?>];
+		var file_size = $(".upload-audio-file").prop('files')[0].size;
+		if (file_size > <?php echo $music->config->user_max_upload?>) {
+			showResponseAlert('.upload_music_alert','danger',"{{LANG file_is_large}}",7000);
+			return false;
+		} else if (!validate_fileupload($('.upload-audio-file').val(), allowed)) {
+			showResponseAlert('.upload_music_alert','danger',"<?php echo ($music->config->ffmpeg_system == "off") ? lang("Invalid file format, only mp3 is allowed") : lang("Invalid file format, only mp3, ogg, opus, oga, wav, and mpeg is allowed")?>",7000);
+			return false;
+		} else {
+			var filename = $('.upload-audio-file').val().split('\\').pop();
+			$('.upload_music').addClass('no-flex');
+			$('#title').val(removeExtension(filename));
+		}
+	});
+
+	
+	$('#thumbnail').change(function(event) {
+		if (!validate_fileupload($('#thumbnail').val(), ["jpg","png","jpeg","webp"])) {
+			showResponseAlert('#output-song-errors','danger',"{{LANG Invalid file format, only jpg, jpeg, png are allowed}}",7000);
+			return false;
+		}
+        let bar = $('#img_upload_progress');
+        let percent = $('#img_upload_progress_bar');
+        bar.removeClass('hidden');
+
+	   $.ajax({
+           xhr: function() {
+               let xhr = new window.XMLHttpRequest();
+               xhr.upload.addEventListener("progress", function(evt){
+                   if (evt.lengthComputable) {
+                       let percentComplete = evt.loaded / evt.total;
+                       percentComplete = parseInt(percentComplete * 100);
+                       //status.html( percentComplete + "%");
+                       percent.width(percentComplete + '%');
+                       percent.html(percentComplete + '%');
+                       if (percentComplete === 100) {
+                           // bar.addClass('hidden');
+                           // percent.width('0%');
+                           // percent.html('0%');
+                       }
+                   }
+               }, false);
+               return xhr;
+           },
+	        type: 'POST',
+	        url: '{{CONFIG ajax_url}}/upload-thumbnail?hash_id=' + $('.main_session').val(),
+	        data: new FormData($("#thumbnail-form")[0]),
+	        processData: false, 
+	        contentType: false, 
+	        success: function(data) {
+                bar.addClass('hidden');
+                percent.width('0%');
+                percent.html('0%');
+	        	if (data.status == 200) {
+	        		$('.upload-image-content').html('<img src="' + data.full_thumbnail + '" class="w-100">');
+	        		$('#song-thumbnail').val(data.thumbnail);
+	        	} else if (data.status == 400) {
+	        		showResponseAlert('#output-song-errors','danger',data.message,7000);
+	        	} else {
+	        		showResponseAlert('#output-song-errors','danger',"{{LANG Error found while uploading your image, please try again later.}}",7000);
+	        	}
+	        }
+	    });
+	});
+
+	$('#upload-audio').ajaxForm({
+	    url: '{{CONFIG ajax_url}}/upload-song?hash_id=' + $('.main_session').val(),
+	    dataType:'json',
+	    beforeSend: function() {
+	        $('.progress').removeClass('hidden');
+	        var percentVal = '0%';
+	        $(".progress-bar").width(percentVal);
+	        $(".progress-bar").html(percentVal);
+	    },
+	    uploadProgress: function(event, position, total, percentComplete) {
+	        if(percentComplete > 50) {
+	            $(".progress-bar").addClass('white');
+	        }
+	        var percentVal = percentComplete + '%';
+	        $(".progress-bar").width(percentVal);
+	        $(".progress-bar").html(percentVal);
+
+	        if (percentComplete == 100) {
+	            $('.progress').find('.bar').removeClass('upload-progress-bar');
+	        }
+	    },
+	    success: function(data) {
+	    	$('.upload-audio-file').val("");
+	    	percentVal = '0%';
+	    	$(".progress-bar").width(percentVal);
+            $('.progress').addClass('hidden');  
+	    	if (data.status == 200) {
+	    		$('#upload-form').removeClass('hidden');
+	    		$('.upload').addClass('hidden');
+	    		$("#song-location").val(data.file_path);
+	    	} else if (data.status == 400) {
+        		showResponseAlert('.upload_music_alert','danger',data.message,7000);
+        	} else {
+        		showResponseAlert('.upload_music_alert','danger',"{{LANG Error found while uploading your track, please try again later.}}",7000);
+        	}
+		}
+	});
+
+	$('.upload-audio-file').on('change', function() {
+		$('#upload-audio').submit();
+	});
+});
+
+
+jQuery(function($) {
+	$(document).ready(function() {
+		$('.upload_music .upload').on('click', function(e) {
+			$('.upload-audio-file').trigger("click");
+		});
+	});
+});
+</script>

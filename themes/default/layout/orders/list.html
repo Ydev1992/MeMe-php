@@ -1,0 +1,22 @@
+<div class="song_list" data-order="{{ID}}">
+	<div class="row ds_order_list">
+		<div class="col-md-3">
+			<a href="{{url}}" data-load="order/{{hash}}"><b>#{{hash}}</b></a>
+		</div>
+		<div class="col-md-2">
+			<h3>{{LANG Products}}</h3><p>{{count}}</p>
+		</div>
+		<div class="col-md-1">
+			<h3>Qty</h3><p>{{items_count}}</p>
+		</div>
+		<div class="col-md-2">
+			<h3>{{LANG Price}}</h3><p>{{CONFIG currency_symbol}}{{price}}</p>
+		</div>
+		<div class="col-md-2">
+			<h3>{{LANG Status}}</h3><p>{{status}}</p>
+		</div>
+		<div class="col-lg-2">
+			<a href="{{url}}" data-load="order/{{hash}}" class="btn btn-mat buy_button">{{LANG View Details}}</a>
+		</div>
+	</div>
+</div>

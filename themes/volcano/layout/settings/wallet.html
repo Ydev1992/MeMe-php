@@ -1,0 +1,364 @@
+<?php if ($music->config->stripe_payment == 'on') { ?>
+<script src="https://checkout.stripe.com/checkout.js"></script>
+<?php } ?>
+<div class="ma_page_content">
+    <div class="ma_pc_inner">
+        <div class="page_padding">
+            <!-- Settings -->
+            <div class="sett_page">
+				<div class="row">
+						<div class="col-lg-4">
+							<?php echo loadPage("settings/sidebar"); ?>
+						</div>
+						<div class="col-lg-8">
+							<div class="st_content">
+								<h2 class="home_widget_title home_big_title mt-4 mb-5">{{LANG Wallet}}</h2>
+								
+								<div class="st_form">
+
+									<form method="POST" id="monetization-settings">
+                                        <?php $loadPage = loadPage('thirdparty/paypal-demo'); echo (!empty($loadPage)) ? $loadPage : '';?>
+										<div class="monetization-settings-alert"></div>
+										<div class="banner_header wallet">
+											<div class="circle-1"></div>
+											<div class="circle-2"></div>
+											<div class="position-relative">
+												<div class="align-items-center">
+													<div class="">
+														<h3 class="home_widget_title home_big_title mt-0 mb-3"><span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path fill="currentColor" d="M2 9h19a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V9zm1-6h15v4H2V4a1 1 0 0 1 1-1zm12 11v2h3v-2h-3z"/></svg></span> {{LANG Available wallet}}</h3>
+														
+														<h1><sup>{{CURRENCY}}</sup>{{USER wallet_format}}</h1>
+													</div>
+													<div class="mat_sett_btn">
+														<a href="javascript:void(0);" onclick="ReplenishWallet();" id="btn-wallet" class="btn btn-primary btn-block btn-mat">{{LANG Top up wallet}}</a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+
+                
+            </div>
+            <!-- End Settings -->
+        </div>
+    </div>
+</div>
+<form class="replenish-wallet-form hidden">
+    <div class="modal-title">
+        <h5>{{LANG MY BALANCE}} <?php echo $music->config->currency_symbol; ?> {{ME wallet}}</h5>
+    </div>
+    <div class="form-group mat_input float">
+        <input type="number" class="form-control" placeholder=" ">
+		<label>{{LANG Replenish My Balance}} {{LANG Amount}}</label>
+    </div>
+</form>
+<div class="payment_method"></div>
+<script type="text/javascript">
+    <?php if ($music->config->fluttewave_payment == 'on') { ?>
+        function open_fluttewave() {
+            $('#pay-go-pro').modal('hide');
+            $('#wallet_payment_modal').modal('hide');
+            $('#fluttewave_modal').modal({
+                show: true
+            });
+        }
+        function SignatureFluttewave() {
+            $('#fluttewave_btn').attr('disabled', true).text("{{LANG Please wait..}}");
+            amount = $('#wallet_amount').val();
+            email = $('#fluttewave_email').val();
+            $.post('{{CONFIG ajax_url}}/fluttewave/pay', {amount:amount,email:email}, function(data) {
+                $('#fluttewave_btn').html("{{LANG pay}}");
+                $('#fluttewave_btn').removeAttr('disabled');
+                if (data.status == 200) {
+                    window.location.href = data.url;
+                } else {
+                    $('#fluttewave_alert').html("<div class='alert alert-danger'>"+data.message+"</div>");
+                    setTimeout(function () {
+                        $('#fluttewave_alert').html("");
+                    },3000);
+                }
+            });
+        }
+    <?php } ?>
+    function purchaseWalletStripe(element,price) {
+        var title = '{{LANG Replenish My Balance}}';
+
+        getText = element.text();
+        element.attr('disabled', 'true');
+        element.text("{{LANG Please wait..}}");
+
+        var fd = new FormData();
+        fd.append('description', title);
+        fd.append('price', price);
+        fd.append('payType', 'wallet');
+        fd.append('trackID', '');
+        fd.append('hash_id', $('.main_session').val() );
+
+        fetch('{{CONFIG ajax_url}}/new-stripe-wallet', {
+            method: 'POST',
+            body : fd
+        }).then(function(response) {
+            return response.json();
+        }).then(function(session) {
+            var stripe = Stripe('{{CONFIG stripe_id}}');
+            return stripe.redirectToCheckout({ sessionId: session.id });
+        }).then(function(result) {
+            // If redirectToCheckout fails due to a browser or network
+            // error, you should display the localized error message to your
+            // customer using error.message.
+            if (result.error) {
+                alert(result.error.message);
+            }
+        })
+        .catch(function(error) {
+            console.error('Error:', error);
+        });
+    }
+    var amount;
+
+    function ShowMethods(type,price = 0,user_id = 0) {
+        $.post('{{CONFIG ajax_url}}/wallet/get_modal',{type:type,price:price,user_id:user_id}, function(data, textStatus, xhr) {
+            if (data.status == 200) {
+                $('.payment_method').html(data.html);
+                $('#wallet_payment_modal').modal({
+                    show: true
+                });
+            }
+        });
+    }
+
+    function ReplenishWallet() {
+        swal({
+          html:$('.replenish-wallet-form').clone().addClass('clone').removeClass('hidden'),
+          showCloseButton: true,
+          showCancelButton: false,
+          focusConfirm: false,
+          confirmButtonText:"{{LANG replenish}}",
+          cancelButtonText:"{{LANG cancel}}",
+          buttonsStyling:false,
+          confirmButtonClass:'btn btn-primary btn-mat',
+          cancelButtonClass:"btn btn-default pull-left",
+          allowOutsideClick:false,
+          showLoaderOnConfirm: true,
+          preConfirm: function () {
+            return new Promise(function (resolve, reject) {
+                amount = $(".replenish-wallet-form.clone").find('input').val();
+                if (!amount || amount < 1){
+                    reject("{{LANG Please check the details}}!");
+                }
+                else{
+                    $('#wallet_amount').val(amount);
+                    swal.close();
+                    ShowMethods('wallet',amount);
+                }
+            })
+          }
+        }).then(function(){/*pass*/},function(){/*pass*/});
+    }
+    function OpenStripe(pkg,self,video_id = 0,price = 0){
+        if (!pkg || !self) {
+          return false;
+        }
+        $(self).text("{{LANG please_wait}}").attr('disabled', 'true');
+        amount = $("#wallet_amount").val()+'00';
+        var handler = StripeCheckout.configure({
+            key: "<?php echo $music->config->stripe_secret;?>",
+            locale: 'english',
+            token: function(token) {
+              $('.modal-body').html('<i class="fa fa-spin fa-spinner"></i> {{LANG Confirming your payment, please wait..}}');
+              $.post('{{CONFIG ajax_url}}/wallet/stripe_replenish', {stripeToken:token.id, amount:amount}, function (data) {
+                 if (data.status == 200) {
+                    window.location.href = data.url;
+                 } else {
+                    $('.modal-body').html('<i class="fa fa-spin fa-spinner"></i> {{LANG Payment declined, please try again later.}}');
+                 }
+              });
+            }
+        });
+
+        handler.open({
+           name: "<?php echo $music->config->name?>",
+           amount: amount,
+           currency: '<?php echo $music->config->stripe_currency?>',
+           opened: function () {
+              $('#pay-go-pro').modal('hide');
+              $('.btn-cart').attr('disabled', false).html("<i class='fa fa-credit-card'></i> {{LANG Credit Card}}");
+           }
+        });
+     }
+
+      $(document).on('click', '#select-img', function(event) {
+        $("#thumbnail").click()
+    });
+      $(document).on('change', '#thumbnail', function(event) {
+        let imgPath = $(this)[0].files[0].name;
+        if (typeof(FileReader) != "undefined") {
+            let reader = new FileReader();
+            reader.onload = function(e) {
+                $('#receipt_img_preview').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(this.files[0]);
+        }
+        $('#bank_transfer_modal').addClass('up_rec_img_ready');
+    });
+      jQuery(document).ready(function($) {
+        $('#bank_transfer_form').ajaxForm({
+          url: '{{CONFIG ajax_url}}/wallet/bank_replenish',
+          beforeSend: function() {
+            $('#bank_transfer_form').find('.ball-pulse').fadeIn(100);
+          },
+          success: function(data) {
+            if (data['status'] == 200) {
+                $("#blog-alert").html('<div class="alert alert-success">'+ data['message'] +'</div>');
+                setTimeout(function () {
+                    window.location = "<?php echo $music->config->site_url;?>";
+                    $(".prv-img").html('<div class="thumbnail-rendderer"><div><div class="error-text-renderer"></div><div><p>{{LINK Browse To Upload}}</p></div></div> </div>');
+                    $("#blog-alert").html('');
+                    $('#configreset').click();
+
+                },3000)
+            } else if (data['message']) {
+              $("#blog-alert").html('<div class="alert alert-danger">' + data['message'] + '</div>');
+            } 
+            $('#bank_transfer_form').find('.ball-pulse').fadeOut(100);
+        }});
+    });
+
+     function OpenBank(pkg,self,video_id = 0,price = 0){
+        if (!pkg || !self) {
+          return false;
+        }
+        amount = $("#wallet_amount").val()+'00';
+        $('#bank_transfer_amount').val(amount)
+        $(self).text("{{LANG please_wait}}").attr('disabled', 'true');
+        $('#pay-go-pro').modal('hide');
+        $('#configreset').click();
+        $("#blog-alert").html('');
+        $('#pay-go-pro').modal('hide');
+        $('#bank_transfer_modal').modal({
+             show: true
+        });
+    }
+    $(document).on('change', '#thumbnail', function(event) {
+        let imgPath = $(this)[0].files[0].name;
+        if (typeof(FileReader) != "undefined") {
+            let reader = new FileReader();
+            reader.onload = function(e) {
+                $('#receipt_img_preview').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(this.files[0]);
+        }
+        $('#bank_transfer_modal').addClass('up_rec_img_ready');
+    });
+    <?php if ($music->config->yoomoney_payment == 'on') { ?>
+        function pay_using_yoomoney() {
+            amount = $("#wallet_amount").val();
+            $.post('{{CONFIG ajax_url}}/yoomoney/create_yoomoney',{amount:amount}, function (data) {
+                if (data.status == 200) {
+                    $('body').append(data.html);
+                    document.getElementById("yoomoney_form").submit();
+                    $("#yoomoney_form").remove();
+                }
+                else{
+                    $('.wallet_payment_modal_alert').html('<div class="alert alert-danger">'+data.message+'</div>');
+                    setTimeout(function () {
+                        $('.wallet_payment_modal_alert').html('');
+                    },2000);
+                }
+            });
+        }
+    <?php } ?>
+    <?php if ($music->config->fortumo_payment == 'on') { ?>
+        function pay_using_fortumo() {
+            $.post('{{CONFIG ajax_url}}/fortumo/get_fortumo', function (data) {
+                if (data.status == 200) {
+                    location.href = data.url;
+                }
+                else{
+                    $('.wallet_payment_modal_alert').html('<div class="alert alert-danger">'+data.message+'</div>');
+                    setTimeout(function () {
+                        $('.wallet_payment_modal_alert').html('');
+                    },2000);
+                }
+            });
+        }
+    <?php } ?>
+    <?php if ($music->config->aamarpay_payment == 'on') { ?>
+        function pay_using_aamarpay() {
+            $('#wallet_payment_modal').modal('hide');
+            $('#aamarpay_modal').modal({
+                show: true
+            });
+        }
+        function AamarpayRequest() {
+            amount = $("#wallet_amount").val();
+            $.post('{{CONFIG ajax_url}}/aamarpay/get_aamarpay',{amount:amount,name:$('#aamarpay_name').val(),email:$('#aamarpay_email').val(),phone:$('#aamarpay_number').val()}, function (data) {
+                $('#aamarpay_button').removeAttr('disabled');
+                $('#aamarpay_button').text("{{LANG pay}}");
+                if (data.status == 200) {
+                    location.href = data.url;
+                }
+                else{
+                    $('.aamarpay_alert').html('<div class="alert alert-danger">'+data.message+'</div>');
+                    setTimeout(function () {
+                        $('.aamarpay_alert').html('');
+                    },2000);
+                }
+            });
+            
+        }
+    <?php } ?>
+    <?php if ($music->config->ngenius_payment == 'on') { ?>
+        function pay_using_ngenius() {
+            amount = $("#wallet_amount").val();
+            $.post('{{CONFIG ajax_url}}/ngenius/get_ngenius',{amount:amount}, function (data) {
+                if (data.status == 200) {
+                    location.href = data.url;
+                }
+                else{
+                    $('.wallet_payment_modal_alert').html('<div class="alert alert-danger">'+data.message+'</div>');
+                    setTimeout(function () {
+                        $('.wallet_payment_modal_alert').html('');
+                    },2000);
+                }
+            });
+        }
+    <?php } ?>
+    <?php if ($music->config->coinbase_payment == 'on') { ?>
+        function pay_using_coinbase() {
+            amount = $("#wallet_amount").val();
+            $.post('{{CONFIG ajax_url}}/coinbase/get_coinbase',{amount:amount}, function (data) {
+                if (data.status == 200) {
+                    location.href = data.url;
+                }
+                else{
+                    $('.wallet_payment_modal_alert').html('<div class="alert alert-danger">'+data.message+'</div>');
+                    setTimeout(function () {
+                        $('.wallet_payment_modal_alert').html('');
+                    },2000);
+                }
+            });
+        }
+    <?php } ?>
+    <?php if ($music->config->coinpayments == 'on') { ?>
+        function pay_using_coinpayments() {
+            amount = $("#wallet_amount").val();
+            $.post('{{CONFIG ajax_url}}/coinpayments/get_coinpayments',{amount:amount}, function (data) {
+                if (data.status == 200) {
+                    location.href = data.url;
+                }
+                else{
+                    $('.wallet_payment_modal_alert').html('<div class="alert alert-danger">'+data.message+'</div>');
+                    setTimeout(function () {
+                        $('.wallet_payment_modal_alert').html('');
+                    },2000);
+                }
+            });
+        }
+    <?php } ?>
+</script>

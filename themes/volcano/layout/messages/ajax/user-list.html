@@ -1,0 +1,13 @@
+<li class="user-list <?php echo ($music->isMessageActive) ? "active" : "" ?>" data-id="{{ID}}" data-time="{{TTIME}}">
+    <div class="list-innr" data-load="messages/{{USERNAME}}" data-id="{{ID}}">
+		<div class="user-avatar">
+			<img src="{{AVATAR}}" alt="user avatar">
+			<div class="countunseen">{{COUNT}}</div>
+		</div>
+		
+		<div class="user-name">{{NAME}}<span class="mx-2">•</span><span class="user-last-time">{{TIME}}</span></div>
+		<div class="username hidden">{{USERNAME}}</div>
+		<div class="user-last-message">{{LAST_MESSAGE}}</div>
+		<div class="clear"></div>
+    </div>
+</li>

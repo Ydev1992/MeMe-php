@@ -1,0 +1,15 @@
+<div class="col-lg-6 col-md-6 ds_radio_stat_list" data-id="{{STATION radio_id}}">
+    <div class="content">
+        <div class="cover_art">
+           <a href="javascript:void(0)"><img src="{{STATION image}}" alt="{{STATION name}}" title="{{STATION name}}"></a>
+		</div>
+        <div class="track_info">
+            <div><h3><a href="javascript:void(0)">{{STATION name}}</a></h3></div>
+            <div><p>{{LANG Country}}: {{STATION country}}&nbsp;&nbsp;•&nbsp;&nbsp;{{LANG Genre}}: {{STATION genre}}</p></div>
+
+			<div class="foot">
+				<button class="btn btn-primary" data-radio-id="{{STATION radio_id}}" data-name="{{STATION name}}" data-url="{{STATION url}}" data-image="{{STATION image}}" data-genre="{{STATION genre}}" data-country="{{STATION country}}" onclick="addStation(this)" title="{{LANG ADD}}"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"></path></svg></button>
+			</div>
+		</div>
+    </div>
+</div>

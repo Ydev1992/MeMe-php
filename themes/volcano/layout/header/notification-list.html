@@ -1,0 +1,33 @@
+<li class="ma_notifs">
+	<?php if( $data['n_type'] == 'admin_notification'){?>
+	<a href="{{uri}}">
+	<?php }else{ ?>
+	<a href="{{n_url}}" data-load="{{n_a_url}}">
+	<?php } ?>
+		<div class="left_part">
+			<div class="avatar">
+				<?php if( $data['n_type'] == 'decline_artist' || $data['n_type'] == 'approved_artist' || $data['n_type'] == 'admin_notification' || $data['n_type'] == 'approve_receipt' || $data['n_type'] == 'disapprove_receipt' || $data['n_type'] == 'product_approved' || $data['n_type'] == 'admin_status_changed' || $data['n_type'] == 'refund_declined' || $data['n_type'] == 'refund_approved' || $data['n_type'] == 'your_song_is_ready' || $data['n_type'] == 'coinpayments_approved' || $data['n_type'] == 'coinpayments_canceled' ){?>
+					<?php if ($data['n_type'] == 'your_song_is_ready' && !empty($music->t_thumbnail)) { ?>
+						<img src="<?php echo $music->t_thumbnail ?>" alt="site avatar">
+					<?php }else{ ?>
+						<img src="{{CONFIG theme_url}}/img/icon.png" alt="site avatar">
+					<?php } ?>
+				<?php }else{ ?>
+					<img src="{{USER avatar}}" alt="User's avatar">
+				<?php } ?>
+			</div>
+			<div class="n_detail">
+				<p>
+					<?php if( $data['n_type'] == 'decline_artist' || $data['n_type'] == 'approved_artist' || $data['n_type'] == 'admin_notification'  || $data['n_type'] == 'approve_receipt' || $data['n_type'] == 'disapprove_receipt' || $data['n_type'] == 'product_approved' || $data['n_type'] == 'admin_status_changed' || $data['n_type'] == 'refund_declined' || $data['n_type'] == 'refund_approved' || $data['n_type'] == 'your_song_is_ready' || $data['n_type'] == 'coinpayments_approved' || $data['n_type'] == 'coinpayments_canceled' ){?>
+
+					<?php }else{ ?>
+					<b>{{USER name_v}}</b>
+					<?php } ?>
+
+					{{n_text}}
+				</p>
+			</div>
+		</div>
+		<div class="ajax-time" title="{{ns_time}}">{{n_time}}</div>
+	</a>
+</li>

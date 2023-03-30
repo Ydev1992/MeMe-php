@@ -1,0 +1,69 @@
+<div class="ma_page_content">
+	<div class="ma_pc_inner">
+		<center><?php echo GetAd('header');?></center>
+		<div class="page_padding">
+			<!-- Best Releases -->
+			<div class="sq_music_tracks mb-60">
+				<h2 class="home_widget_title home_big_title mt-0">{{LANG Best New Releases}}</h2>
+				<div class="owl-carousel owl-theme mus_disc_new_trk">
+					{{BEST_NEW_RELEASES}}
+				</div>
+			</div>
+			<!-- End Best Releases -->
+			
+			<div class="short_list_cont top_dic_son_listz mb-60">
+				<div class="short_list_card">
+					<h2 class="home_widget_title home_big_title">{{LANG Most Popular This Week}}</h2>
+					<ul class="s_list_songs home_tp_songs_list ds_new_music_weekly">
+						{{MOST_THIS_WEEK}}
+					</ul>
+				</div>
+			</div>
+
+			<!-- New Releases -->
+			<div class="sq_music_tracks">
+				<h2 class="home_widget_title home_big_title">{{LANG Latest Music}}</h2>
+				<div class="sq_track_slider no-slider top_albums_lists_pag mus_top_albms ds_new_music_latest" id="new-music">{{NEW_RELEASES}}</div>
+				<?php if ($music->latestReleases > 19) { ?>
+				<div class="text-center see_all">
+					<a href="javascript:void(0); loadMore('latest_music');" id="load-more-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M17,13H13V17H11V13H7V11H11V7H13V11H17M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"></path></svg> {{LANG Load More}}</a>
+				</div>
+				<?php } ?>
+			</div>
+			<!-- End New Releases -->
+		</div>
+		
+	</div>
+</div>
+
+<script>
+$('svg .verified_ico').tooltip({
+	title: '{{LANG verified}}',
+	placement: 'top',
+	container: 'body'
+});
+
+$(function () {
+	$(".mus_disc_new_trk").owlCarousel({
+		loop:true,
+		items: 5,
+		margin: 20,
+		<?php if ($music->language_type == 'rtl'){?>
+		rtl:true,
+		<?php }?>
+		nav:true,
+		dots: false,
+		responsive:{
+			0:{
+				items:1
+			},
+			600:{
+				items:3
+			},
+			1000:{
+				items:5
+			}
+		}
+	});
+})
+</script>

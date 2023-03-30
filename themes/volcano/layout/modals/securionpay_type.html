@@ -1,0 +1,49 @@
+<input type="hidden" id="securionpay_type">
+<script type="text/javascript">
+  $(function () {
+          SecurionpayCheckout.key = '<?php echo($music->config->securionpay_public_key); ?>';
+          SecurionpayCheckout.success = function (result) {
+            type = $('#securionpay_type').val();
+            id    = $('#buy_album_modal').attr('data-id');
+      amount = $('#buy_album_modal').attr('data_price');
+      if (type == 'buy_song') {
+        id    = $('#payment_modal').attr('data-id');
+      }
+      if (type== 'wallet') {
+        amount = $('#wallet_payment_modal').attr('data_price');
+      }
+              $.post('{{LINK endpoints/securionpay/handle}}?id='+id, result, function(data, textStatus, xhr) {
+                  if (data.status == 200) {
+                      window.location.href = data.url;
+                  }
+              }).fail(function(data) {
+                  M.toast({html: data.responseJSON.message});
+              });
+          };
+          SecurionpayCheckout.error = function (errorMessage) {
+              M.toast({html: errorMessage});
+          };
+      });
+      function securionpay_pay(self,type){
+          id    = $('#buy_album_modal').attr('data-id');
+    amount = $('#buy_album_modal').attr('data_price');
+    if (type == 'buy_song') {
+      id    = $('#payment_modal').attr('data-id');
+    }
+    if (type== 'wallet') {
+      amount = $('#wallet_payment_modal').attr('data_price');
+    }
+    $('#securionpay_type').val(type);
+          $.post('{{LINK endpoints/securionpay/token}}', {type:type,amount:amount,id:id}, function(data, textStatus, xhr) {
+              if (data.status == 200) {
+                  SecurionpayCheckout.open({
+                      checkoutRequest: data.token,
+                      name: type,
+                      description: type
+                  });
+              }
+          }).fail(function(data) {
+              M.toast({html: data.responseJSON.message});
+          });
+      }
+</script>

@@ -1,0 +1,23 @@
+<div class="col-md-2 px-2 events-list-wrapper" data-id='{{id}}'>
+	<div class="events-list-cover text-center store_products">
+		<a href="{{url}}" data-load="{{data_load}}" class="event_cover store_products_hdr">
+			<img src="{{thumbnail}}" class="events-list-cover-img">
+			<p class="store_products-cat"><?php echo $music->products_categories[$music->product->cat_id]; ?></p>
+			<span class="numbers">{{key}}</span>
+		</a>
+		<div class="store_products-info">
+			<h3 class="store_products-name">
+				<a href="{{url}}" data-load="{{data_load}}">{{title}}</a>
+			</h3>
+			<b class="text-success store_products-price text-truncate">{{CONFIG currency_symbol}}{{price}}</b>
+			<div class="store_products-btns">
+				<?php if ($music->product->user_data->id != $music->user->id) { ?>
+					<span>
+						<button type="button" onclick="AddProductToCart(this,'<?php echo($music->product->id) ?>','<?php echo(!empty($music->product->added_to_cart) && $music->product->added_to_cart > 0 ? 'remove' : 'add') ?>')" class="btn btn-primary btn-mat btn-block"><?php echo(!empty($music->product->added_to_cart) && $music->product->added_to_cart > 0 ? lang('Remove From Cart') : lang('Add To Cart')) ?></button>
+					</span>  
+				<?php } ?>				
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>

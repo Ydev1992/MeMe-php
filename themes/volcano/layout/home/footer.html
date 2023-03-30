@@ -1,0 +1,65 @@
+<div class="ma_footer_cright">
+	<div class="ma_footer_links">
+		<div class="lang_select dropup">
+			<button type="button" class="btn dropdown-toggle" data-toggle="modal" data-target="#select-language"><svg xmlns="http://www.w3.org/2000/svg" width="16.66" height="16.66" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-globe"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg> <?php echo ucfirst($_SESSION['lang']); ?></button>
+		</div>
+	</div>
+	<div class="ma_footer_links">
+		<?php if (IS_LOGGED && $music->config->developers_page == 'on') { ?>
+		<a href="{{LINK developers}}" data-load="developers">{{LANG developers}}</a>&nbsp;&nbsp;•&nbsp;&nbsp;
+		<?php } ?>
+		<a href="{{LINK blogs}}" data-load="blogs">{{LANG Blogs}}</a>&nbsp;&nbsp;•&nbsp;&nbsp;
+		<?php if ($music->dmca_terms_page == 1) { ?>
+		<a href="{{LINK terms/dmca}}" data-load="terms/dmca">{{LANG DMCA}}</a>&nbsp;&nbsp;•&nbsp;&nbsp;
+		<?php } ?>
+		<?php if ($music->about_page == 1) { ?>
+		<a href="{{LINK terms/about}}" data-load="terms/about">{{LANG About Us}}</a>&nbsp;&nbsp;•&nbsp;&nbsp;
+		<?php } ?>
+		<?php if ($music->terms_of_use_page == 1) { ?>
+		<a href="{{LINK terms/terms}}" data-load="terms/terms">{{LANG Terms}}</a>&nbsp;&nbsp;•&nbsp;&nbsp;
+		<?php } ?>
+		<a href="{{LINK contact}}" data-load="contact">{{LANG Contact}}</a>&nbsp;&nbsp;•&nbsp;&nbsp;
+		<?php if ($music->privacy_policy_page == 1) { ?>
+		<a href="{{LINK terms/privacy}}" data-load="terms/privacy">{{LANG Privacy Policy}}</a>&nbsp;&nbsp;•&nbsp;&nbsp;
+		<?php } ?>
+		<a href="{{LINK terms/faqs}}" data-load="terms/faqs">{{LANG faqs}}</a>
+		{{HOOK LOAD_FOOTER_CONTENT}}
+
+		<?php $pages = GetCustomPages();
+							if (!empty($pages)) {
+							 ?>
+							 • <div class="lang_select dropup">
+				<button type="button" class="btn dropdown-toggle" data-display="static" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{LANG More}}</button>
+				<div class="dropdown-menu dropdown-menu-right mat-dropdown">
+					<ul class="list-unstyled mb-0">
+						<?php foreach($pages as $key => $page) { ?>
+							<li><a href="{{LINK site_pages/<?php echo($page['page_name']) ?>}}"><?php echo $page['page_title'];?></a></li>
+						<?php } ?>
+					</ul>
+				</div>
+			</div>
+		<?php } ?>
+	</div>
+	<div class="ma_footer_links">
+		<?php if (!empty($music->config->facebook_url)) { ?>
+			<a href="<?php echo($music->config->facebook_url); ?>" target="_blank" class="bold">
+				<svg height="512" viewBox="0 0 152 152" width="512" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><g><g><path d="m76 0a76 76 0 1 0 76 76 76 76 0 0 0 -76-76zm19.26 68.8-1.26 10.59a2 2 0 0 1 -2 1.78h-11v31.4a1.42 1.42 0 0 1 -1.4 1.43h-11.2a1.42 1.42 0 0 1 -1.4-1.44l.06-31.39h-8.33a2 2 0 0 1 -2-2v-10.58a2 2 0 0 1 2-2h8.27v-10.26c0-11.87 7.07-18.33 17.4-18.33h8.47a2 2 0 0 1 2 2v8.91a2 2 0 0 1 -2 2h-5.19c-5.62.09-6.68 2.78-6.68 6.8v8.85h12.32a2 2 0 0 1 1.94 2.24z"/></g></g></svg>&nbsp;
+			</a>
+		<?php } ?>
+		<?php if (!empty($music->config->twitter_url)) { ?>
+			<a href="<?php echo($music->config->twitter_url); ?>" target="_blank" class="bold">
+				<svg height="512" viewBox="0 0 152 152" width="512" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><g><g><path d="m76 0a76 76 0 1 0 76 76 76 76 0 0 0 -76-76zm37.85 53a32.09 32.09 0 0 1 -6.51 7.15 2.78 2.78 0 0 0 -1 2.17v.25a45.58 45.58 0 0 1 -2.94 15.86 46.45 46.45 0 0 1 -8.65 14.5 42.73 42.73 0 0 1 -18.75 12.39 46.9 46.9 0 0 1 -14.74 2.29 45 45 0 0 1 -22.6-6.09 1.3 1.3 0 0 1 -.62-1.44 1.25 1.25 0 0 1 1.22-.94h1.9a30.31 30.31 0 0 0 16.94-5.14 16.45 16.45 0 0 1 -13-11.17.86.86 0 0 1 1-1.11 15.08 15.08 0 0 0 2.76.26h.35a16.42 16.42 0 0 1 -9.57-15.11.86.86 0 0 1 1.27-.75 14.44 14.44 0 0 0 3.74 1.45 16.42 16.42 0 0 1 -2.65-19.91.86.86 0 0 1 1.41-.11 43 43 0 0 0 29.51 15.77h.08a.62.62 0 0 0 .6-.67 17.39 17.39 0 0 1 .38-6 15.91 15.91 0 0 1 10.7-11.44 17.59 17.59 0 0 1 5.19-.8 16.36 16.36 0 0 1 10.84 4.09 2.12 2.12 0 0 0 1.41.54 2.15 2.15 0 0 0 .5-.07 30.3 30.3 0 0 0 8-3.3.85.85 0 0 1 1.25 1 16.23 16.23 0 0 1 -4.31 6.87 29.38 29.38 0 0 0 5.24-1.77.86.86 0 0 1 1.05 1.23z"/></g></g></svg>&nbsp;
+			</a>
+		<?php } ?>
+		<?php if (!empty($music->config->google_url)) { ?>
+			<a href="<?php echo($music->config->google_url); ?>" target="_blank" class="bold">
+				<svg height="512" viewBox="0 0 152 152" width="512" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><g><g><circle cx="76" cy="76" r="12.01"/><path d="m91.36 45.65h-30.72a15 15 0 0 0 -15 15v30.71a15 15 0 0 0 15 15h30.72a15 15 0 0 0 15-15v-30.72a15 15 0 0 0 -15-14.99zm-15.36 50.01a19.66 19.66 0 1 1 19.65-19.66 19.68 19.68 0 0 1 -19.65 19.66zm19.77-34.46a4.86 4.86 0 1 1 4.85-4.85 4.86 4.86 0 0 1 -4.85 4.85z"/><path d="m76 0a76 76 0 1 0 76 76 76 76 0 0 0 -76-76zm38 91.36a22.66 22.66 0 0 1 -22.64 22.64h-30.72a22.67 22.67 0 0 1 -22.64-22.64v-30.72a22.67 22.67 0 0 1 22.64-22.64h30.72a22.67 22.67 0 0 1 22.64 22.64z"/></g></g></svg>&nbsp;
+			</a>
+		<?php } ?>
+		<?php
+			$lang_copy = lang("© |DATE| |NAME|");
+			$lang_copy = str_replace('|NAME|', $music->config->name, $lang_copy);
+			echo $lang_copy = str_replace('|DATE|', date('Y'), $lang_copy);
+		?>
+	</div>
+</div>

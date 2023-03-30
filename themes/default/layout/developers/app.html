@@ -1,0 +1,159 @@
+<div class="ma_page_content" id="container_blog">
+    <div class="ma_pc_inner">
+        <div class="page_padding">
+			<h2 class="home_widget_title">
+				<span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M5,3H19A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3M7,7V9H9V7H7M11,7V9H13V7H11M15,7V9H17V7H15M7,11V13H9V11H7M11,11V13H13V11H11M15,11V13H17V11H15M7,15V17H9V15H7M11,15V17H13V15H11M15,15V17H17V15H15Z"></path></svg></span> {{LANG edit_app}}
+			</h2>
+			
+            <div class="content upload_music no-flex ds_create_edit_ads_cont pt-4">
+				<div class="row">
+						<div class="col-lg-8 offset-lg-2">
+            	<div class="form-group row mat_input">
+					<label class="col-md-3 col-form-label"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="17"><path fill="currentColor" d="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"></path></svg> {{LANG app_id}}</label>
+					<div class="col-md-9">
+						<input type="text" class="form-control" readonly value="{{app_id}}">
+					</div>
+				</div>
+            	<div class="form-group row mat_input">
+					<label class="col-md-3 col-form-label"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="17"><path fill="currentColor" d="M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z"></path></svg> {{LANG App secret}}</label>
+					<div class="col-md-9">
+						<input type="text" class="form-control" readonly value="{{app_secret}}">
+					</div>
+				</div>
+
+				<form class="user-app-form ds_create_edit_prods" method="POST">
+
+							<div class="user-app-alert"></div>
+							<div class="alert alert-success ads-settings-alert hidden"></div>
+							<div class="progress hidden">
+								<div class="upload-progress-bar bar progress-bar progress-bar-striped active"></div>
+								<div class="percent">0%</div>
+							</div>
+							
+							<div class="form-group row mat_input">
+								<label class="col-md-3 col-form-label" for="name"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="17"><path fill="currentColor" d="M21,2H3A2,2 0 0,0 1,4V20A2,2 0 0,0 3,22H21A2,2 0 0,0 23,20V4A2,2 0 0,0 21,2M11,17.5L9.5,19L5,14.5L9.5,10L11,11.5L8,14.5L11,17.5M14.5,19L13,17.5L16,14.5L13,11.5L14.5,10L19,14.5L14.5,19M21,7H3V4H21V7Z"></path></svg> {{LANG name}}</label>
+								<div class="col-md-9">
+									<input type="text" id="name" name="app_name" class="form-control" value="{{app_name}}">
+								</div>
+							</div>
+							
+							<div class="form-group row mat_input">
+								<label class="col-md-3 col-form-label" for="domain"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="17"><path fill="currentColor" d="M17.9,17.39C17.64,16.59 16.89,16 16,16H15V13A1,1 0 0,0 14,12H8V10H10A1,1 0 0,0 11,9V7H13A2,2 0 0,0 15,5V4.59C17.93,5.77 20,8.64 20,12C20,14.08 19.2,15.97 17.9,17.39M11,19.93C7.05,19.44 4,16.08 4,12C4,11.38 4.08,10.78 4.21,10.21L9,15V16A2,2 0 0,0 11,18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"></path></svg> {{LANG domain}}</label>
+								<div class="col-md-9">
+									<input type="text" id="domain" name="app_website_url" class="form-control" value="{{app_website_url}}">
+								</div>
+							</div>
+							
+							<div class="form-group row mat_input">
+								<label class="col-md-3 col-form-label" for="redirect_uri"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="17"><path fill="currentColor" d="M3.9,12C3.9,10.29 5.29,8.9 7,8.9H11V7H7A5,5 0 0,0 2,12A5,5 0 0,0 7,17H11V15.1H7C5.29,15.1 3.9,13.71 3.9,12M8,13H16V11H8V13M17,7H13V8.9H17C18.71,8.9 20.1,10.29 20.1,12C20.1,13.71 18.71,15.1 17,15.1H13V17H17A5,5 0 0,0 22,12A5,5 0 0,0 17,7Z"></path></svg> {{LANG redirect_uri}}</label>
+								<div class="col-md-9">
+									<input type="text" id="redirect_uri" name="app_callback_url" class="form-control" value="{{app_callback_url}}">
+								</div>
+							</div>
+							
+							<div class="form-group row mat_input">
+								<label class="col-md-3 col-form-label" for="desc"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="17"><path fill="currentColor" d="M4,5H20V7H4V5M4,9H20V11H4V9M4,13H20V15H4V13M4,17H14V19H4V17Z"></path></svg> {{LANG description}}</label>
+								<div class="col-md-9">
+									<textarea name="app_description" id="desc" rows="5" class="form-control">{{app_description}}</textarea>
+								</div>
+							</div>
+							
+							<div class="form-group row mat_input">
+								<label class="col-md-3 col-form-label"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="17" class="mt-n2"><path fill="currentColor" d="M4,5H7L9,3H15L17,5H20A2,2 0 0,1 22,7V19A2,2 0 0,1 20,21H4A2,2 0 0,1 2,19V7A2,2 0 0,1 4,5M13.09,9.45L11.05,12.18L12.6,14.25L11.73,14.91L9.27,11.64L6,16H18L13.09,9.45Z"></path></svg> {{LANG image}}</label>
+								<div class="col-md-9 ds_media_file mt-0">
+									<span class="btn btn-file image_file" onclick="$('#app-media').trigger('click'); return false;">
+										<span id="app-media-holder"><img src="{{app_avatar}}" alt='Picture'></span>
+									</span>
+									<input type="file" class="media" id="app-media" name="app_avatar" accept="image/*">
+								</div>
+							</div>
+							
+						
+					<input type="hidden" name="id" value="{{id}}">
+					<div class="last-sett-btn modal-footer">
+						<button type="submit" class="btn btn-primary btn-mat" id="submit-btn">{{LANG edit}}</button>
+					</div>
+				</form>
+				</div>
+					</div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    var _Delay = (function(){
+        var timer = 0;
+        return function(callback, ms){
+            clearTimeout (timer);
+            timer = setTimeout(callback, ms);
+        };
+    })();
+
+    function scrollToTop() {
+        verticalOffset = typeof (verticalOffset) != 'undefined' ? verticalOffset : 0;
+        element = $('html');
+        offset = element.offset();
+        offsetTop = offset.top;
+        $('html, body').animate({
+            scrollTop: offsetTop
+        }, 300, 'linear');
+    }
+
+  var bar         = $('.bar');
+  var percent     = $('.percent');
+
+	jQuery(document).ready(function($) {
+		$("#app-media").on('change', function() {
+			//Get count of selected files
+			$("#app-media-holder").html("<img src='" + window.URL.createObjectURL(this.files[0]) + "' alt='Picture'>");
+	  });
+
+    $('.user-app-form').ajaxForm({
+      url: '{{CONFIG ajax_url}}/developers/edit?hash_id=' + getHashID(),
+      dataType:"json",
+      beforeSend: function() {
+        if ($("#app-media").val()) {
+          $(".user-app-alert").html($('.progress').clone(true).addClass('progress-clone').removeClass('hidden'));
+          bar     = $('.progress-clone').find('.bar');
+          percent = $('.progress-clone').find('.percent');
+        }
+
+        $('#submit-btn').attr('disabled', true).text("{{LANG Please wait..}}");
+        
+      },
+      uploadProgress: function(event, position, total, percentComplete) {
+          if(percentComplete > 50) {
+            percent.addClass('white');
+          }
+          var percentVal = percentComplete + '%';
+          bar.width(percentVal);
+          percent.html(percentVal);
+
+          if (percentComplete == 100) {
+            $(".user-app-alert").empty();
+          }
+      },
+      success: function(data) {
+        scrollToTop();
+        $('#submit-btn').removeAttr('disabled').text('{{LANG edit}}');
+        if (data.status == 200){
+          $(".user-app-alert").html('<div class="alert alert-success bg-success"><i class="fa fa-check"></i> '+
+            data.message
+            +'</div>');
+            _Delay(function(){
+            /*window.location.href = data.url;*/
+            goToAjaxLink("my_apps");
+          },2000);
+          
+        }
+        else {
+          $('#submit-btn').removeAttr('disabled').text('{{LANG edit}}');
+          $(".user-app-alert").html('<div class="alert alert-danger bg-danger"><i class="fa fa-info-circle"></i> '+
+            data.message
+            +'</div>');
+        }
+      }
+    });
+	});
+</script>

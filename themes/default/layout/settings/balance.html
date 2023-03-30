@@ -1,0 +1,161 @@
+<div class="ma_page_content">
+    <div class="ma_pc_inner">
+        <div class="page_padding">
+            <!-- Settings -->
+            <div class="sett_page">
+                <?php echo loadPage("settings/sidebar"); ?>
+                <div class="st_content">
+                    <div class="st_form">
+                        <h3>{{LANG Balance}}</h3>
+                        <form method="POST" id="monetization-settings">
+                            <div class="monetization-settings-alert"></div>
+                            <div class="row">
+                                <div class="col-md-6 p-0">
+                                    <div class="form-group mat_input">
+                                        <label class="col-md-12" for="balance">{{LANG Available balance}}</label>
+                                        <div class="col-md-12">
+											<h5 class="dt_avbl_bal">
+												<span>{{CONFIG currency}}</span>&nbsp;&nbsp;
+												<b>{{USER balance}}</b>
+											</h5>
+                                            <input type="hidden" name="balance" id="balance" disabled value="{{USER balance}}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group mat_input">
+                                        <label for="withdraw_method">{{LANG withdraw_method}}</label>  
+                                        <select id="withdraw_method" name="withdraw_method" class="form-control" onchange="ShowWithdrawMethod(this)">
+                                            <?php foreach ($music->config->withdrawal_payment_method as $key => $value) { 
+                                                if ($value == 1) {
+                                                    if ($key != 'custom') { ?>
+                                                        <option value="<?php echo $key; ?>"><?php echo lang($key); ?></option>
+                                            <?php   }elseif(!empty($music->config->custom_name)){ ?>
+                                                    <option value="<?php echo $key; ?>"><?php echo $music->config->custom_name; ?></option>
+                                            <?php }}} ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="paypal_withdrawal col-md-12">
+									<div class="form-group row mat_input">
+										<label class="col-md-12" for="email"> {{LANG PayPal E-mail}}</label>
+										<div class="col-md-12">
+											<input type="text" name="email" id="email" value="{{USER email}}">
+										</div>
+									</div>
+                                </div>
+                                <div class="transfer_to_withdrawal col-md-12" style="display: none;">
+									<div class="form-group row mat_input">
+										<label class="col-md-12" for="transfer_to">{{LANG transfer_to}}</label>
+										<div class="col-md-12">
+											<input name="transfer_to" id="transfer_to" type="text" class="form-control input-md">
+											<span class="help-block checking"></span>
+										</div>
+									</div>
+                                </div>
+                                <div class="bank_withdrawal col-md-12" style="display: none;">
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group mat_input">
+												<label for="iban">{{LANG iban}}</label>  
+												<input name="iban" id="iban" type="text" class="form-control input-md">
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group mat_input">
+												<label for="country">{{LANG country}}</label>  
+												<input name="country" id="country" type="text" class="form-control input-md">
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group mat_input">
+												<label for="full_name">{{LANG full_name}}</label>  
+												<input name="full_name" id="full_name" type="text" class="form-control input-md">
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group mat_input">
+												<label for="swift_code">{{LANG swift_code}}</label>  
+												<input name="swift_code" id="swift_code" type="text" class="form-control input-md">
+											</div>
+										</div>
+										<div class="col-md-12">
+											<div class="form-group mat_input">
+												<label for="address">{{LANG address}}</label>  
+												<textarea name="address" id="address" type="text" class="form-control input-md"></textarea>
+											</div>
+										</div>
+									</div>
+                                </div>
+                                <div class="col-md-12 p-0">
+                                    <div class="form-group mat_input">
+                                        <label class="col-md-12" for="amount"> {{LANG Amount}}: {{LANG Min }} {{CURRENCY}}{{CONFIG m_withdrawal}} {{CONFIG currency}}</label>
+                                        <div class="col-md-12">
+                                            <input type="text" name="amount" id="amount" autofocus placeholder="0.00">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="last-sett-btn modal-footer">
+								<a href="{{LINK settings/<?php echo $music->userData->username ?>/withdrawals}}" data-load="settings/<?php echo $music->userData->username ?>/withdrawals" class="btn btn-secondary btn-mat" id="btn-withdrawals">{{LANG Withdrawals}}</a>
+                                <button type="submit" class="btn btn-primary btn-mat" id="btn-general-submit">
+                                   {{LANG Submit withdrawal request}}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- End Settings -->
+        </div>
+    </div>
+</div>
+
+<script>
+    function ShowWithdrawMethod(self) {
+        if ($(self).val() == 'bank') {
+            $('.paypal_withdrawal').slideUp();
+            $('.transfer_to_withdrawal').slideUp();
+            $('.bank_withdrawal').slideDown();
+        }
+        else if($(self).val() == 'paypal'){
+            $('.bank_withdrawal').slideUp();
+            $('.transfer_to_withdrawal').slideUp();
+            $('.paypal_withdrawal').slideDown();
+        }
+        else{
+            $('.bank_withdrawal').slideUp();
+            $('.transfer_to_withdrawal').slideDown();
+            $('.paypal_withdrawal').slideUp();
+        }
+    }
+    jQuery(document).ready(function($) {
+        var form = $('form#monetization-settings');
+        form.ajaxForm({
+            url: "{{CONFIG ajax_url}}/user/request-withdrawal?hash_id=" + getHashID(),
+            dataType:'json',
+            beforeSend: function() {
+                form.find('button').text("{{LANG Please wait...}}");
+            },
+            success: function(data) {
+                if (data.status == 200) {
+                    $('.monetization-settings-alert').html('<div class="alert alert-success bg-success">' + data.message + '</div>');
+                    $('.alert-success').fadeIn('fast', function() {
+                        $(this).delay(2500).slideUp(500, function() {
+                            $(this).remove();
+                        });
+                    });
+                    $('#amount').val('');
+                }
+                else if (data.status == 400) {
+                    $('.monetization-settings-alert').html('<div class="alert alert-danger bg-danger">' + data.message + '</div>');
+                    $('.alert-danger').fadeIn(300);
+                }
+                form.find('button').html('{{LANG submit_withdrawal_request}}');
+            }
+        });
+    });
+
+</script>

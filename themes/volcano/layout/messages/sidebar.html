@@ -1,0 +1,60 @@
+<div class="messages-sidebar">
+    <div class="search-box">
+		<div class="search-box-inner">
+			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search" id="search-icon"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+			<input type="text" name="search" placeholder="{{LANG search}}" id="search-list">
+		</div>
+        <a type="button" onclick="MarkAllAsRead(this)" class="btn btn-secondary">
+			<svg xmlns="http://www.w3.org/2000/svg" width="20.898" height="11.03" viewBox="0 0 20.898 11.03"> <path id="Subtraction_129" data-name="Subtraction 129" d="M-17511.5-5851.979h0l-5.861-5.866.914-.923,4.947,4.948,8.471-8.458.914.915-9.385,9.384Zm-5.646,0h0l-5.867-5.866.914-.923,5.877,5.875-.924.914Zm5.646-5.66h0l-.91-.914,4.465-4.455.914.915-4.469,4.454Z" transform="translate(17523.012 5863.01)" fill="var(--main-color)"/> </svg>&nbsp;&nbsp;&nbsp;{{LANG mark_all_as_read}}
+		</a>
+    </div>
+	
+    <ul class="list-group" onscroll="LoadMoreUserChat()">
+        {{USERS}}
+    </ul>
+</div>
+<script type="text/javascript">
+    function MarkAllAsRead(self) {
+        $(self).html('<svg width="25px" height="25px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid"><rect x="0" y="0" width="25" height="25" fill="none" class="bk"></rect><circle cx="50" cy="50" r="40" stroke="#676d76" fill="none" stroke-width="6" stroke-linecap="round"><animate attributeName="stroke-dashoffset" dur="1.5s" repeatCount="indefinite" from="0" to="502"></animate><animate attributeName="stroke-dasharray" dur="1.5s" repeatCount="indefinite" values="150.6 100.4;1 250;150.6 100.4"></animate></circle></svg>');
+        $.post('{{LINK endpoints/messages/mark_read}}', function (data, textStatus, xhr) {
+            if (data.status == 200) {
+                setTimeout(function () {
+                    $('.user-list').find('.countunseen').html('');
+                    $("#new-messages").html("");
+                    $(self).html('<svg xmlns="http://www.w3.org/2000/svg" width="20.898" height="11.03" viewBox="0 0 20.898 11.03"> <path id="Subtraction_129" data-name="Subtraction 129" d="M-17511.5-5851.979h0l-5.861-5.866.914-.923,4.947,4.948,8.471-8.458.914.915-9.385,9.384Zm-5.646,0h0l-5.867-5.866.914-.923,5.877,5.875-.924.914Zm5.646-5.66h0l-.91-.914,4.465-4.455.914.915-4.469,4.454Z" transform="translate(17523.012 5863.01)" fill="var(--main-color)"/> </svg>&nbsp;&nbsp;&nbsp;{{LANG mark_all_as_read}}');
+                    setTimeout(function () {
+                        $(self).html('<svg xmlns="http://www.w3.org/2000/svg" width="20.898" height="11.03" viewBox="0 0 20.898 11.03"> <path id="Subtraction_129" data-name="Subtraction 129" d="M-17511.5-5851.979h0l-5.861-5.866.914-.923,4.947,4.948,8.471-8.458.914.915-9.385,9.384Zm-5.646,0h0l-5.867-5.866.914-.923,5.877,5.875-.924.914Zm5.646-5.66h0l-.91-.914,4.465-4.455.914.915-4.469,4.454Z" transform="translate(17523.012 5863.01)" fill="var(--main-color)"/> </svg>&nbsp;&nbsp;&nbsp;{{LANG mark_all_as_read}}');
+                    },500);
+                },1000);
+            }
+        });
+    }
+    var sent = 0;
+    function LoadMoreUserChat() {
+        if (sent === 0) {
+            clearTimeout(window.UpdateChatU);
+            sent = 1;
+            let time = $('.user-list').last().attr('data-time');
+            $.post('{{LINK endpoints/messages/load_user_chat}}', {
+                time: time
+            }, function (data, textStatus, xhr) {
+                if (data.status == 200) {
+                    $('.list-group').append(data.html);
+                    setTimeout(function () {
+                        sent = 0;
+                        window.UpdateChatU = setTimeout(function () {
+                            if (sent === 0) {
+                                fetchMessages();
+                            }
+                        },5000);
+                    },500);
+                }
+                else{
+                    window.UpdateChatU = setTimeout(function () {
+                        fetchMessages();
+                    },5000);
+                }
+            });
+        }
+    }
+</script>

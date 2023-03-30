@@ -1,0 +1,37 @@
+<tr class="setting-event" id="list_<?php echo $music->value->id ?>" data_selected="<?php echo $music->value->id ?>">
+  <td><input type="checkbox" id="check-data-<?php echo $music->value->id?>" class="delete-checkbox filled-in"><label for="check-data-<?php echo $music->value->id?>"></label></td>
+   <td><?php echo $music->value->id?></td>
+   <td>
+      <a href="<?php echo $music->value->url; ?>" target="_blank">LINK</a>
+   </td>
+   <td>
+      <a href="<?php echo $music->value->user_data->url; ?>">
+        <img src="<?php echo $music->value->user_data->avatar; ?>" class="setting-avatar" >
+         <?php echo $music->value->user_data->name; ?>
+      </a>
+   </td>
+   <td>
+     <div class="ajax-time">
+         <?php echo date('F j Y, g:i a', $music->value->time); ?>
+     </div>
+   </td>
+   <td>
+      <button type="button" class="delete-event btn bg-danger admn_table_btn" id="<?php echo $music->value->id?>" onclick="DeleteRefund(<?php echo $music->value->id?>,'hide')">Delete</button>
+      <button type="button" class="delete-event btn bg-success admn_table_btn" id="<?php echo $music->value->id?>" onclick="ApproveRefund(<?php echo $music->value->id?>,'hide')">Approve</button>
+      <button type="button" class="delete-event btn bg-info admn_table_btn" id="<?php echo $music->value->id?>" onclick="ViewRefund(<?php echo $music->value->id?>)">View</button>
+   </td>
+</tr>
+<div class="modal fade" id="refund_<?php echo $music->value->id?>" tabindex="-1" role="dialog" aria-labelledby="refund_<?php echo $music->value->id?>" aria-hidden="true" data-id="0">
+   <div class="modal-dialog mat_box" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+         </div>
+         <div class="modal-body">
+            <?php echo $music->value->message?>
+         </div>   
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">{{LANG Cancel}}</button>
+         </div>
+      </div>
+   </div>
+</div>

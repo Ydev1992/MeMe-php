@@ -1,0 +1,50 @@
+<div class="ma_page_content">
+	<!-- Forgot Box -->
+	<div class="reset_page">
+		<div class="reset-page ds_app_permission">
+			<div class="reset-form">
+				<div class="app_permission_alert"></div>
+				
+				<h4>{{LANG app_permission}}</h4>
+				
+				<div class="hdr">
+					<p>{{app_name}}</p>
+					<div class="avatar">
+						<img src="{{app_avatar}}" alt="Picture"/>
+					</div>
+				</div>
+				
+				<p class="desc">{{app_description}}</p>
+				<hr>
+				<ul class="perm">
+					{{app_name}} {{LANG receive_the_following_info}}:
+					<li>{{LANG user_data}}</li>
+					<li>{{LANG followers}}</li>
+					<li>{{LANG following}}</li>
+					<li>{{LANG songs}}</li>
+				</ul>
+				
+				<div class="foot">
+					<a class="btn btn-link" href="{{app_website_url}}"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z" /></svg> {{LANG back}}</a>
+					<button type="button" class="btn btn-primary btn-mat" onclick="acceptPermission()">{{LANG accept}}</button>
+				</div>
+			</div>    
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	function acceptPermission() {
+		$.post('{{CONFIG ajax_url}}/developers/accept', {id: "{{app_id}}"},(data) => {
+			if (data.status == 200) {
+				showResponseAlert('.app_permission_alert','success',data.message,2000);
+				setTimeout(function () {
+					window.location.href = data.url;
+				},2000);
+			}
+			else{
+				showResponseAlert('.app_permission_alert','danger',data.message,2000);
+			}
+		});
+	}
+	
+</script>

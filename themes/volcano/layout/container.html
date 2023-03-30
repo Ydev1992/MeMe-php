@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<!-- Title -->
+		<title>{{site_title}}</title>
+
+		<!-- Required Meta Tags Always Come First -->
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<!-- Favicon -->
+		<link rel="shortcut icon" href="{{theme_url}}/img/icon.png" />
+
+		<meta name="title" content="{{site_title}}">
+		<meta name="description" content="{{site_desc}}">
+		<meta name="keywords" content="{{site_keyword}}">
+
+
+		<?php echoOGTrackTags();?>
+
+		<!-- Google Fonts -->
+		<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800;900&display=swap" rel="stylesheet">
+		<link href="{{theme_url}}/fonts/Roboto.css" rel="stylesheet">
+		<link href="{{theme_url}}/fonts/Muli.css" rel="stylesheet">
+
+		<script src="{{theme_url}}/js/jquery.min.js?v=<?php echo $music->config->version; ?>"></script>
+		<link rel="stylesheet" href="{{theme_url}}/css/jquery-ui.css?v=<?php echo $music->config->version; ?>">
+		<script src="{{CONFIG theme_url}}/js/jquery-ui.min.js?v=<?php echo $music->config->version; ?>"></script>
+		<!-- CSS -->
+		<link rel="stylesheet" href="{{theme_url}}/css/bootstrap.min.css?v=<?php echo $music->config->version; ?>">
+		<link rel="stylesheet" href="{{theme_url}}/css/owl.carousel.min.css?v=<?php echo $music->config->version; ?>">
+		<link rel="stylesheet" href="{{theme_url}}/css/style.css?v=<?php echo $music->config->version; ?>">
+		<script src="{{theme_url}}/js/wavesurfer.min.js?v=<?php echo $music->config->version; ?>"></script>
+
+		{{site_style}}
+
+		<script type="text/javascript" src="{{theme_url}}/js/tag-it.min.js?v=<?php echo $music->config->version; ?>"></script>
+		<link rel="stylesheet" href="{{theme_url}}/css/jquery.tagit.css?v=<?php echo $music->config->version; ?>">
+		<link rel="stylesheet" href="{{theme_url}}/css/bootstrap-colorpicker.min.css?v=<?php echo $music->config->version; ?>" />
+		<script src="{{theme_url}}/js/bootstrap-colorpicker.min.js?v=<?php echo $music->config->version; ?>"></script>
+
+		<script type="text/javascript" src="{{theme_url}}/js/fastclick.js?v=<?php echo $music->config->version; ?>"></script>
+		<?php if($music->config->plus_login != 'off'): ?>
+	    <script src="https://accounts.google.com/gsi/client" async defer></script>
+	    <?php endif; ?>
+		<!--  Scripts-->
+		<script>
+			function ajaxUrl() {
+				return '{{CONFIG ajax_url}}';
+			}
+			function siteUrl() {
+				return '{{LINK }}';
+			}
+		</script>
+		<!-- <script src="https://unpkg.com/wavesurfer.js"></script> -->
+		<?php if ($music->config->recaptcha == 'on') { ?>
+	    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+	    <?php } ?>
+		<script src="{{theme_url}}/js/emojionearea.min.js?v=<?php echo $music->config->version; ?>"></script>
+		<link rel="stylesheet" href="{{theme_url}}/css/emojionearea.min.css?v=<?php echo $music->config->version; ?>">
+		 <?php if (!empty($music->config->google)) { echo htmlspecialchars_decode($music->config->google); } ?>
+	    <?php if ($music->config->checkout_payment == 'on') { ?>
+        <script type="text/javascript" src="https://www.2checkout.com/checkout/api/2co.min.js"></script>
+      <?php } ?>
+	    <?php if ($music->config->securionpay_payment == 'on') { ?>
+        <script src="https://securionpay.com/checkout.js"></script>
+      <?php } ?>
+	  <?php echo $music->jsPluginFiles;?>
+	  <?php echo $music->cssPluginFiles;?>
+	  {{HOOK LOAD_ADDITIONAL_HEAD}}
+		<script>
+            window.run_station = null;
+            $(document).ready(function() {
+                // $(".emoji_comment_btn").emojioneArea({
+                //     standalone: true,
+                //     autocomplete: false,
+                //     pickerPosition: "bottom",
+                //     emojiPlaceholder: "",
+                //     inline: true,
+                //     dir            : "ltr",
+                //     placement : 'absright'
+                // 	// container: "#container",
+                // 	// hideSource: false,
+                // 	// useSprite: false
+                // });
+                window.init_emojioneArea = function() {
+                    $(".comment_input").emojioneArea({
+                        useInternalCDN: true,
+                        events: {
+                            keyup: function (editor, event) {
+                                let emojioneArea = this; //this is instance of EmojioneArea
+                                <?php if ($music->config->maxCharacters != 10000) { ?>
+                                id = $( $(this)[0].source[0]).attr('data-audio-id');
+                                $($(".comment_input")).limit("{{CONFIG maxCharacters}}", '#charsLeft_'+id);
+                                c_id = $( $(this)[0].source[0]).attr('data-comment-id');
+                                if ($('#write_comment_'+c_id).length) {
+                                	$($('#write_comment_'+c_id)).limit("{{CONFIG maxCharacters}}", '#charsLeft_r_'+c_id);
+                                }
+                                <?php } ?>
+                                if (event.which === 13 && !event.shiftKey) {
+                                    // $scope.onPressKeyTextarea(event);
+									var audioid = $( $(this)[0].source[0]).attr('data-audio-id');
+									var commentid = $( $(this)[0].source[0]).attr('data-comment-id');
+									if(typeof commentid !== 'undefined'){
+										registerCommentreplay(emojioneArea.getText(), audioid, commentid, event, $(this));
+									}else{
+										registerComment(emojioneArea.getText(), audioid, event, $(this));
+									}
+                                    emojioneArea.setText('');
+                                    emojioneArea.hidePicker();
+                                    emojioneArea.editor.focus();
+                                    event.preventDefault();
+                                }
+                            }
+                        },
+                        search: false,
+                        recentEmojis: false,
+                        filtersPosition: "bottom",
+                        tones: false,
+                        autocomplete: true,
+                        filters: {animals_nature: false, food_drink: false, activity: false, travel_places: false, objects: false, symbols: false, flags: false}
+                    });
+                }
+				window.init_emojioneArea();
+
+				window.init_emojioneArea_replay = function(id) {
+					$('#write_comment_'+id).emojioneArea({
+						useInternalCDN: true,
+						events: {
+							keyup: function (editor, event) {
+								let _emojioneArea = this; //this is instance of EmojioneArea
+								if (event.which === 13 && !event.shiftKey) {
+									var _audioid = $( $(this)[0].source[0]).attr('data-audio-id');
+									var _commentid = $( $(this)[0].source[0]).attr('data-comment-id');
+									registerCommentreplay(_emojioneArea.getText(), _audioid, _commentid, event, $(this));
+									_emojioneArea.setText('');
+									_emojioneArea.hidePicker();
+									_emojioneArea.editor.focus();
+									event.preventDefault();
+								}
+							}
+						},
+						search: false,
+						recentEmojis: false,
+						filtersPosition: "bottom",
+						tones: false,
+						autocomplete: false,
+						filters: {animals_nature: false, food_drink: false, activity: false, travel_places: false, objects: false, symbols: false, flags: false}
+					});
+				}
+
+				window.init_blogemojioneArea = function() {
+                    $(".blog_comment_input").emojioneArea({
+                        useInternalCDN: true,
+                        events: {
+                            keyup: function (editor, event) {
+                                let emojioneArea = this; //this is instance of EmojioneArea
+                                if (event.which === 13 && !event.shiftKey) {
+                                    // $scope.onPressKeyTextarea(event);
+									var audioid = $( $(this)[0].source[0]).attr('data-article-id');
+                                    registerBlogComment(emojioneArea.getText(), audioid, event, $(this));
+                                    emojioneArea.setText('');
+                                    emojioneArea.hidePicker();
+                                    emojioneArea.editor.focus();
+                                    event.preventDefault();
+                                }
+                            }
+                        },
+                        search: false,
+                        recentEmojis: false,
+                        filtersPosition: "bottom",
+                        tones: false,
+                        autocomplete: true,
+                        filters: {animals_nature: false, food_drink: false, activity: false, travel_places: false, objects: false, symbols: false, flags: false}
+                    });
+                }
+                window.init_blogemojioneArea();
+            });
+		</script>
+
+		<script>
+		$(document).ready(function() {
+		  $.ajaxSetup({
+		    data: {
+		        hash_id: getHashID()
+		    },
+		    cache: false
+		  });
+		});
+		window.addEventListener("popstate", function(e) {
+            window.location.href = location.href;
+        });
+        window.search_url = '{{LINK search/songs/}}';
+        window.chatfetch = false;
+        window.UpdateChatU = 0;
+			$(document).on('click', '[data-load]', function(event) {
+				if ($('.ma_container').attr('data-page') == 'home') {
+					window.location.href = siteUrl() + $(this).attr('data-load');
+					return false;
+				}
+				$('.xzoom-source').remove();
+				$('#buy_ticket_modal').modal('hide');
+				if ($(this).attr('data-load') == '') {window.open($(this).attr('href'), '_blank');
+					if (parseInt($('.ss_track_play_pause').attr('data_is_ad')) > 0) {
+				 		is_sent = 1;
+				 		song_id = $('#current-track').attr('value');
+				 		onTimesUp(song_id);
+				 		return false;
+				 	}
+					return false;
+				}
+				  //$('.sections li').removeClass('active');
+			      $('#bar_loading').show().animate({width:20 + 80 * Math.random() + "%"}, 200);
+			      event.preventDefault();
+			      var url = $(this).attr('data-load');
+			      $.ajax({
+			        url: siteUrl() + '/ajax-load.php?path=' + url,
+			        type: 'GET',
+			        dataType: 'html'
+			      })
+			      .done(function(data_html, textStatus, request) {
+			      	if (request.status == 201) {
+			      		$('#login_box').modal('show');
+			      	} else {
+                        if(window.run_station !== null){
+                            window.run_station.pause();
+                        }
+
+			      		data = JSON.parse($(data_html).filter('#json-data').val());
+				        window.history.pushState({state:'new', ajax_url: url},'', data.url);
+
+                        if(data.page_name == 'messages'){
+                            window.chatfetch = true;
+						}else{
+                            window.chatfetch = false;
+						}
+
+				        if(data.page_name !== 'search'){
+				            $('#search_keyword').val('');
+						}
+
+				        $('#container_content').html(data_html);
+				        $('meta[name=title]').attr('content', data.site_title);
+				        $('#page').attr('data-page', data.page_name);
+				        $('meta[name=description]').attr('content', data.description);
+				        $('meta[name=keywords]').attr('content', data.keyword);
+				        $('title').html(data.site_title);
+				        if (data.page_name) {
+				        	setTimeout(function () {
+				        		updateWaves = false;
+				        		if ($('#current-track').val()) {
+				        			if (Amplitude.getActiveSongMetadata().id == $('#current-track').val()) {
+					        			updateWaves = true;
+					        		} else {
+					        			$('body').removeClass('player_running');
+					        		}
+				        		} else {
+				        			updateWaves = true;
+				        		}
+				        		if (updateWaves == true) {
+				        			var getCurrentPlaying = Number($('.amplitude-song-played-progress').attr('value')) * 100;
+					        		$('#light-wave, #light-waves').width(getCurrentPlaying + '%');
+					        		updateWaveForm();
+				        		}
+				        	}, 100);
+                            if( data.page_name == 'blogs' ){
+                                window.search_url = '{{LINK blogs/tag/}}';
+                            }
+				        }
+				        if (Amplitude.getActiveSongMetadata().id && $('#page').attr('data-page') == 'track') {
+				        	if (Amplitude.getActiveSongMetadata().id == $('#current-track').val()) {
+				        		$('body').addClass('player_running');
+				        	}
+				        }
+				        if (Amplitude.getActiveSongMetadata().u_id && $('#page').attr('data-page') != 'track') {
+				        	$('.playlist-list-song[data-id=' + Amplitude.getActiveSongMetadata().u_id + ']').addClass('playing');
+				        	$('.list-recommended[data-id=' + Amplitude.getActiveSongMetadata().u_id + ']').addClass('playlist-list-song playing');
+				        	if ($('.feed_post[data-id="' + Amplitude.getActiveSongMetadata().u_id + '"]').length > 0) {
+				        		$.get('{{CONFIG ajax_url}}/get-song-info', {id: Amplitude.getActiveSongMetadata().id}, function(data) {
+				        			if (data.status == 200) {
+				        				$('body').attr('song-duration', data.duration);
+				        				if (data.songWaves.length > 0) {
+											$('.feed_post[data-id="' + data.songID + '"]:first').find('.waveform-small').html(data.songWaves);
+											$('#light-wave img').width($('#dark-wave').width() + 'px');
+											$('#light-waves img').width($('#dark-wavez').width() + 'px');
+											$('.feed_post[data-id="' + data.songID + '"]:first').find('.post-actions').removeClass('hidden');
+											$('.feed_post[data-id="' + data.songID + '"]:first').find('.ssong_comments').removeClass('hidden');
+											$('.feed_post[data-id="' + data.songID + '"]:first').find('.mus_feeds_bodycoms').removeClass('hidden');
+											$('.feed_post[data-id="' + data.songID + '"]:first').find('.art-info').removeClass('hidden');
+				    						$('.feed_post[data-id="' + data.songID + '"]:first').find('.comment_list').html(data.comments);
+				    						$('.feed_post[data-id="' + data.songID + '"]:first').find('.comment-waves').html(data.waves);
+				    						var getCurrentPlaying = Number($('.amplitude-song-played-progress').attr('value')) * 100;
+					        		        $('#light-wave, #light-waves').width(getCurrentPlaying + '%');
+				    						updateWaveForm();
+										}
+				        			}
+				        		});
+				        	}
+				        }
+                        $('#music-user-ads-table').find('[type="checkbox"]').each(function(index, el) {
+                            $(el).bootstrapToggle();
+                        });
+                        if( data.page_name === 'station'){
+                            setTimeout(function () {
+                                $('body').addClass('player_running');
+                            }, 100);
+                        }
+			      	}
+
+			      })
+			      .fail(function() {
+			         window.location.href = siteUrl()+'/404';
+			      })
+			      .always(function() {
+			      	if (typeof data !== 'undefined') {
+			      		if (data.page_name == 'user' && data.scroll == true) {
+				        	$('html,body').animate({
+						        scrollTop: $('#myTab').offset().top - 350
+						    });
+				        } else {
+				        	$('html,body').animate({
+						        scrollTop: $('body').offset().top
+						    });
+				        }
+                        window.init_emojioneArea();
+			      	}
+			        $('#bar_loading').animate({width:"100%"}, 200).fadeOut(300, function() {
+			           $(this).width("0");
+			        });
+			      });
+			  });
+			window.artist_sell = '<?php echo $music->config->artist_sell;?>';
+			var video_player;
+		</script>
+
+		<style>
+		<?php 
+		$mainColor = $music->config->main_color;
+		$secondColor = $music->config->second_color;
+		?>
+		:root {
+		--main-color: #<?php echo $mainColor?>;
+		--second-color: #<?php echo $secondColor?>;
+		}
+
+		.sidebar .sidebar_innr .sections li a:before {
+    		background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='11' height='15.866' viewBox='0 0 11 15.866'%3e%3cg id='Hover:_Sound_bar' data-name='Hover: Sound bar' transform='translate(-1502 -129.5)'%3e%3cline id='Line_8' data-name='Line 8' y2='15.866' transform='translate(1511.5 129.5)' fill='none' stroke='%23<?php echo $music->config->second_color?>' stroke-width='3'/%3e%3cline id='Line_9' data-name='Line 9' y2='14.254' transform='translate(1503.5 130.306)' fill='none' stroke='%23<?php echo $music->config->second_color?>' stroke-width='3'/%3e%3c/g%3e%3c/svg%3e");
+		}
+		header .head_search .search_dropdown .see_all a:before {
+			background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3e%3cpath fill='%23<?php echo $mainColor?>' d='M13,9L15.5,6.5L16.92,7.92L12,12.84L7.08,7.92L8.5,6.5L11,9V3H13V9M3,15H21V17H3V15M3,19H13V21H3V19Z' /%3e%3c/svg%3e");
+		}
+		.see_all a:before {
+			background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3e%3cpath fill='%23<?php echo $mainColor?>' d='M13,9L15.5,6.5L16.92,7.92L12,12.84L7.08,7.92L8.5,6.5L11,9V3H13V9M3,15H21V17H3V15M3,19H13V21H3V19Z' /%3e%3c/svg%3e");
+		}
+		.sq_music_tracks .track .track_info .play_btn {
+			background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='42.505' height='42.5' viewBox='0 0 42.505 42.5'%3e%3cpath id='Path_7225' data-name='Path 7225' d='M8827,2861.251a21.252,21.252,0,1,1,21.251,21.249A21.276,21.276,0,0,1,8827,2861.251Zm14.1-17.34a18.2,18.2,0,0,0-6.086,4.009,18.976,18.976,0,0,0,0,26.66,18.218,18.218,0,0,0,6.086,4.013,19.327,19.327,0,0,0,14.311,0,18.159,18.159,0,0,0,6.084-4.013,18.968,18.968,0,0,0,0-26.66,18.18,18.18,0,0,0-6.084-4.009,19.327,19.327,0,0,0-14.311,0Zm2.277,24.14c-.106,0-.214-.178-.267-.178a2.321,2.321,0,0,1-.107-.358v-11.8a2.33,2.33,0,0,1,.107-.358c.053,0,.16-.178.267-.178.125,0,.252-.18.376-.18a.369.369,0,0,0,.356.18l8.726,5.9c.107,0,.178.176.231.176.054.18.089.18.089.358s-.035.176-.089.358c-.054,0-.124.178-.231.178l-8.726,5.9a.37.37,0,0,0-.356.178C8843.627,2868.229,8843.5,2868.051,8843.375,2868.051Z' transform='translate(-8827.001 -2840)' fill='%23<?php echo $mainColor?>'/%3e%3c/svg%3e");
+
+		}
+
+		</style>
+
+		<script src="{{theme_url}}/js/header.js<?php echo ($music->update_cache !== '') ?$music->update_cache:'?'.rand(1111,4444); ?>"></script>
+
+		<?php if ($_COOKIE['mode'] !== 'night') { ?>
+		<link rel="stylesheet" href="{{CONFIG theme_url}}/css/day.style.css<?php echo $music->update_cache; ?>" id="night-mode-css">
+		<?php } ?>
+
+		<link rel="stylesheet" href="{{CONFIG theme_url}}/css/custom.style.css<?php echo ($music->update_cache !== '') ?$music->update_cache:'?'.rand(1111,4444); ?>" id="custom.style.css">
+		<?php if ($music->language_type == 'rtl'){?>
+		<link rel="stylesheet" href="{{CONFIG theme_url}}/css/rtl.style.css?v=<?php echo $music->config->version; ?>">
+		<?php }?>
+
+
+		<link rel="stylesheet" href="{{CONFIG theme_url}}/js/lib/sweetalert2/dist/sweetalert2.min.css?v=<?php echo $music->config->version; ?>">
+		<link rel="stylesheet" type="text/css" href="{{CONFIG theme_url}}/css/dataTables.bootstrap4.min.css?v=<?php echo $music->config->version; ?>">
+		<link rel="stylesheet" href="{{CONFIG theme_url}}/css/bootstrap-select.min.css?v=<?php echo $music->config->version; ?>">
+
+		<?php if( $music->config->stripe_payment == 'on' ){?>
+		<script src="https://js.stripe.com/v3/"></script>
+		<?php } ?>
+		<?php if ($music->config->event_system == 1 || $music->config->youtube_video == 'on') { ?>
+		<script src="{{CONFIG theme_url}}/js/plyr.polyfilled.js?v=<?php echo $music->config->version; ?>"></script>
+		<link rel="stylesheet" href="{{CONFIG theme_url}}/css/plyr.css?v=<?php echo $music->config->version; ?>" />
+		<?php } ?>
+		<?php if ($music->config->event_system == 1) { ?>
+		<script src="{{CONFIG theme_url}}/js/jquery-ui-timepicker-addon.min.js?v=<?php echo $music->config->version; ?>"></script>
+		<?php } ?>
+		<?php if ($music->config->store_system == 'on') { ?>
+		<script type="text/javascript" src="{{CONFIG theme_url}}/js/xzoom.min.js"></script>
+		<script src="{{CONFIG theme_url}}/js/html2pdf.bundle.js?v=<?php echo $music->config->version; ?>"></script>
+		<script src="{{theme_url}}/js/qrcode.js?v=<?php echo $music->config->version; ?>"></script>
+		<link rel="stylesheet" href="{{theme_url}}/css/lightbox.min.css?v=<?php echo $music->config->version; ?>">
+		<script src="{{theme_url}}/js/lightbox.min.js?v=<?php echo $music->config->version; ?>"></script>
+		<?php } ?>
+		
+		<link rel="stylesheet" href="{{theme_url}}/css/flatpickr.min.css?v=<?php echo $music->config->version; ?>">
+		<script src="{{theme_url}}/js/flatpickr.js?v=<?php echo $music->config->version; ?>"></script>
+	</head>
+
+	<body class="{{classes}}" data-lang="<?php if ($music->language_type == 'rtl'){?>rtl<?php } else {?>ltr<?php } ?>">
+	<?php $loadPage = loadPage('thirdparty/theme-changer'); echo (!empty($loadPage)) ? $loadPage : '';?>
+		<div class="music_app">
+			<div class="ma_container" id="page" data-page="<?php echo $music->site_pagename?>">
+				<!-- Start Sidebar  -->
+				{{site_sidebar}}
+				<!-- End Sidebar  -->
+
+				<!-- Header  -->
+				<div id="main-header">
+					{{site_header}}
+				</div>
+				<div id="bar_loading"></div>
+				<!-- End Header  -->
+
+				<!-- Content  -->
+				<div id="container_content">
+					{{site_content}}
+				</div>
+				<!-- End Content  -->
+
+				<!-- Footer -->
+				<div class="ma_footer">
+					<?php echo GetAd('footer');?>
+
+					<?php echo loadPage('home/footer')?>
+				</div>
+				<!-- End Footer -->
+			</div>
+			<!-- Player  -->
+			{{site_player}}
+			<!-- End Player  -->
+		</div>
+
+		<!-- Login Modal  -->
+		{{site_loginForm}}
+		<!-- End Login Modal  -->
+
+		<!-- Signup Modal  -->
+		{{site_signupForm}}
+		<!-- End Signup Modal  -->
+
+		<!-- Modals -->
+		<?php echo loadPage('modals/delete-song')?>
+		<?php echo loadPage('modals/delete-comment')?>
+		<?php echo loadPage('modals/delete-post')?>
+		<?php echo loadPage('modals/reposted')?>
+		<?php echo loadPage('modals/purchase-song')?>
+		<?php echo loadPage('modals/age-restrcited')?>
+		<?php echo loadPage('modals/copyright')?>
+		<?php echo loadPage('modals/comment-report')?>
+		<?php echo loadPage('modals/blog-comment-report')?>
+		<?php echo loadPage('modals/track-report')?>
+		<?php echo loadPage('modals/track-review')?>
+		<?php echo loadPage('modals/bank-payment')?>
+		<?php echo loadPage('modals/logout-modal')?>
+		<?php echo loadPage('modals/two-factor')?>
+		<?php echo loadPage('modals/refund_order')?>
+		<?php echo loadPage('modals/add_address_modal')?>
+		<?php echo loadPage('modals/delete-address')?>
+
+		<?php echo loadPage('modals/buy_product_modal')?>
+		<?php echo loadPage('modals/delete-product')?>
+		<?php echo loadPage('modals/story_pay')?>
+
+		<?php echo loadPage('modals/wallet_to_pay')?>
+		<?php echo loadPage('modals/buy_ticket_modal')?>
+		<?php echo loadPage('modals/unjoin-event')?>
+
+		<?php echo loadPage('modals/delete-event')?>
+		<?php echo loadPage('modals/albums_success')?>
+		<?php echo loadPage('modals/ShowAlert')?>
+		
+		<div class="modal fade" id="select-language" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog modal-lg mat_box lang_select_modal" role="document">
+				<div class="modal-content">
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="language_info">
+									<h3>{{LANG Language}}</h3>
+									
+									<ul class="lang_modal">
+										<?php foreach($music->langs as $lang) { ?>
+											<li class="language_select"><a href="?lang=<?php echo $lang; ?>"><?php echo ucfirst($lang); ?></a></li>
+										<?php } ?>
+									</ul>
+									
+									<svg enable-background="new 0 0 512 512" height="512" viewBox="0 0 512 512" width="512" xmlns="http://www.w3.org/2000/svg"><g><path d="m164.061 1.765c89.491 0 164.061 30.492 164.061 123.688 0 39.307-13.272 67.453-35.329 86.867-4.005 3.525-5.715 8.976-4.326 14.127 3.903 14.48 9.536 29.7 17.262 43.91 5.927 10.9-2.075 24.048-14.477 23.702-30.009-.836-62.771-14.812-87.325-41.505-2.922-3.177-7.103-4.882-11.405-4.53-9.262.757-18.773 1.118-28.462 1.118-89.49 0-164.06-30.493-164.06-123.689s74.57-123.688 164.061-123.688z" fill="#b0da87"/><g><g fill="#fff"><ellipse cx="55.409" cy="104.463" rx="29.792" ry="23.725"/><ellipse cx="216.893" cy="104.463" rx="29.792" ry="23.725"/></g><g fill="#4e5660"><path d="m86.952 86.146c-4.143 0-7.5-3.357-7.5-7.5 0-3.684-2.996-6.681-6.68-6.681s-6.681 2.997-6.681 6.681c0 4.143-3.357 7.5-7.5 7.5s-7.5-3.357-7.5-7.5c0-11.955 9.726-21.681 21.681-21.681 11.954 0 21.68 9.726 21.68 21.681 0 4.143-3.357 7.5-7.5 7.5z"/><path d="m213.711 86.146c-4.143 0-7.5-3.357-7.5-7.5 0-3.684-2.997-6.681-6.681-6.681s-6.68 2.997-6.68 6.681c0 4.143-3.357 7.5-7.5 7.5s-7.5-3.357-7.5-7.5c0-11.955 9.726-21.681 21.68-21.681 11.955 0 21.681 9.726 21.681 21.681 0 4.143-3.357 7.5-7.5 7.5z"/><path d="m136.151 109.573c-7.933 0-15.476-3.436-20.696-9.425-2.722-3.123-2.396-7.86.727-10.582 3.122-2.721 7.859-2.396 10.582.727 2.37 2.72 5.792 4.28 9.388 4.28s7.018-1.561 9.388-4.28c2.722-3.123 7.459-3.447 10.582-.727 3.123 2.722 3.448 7.459.727 10.582-5.222 5.99-12.765 9.425-20.698 9.425z"/></g></g><path d="m347.939 96.356c89.491 0 164.061 30.492 164.061 123.688 0 39.308-13.272 67.453-35.329 86.867-4.005 3.525-5.715 8.976-4.326 14.127 3.903 14.48 9.536 29.7 17.262 43.91 5.927 10.9-2.075 24.048-14.477 23.702-30.009-.836-62.771-14.812-87.325-41.505-2.922-3.177-7.103-4.882-11.405-4.53-9.262.757-18.773 1.118-28.462 1.118-89.491 0-164.061-30.492-164.061-123.688.002-93.197 74.572-123.689 164.062-123.689z" fill="#8daee1"/><path d="m296.422 218.871c-27.969-18.07-64.598-28.515-109.1-31.162-2.253 9.825-3.443 20.58-3.443 32.335 0 93.196 74.57 123.688 164.061 123.688 3.718 0 7.401-.071 11.062-.179.006-.645.024-1.283.024-1.931 0-53.841-21.648-96.288-62.604-122.751z" fill="#6a95d6"/><path d="m401.315 262.7-43.695-115.784c-.025-.068-.053-.137-.08-.204-1.573-3.826-5.262-6.297-9.398-6.297h-.009c-4.141.004-7.829 2.482-9.396 6.314-.023.057-.046.113-.067.171l-44.098 115.78c-1.475 3.87.469 8.203 4.34 9.678 3.866 1.474 8.203-.468 9.678-4.34l9.142-24.004h60.498l9.051 23.983c1.133 3.003 3.987 4.853 7.017 4.853.88 0 1.775-.156 2.647-.485 3.876-1.462 5.832-5.789 4.37-9.665zm-77.87-33.686 24.675-64.786 24.449 64.786z" fill="#fff"/><path d="m164.061 217.934c-89.491 0-164.061 30.493-164.061 123.689 0 39.307 13.272 67.453 35.329 86.867 4.005 3.525 5.715 8.976 4.326 14.127-3.903 14.48-9.536 29.7-17.262 43.909-5.927 10.9 2.075 24.048 14.477 23.702 30.009-.836 62.771-14.812 87.325-41.505 2.922-3.177 7.103-4.882 11.405-4.53 9.262.757 18.773 1.118 28.462 1.118 89.491 0 164.061-30.492 164.061-123.688-.002-93.196-74.572-123.689-164.062-123.689z" fill="#fbf1cf"/><path d="m98.158 224.732c-57.403 13.375-98.158 47.997-98.158 116.891 0 39.307 13.272 67.453 35.329 86.867 4.005 3.525 5.715 8.976 4.326 14.127-3.903 14.48-9.536 29.7-17.262 43.909-5.927 10.9 2.075 24.048 14.477 23.702 30.009-.836 62.771-14.812 87.325-41.505 2.922-3.177 7.103-4.882 11.405-4.53 9.262.757 18.773 1.118 28.461 1.118 9.979 0 19.771-.382 29.296-1.185-109.038-33.437-126.653-188.039-95.199-239.394z" fill="#fae0bd"/><path d="m215.939 289.092h-44.267v-19.954c0-4.143-3.357-7.5-7.5-7.5s-7.5 3.357-7.5 7.5v19.954h-44.267c-4.143 0-7.5 3.357-7.5 7.5s3.357 7.5 7.5 7.5h73.205c-1.638 18.399-10.545 38.587-23.975 56.243-7.491-6.699-13.58-14.368-17.432-21.597-1.947-3.654-6.487-5.039-10.146-3.092-3.655 1.948-5.039 6.49-3.092 10.146 4.554 8.546 11.825 17.845 20.986 25.993-8.01 8.521-17.087 16.084-26.839 22.069-3.53 2.167-4.636 6.785-2.47 10.315 1.416 2.307 3.878 3.578 6.399 3.578 1.338 0 2.692-.357 3.916-1.108 11.003-6.753 21.527-15.56 30.892-25.717 8.934 5.854 18.992 10.334 29.679 12.277.453.083.905.122 1.351.122 3.555 0 6.712-2.537 7.37-6.159.741-4.075-1.962-7.979-6.037-8.721-7.906-1.438-15.595-4.733-22.631-9.119 2.391-3.137 4.675-6.357 6.821-9.658 12.049-18.525 18.971-37.605 20.252-55.574h15.285c4.143 0 7.5-3.357 7.5-7.5s-3.358-7.498-7.5-7.498z" fill="#4e5660"/></g></svg>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="queue_overlay" onclick="javascript:$('body').removeClass('data-queue-open');"></div>
+		<div class="sidenav_overlay" onclick="javascript:$('body').removeClass('side_open');"></div>
+
+
+		<?php echo loadPage('extrajs/content');?>
+		<script src="{{theme_url}}/js/fingerprint2.min.js?v=<?php echo $music->config->version; ?>"></script>
+		<script src="{{theme_url}}/js/jquery.form.min.js?v=<?php echo $music->config->version; ?>"></script>
+		<script src="{{theme_url}}/js/popper.min.js?v=<?php echo $music->config->version; ?>"></script>
+		<script src="{{theme_url}}/js/bootstrap.min.js?v=<?php echo $music->config->version; ?>"></script>
+		<script src="{{theme_url}}/js/owl.carousel.min.js?v=<?php echo $music->config->version; ?>"></script>
+		<script src="{{theme_url}}/js/simplebar.min.js?v=<?php echo $music->config->version; ?>"></script>
+		<script src="{{theme_url}}/js/amplitude.min.js?v=<?php echo $music->config->version; ?>"></script>
+		<script src="{{theme_url}}/js/script.js?v=<?php echo $music->config->version; ?>"></script>
+		<script src="{{theme_url}}/js/Chart.min.js?v=<?php echo $music->config->version; ?>"></script>
+		<script src="{{CONFIG theme_url}}/js/highcharts/highcharts.js?v=<?php echo $music->config->version; ?>"></script>
+		<script src="{{CONFIG theme_url}}/js/footer.js?v=<?php echo $music->config->version; ?>"></script>
+		<script src="{{CONFIG theme_url}}/js/bootstrap-select.min.js?v=<?php echo $music->config->version; ?>"></script>
+		<script type="text/javascript" src="{{CONFIG theme_url}}/js/jquery.dataTables.min.js?v=<?php echo $music->config->version; ?>"></script>
+		<script type="text/javascript" src="{{CONFIG theme_url}}/js/dataTables.bootstrap4.min.js?v=<?php echo $music->config->version; ?>"></script>
+		<script src="{{CONFIG theme_url}}/js/lib/sweetalert2/dist/sweetalert2.js?v=<?php echo $music->config->version; ?>"></script>
+		<script src="{{CONFIG theme_url}}/js/bootstrap-toggle.min.js?v=<?php echo $music->config->version; ?>"></script>
+		<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+		<input type="hidden" class="main_session" value="<?php echo createMainSession();?>">
+    <?php echo LoadPage('timeago/content');?>
+
+		<script>
+			<?php if( isset($_GET['invite']) && !empty($_GET['invite']) ){?>
+			$('#signup_box').modal('show');
+			<?php }?>
+            $('#rmjs-1').readmore({
+                speed: 75,
+                collapsedHeight: 190,
+                moreLink: '<a href="#" class="hash"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg> {{LANG Read more}}</a>',
+				lessLink: '<a href="#" class="hash"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M7.41,15.41L12,10.83L16.59,15.41L18,14L12,8L6,14L7.41,15.41Z" /></svg> {{LANG Read less}}</a>',
+                afterToggle: function(trigger, element, expanded) {
+                    //if(! expanded) {
+                        // The "Close" link was clicked
+                        $('html, body').animate({scrollTop: element.offset().top}, {duration: 100});
+                    //}
+                }
+            });
+            var running = false;
+            $( document ).on( 'change', '#chat_message_upload_media_file', function(e){
+                if( running === true ){
+                    running = false;
+                    return false;
+                }
+                running = true;
+                var countFiles = $(this)[0].files.length;
+                var imgPath = $(this)[0].value;
+                var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
+
+                if(countFiles > 1) {
+                    M.toast({html: 'Please select Four Images only.'});
+                } else if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg") {
+
+                    let from = $( '#user-id' ).val();
+                    let formData = new FormData();
+                    formData.append( "media", $(this)[0].files[0],$(this)[0].files[0].value );
+                    formData.append( 'to' , $('#user-id').val() );
+                    formData.append( 'message_id' , window.message_id );
+
+                    var img = $('<img style="width: 300px;border-radius: 20px;">');
+                    //if (typeof(FileReader) != "undefined") {
+                    let reader = new FileReader();
+                    reader.onload = function(e) {
+                        img.attr('src', e.target.result);
+                    };
+                    reader.readAsDataURL($(this)[0].files[0]);
+                    //}
+
+                    $('.lds-facebook').removeClass('hide');
+                    $('#btn_chat_f_send').addClass('hide');
+
+                    $( '.chat_message_upload_media_imgprogress' ).removeClass( 'hide' );
+                    $( '.chat_message_upload_media_imgstatus' ).removeClass( 'hide' );
+                    $.ajax({
+                        xhr: function() {
+                            let xhr = new window.XMLHttpRequest();
+                            xhr.upload.addEventListener("progress", function(evt){
+                                if (evt.lengthComputable) {
+                                    let percentComplete = evt.loaded / evt.total;
+                                    percentComplete = parseInt(percentComplete * 100);
+                                    //console.log( 'prog: ' + percentComplete + '%');
+                                    $( '#chat_message_upload_media_imgstatus' ).html( percentComplete + '%');
+                                    $( '.chat_message_upload_media_imgdeterminate' ).css({'width': percentComplete + '%'});
+                                    if (percentComplete === 100) {
+                                        $( '.chat_message_upload_media_imgprogress' ).addClass( 'hide' );
+                                        $( '.chat_message_upload_media_imgstatus' ).addClass( 'hide' );
+                                        $( '#chat_message_upload_media_imgstatus' ).html( '' );
+                                    }
+                                }
+                            }, false);
+                            return xhr;
+                        },
+                        beforeSend: function() {
+                            $('.messages').append('<div class="data_message" data-id="' + window.message_id + '"><div class="message to-user pull-right" data-id=""><div class="user-message"></div><div class="clear"></div></div><div class="clear"></div></div>');
+                            img.appendTo($('.data_message[data-id="' + window.message_id + '"]').find('.user-message'));
+                            $('.user-messages').scrollTop($('.user-messages')[0].scrollHeight);
+                            window.message_id = makeid();
+                        },
+                        url: '{{LINK endpoints/messages/upload_media}}?hash_id=' + $('.main_session').val(),
+                        type: "POST",
+                        async: true,
+                        data: formData,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        timeout: 60000,
+                        dataType: false,
+                        success: function(data) {
+                            $('.data_message[data-id="' + data.message_id + '"]').replaceWith(data.message);
+                            running = false;
+                        }
+                    });
+
+                }else{
+                    M.toast({html: 'Please select only Images.'});
+                }
+            });
+
+            // update user last seen
+            function getRandomBetween(min, max) {
+                return min + Math.random() * (max - min);
+            }
+            function UpdateLastSeen() {
+                $.get('{{LINK endpoints/user/update_lastseen}}', { }, function () {
+                    setTimeout(UpdateLastSeen, getRandomBetween(60000, 120000));
+                });
+            }
+            setTimeout(UpdateLastSeen, getRandomBetween(60000, 120000));
+            function GetArtist(key,form = '') {
+            	$.post('{{LINK endpoints/tag_artist/tag}}', {key: key}, function(data, textStatus, xhr) {
+            		if (data.html) {
+            			if (form != '') {
+            				$('#group_chat_mbr_list_'+form).html(data.html);
+            			}
+            			else{
+            				$('.group_chat_mbr_list').html(data.html);
+            			}
+            		}
+            	});
+            }
+            function ApproveRequest(id) {
+            	$.post('{{LINK endpoints/tag_artist/approve}}', {id: id}, function(data, textStatus, xhr) {});
+            }
+            function DeclineRequest(id) {
+            	$.post('{{LINK endpoints/tag_artist/decline}}', {id: id}, function(data, textStatus, xhr) {});
+            }
+            function count_char(self,id) {
+			    $(self).limit("{{CONFIG maxCharacters}}", id);
+			}
+			<?php if ($music->config->iyzipay_payment == 'on') { ?>
+				function iyzipay_pay(self,type) {
+					self.attr('disabled','true');
+					$('#buy_album_modal').modal('hide');
+					id    = $('#buy_album_modal').attr('data-id');
+					amount = $('#buy_album_modal').attr('data_price');
+					if (type == 'buy_song') {
+						id    = $('#payment_modal').attr('data-id');
+					}
+					if (type== 'wallet') {
+						amount = $('#wallet_payment_modal').attr('data_price');
+					}
+					$.post('{{LINK endpoints/iyzipay/initialize}}', {
+			            type: type,
+			            id: id,
+			            amount: amount
+			        }, function(data) {
+						if (data.status == 200) {
+							$('#iyzipay_content').html('');
+							$('#iyzipay_content').html(data.html);
+						} else {
+							self.attr('disabled', false).html("Iyzipay App not set yet.");
+						}
+						self.removeAttr('disabled');
+					});
+				}
+			<?php } ?>
+			<?php if ($music->config->paysera_payment == 'on') { ?>
+				function paysera_pay(self,type) {
+					$('#btn-paysera-payment').html("{{LANG please_wait}}");
+					$('#btn-paysera-payment').attr('disabled','true');
+					id    = $('#buy_album_modal').attr('data-id');
+					amount = $('#buy_album_modal').attr('data_price');
+					if (type == 'buy_song') {
+						id    = $('#payment_modal').attr('data-id');
+					}
+					if (type == 'wallet') {
+						amount = $('#wallet_payment_modal').attr('data_price');
+					}
+					$.post('{{LINK endpoints/paysera/initialize}}', {type:type,amount:amount,id:id}, function(data) {
+						if (data.status == 200) {
+							window.location.href = data.url;
+						} else {
+							// $('#paystack_fund_alert').html("<div class='alert alert-danger'>"+data.error+"</div>");
+							// setTimeout(function () {
+							// 	$('#paystack_fund_alert').html("");
+							// },3000);
+						}
+						$('#btn-paysera-payment').html("{{LANG Pay}}");
+						$('#btn-paysera-payment').removeAttr('disabled');
+					});
+				}
+			<?php } ?>
+			<?php if (!IS_LOGGED && !empty($_GET['last_url'])) { ?>
+				$('.login_last_url').val("<?php echo(filter_var(strip_tags($_GET['last_url']),FILTER_UNSAFE_RAW)) ?>");
+				$('#login_box').modal('show');
+			<?php } ?>
+			
+			$('svg .verified_ico').tooltip({
+				title: '{{LANG verified}}',
+				placement: 'top',
+				container: 'body'
+			});
+		</script>
+		<script src="{{CONFIG theme_url}}/js/footer.js<?php echo ($music->update_cache !== '') ?$music->update_cache:'?'.rand(1111,4444); ?>"></script>
+		<?php if ($music->config->securionpay_payment == 'on') { ?>
+		<?php echo loadPage('modals/securionpay_type')?>
+		<?php } ?>
+		<?php if ($music->config->authorize_payment == 'on') { ?>
+	  <?php echo loadPage('modals/authorize_modal')?>
+	  <?php } ?>
+		<?php if ($music->config->payu_payment == 'on') { ?>
+		<?php echo loadPage('modals/payu_modal')?>
+    <?php } ?>
+		<?php if ($music->config->iyzipay_payment == 'on') { ?>
+		<div id="iyzipay_content"></div>
+		<?php } ?>
+		<?php if ($music->config->checkout_payment == 'on') { ?>
+		<?php echo loadPage('modals/2checkout_wallet_modal')?>
+		<?php } ?>
+		<?php if ($music->config->cashfree_payment == 'on') { ?>
+		<?php echo loadPage('modals/cashfree_wallet_modal')?>
+		<?php } ?>
+		<?php if ($music->config->paystack_payment == 'on') { ?>
+		<?php echo loadPage('modals/paystack_fund_modal')?>
+		<?php } ?>
+		<?php if ($music->config->razorpay_payment == 'on') { ?>
+		<?php echo loadPage('modals/razorpay_modal')?>
+		<?php } ?>
+	</body>
+</html>

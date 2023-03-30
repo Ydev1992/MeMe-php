@@ -1,0 +1,29 @@
+<div class="col-lg-3 col-md-6 px-2 events-list-wrapper" data-product="{{id}}">
+	<div class="events-list-cover text-center store_products">
+		<a href="{{url}}" class="event_cover store_products_hdr" data-load="{{data_load}}">
+			<img src="{{image}}" class="events-list-cover-img">
+			<p class="store_products-cat"><?php echo $music->products_categories[$music->product->cat_id]; ?></p>
+		</a>
+		<div class="store_products-info">
+			<h3 class="store_products-name">
+				<a href="{{url}}"  data-load="{{data_load}}">{{title}}</a>
+			</h3>
+			<b class="text-success store_products-price text-truncate">{{CONFIG currency_symbol}}{{f_price}}</b>
+			<div class="store_products-btns">
+				<div class="row mx-0">
+					<div class="col-6 px-1">
+						<span id="going-{{id}}">
+							<a href="{{edit_url}}" class="btn btn-secondary btn-mat btn-block" data-load="{{edit_data_load}}">{{LANG Edit}}</a>
+						</span> 
+					</div>
+					<div class="col-6 px-1">
+						<span id="interested-{{id}}">
+							<button type="button" onclick="DeleteProduct('{{id}}','hide')" class="btn btn-secondary btn-mat btn-block">{{LANG Delete}}</button>
+						</span> 
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>

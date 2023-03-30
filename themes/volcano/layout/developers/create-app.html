@@ -1,0 +1,136 @@
+<div class="ma_page_content" id="container_blog">
+    <div class="ma_pc_inner">
+        <div class="page_padding">
+			<div class="row">
+				<div class="col-lg-8 offset-lg-2">
+					<h2 class="home_widget_title home_big_title mt-0">
+						{{LANG create_app}}
+					</h2>
+			
+					<div class="content upload_music no-flex ds_create_edit_ads_cont p-5">
+						<form class="user-app-form ds_create_edit_prods" method="POST">
+
+							<div class="user-app-alert"></div>
+							<div class="alert alert-success ads-settings-alert hidden"></div>
+							<div class="progress hidden">
+								<div class="upload-progress-bar bar progress-bar progress-bar-striped active"></div>
+								<div class="percent">0%</div>
+							</div>
+							
+							<div class="form-group mat_input float">
+								<input type="text" id="name" name="app_name" placeholder=" " class="form-control">
+								<label for="name">{{LANG name}}</label>
+							</div>
+							
+							<div class="form-group mat_input float">
+								<input type="text" id="domain" name="app_website_url" placeholder=" " class="form-control">
+								<label for="domain">{{LANG domain}}</label>
+							</div>
+							
+							<div class="form-group mat_input float">
+								<input type="text" id="redirect_uri" name="app_callback_url" placeholder=" " class="form-control">
+								<label for="redirect_uri">{{LANG redirect_uri}}</label>
+							</div>
+							
+							<div class="form-group mat_input float">
+								<textarea name="app_description" id="desc" rows="5" placeholder=" " class="form-control"></textarea>
+								<label for="desc">{{LANG description}}</label>
+							</div>
+							
+							<h3 class="mat_form_title mt-5 mb-4">{{LANG image}}</h3>
+							<div class="form-group mat_input">
+								<div class="ds_media_file mt-0 mat_file_upload">
+									<div class="btn btn-file image_file" onclick="$('#app-media').trigger('click'); return false;">
+										<span id="app-media-holder"><svg xmlns="http://www.w3.org/2000/svg" width="62.982" height="57.205" viewBox="0 0 62.982 57.205"> <path id="Path_6622" data-name="Path 6622" d="M3782.481,7254.287l12.127,12.129-4.032,4.033-5.234-5.207V7281.2h-5.721v-15.988l-5.234,5.234-4.032-4.033Zm0-30.289a19.963,19.963,0,0,1,19.878,17.705,15.79,15.79,0,0,1,11.555,16.561,15.735,15.735,0,0,1-14.271,14.3V7266.9a17.168,17.168,0,0,0-34.322-.658v6.32a15.742,15.742,0,0,1-2.717-30.861A19.963,19.963,0,0,1,3782.481,7224Z" transform="translate(-3750.99 -7223.998)" fill="#d8d8d8"></path> </svg> {{LANG select_images_import}}</span>
+									</div>
+									<input type="file" class="media" id="app-media" name="app_avatar" accept="image/*">
+								</div>
+							</div>
+							
+							<div class="last-sett-btn modal-footer mat_sett_btn">
+								<button type="submit" class="btn btn-primary btn-mat" id="submit-btn">{{LANG Publish}}</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+        </div>
+    </div>
+</div>
+<script>
+
+    var _Delay = (function(){
+        var timer = 0;
+        return function(callback, ms){
+            clearTimeout (timer);
+            timer = setTimeout(callback, ms);
+        };
+    })();
+
+    function scrollToTop() {
+        verticalOffset = typeof (verticalOffset) != 'undefined' ? verticalOffset : 0;
+        element = $('html');
+        offset = element.offset();
+        offsetTop = offset.top;
+        $('html, body').animate({
+            scrollTop: offsetTop
+        }, 300, 'linear');
+    }
+
+  var bar         = $('.bar');
+  var percent     = $('.percent');
+
+	jQuery(document).ready(function($) {
+		$("#app-media").on('change', function() {
+			//Get count of selected files
+			$("#app-media-holder").html("<img src='" + window.URL.createObjectURL(this.files[0]) + "' alt='Picture'>");
+	  });
+
+    $('.user-app-form').ajaxForm({
+      url: '{{CONFIG ajax_url}}/developers/create?hash_id=' + getHashID(),
+      dataType:"json",
+      beforeSend: function() {
+        if ($("#app-media").val()) {
+          $(".user-app-alert").html($('.progress').clone(true).addClass('progress-clone').removeClass('hidden'));
+          bar     = $('.progress-clone').find('.bar');
+          percent = $('.progress-clone').find('.percent');
+        }
+
+        $('#submit-btn').attr('disabled', true).text("{{LANG Please wait..}}");
+        
+      },
+      uploadProgress: function(event, position, total, percentComplete) {
+          if(percentComplete > 50) {
+            percent.addClass('white');
+          }
+          var percentVal = percentComplete + '%';
+          bar.width(percentVal);
+          percent.html(percentVal);
+
+          if (percentComplete == 100) {
+            $(".user-app-alert").empty();
+          }
+      },
+      success: function(data) {
+        scrollToTop();
+        $('#submit-btn').removeAttr('disabled').text('{{LANG Publish}}');
+        if (data.status == 200){
+          $(".user-app-alert").html('<div class="alert alert-success"><i class="fa fa-check"></i> '+
+            data.message
+            +'</div>');
+            _Delay(function(){
+            /*window.location.href = data.url;*/
+            goToAjaxLink("my_apps");
+          },2000);
+          
+        }
+        else {
+          $('#submit-btn').removeAttr('disabled').text('{{LANG Publish}}');
+          $(".user-app-alert").html('<div class="alert alert-danger"><i class="fa fa-info-circle"></i> '+
+            data.message
+            +'</div>');
+        }
+      }
+    });
+	});
+</script>

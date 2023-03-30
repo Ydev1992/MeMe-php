@@ -1,0 +1,119 @@
+<div class="ma_page_content">
+	<div class="ma_pc_inner">
+		<div class="page_padding">
+			<h2 class="home_widget_title font-weight-bold">
+				{{LANG Order}} #<?php echo $music->order->hash_id ?>
+				<?php if ($music->order->status != 'delivered' && $music->order->status != 'shipped') { ?>
+					&nbsp;<select id="cart_product_qty" onchange="ChangeStatus(this,'{{hash}}')">
+						<?php if ($music->order->status == 'placed') { ?>
+							<option value="placed" <?php if ($music->order->status == 'placed') {echo "selected";} ?>>{{LANG Placed}}</option>
+							<option value="canceled" <?php if ($music->order->status == 'canceled') {echo "selected";} ?>>{{LANG Canceled}}</option>
+							<option value="accepted" <?php if ($music->order->status == 'accepted') {echo "selected";} ?>>{{LANG Accepted_}}</option>
+							<option value="packed" <?php if ($music->order->status == 'packed') {echo "selected";} ?>>{{LANG Packed}}</option>
+							<option value="shipped" <?php if ($music->order->status == 'shipped') {echo "selected";} ?>>{{LANG Shipped}}</option>
+						<?php }elseif ($music->order->status == 'accepted') { ?>
+							<option value="accepted" <?php if ($music->order->status == 'accepted') {echo "selected";} ?>>{{LANG Accepted_}}</option>
+							<option value="packed" <?php if ($music->order->status == 'packed') {echo "selected";} ?>>{{LANG Packed}}</option>
+							<option value="shipped" <?php if ($music->order->status == 'shipped') {echo "selected";} ?>>{{LANG Shipped}}</option>
+						<?php }elseif ($music->order->status == 'packed') { ?>
+							<option value="packed" <?php if ($music->order->status == 'packed') {echo "selected";} ?>>{{LANG Packed}}</option>
+							<option value="shipped" <?php if ($music->order->status == 'shipped') {echo "selected";} ?>>{{LANG Shipped}}</option>
+						<?php }elseif ($music->order->status == 'shipped') { ?>
+							<option value="shipped" <?php if ($music->order->status == 'shipped') {echo "selected";} ?>>{{LANG Shipped}}</option>
+						<?php } ?>
+					</select>
+				<?php } else if ($music->order->status == 'delivered') { ?>
+					&nbsp;<div class="badge badge-success">{{LANG Delivered}}</div>
+				<?php } else if ($music->order->status == 'shipped') { ?>
+					&nbsp;<div class="badge badge-info">{{LANG Shipped}}</div>
+				<?php } ?>
+			</h2>
+			
+			<?php if ($music->order->status != 'delivered') { ?>
+				<div class="alert alert-info">
+					<ul class="mb-0 px-3">
+						<li>{{LANG If the order status wasn't set to delivered within 60 days from the order date, it will be automatically be sent to "Delivered".}}</li>
+						<li>{{LANG If the order wasn't actually delivered, the buyer can request a refund.}}</li>
+					</ul>
+				</div>
+			<?php } ?>
+			
+			<div class="row">
+				<div class="col-lg-9">
+					<div class="se_box store_songs ds_order_items p-1" id="store_result">
+						{{html}}
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="se_box">
+								<b class="se_prod_ordr_title">{{LANG Payments}}</b>
+								<ul class="list-unstyled mb-0">
+									<li class="valign-wrapper mb-1">{{LANG Subtotal}}<span class="ml-auto">{{CONFIG currency_symbol}}{{total}}</span></li>
+									<li class="valign-wrapper">{{LANG Commission}}<span class="ml-auto">-{{CONFIG currency_symbol}}{{total_commission}}</span></li>
+									<hr>
+									<li class="valign-wrapper">{{LANG Final Price}}<span class="ml-auto">{{CONFIG currency_symbol}}{{total_final_price}}</span></li>
+								</ul>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="se_box order_tracking_detail_box">
+								<b class="se_prod_ordr_title">{{LANG Tracking Details}}</b>
+								<div class="tracking_alert"></div>
+								<div class="form-group mat_input">
+									<input type="url" name="url" id="tracking_url" placeholder="{{LANG Link}}" value="<?php echo(!empty($music->order->tracking_url) ? $music->order->tracking_url : '') ?>">
+								</div>
+								<div class="form-group mat_input mb-0">
+									<div class="row">
+										<div class="col-8">
+											<input type="text" name="id" id="tracking_id" placeholder="{{LANG Tracking Number}}" value="<?php echo(!empty($music->order->tracking_id) ? $music->order->tracking_id : '') ?>">
+										</div>
+										<div class="col-4">
+											<button type="button" class="btn btn-primary btn-block btn-mat buy_button" onclick="SaveTracking(this,'{{hash}}')">{{LANG Save}}</button>
+										</div>
+									</div>
+								</div>
+								
+							</div>
+						</div>
+					</div>
+					
+				</div>
+				<div class="col-lg-3">
+					<div class="se_box">
+						<b class="se_prod_ordr_title">{{LANG Delivery Address}}</b>
+						<div class="address_box selr_adrs_box">
+							<p class="addrs_name"><?php echo($music->address->name) ?></p>
+							<p class="addrs_phone"><?php echo($music->address->phone) ?></p>
+							<p class="addrs_street"><?php echo($music->address->address) ?>, <?php echo($music->address->city) ?> - <?php echo($music->address->zip) ?></p>
+							<p class="addrs_count"><?php echo($music->address->country) ?></p>
+						</div>
+						<a class="btn btn-info btn-mat btn-block mt-3" href="javascript:void(0)" onclick="DownloadPurchased('{{hash}}','order')">{{LANG Download Invoice}}</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<a href="{{LINK order/{{hash}}}}" data-load="order/{{hash}}" id="load_order"></a>
+
+<script type="text/javascript">
+	function SaveTracking(self,hash) {
+		$(self).html("{{LANG Please wait..}}");
+	    $(self).attr('disabled', "true");
+	    tracking_id = $('#tracking_id').val()
+	    tracking_url = $('#tracking_url').val()
+	    $.post('{{CONFIG ajax_url}}/product/tracking', {tracking_url: tracking_url,tracking_id: tracking_id,hash: hash}, function(data, textStatus, xhr) {
+	    	$(self).removeAttr('disabled');
+			$(self).text("{{LANG Save}}");
+	    	if (data.status == 200) {
+	    		$('.tracking_alert').html("<div class='alert alert-success bg-success'><i class='fa fa-info-circle'></i> "+data.message+"</div>");
+	    	}
+	    	else{
+	    		$('.tracking_alert').html("<div class='alert alert-danger bg-danger'><i class='fa fa-info-circle'></i> "+data.message+"</div>");
+	    	}
+	    	setTimeout(function () {
+            	$('.tracking_alert').html("");
+            },2000);
+	    });
+	}
+</script>

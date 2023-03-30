@@ -1,0 +1,9 @@
+<?php 
+$data = $db->where('name','confirm')->getOne(T_HTML_EMAILS);
+$html = $data->value;
+$replaces = array('USERNAME' => $music->username,
+                 'CODE_URL' => getLink('co/'.$music->email_code),
+                 'SITE_NAME' => $music->config->name);
+$html = ReplaceText($html,$replaces);
+echo $html;
+ ?>

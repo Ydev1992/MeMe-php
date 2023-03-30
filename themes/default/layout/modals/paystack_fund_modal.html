@@ -1,0 +1,63 @@
+<div class="modal fade" id="paystack_fund_modal" role="dialog" data-keyboard="false" >
+  <div class="modal-dialog mat_box">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{LANG Paystack}}</h5>
+      </div>
+      <form class="form form-horizontal" method="post" id="paystack_fund_form" action="#">
+        <div class="modal-body twocheckout_modal">
+          <div id="paystack_fund_alert"></div>
+          <div class="clear"></div>
+          <div class="form-group">
+            <input id="paystack_fund_email" type="text" class="form-control" autocomplete="off" placeholder="{{LANG Email}}">
+          </div>
+          <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+        <input type="hidden" name="paystack_type" id="paystack_type">
+        <div class="modal-footer">
+          <div class="ball-pulse"><div></div><div></div><div></div></div>
+          <button class="btn btn-default" data-dismiss="modal">{{LANG Close}}</button>
+          <button type="button" class="btn btn-primary btn-mat" id="paystack_btn" onclick="InitializePaystack()">{{LANG Pay}}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  function paystack_pay(self,type) {
+    $("#paystack_fund_alert").html('');
+    $('#buy_album_modal').modal('hide');
+    $('#paystack_type').val(type);
+    $('#paystack_fund_modal').modal({
+          show: true
+      });
+  }
+
+  function InitializePaystack() {
+    $('#paystack_btn').html("{{LANG Please wait..}}");
+    $('#paystack_btn').attr('disabled','true');
+    type = $('#paystack_type').val();
+    email = $('#paystack_fund_email').val();
+    id    = $('#buy_album_modal').attr('data-id');
+    amount = $('#buy_album_modal').attr('data_price');
+    if ($('#paystack_type').val() == 'buy_song') {
+      id    = $('#payment_modal').attr('data-id');
+    }
+    if ($('#paystack_type').val() == 'wallet') {
+      amount = $('#wallet_payment_modal').attr('data_price');
+    }
+    $.post('{{LINK endpoints/paystack/initialize}}', {type:type,email:email,amount:amount,id:id}, function(data) {
+      if (data.status == 200) {
+        window.location.href = data.url;
+      } else {
+        $('#paystack_fund_alert').html("<div class='alert alert-danger'>"+data.error+"</div>");
+        setTimeout(function () {
+          $('#paystack_fund_alert').html("");
+        },3000);
+      }
+      $('#paystack_btn').html("{{LANG Pay}}");
+      $('#paystack_btn').removeAttr('disabled');
+    });
+  }
+</script>

@@ -1,0 +1,100 @@
+<div class="modal fade" id="authorize_modal" role="dialog" data-keyboard="false">
+      <div class="modal-dialog mat_box">
+          <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{LANG Authorize}}</h5>
+      </div>
+              <form class="form form-horizontal" method="post" id="authorize_form" action="#">
+                  <div class="modal-body authorize_modal">
+                      <div id="authorize_alert"></div>
+                      <div class="clear"></div>
+                      <div class="row">
+                          <div class="form-group col-12">
+                              <input id="authorize_number" type="text" class="form-control" autocomplete="off" placeholder="{{LANG Card Number}}">
+                          </div>
+                          <div class="form-group col-4">
+                              <select id="authorize_month" name="card_month" type="text" class="form-control" autocomplete="off" placeholder="{{LANG Month}} (01)">
+                                  <option value="01">01</option>
+                                  <option value="02">02</option>
+                                  <option value="03">03</option>
+                                  <option value="04">04</option>
+                                  <option value="05">05</option>
+                                  <option value="06">06</option>
+                                  <option value="07">07</option>
+                                  <option value="08">08</option>
+                                  <option value="09">09</option>
+                                  <option value="10">10</option>
+                                  <option value="11">11</option>
+                                  <option value="12">12</option>
+                              </select>
+                          </div>
+                          <div class="form-group col-4">
+                              <select id="authorize_year" name="card_year" type="text" class="form-control" autocomplete="off" placeholder="{{LANG Year}} (2021)">
+                                  <?php for ($i=date('Y'); $i <= date('Y')+15; $i++) {  ?>
+                                      <option value="<?php echo($i) ?>"><?php echo($i) ?></option>
+                                  <?php } ?>
+                              </select>
+                          </div>
+                          <div class="form-group col-4">
+                              <input id="authorize_cvc" name="card_cvc" type="text" class="form-control" autocomplete="off" placeholder="CVC" maxlength="3" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                          </div>
+                      </div>
+                      <input id="authorize_type" type="hidden">
+                  </div>
+                  <div class="clear"></div>
+                  <div class="modal-footer">
+                      <div class="ball-pulse"><div></div><div></div><div></div></div>
+          <button class="btn btn-default" data-dismiss="modal">{{LANG Close}}</button>
+                      <button type="button" class="btn btn-primary btn-mat" onclick="AuthorizeRequest()" id="authorize_btn">{{LANG Pay}}</button>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+  <script type="text/javascript">
+    function authorize_pay(self,type) {
+  $("#authorize_alert").html('');
+  $('#authorize_type').val(type)
+  $('#buy_album_modal').modal('hide');
+  $('#authorize_modal').modal({
+        show: true
+    });
+  }
+  function AuthorizeRequest() {
+  $('#authorize_btn').html("{{LANG Please wait..}}");
+    $('#authorize_btn').attr('disabled','true');
+    type    = $('#authorize_type').val();
+  id    = $('#buy_album_modal').attr('data-id');
+  amount = $('#buy_album_modal').attr('data_price');
+  if (type == 'buy_song') {
+    id    = $('#payment_modal').attr('data-id');
+  }
+  if (type == 'wallet') {
+    amount = $('#wallet_payment_modal').attr('data_price');
+  }
+  authorize_number = $('#authorize_number').val();
+  authorize_month = $('#authorize_month').val();
+  authorize_year = $('#authorize_year').val();
+  authorize_cvc = $('#authorize_cvc').val();
+  $.post('{{LINK endpoints/authorize/pay}}', {type:type,card_number:authorize_number,card_month:authorize_month,card_year:authorize_year,card_cvc:authorize_cvc,amount:amount,id:id}, function(data) {
+    if (data.status == 200) {
+      window.location.href = data.url;
+    } else {
+      $('#authorize_alert').html("<div class='alert alert-danger'>"+data.error+"</div>");
+      setTimeout(function () {
+        $('#authorize_alert').html("");
+      },3000);
+    }
+    $('#authorize_btn').html("{{LANG Pay}}");
+      $('#authorize_btn').removeAttr('disabled');
+  }).fail(function(data) {
+      $('#authorize_alert').html("<div class='alert alert-danger'>"+data.responseJSON.error+"</div>");
+    setTimeout(function () {
+      $('#authorize_alert').html("");
+    },3000);
+    $('#authorize_btn').html("{{LANG Pay}}");
+      $('#authorize_btn').removeAttr('disabled');
+  });
+  }
+
+  </script>

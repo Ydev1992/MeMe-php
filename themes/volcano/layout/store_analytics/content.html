@@ -1,0 +1,200 @@
+<div class="ma_page_content">
+	<div class="ma_pc_inner">
+		<div class="container">
+			<div class="ma_dashboard">
+				<?php if($music->config->artist_sell == 'on'){?>
+					<div class="row dashboard_small_stats">
+						<div class="col-md-4">
+							<div class="content small_stat sales">
+								<div class="small_stat_hdr">
+									<svg xmlns="http://www.w3.org/2000/svg" width="27.611" height="24.608" viewBox="0 0 27.611 24.608"> <path id="Path_5849" data-name="Path 5849" d="M3664.656,4691.439l4.239,7.342h4.516v2.641h-1.545l-.991,11.991a1.373,1.373,0,0,1-.422.872,1.341,1.341,0,0,1-.9.343h-18.7a1.341,1.341,0,0,1-.9-.343,1.373,1.373,0,0,1-.422-.872l-.991-11.991H3647v-2.641h4.516l4.239-7.342,2.3,1.321-3.486,6.021h11.277l-3.486-6.021Zm4.569,9.983h-18.039l.885,10.564h16.269Zm-7.7,2.641v5.282h-2.641v-5.282Zm-5.282,0v5.282H3653.6v-5.282Zm10.564,0v5.282h-2.641v-5.282Z" transform="translate(-3646.4 -4690.621)" fill="#7239ea" stroke="#f8f5ff" stroke-width="1.2"/> </svg>
+									<div>
+										<p>{{CONFIG currency_symbol}}{{total_final_price}}</p>
+										<h2>{{LANG Total Sales}}</h2>
+									</div>
+								</div>
+								<div id="sales1"></div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="content small_stat mnthsale">
+								<div class="small_stat_hdr">
+									<svg xmlns="http://www.w3.org/2000/svg" width="23.824" height="30.966" viewBox="0 0 23.824 30.966"> <path id="Path_5853" data-name="Path 5853" d="M3318.88,4769.044h13.093a1.19,1.19,0,0,0,0-2.38h-9.522a5.951,5.951,0,1,1,0-11.9h2.381V4750h4.761v4.761h5.951v4.761h-13.092a1.19,1.19,0,0,0,0,2.38h9.522a5.952,5.952,0,1,1,0,11.9h-2.381v4.761h-4.761v-4.761h-5.952Z" transform="translate(-3315.301 -4748.801)" fill="#50cd89" stroke="#e8fff3" stroke-width="2.4"/> </svg>
+									<div>
+										<p>{{CONFIG currency_symbol}}{{total_month_sales}}</p>
+										<h2>{{LANG Total Sales This Month}}</h2>
+									</div>
+								</div>
+								<div id="sales2"></div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="content small_stat todsale">
+								<div class="small_stat_hdr">
+									<svg xmlns="http://www.w3.org/2000/svg" width="23.824" height="30.966" viewBox="0 0 23.824 30.966"> <path id="Path_5853" data-name="Path 5853" d="M3318.88,4769.044h13.093a1.19,1.19,0,0,0,0-2.38h-9.522a5.951,5.951,0,1,1,0-11.9h2.381V4750h4.761v4.761h5.951v4.761h-13.092a1.19,1.19,0,0,0,0,2.38h9.522a5.952,5.952,0,1,1,0,11.9h-2.381v4.761h-4.761v-4.761h-5.952Z" transform="translate(-3315.301 -4748.801)" fill="#009ef7" stroke="#f1faff" stroke-width="2.4"/> </svg>
+									<div>
+										<p>{{CONFIG currency_symbol}}{{total_today_sales}}</p>
+										<h2>{{LANG Total Sales Today}}</h2>
+									</div>
+								</div>
+								<div id="sales3"></div>
+							</div>
+						</div>
+					</div>
+				<?php } ?>
+				
+
+				<div class="row">
+					<div class="col-md-12">
+						<div class="content">
+							<h2 class="home_widget_title home_big_title mt-2 mb-3">{{LANG Most sold products}}</h2>
+							<div class="list-unstyled feed_sidebar_song short_track_stats">
+								{{most_sold_product}}
+							</div>
+						</div>
+					</div>
+				</div>
+
+				
+				<div class="row">
+					<div class="col-md-12">
+						<div class="row dashboard_small_stats">
+							<div class="col-md-3">
+								<div class="content small_stat songs">
+									<div class="small_stat_hdr">
+										<svg xmlns="http://www.w3.org/2000/svg" width="27.611" height="24.608" viewBox="0 0 27.611 24.608"> <path id="Path_215829" data-name="Path 215829" d="M3664.656,4691.439l4.239,7.342h4.516v2.641h-1.545l-.991,11.991a1.373,1.373,0,0,1-.422.872,1.341,1.341,0,0,1-.9.343h-18.7a1.341,1.341,0,0,1-.9-.343,1.373,1.373,0,0,1-.422-.872l-.991-11.991H3647v-2.641h4.516l4.239-7.342,2.3,1.321-3.486,6.021h11.277l-3.486-6.021Zm4.569,9.983h-18.039l.885,10.564h16.269Zm-7.7,2.641v5.282h-2.641v-5.282Zm-5.282,0v5.282H3653.6v-5.282Zm10.564,0v5.282h-2.641v-5.282Z" transform="translate(-3646.4 -4690.621)" fill="#009ef7" stroke="#f3fbff" stroke-width="1.2"/> </svg>
+										<div>
+											<p>{{TOTAL_PRODUCTS}}</p>
+											<h2>{{LANG Total Products}}</h2>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="content small_stat plays">
+									<div class="small_stat_hdr">
+										<svg xmlns="http://www.w3.org/2000/svg" width="23.824" height="30.966" viewBox="0 0 23.824 30.966"> <path id="Path_215830" data-name="Path 215830" d="M3318.88,4769.044h13.093a1.19,1.19,0,0,0,0-2.38h-9.522a5.951,5.951,0,1,1,0-11.9h2.381V4750h4.761v4.761h5.951v4.761h-13.092a1.19,1.19,0,0,0,0,2.38h9.522a5.952,5.952,0,1,1,0,11.9h-2.381v4.761h-4.761v-4.761h-5.952Z" transform="translate(-3315.301 -4748.801)" fill="#ffc700" stroke="#fff9e3" stroke-width="2.4"/> </svg>
+										<div>
+											<p>{{CONFIG currency_symbol}}{{total_earned}}</p>
+											<h2>{{LANG Total Sub Earned}}</h2>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="content small_stat downs">
+									<div class="small_stat_hdr">
+										<svg xmlns="http://www.w3.org/2000/svg" width="21.074" height="21.074" viewBox="0 0 21.074 21.074"> <path id="Path_5856" data-name="Path 5856" d="M3496.493,4767.475a4,4,0,1,1,2.809-1.172A3.944,3.944,0,0,1,3496.493,4767.475Zm-12.512-12.513a3.918,3.918,0,0,1-1.524-.307,4.029,4.029,0,0,1-2.15-2.15,3.934,3.934,0,0,1,0-3.048,4.022,4.022,0,0,1,2.15-2.149,3.977,3.977,0,1,1,1.524,7.654Zm14.3-7.37,1.615,1.6-17.7,17.7-1.6-1.616,17.687-17.687Z" transform="translate(-3479.7 -4746.7)" fill="#f1416c" stroke="#fff5f8" stroke-width="0.6"/> </svg>
+										<div>
+											<p>{{CONFIG currency_symbol}}{{total_commission}}</p>
+											<h2>{{LANG Total Commission}}</h2>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="content small_stat up">
+									<div class="small_stat_hdr">
+										<svg xmlns="http://www.w3.org/2000/svg" width="23.824" height="30.966" viewBox="0 0 23.824 30.966"> <path id="Path_215831" data-name="Path 215831" d="M3318.88,4769.044h13.093a1.19,1.19,0,0,0,0-2.38h-9.522a5.951,5.951,0,1,1,0-11.9h2.381V4750h4.761v4.761h5.951v4.761h-13.092a1.19,1.19,0,0,0,0,2.38h9.522a5.952,5.952,0,1,1,0,11.9h-2.381v4.761h-4.761v-4.761h-5.952Z" transform="translate(-3315.301 -4748.801)" fill="#50cd89" stroke="#e8fff3" stroke-width="2.4"/> </svg>
+										<div>
+											<p>{{CONFIG currency_symbol}}{{total_final_price}}</p>
+											<h2>{{LANG Total Earned}}</h2>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+				
+						<?php if($music->config->artist_sell == 'on'){?>
+						<div class="content">
+							<h2 class="home_widget_title home_big_title mt-2 mb-3">{{LANG Recent sales}}</h2>
+							<div class="table-responsive my_purchased_songs ds_store_analytics">
+								<table class="table mb-0" id="music-user-ads-table">
+									<thead>
+										<th>{{LANG ID}}</th>
+										<th>{{LANG Title}}</th>
+										<th class="text-center">{{LANG Type}}</th>
+										<th class="text-center">{{LANG Price}}</th>
+										<th class="text-center">{{LANG Commission}}</th>
+										<th class="text-right">{{LANG Final Price}}</th>
+									</thead>
+									<tbody>{{RECENT_SALES}}</tbody>
+								</table>
+							</div>
+						</div>
+						<?php } ?>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script>
+var sales1 = {
+	chart: {
+		type: 'area',
+		height: 160,
+		sparkline: {
+			enabled: true
+		},
+	},
+	tooltip: {
+		enabled: false,
+	},
+	stroke: {
+		curve: 'smooth'
+	},
+	series: [{
+		data: [{{ChartToTalSales}}]
+	}],
+	colors: ['#7239EA'],
+}
+
+var sales2 = {
+	chart: {
+		type: 'area',
+		height: 160,
+		sparkline: {
+			enabled: true
+		},
+	},
+	tooltip: {
+		enabled: false,
+	},
+	stroke: {
+		curve: 'smooth'
+	},
+	series: [{
+		data: [{{ChartToTalSalesThisMonth}}]
+	}],
+	colors: ['#50CD89'],
+}
+
+var sales3 = {
+	chart: {
+		type: 'area',
+		height: 160,
+		sparkline: {
+			enabled: true
+		},
+	},
+	tooltip: {
+		enabled: false,
+	},
+	stroke: {
+		curve: 'smooth'
+	},
+	series: [{
+		data: [{{ChartTodaySales}}]
+	}],
+	colors: ['#009EF7'],
+}
+
+new ApexCharts(document.querySelector("#sales1"), sales1).render();
+new ApexCharts(document.querySelector("#sales2"), sales2).render();
+new ApexCharts(document.querySelector("#sales3"), sales3).render();
+
+</script>
